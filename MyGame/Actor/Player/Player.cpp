@@ -49,10 +49,6 @@ void Player::onCollide(Actor & other)
 
 void Player::receiveMessage(EventMessage message, void * param)
 {
-	if (message == EventMessage::HIT_BALL)
-	{
-		die();
-	}
 }
 
 void Player::update_state(float delta_time)
