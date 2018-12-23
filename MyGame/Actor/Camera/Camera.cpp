@@ -1,139 +1,74 @@
 #include "Camera.h"
-#include "../../World/IWorld.h"
 #include "../ActorGroup.h"
+#include "../../Graphics/Graphics3D.h"
+#include "../../Game/Define.h"
 
-Camera::Camera(IWorld & world,Vector3& position):
-	player_{ nullptr }
-{
-	world_ = &world;
-	position_ = position;
-}
+#include "../../Input/GamePad.h"
 
-void Camera::initialize()
+Camera::Camera(IWorld * world) :
+	Actor(world, "Camera", Vector3::Zero)
 {
-	Angle = 0.0f;
-	//カメラの向きを初期化
-	CameraHAngle = 0.0f;
-	CameraVAngle = 40.0f;
-	SetCameraNearFar(100.0f, 50000.0f);
 }
 
 void Camera::update(float deltaTime)
 {
-	//(void)deltaTime;
-	player_ = world_->find_actor(ActorGroup::Player, "Player").get();
+	Actor* player_ = world_->find_actor(ActorGroup::Player, "Player").get();
 	if (player_ == nullptr) return;
-	//const auto position = Vector3{ 0.0f,3.0f,-6.0f } *player_->pose();
-	//target_ = player_->pose().Translation().x + Vector3{ 0.0f,2.0f,0.0f };
+	const auto position = Vector3{ 0.0f,m_FarPoint.x,m_FarPoint.y } *player_->Getpose();
+	target_ = player_->Getposition() + Vector3{ 0.0f,20.0f,0.0f };
 
-	Vector3 p_pos = player_->pose().Translation();
-	m_pos = player_->pose().Translation();
+	move(position, 1.0f, 0.2f, 0.8f);
 
-	// 移動しているかどうかのフラグを倒す
-	Moveflag = FALSE;
-
-	if (GamePad::state(GamePad::Up))
-	{
-		Angle = 18.0f - CameraHAngle;
-		Moveflag = true;
-	}
-	else if (GamePad::state(GamePad::Down))
-	{
-		Angle = 0.0f - CameraHAngle;
-		Moveflag = true;
-	}
-	else if (GamePad::state(GamePad::Left))
-	{
-		Angle = 90.0f - CameraHAngle;
-		Moveflag = true;
-	}
-	else if (GamePad::state(GamePad::Right))
-	{
-		Angle = -90.0f - CameraHAngle;
-		Moveflag = true;
-	}
-
-	if (Moveflag)
-	{
-		Vector3 TempMoveVector;
-	}
-
-
-	//CameraMove();
-	//CameraCalculation(p_pos);
+	PlayerInput();
 }
 
 void Camera::draw() const
 {
-	//DrawFormatString(100, 100, GetColor(255, 255, 255), "%f", m_pos);
-	//SetCameraPositionAndTargetAndUpVec(VGet(player_->pose().Translation().x, 10, 50.0f), Vector3{ player_->pose().Translation().x,10,0.0f }, Vector3::Up);
-	//カメラの設定
-	//Graphics3D::view_matrix(Matrix::CreateLookAt(position_,
-	//	target_, { 0.0f,15.0f,0.0f }));
-	//Graphics3D::projection_matrix(Matrix::CreatePerspectiveFieldOfView(
-	//	49.0f, 640.0f / 480.0f, 0.3f, 1000.0f));
 
-	//カメラの設定
-	Graphics3D::view_matrix(Matrix::CreateLookAt({ 0.0f,46.0f,80.0f },
-		{ 0.0f,31.0f,0.0f }, { 0.0f,2.0f,5.0f }));
+	Graphics3D::view_matrix(Matrix::CreateLookAt(position_,
+		target_, { 0.0f,5.0f,0.0f }));
 	Graphics3D::projection_matrix(Matrix::CreatePerspectiveFieldOfView(
 		49.0f, 640.0f / 480.0f, 0.3f, 1000.0f));
 
+	//カメラの設定
+//Graphics3D::view_matrix(Matrix::CreateLookAt(position_,
+//	target_, { 0.0f,5.0f,0.0f }));
+//Graphics3D::projection_matrix(Matrix::CreatePerspectiveFieldOfView(
+//	49.0f, 640.0f / 480.0f, 0.3f, 1000.0f));
 }
 
-void Camera::CameraMove()
+void Camera::move(const Vector3 & rest_position, float stiffness, float friction, float mass)
 {
-	//カメラの操作
-	if (CheckHitKey(KEY_INPUT_X) == 1)
-	{
-		CameraHAngle += CAMERA_ANGLE_SPEED;
-		if (CameraHAngle >= 180.0f)
-		{
-			CameraHAngle -= 360.0f;
-		}
-	}
-
-	if (CheckHitKey(KEY_INPUT_C) == 1)
-	{
-		CameraHAngle -= CAMERA_ANGLE_SPEED;
-		if (CameraHAngle <= -180.0f)
-		{
-			CameraHAngle += 360.0f;
-		}
-	}
-
-	if (CheckHitKey(KEY_INPUT_Z) == 1)
-	{
-		CameraVAngle += CAMERA_ANGLE_SPEED;
-		if (CameraVAngle >= 80.0f)
-		{
-			CameraVAngle = 80.0f;
-		}
-	}
-
-	if (CheckHitKey(KEY_INPUT_V) == 1)
-	{
-		CameraVAngle -= CAMERA_ANGLE_SPEED;
-		if (CameraVAngle <= 0.0f)
-		{
-			CameraVAngle = 0.0f;
-		}
-	}
+	//ばねの伸び具合を計算
+	const auto stretch = position_ - rest_position;
+	//ばねの力を計算
+	const auto force = -stiffness * stretch;
+	//加速度を追加
+	const auto acceleration = force / mass;
+	//移動速度を計算
+	velocity_ = friction * (velocity_ + acceleration);
+	//座標の更新
+	position_ += velocity_;
 }
 
-void Camera::CameraCalculation(Vector3 pos)
+void Camera::PlayerInput()
 {
-	DrawFormatString(400, 400, GetColor(255, 255, 255), "%f", pos);
-	Vector3 TempPosition1;
-	Vector3 TempPosition2;
-	Vector3 CameraPosition;
-	Vector3 CameraLookAtPosition;
+	if (CheckHitKey(KEY_INPUT_UP) ||
+		GamePad::state(GamePad::Up))
+	{
+		if (m_FarPoint < Vector2(75.0f, 60.0f))
+		{
+			m_FarPoint += Vector2(FarSpeed, FarSpeed);
+		}
+	}
 
-	CameraLookAtPosition = pos;
-	CameraLookAtPosition.y += CAMERA_LOOK_AT_HEIGHT;
+	if (CheckHitKey(KEY_INPUT_DOWN) ||
+		GamePad::state(GamePad::Down))
+	{
+		if (Vector2(50.0f, 40.0f) < m_FarPoint)
+		{
+			m_FarPoint -= Vector2(FarSpeed, FarSpeed);
+		}
+	}
 
-	CameraPosition = VAdd(TempPosition2, CameraLookAtPosition);
-
-	SetCameraPositionAndTarget_UpVecY(CameraPosition, CameraLookAtPosition);
 }
-

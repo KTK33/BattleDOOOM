@@ -6,7 +6,6 @@
 #include "../../Mesh/StaticMesh.h"
 #include "../../Animation/Animation.h"
 #include "../../Animation/AnimationMesh.h"
-#include "../../Input/GamePad.h"
 #include "PlayerState.h"
 #include "../../World/World.h"
 

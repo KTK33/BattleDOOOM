@@ -1,34 +1,27 @@
 #pragma once
+
 #include "../Actor.h"
-#include "../Player/Player.h"
 
-class Camera : public Actor {
+class Camera : public Actor
+{
 public:
-	Camera(IWorld& world,Vector3& position);
+	Camera(IWorld* world);
 
-	virtual void initialize() override;
+	void update(float deltaTime);
 
-	virtual void update(float deltaTime) override;
+	virtual void draw() const override;
+	//
+	void move(
+		const Vector3& rest_position, //ばねの静止位置
+		float stiffness,                //ばね定数(ばねの強さ)
+		float friction,                 //摩擦力
+		float mass                      //質量
+	);
 
-	virtual void draw()const override;
-
-protected:
-	void CameraMove();
-	void CameraCalculation(Vector3 pos);
-
+	void PlayerInput();
 private:
-	//プレイヤー
-	Actor* player_;
-
+	//
 	Vector3 target_{ 0.0f,0.0f,0.0f };
 
-	float Angle;
-	float CAMERA_ANGLE_SPEED{ 3.0f };
-	float CAMERA_LOOK_AT_HEIGHT{ 400.0f };
-	float CAMERA_LOOK_AT_DISTANCE{ 2150.0f };
-	float CameraHAngle;
-	float CameraVAngle;
-
-	bool Moveflag;
-	Vector3 m_pos;
+	Vector2 m_FarPoint{ 50.f,40.f };
 };

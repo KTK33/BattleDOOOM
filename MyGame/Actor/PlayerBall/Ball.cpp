@@ -7,6 +7,7 @@ Ball::Ball(int model, IWorld* world, const Vector3& position, const IBodyPtr& bo
 	enemy_{ nullptr },
 	mesh_ {model}
 {
+	player_ = world_->find_actor(ActorGroup::Player, "Player").get();
 	enemy_ = world_->find_actor(ActorGroup::Enemy, "Enemy").get();
 	mesh_.transform(Getpose());
 }
@@ -26,7 +27,7 @@ void Ball::update(float deltaTime)
 
 	//position_ = Vector3::Lerp(position_, Vector3(enemy_->Getposition().x,enemy_->Getposition().y + 10.0f,enemy_->Getposition().z),0.1f);
 
-	position_ = position_ + Vector3(0, 0, 5.0f);
+	position_ = position_ + Vector3(1.0f, 0, 1.0f) * player_->Getpose();
 }
 
 void Ball::onCollide(Actor & other)

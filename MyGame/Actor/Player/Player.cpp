@@ -2,6 +2,8 @@
 #include "../PlayerBall/Ball.h"
 #include "../TestEnemy.h"
 #include "../ActorGroup.h"
+#include "../../Input/GamePad.h"
+
 
 Player::Player(int model,int weapon,IWorld * world, const Vector3 & position, const IBodyPtr & body):
 	Actor(world,"Player",position,body),
@@ -80,21 +82,21 @@ void Player::change_state(PlayerState::State state, int motion)
 
 void Player::move(float delta_time)
 {
-	if (CheckHitKey(KEY_INPUT_Q) ||
+	if (CheckHitKey(KEY_INPUT_V) ||
 		GamePad::state(GamePad::B))
 	{
 		//motion_ = MotionFire;
 		change_state(PlayerState::State::PUNCH, MotionPunch);
 		return;
 	}
-	if (CheckHitKey(KEY_INPUT_W) ||
+	if (CheckHitKey(KEY_INPUT_B) ||
 		GamePad::state(GamePad::X))
 	{
 		//motion_ = MotionFire;
 		change_state(PlayerState::State::KICK, MotionKick);
 		return;
 	}
-	if (CheckHitKey(KEY_INPUT_E) ||
+	if (CheckHitKey(KEY_INPUT_N) ||
 		GamePad::state(GamePad::Y))
 	{
 		//motion_ = MotionFire;
@@ -131,35 +133,39 @@ void Player::move(float delta_time)
 	float forward_speed{ 0.0f };
 	float side_speed{ 0 };
 	float yaw_speed{ 0.0f };
-	if (GamePad::state(GamePad::Up))
+	if (GamePad::state(GamePad::Up) 
+		||CheckHitKey(KEY_INPUT_W))
 	{
 		forward_speed = WalkSpeed;
 		motion = MotionForwardWalk;
 	}
-	else if (GamePad::state(GamePad::Down))
+	else if (GamePad::state(GamePad::Down)
+		|| CheckHitKey(KEY_INPUT_S))
 	{
 		forward_speed = -WalkSpeed;
 		motion = MotionBackarWalk;
 	}
-	else if (GamePad::state(GamePad::Left))
+	else if (GamePad::state(GamePad::Left)
+		|| CheckHitKey(KEY_INPUT_A))
 	{
 		side_speed = WalkSpeed;
 		motion = MotionLeftWalk;
 	}
-	else if (GamePad::state(GamePad::Right))
+	else if (GamePad::state(GamePad::Right)
+		|| CheckHitKey(KEY_INPUT_D))
 	{
 		side_speed = -WalkSpeed;
 		motion = MotionRightWalk;
 	}
-	if (CheckHitKey(KEY_INPUT_T) ||
+	if (CheckHitKey(KEY_INPUT_RIGHT) ||
 		GamePad::state(GamePad::RightButton))
 	{
-		yaw_speed = 2.0f;
+		yaw_speed = 1.0f;
 	}
-	else if (CheckHitKey(KEY_INPUT_Y) ||
+	else if (CheckHitKey(KEY_INPUT_LEFT) ||
 		GamePad::state(GamePad::LeftButton))
 	{
-		yaw_speed = -2.0f;
+		yaw_speed = -1.0f;
 	}
 
 	change_state(PlayerState::State::MOVE, motion);

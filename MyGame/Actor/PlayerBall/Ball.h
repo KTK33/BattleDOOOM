@@ -30,6 +30,8 @@ protected:
 private:
 	AnimatedMesh mesh_;
 
+	Actor* player_;
+
 	Actor* enemy_;
 
 	bool Hit;

@@ -142,6 +142,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Actor\Camera\Camera.cpp" />
     <ClCompile Include="Actor\PlayerBall\Ball.cpp" />
     <ClCompile Include="Actor\Player\Player.cpp" />
     <ClCompile Include="Actor\TestEnemy.cpp" />
@@ -192,6 +193,7 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Actor\Camera\Camera.h" />
     <ClInclude Include="Actor\PlayerBall\Ball.h" />
     <ClInclude Include="Actor\Player\Player.h" />
     <ClInclude Include="Actor\Player\PlayerState.h" />

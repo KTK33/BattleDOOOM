@@ -13,3 +13,5 @@ static int constexpr GRID_X = 10;
 static int constexpr GRID_Y = 10;
 
 static constexpr int SEGMENT_VERTEX_COUNT = 2;
+
+static constexpr float FarSpeed = 2.0f;
