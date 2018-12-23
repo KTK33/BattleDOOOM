@@ -45,7 +45,7 @@ void TestEnemy::receiveMessage(EventMessage message, void * param)
 	{
 		hit_player(*(Vector3*)param);
 	}
-	if (message == EventMessage::HIT_ENEMY)
+	if (message == EventMessage::HIT_BALL)
 	{
 		hp_ -= 1;
 	}

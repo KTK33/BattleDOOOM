@@ -16,9 +16,9 @@ public:
 
 	virtual void update(float deltaTime) override;
 
-	virtual void OnCollide(Actor& other);
+	virtual void onCollide(Actor& other);
 
-	virtual void receiveMessage(EventMessage message, void * param);
+	virtual void receiveMessage(EventMessage message, void * param) override;
 
 	virtual void draw() const;
 

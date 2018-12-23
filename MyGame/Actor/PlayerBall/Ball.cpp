@@ -24,18 +24,15 @@ void Ball::update(float deltaTime)
 	//s—ñ‚ÌÝ’è
 	mesh_.transform(Getpose());
 
-	//if (Vector3::Distance(position_, enemy_->Getpose().Translation()) == 0)
-	//{
-	//	Hit = true;
-	//}
+	//position_ = Vector3::Lerp(position_, Vector3(enemy_->Getposition().x,enemy_->Getposition().y + 10.0f,enemy_->Getposition().z),0.1f);
 
-	position_ = Vector3::Lerp(position_, Vector3(enemy_->Getposition().x,enemy_->Getposition().y + 10.0f,enemy_->Getposition().z),0.1f);
+	position_ = position_ + Vector3(0, 0, 5.0f);
 }
 
-void Ball::OnCollide(Actor & other)
+void Ball::onCollide(Actor & other)
 {
 	Vector3 hitdir = (other.Getposition() - position_);
-	other.receiveMessage(EventMessage::HIT_ENEMY,(void*)&hitdir);
+	other.receiveMessage(EventMessage::HIT_BALL,(void*)&hitdir);
 }
 
 void Ball::receiveMessage(EventMessage message, void * param)

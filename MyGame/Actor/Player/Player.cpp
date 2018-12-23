@@ -49,6 +49,10 @@ void Player::onCollide(Actor & other)
 
 void Player::receiveMessage(EventMessage message, void * param)
 {
+	if (message == EventMessage::HIT_ENEMY)
+	{
+		//die();
+	}
 }
 
 void Player::update_state(float delta_time)
@@ -121,6 +125,7 @@ void Player::move(float delta_time)
 	}
 	//何もしなければアイドル状態
 	int motion{ MotionIdel };
+	DelayGunTime = 30;
 	//前後左右移動
 	velocity_ = Vector3::Zero;
 	float forward_speed{ 0.0f };
