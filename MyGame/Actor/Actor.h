@@ -9,7 +9,9 @@
 #include <memory>
 #include <list>
 
+#include "../Fiield/Field.h"
 #include "../Math/MathH.h"
+#include "../Game/Define.h"
 
 class IWorld;
 enum class EventMessage
@@ -17,6 +19,9 @@ enum class EventMessage
 	HIT_PLAYER,
 	HIT_ENEMY,
 	HIT_BALL,
+	DEAD_ENEMY,
+	DUMMY_DEAD_ENEMY,
+	DEAD_DUMMY_ENEMY,
 };
 //アクタークラス
 class Actor {
@@ -39,6 +44,10 @@ public:
 	virtual void receiveMessage(EventMessage message, void* param);
 	//衝突判定
 	void collide(Actor& other);
+	//ステージとの共通当たり判定
+	bool field(Vector3& result);
+	//ステージ床面限定当たり判定
+	bool floor(Vector3& result);
 	//死亡する
 	void die();
 	//衝突判定しているか？

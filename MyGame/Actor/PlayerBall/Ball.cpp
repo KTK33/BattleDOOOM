@@ -5,11 +5,14 @@
 Ball::Ball(int model, IWorld* world, const Vector3& position, const IBodyPtr& body):
 	Actor(world,"Ball",position,body),
 	enemy_{ nullptr },
-	mesh_ {model}
+	mesh_ {model},
+	deadTime{60}
 {
 	player_ = world_->find_actor(ActorGroup::Player, "Player").get();
 	enemy_ = world_->find_actor(ActorGroup::Enemy, "Enemy").get();
 	mesh_.transform(Getpose());
+
+	m_InitFar = player_->Getpose().Forward();
 }
 
 void Ball::initialize()
@@ -19,15 +22,16 @@ void Ball::initialize()
 
 void Ball::update(float deltaTime)
 {
-	//lookPlayer();
-
 	mesh_.update(deltaTime);
 	//s—ñ‚ÌÝ’è
 	mesh_.transform(Getpose());
 
+	distance();
+
 	//position_ = Vector3::Lerp(position_, Vector3(enemy_->Getposition().x,enemy_->Getposition().y + 10.0f,enemy_->Getposition().z),0.1f);
 
-	position_ = position_ + Vector3(1.0f, 0, 1.0f) * player_->Getpose();
+	deadTime--;
+	if (deadTime <= 0) die();
 }
 
 void Ball::onCollide(Actor & other)
@@ -50,7 +54,11 @@ void Ball::draw() const
 	body_->transform(Getpose())->draw();
 }
 
-void Ball::lookPlayer()
+void Ball::distance()
+{
+	position_ += m_InitFar * 3;
+}
+void Ball::homing()
 {
 	//const auto& to_target = player_->pose().Translation() - position_;
 

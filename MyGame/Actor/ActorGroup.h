@@ -11,5 +11,6 @@ enum class ActorGroup {
 	Effect,       //エフェクト
 	Ball,         //ボール
 	System,
+	UI,
 };
 #endif // !ACTOR_GROUP_H_

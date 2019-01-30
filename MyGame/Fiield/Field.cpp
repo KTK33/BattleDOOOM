@@ -1,18 +1,36 @@
 #include "Field.h"
 #include "../Collision/BoundingSphere.h"
 
-Field::Field(int skybox) :
-	skybox_{ skybox } {
-}
-
-
-bool Field::collision(const BoundingSphere & sphere, Vector3 * intersect) const
+Field::Field(int field) :
+	field_{ field }
 {
-	return TRUE;
 }
+
+void Field::update(float deltaTime)
+{
+}
+
 
 void Field::draw() const
 {
-	//gsDrawSkyBox(skybox_);
-	//gsDrawOctree(octree_);
+}
+
+int Field::modelHandle()
+{
+	return 0;
+}
+
+CollisionMesh & Field::getMesh()
+{
+	return mesh_;
+}
+
+int Field::getWidth() const
+{
+	return 0;
+}
+
+int Field::getHeight() const
+{
+	return 0;
 }

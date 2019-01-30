@@ -23,6 +23,11 @@ public:
 
 	virtual void receiveMessage(EventMessage message, void * param) override;
 private:
+	//•Ç‚Æ°‚Ì”»’è
+	void collision();
+
+	void gravity(float deltaTime);
+
 	//ó‘Ô‚ÌXV
 	void update_state(float delta_time);
 	//ó‘Ô‚Ì•ÏX

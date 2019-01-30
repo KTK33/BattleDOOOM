@@ -2,6 +2,7 @@
 #define COLLISION_TRIANGLE_H_
 
 #include <DxLib.h>
+#include "../Math/Vector3.h"
 
 // 衝突判定用の三角形クラス
 class CollisionTriangle {
@@ -12,6 +13,8 @@ public:
     bool is_inside(const VECTOR& point) const;
     // 三角形の辺と球体の衝突判定
     bool collide_edge_and_sphere(const VECTOR& center, float radius, VECTOR* result = nullptr);
+	bool collide_edge_and_capsule(const VECTOR& start, const VECTOR& end, float radius, VECTOR* result = nullptr);
+
 private:
     // 三角形の頂点
     VECTOR  points_[3];

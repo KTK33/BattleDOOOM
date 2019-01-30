@@ -4,10 +4,12 @@
 #include "../../Game/Define.h"
 
 #include "../../Input/GamePad.h"
+#include "../../Math/Vector2.h"
 
 Camera::Camera(IWorld * world) :
 	Actor(world, "Camera", Vector3::Zero)
 {
+	fps = false;
 }
 
 void Camera::update(float deltaTime)
@@ -15,8 +17,14 @@ void Camera::update(float deltaTime)
 	Actor* player_ = world_->find_actor(ActorGroup::Player, "Player").get();
 	if (player_ == nullptr) return;
 	const auto position = Vector3{ 0.0f,m_FarPoint.x,m_FarPoint.y } *player_->Getpose();
-	target_ = player_->Getposition() + Vector3{ 0.0f,20.0f,0.0f };
-
+	if (fps)
+	{
+		target_ = player_->Getposition()+ (player_->Getpose().Forward());
+	}
+	else
+	{
+		target_ = player_->Getposition() + Vector3{ 0.0f,20.0f,0.0f };
+	}
 	move(position, 1.0f, 0.2f, 0.8f);
 
 	PlayerInput();
@@ -35,6 +43,12 @@ void Camera::draw() const
 //	target_, { 0.0f,5.0f,0.0f }));
 //Graphics3D::projection_matrix(Matrix::CreatePerspectiveFieldOfView(
 //	49.0f, 640.0f / 480.0f, 0.3f, 1000.0f));
+
+	//DrawFormatString(600, 600, GetColor(255, 255, 255), "%f", GamePad::GetInstance().RightStick().y);
+
+	//DrawFormatString(600, 700, GetColor(255, 255, 255), "%f", m_FarPoint.x);
+	//DrawFormatString(600, 800, GetColor(255, 255, 255), "%f", m_FarPoint.y);
+
 }
 
 void Camera::move(const Vector3 & rest_position, float stiffness, float friction, float mass)
@@ -53,22 +67,18 @@ void Camera::move(const Vector3 & rest_position, float stiffness, float friction
 
 void Camera::PlayerInput()
 {
-	if (CheckHitKey(KEY_INPUT_UP) ||
-		GamePad::state(GamePad::Up))
-	{
-		if (m_FarPoint < Vector2(75.0f, 60.0f))
-		{
-			m_FarPoint += Vector2(FarSpeed, FarSpeed);
-		}
+	m_FarPoint = Vector2::Clamp(m_FarPoint, Vector2(50.0f, 40.0f), Vector2(75.0f, 60.0f));
+
+	m_FarPoint = m_FarPoint + GamePad::GetInstance().RightStick();
+
+
+	if (CheckHitKey(KEY_INPUT_G) || GamePad::GetInstance().ButtonStateDown(PADBUTTON::NUM10)){
+		fps = !fps;
 	}
 
-	if (CheckHitKey(KEY_INPUT_DOWN) ||
-		GamePad::state(GamePad::Down))
-	{
-		if (Vector2(50.0f, 40.0f) < m_FarPoint)
-		{
-			m_FarPoint -= Vector2(FarSpeed, FarSpeed);
-		}
-	}
+}
 
+void Camera::TPS()
+{
+	m_FarPoint = Vector2::Lerp(m_FarPoint, Vector2(50,40), 0.1f);
 }

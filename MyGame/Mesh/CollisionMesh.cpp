@@ -105,3 +105,104 @@ bool CollisionMesh::collide_sphere(const Vector3 & center, float radius, Vector3
     MV1CollResultPolyDimTerminate(coll_poly);
     return true;
 }
+
+bool CollisionMesh::collide_capsule(const Vector3 & start, const Vector3 & end, float radius, Vector3 * result)
+{
+	//当たったかどうか
+	bool isHit = false;
+
+	//始点、終点を取得
+	VECTOR resultstart = start;
+	VECTOR resultend = end;
+
+	//足元を基準にした押し出し判定を行う
+	if (collide_sphere(resultend, radius, &Vector3::VECTORToVector3(resultend))) {
+		//足元からの押し出しベクトルを作成
+		Vector3 moveVecbottom = VSub(resultend, end);
+		//カプセルの始点に押し出しを適用
+		resultstart = VAdd(resultstart, moveVecbottom);
+		isHit = true;
+	}
+	//足元押し出し時点の始点、終点情報を保存
+	VECTOR savestart = resultstart;
+	VECTOR saveend = resultend;
+
+	//頭を基準にした押し出し判定を行う
+	if (collide_sphere(resultstart, radius, &Vector3::VECTORToVector3(resultstart))) {
+		//頭からの押し出しベクトルを作成
+		Vector3 moveVectop = VSub(resultstart, savestart);
+		//カプセルの終点に押し出しを適用
+		resultend = VAdd(resultend, moveVectop);
+		isHit = true;
+	}
+	//ここまでで始点終点の押し出しが完了
+
+	//中心を計算して返す
+	//if(isHit)*result = (resultstart+ resultend)*0.5f;
+
+	// プレイヤーの周囲にあるポリゴンを検出した結果が代入される当たり判定結果構造体
+	MV1_COLL_RESULT_POLY_DIM HitDim = MV1CollCheck_Capsule(model_, -1, resultstart, resultend, radius);
+
+	for (int i = 0; i < HitDim.HitNum; i++) {
+		VECTOR triangle[4]{
+			HitDim.Dim[i].Position[0],
+			HitDim.Dim[i].Position[1],
+			HitDim.Dim[i].Position[2],
+			HitDim.Dim[i].Position[0]
+		};
+
+		for (int loop = 0; loop < 3; loop++) {
+			SEGMENT_SEGMENT_RESULT seg_seg_result;
+			Segment_Segment_Analyse(&resultstart, &resultend, &triangle[i], &triangle[i + 1], &seg_seg_result);
+			const auto distance = std::sqrt(seg_seg_result.SegA_SegB_MinDist_Square);
+			if (distance <= radius) {
+				isHit = true;
+				VECTOR offset = VScale(VNorm(VSub(seg_seg_result.SegA_MinDist_Pos, seg_seg_result.SegB_MinDist_Pos)), radius - distance);
+				resultstart = VAdd(resultstart, offset);
+				resultend = VAdd(resultend, offset);
+			}
+		}
+	}
+	if (isHit)*result = (resultstart + resultend)*0.5f;
+
+	//ポリゴンを開放する
+	MV1CollResultPolyDimTerminate(HitDim);
+
+	return isHit;
+
+}
+
+bool CollisionMesh::collide_capsule(const Vector3 & start1, const Vector3 & end1, float radius1, const Vector3 & start2, const Vector3 & end2, float radius2, Vector3 * result1, Vector3 * result2)
+{
+	//当たったかどうか
+	bool isHit = false;
+
+	//始点、終点を取得
+	VECTOR resultstart1 = start1;
+	VECTOR resultend1 = end1;
+	VECTOR resultstart2 = start2;
+	VECTOR resultend2 = end2;
+
+	if (collide_sphere(resultend1, radius1, &Vector3::VECTORToVector3(resultend1))) {
+		//足元からの押し出しベクトルを作成
+		Vector3 moveVecbottom = VSub(resultend1, end1);
+		//カプセルの始点に押し出しを適用
+		resultend2 = VAdd(resultend2, moveVecbottom);
+		isHit = true;
+	}
+	if (collide_sphere(resultend2, radius2, &Vector3::VECTORToVector3(resultend2))) {
+		//足元からの押し出しベクトルを作成
+		Vector3 moveVecbottom2 = VSub(resultend2, end2);
+		//カプセルの始点に押し出しを適用
+		resultend1 = VAdd(resultend1, moveVecbottom2);
+		isHit = true;
+	}
+
+	//中心を計算して返す
+	if (isHit) {
+		*result1 = resultend1;
+		*result2 = resultend2;
+	}
+	return isHit;
+
+}

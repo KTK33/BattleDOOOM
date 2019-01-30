@@ -11,7 +11,7 @@
 class Game {
 public:
     // コンストラクタ
-    Game(int width = WINDOW_WIDTH, int height = WINDOW_HEIGHT, bool full_screen = false);
+    Game(int width = WINDOW_WIDTH, int height = WINDOW_HEIGHT, bool full_screen = false,float fps = 60.0f);
     // 実行
     int run();
     // コピー禁止
@@ -41,6 +41,9 @@ private:
     bool is_full_screen_{ false };
 
 	SceneManager sceneManager_;
+
+	// FPS
+	float mFps;
 };
 
 #endif

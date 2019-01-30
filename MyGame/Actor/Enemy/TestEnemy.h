@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Actor.h"
-#include "../Collision/BoundingCapsule.h"
-#include "../Animation/AnimationMesh.h"
+#include "../Actor.h"
+#include "../../Collision/BoundingCapsule.h"
+#include "../../Animation/AnimationMesh.h"
 
 class TestEnemy : public Actor {
 public:
@@ -20,7 +20,10 @@ public:
 
 	void hit_player(const Vector3& dir);
 
+	void deadAction();
+
 private:
 	AnimatedMesh mesh_;
 
+	bool m_EneDead{ false };
 };

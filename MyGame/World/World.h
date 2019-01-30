@@ -5,6 +5,7 @@
 #include "../Actor/ActorGroupManager.h"
 #include "../Actor/ActorPtr.h"
 #include "../Fiield/FieldPtr.h"
+#include "../Fiield/WorldContentManager/WorldContentManager.h"
 #include <functional>
 
 enum class EventMessage;
@@ -48,6 +49,7 @@ public:
 	virtual void send_message(EventMessage message, void* param = nullptr)override;
 	//
 	virtual Field& field() override;
+	virtual std::shared_ptr<Field> getFieldOnly() override;
 
 	//
 	World(const World& other) = delete;
@@ -62,6 +64,8 @@ private:
 	ActorPtr             camera_;
 	//
 	FieldPtr             field_;
+
+	WorldContentManager worldManager_{};
 
 	EventMessageListener listener_{ [](EventMessage,void*) {} };
 };

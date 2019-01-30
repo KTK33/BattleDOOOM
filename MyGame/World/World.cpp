@@ -110,3 +110,7 @@ Field & World::field()
 {
 	return *field_;
 }
+std::shared_ptr<Field> World::getFieldOnly()
+{
+	return worldManager_.getField();
+}

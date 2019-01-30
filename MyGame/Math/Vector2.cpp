@@ -1,159 +1,179 @@
 #include "Vector2.h"
 #include "MathHelper.h"
 #include <cmath>
-#include <cfloat>
 #include <algorithm>
 
-// 定数の実体
-const Vector2 Vector2::Zero{ 0.0f, 0.0f };
-const Vector2 Vector2::One{ 1.0f, 1.0f };
-const Vector2 Vector2::Left{ -1.0f, 0.0f };
-const Vector2 Vector2::Right{ 1.0f, 0.0f };
-const Vector2 Vector2::Up{ 0.0f, -1.0f };
-const Vector2 Vector2::Down{ 0.0f, 1.0f };
+// 定数
+const Vector2 Vector2::Up(0.0f, 1.0f);
+const Vector2 Vector2::Down(0.0f, -1.0f);
+const Vector2 Vector2::Left(-1.0f, 0.0f);
+const Vector2 Vector2::Right(1.0f, 0.0f);
+const Vector2 Vector2::UnitX(1.0f, 0.0f);
+const Vector2 Vector2::UnitY(0.0f, 1.0f);
+const Vector2 Vector2::One(1.0f, 1.0f);
+const Vector2 Vector2::Zero(0.0f, 0.0f);
 
-// コンストラクタ
-Vector2::Vector2(float x, float y) : x{ x }, y{ y } {
+Vector2::Vector2(float x, float y) : x(x), y(y)
+{
 }
 
-// 内積を求める
-float Vector2::dot(const Vector2 & other) const {
-    return (x * other.x) + (y * other.y);
+float Vector2::Length() const
+{
+	return std::sqrt(Dot(*this, *this));
 }
 
-// 外積を求める
-float Vector2::cross(const Vector2 & other) const {
-    return (x * other.y) - (y * other.x);
+float Vector2::LengthSquared() const
+{
+	return Dot(*this, *this);
 }
 
-// 長さを求める
-float Vector2::length() const {
-    return std::sqrt(dot(*this));
+Vector2& Vector2::Normalize()
+{
+	const float len = Length();
+	if (len != 0.0f) {
+		*this /= len;
+	}
+	return *this;
 }
 
-// 距離を求める
-float Vector2::distance(const Vector2 & other) const {
-    return (*this - other).length();
+Vector2 Vector2::Horizontal() {
+	Vector2 tmp = *this;
+	return Vector2(tmp.x, 0);
 }
 
-// 正規化する
-Vector2 Vector2::normalize() const {
-    const auto len = length();
-    if (len < FLT_EPSILON) return Vector2::Zero;
-    return *this / len;
+Vector2 Vector2::Vertical() {
+	Vector2 tmp = *this;
+	return Vector2(0, tmp.y);
 }
 
-// ゼロベクトルか？
-bool Vector2::is_zero() const {
-    return (x == 0.0f) && (y == 0.0f);
+float Vector2::Angle(const Vector2 & vector1, const Vector2 & vector2)
+{
+	float dot = Dot(Normalize(vector1), Normalize(vector2));
+	return MathHelper::ACos(MathHelper::Clamp(dot, -1.0f, 1.0f));
 }
 
-// ベクトルが向いている角度を求める
-float Vector2::to_angle() const {
-    if (is_zero()) return 0.0f; // ゼロベクトルは角度を求められない
-    return MathHelper::ToDegrees(std::atan2(y, x)); // 度数法に変換
+Vector2 Vector2::Normalize(const Vector2 & value)
+{
+	return Vector2(value).Normalize();
 }
 
-// ターゲット方向のベクトルを求める
-Vector2 Vector2::to_target(const Vector2& target) const {
-    return (target - *this).normalize();
+float Vector2::Dot(const Vector2 & vector1, const Vector2 & vector2)
+{
+	return (vector1.x * vector2.x) + (vector1.y * vector2.y);
 }
 
-// ターゲット方向の角度を求める
-float Vector2::to_target_angle(const Vector2& target) const {
-    return to_target(target).to_angle();
+float Vector2::Cross(const Vector2 & vector1, const Vector2 & vector2)
+{
+	return  (vector1.x * vector2.y) - (vector1.y * vector2.x);
 }
 
-// 角度からベクトルを作成
-Vector2 Vector2::from_angle(float degree) {
-    const auto rad = MathHelper::ToRadians(degree); // 弧度法に変換
-    return { std::cos(rad), std::sin(rad) };
+float Vector2::Distance(const Vector2 & vector1, const Vector2 & vector2)
+{
+	return (vector2 - vector1).Length();
 }
 
-// ２つのベクトルなす角度を求める
-float Vector2::inner_angle(const Vector2& other) const {
-    const auto& n1 = normalize();
-    const auto& n2 = other.normalize();
-    const auto cos = n1.dot(n2);
-    return MathHelper::ToDegrees(std::acos(cos));
+float Vector2::DistanceSquared(const Vector2 & vector1, const Vector2 & vector2)
+{
+	return (vector2 - vector1).LengthSquared();
 }
 
-// 線形補間
-Vector2 Vector2::lerp(const Vector2& end, float t) const {
-    return { MathHelper::Lerp(x, end.x, t), MathHelper::Lerp(y, end.y, t) };
+Vector2 Vector2::Lerp(const Vector2 & value1, const Vector2 & value2, float amount)
+{
+	return Vector2(MathHelper::Lerp(value1.x, value2.x, amount), MathHelper::Lerp(value1.y, value2.y, amount));
 }
 
-// クランプ
-Vector2 Vector2::clamp(const Vector2& min, const Vector2& max) const {
-    return { MathHelper::Clamp(x, min.x, max.x), MathHelper::Clamp(y, min.y, max.y) };
+Vector2 Vector2::Min(const Vector2 & vector1, const Vector2 & vector2)
+{
+	return Vector2(std::min<float>(vector1.x, vector1.x), std::min<float>(vector1.y, vector2.y));
 }
 
-// 回転
-Vector2 Vector2::rotate(float degree) const {
-    const auto rad = MathHelper::ToRadians(degree); // 弧度法に変換
-    return { x * std::cos(rad) - y * std::sin(rad), x * std::sin(rad) + y * std::cos(rad) };
+Vector2 Vector2::Max(const Vector2 & vector1, const Vector2 & vector2)
+{
+	return Vector2(std::max<float>(vector1.x, vector2.x), std::min<float>(vector1.y, vector2.y));
 }
 
-Vector2& operator += (Vector2& lhs, const Vector2& rhs) {
-    lhs.x += rhs.x;
-    lhs.y += rhs.y;
-    return lhs;
+Vector2 Vector2::Clamp(const Vector2 & value1, const Vector2& min, const Vector2 & max)
+{
+	return Vector2(MathHelper::Clamp(value1.x, min.x, max.x), MathHelper::Clamp(value1.y, min.y, max.y));
 }
 
-Vector2& operator -= (Vector2& lhs, const Vector2& rhs) {
-    lhs.x -= rhs.x;
-    lhs.y -= rhs.y;
-    return lhs;
+float Vector2::Point_Distance(const Vector2 & direction, const Vector2& basePoint, const Vector2& targetPoint)
+{
+	Vector2 AP = targetPoint - basePoint;
+	float D = MathHelper::Abs(Vector2::Cross(direction, AP));
+
+	Vector2 pos_direction = basePoint + direction;
+	float L = Vector2::Distance(basePoint, pos_direction);
+
+	float H = D / L;
+
+	return H;
+
 }
 
-Vector2& operator *= (Vector2& lhs, float scalar) {
-    lhs.x *= scalar;
-    lhs.y *= scalar;
-    return lhs;
+VECTOR Vector2::Vector2ToVECTOR(const Vector2 & v)
+{
+	return VGet(v.x, v.y, 0);
 }
 
-Vector2& operator /= (Vector2& lhs, float scalar) {
-    lhs.x /= scalar;
-    lhs.y /= scalar;
-    return lhs;
+Vector2 Vector2::VECTORToVector2(const VECTOR & v) {
+	return Vector2(v.x, v.y);
 }
 
-const Vector2 operator + (const Vector2& lhs, const Vector2& rhs) {
-    return { lhs.x + rhs.x, lhs.y + rhs.y };
+Vector2 operator-(const Vector2 & v)
+{
+	return Vector2(-v.x, -v.y);
 }
 
-const Vector2 operator - (const Vector2& lhs, const Vector2& rhs) {
-    return { lhs.x - rhs.x, lhs.y - rhs.y };
+Vector2 & operator+=(Vector2 & v1, const Vector2 & v2)
+{
+	v1.x += v2.x;
+	v1.y += v2.y;
+	return v1;
 }
 
-const Vector2 operator * (const Vector2& lhs, float scalar) {
-    return { lhs.x * scalar, lhs.y * scalar };
+Vector2 & operator-=(Vector2 & v1, const Vector2 & v2)
+{
+	v1.x -= v2.x;
+	v1.y -= v2.y;
+	return v1;
 }
 
-const Vector2 operator * (float scalar, const Vector2& rhs) {
-    return { rhs.x * scalar, rhs.y * scalar };
+Vector2 & operator*=(Vector2 & v, float s)
+{
+	v.x *= s;
+	v.y *= s;
+	return v;
 }
 
-const Vector2 operator / (const Vector2& lhs, float scalar) {
-    return { lhs.x / scalar, lhs.y / scalar };
+Vector2 & operator/=(Vector2 & v, float s)
+{
+	v.x /= s;
+	v.y /= s;
+	return v;
 }
 
-const Vector2 operator - (const Vector2& v) {
-    return { -v.x, -v.y };
+Vector2 operator+(Vector2 v1, const Vector2 & v2)
+{
+	return v1 += v2;
 }
 
-bool operator == (const Vector2& lhs, const Vector2& rhs) {
-    return (lhs.x == rhs.x) && (lhs.y == lhs.y);
+Vector2 operator-(Vector2 v1, const Vector2 & v2)
+{
+	return v1 -= v2;
 }
 
-bool operator != (const Vector2& lhs, const Vector2& rhs) {
-    return !(lhs == rhs);
+Vector2 operator*(Vector2 v, float s)
+{
+	return v *= s;
 }
 
-bool operator < (const Vector2& lhs, const Vector2& rhs) {
-    if (lhs.x != rhs.x) return lhs.x < rhs.x;
-    if (lhs.y != rhs.y) return lhs.y < rhs.y;
-    return true;
+Vector2 operator*(float s, Vector2 v)
+{
+	return v *= s;
 }
 
-// end of files
+Vector2 operator/(Vector2 v, float s)
+{
+	return v /= s;
+}

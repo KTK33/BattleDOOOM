@@ -19,13 +19,13 @@ void Actor::initialize()
 {
 }
 
-void Actor::update(float delta_time){}
+void Actor::update(float delta_time) {}
 
-void Actor::draw() const{}
+void Actor::draw() const {}
 
-void Actor::onCollide(Actor & other){}
+void Actor::onCollide(Actor & other) {}
 
-void Actor::receiveMessage(EventMessage message, void * param){}
+void Actor::receiveMessage(EventMessage message, void * param) {}
 
 bool Actor::is_collided(const Actor & other) const {
 	//return body().intersects(other.body());
@@ -33,11 +33,49 @@ bool Actor::is_collided(const Actor & other) const {
 	return body_->transform(Getpose())->isCollide(*other.GetBody()->transform(other.Getpose()).get(), hitInfo);
 }
 
-void Actor::collide(Actor & other){
+void Actor::collide(Actor & other) {
 	if (is_collided(other)) {
 		onCollide(other);
 		other.onCollide(*this);
 	}
+}
+
+//ステージとの共通当たり判定
+bool Actor::field(Vector3 & result)
+{
+	Vector3 hitPos;
+	if (world_->getFieldOnly()->getMesh().collide_line(prevPosition_ + rotation_.Up()*(body_->length()*0.5f), position_ + rotation_.Up()*(body_->radius() + body_->length()*0.5f), (Vector3*)&hitPos))
+	{
+		Vector3 upVec = rotation_.Up()*(body_->radius() + body_->length()*0.5f);
+		position_ = hitPos - upVec;
+	}
+	Vector3 hitcenter;
+	if (world_->getFieldOnly()->getMesh().collide_capsule(
+		position_ + 
+		rotation_.Up()*(body_->length()*0.5f),
+		position_ + rotation_.Down()*(body_->length()*0.5f),
+		body_->radius(), 
+		(Vector3*)&hitcenter))
+	{
+		result = hitcenter;
+
+		return true;
+	}
+	return false;
+}
+
+//ステージ床面限定当たり判定
+bool Actor::floor(Vector3 & result)
+{
+	Vector3 hitpos;
+	if (world_->getFieldOnly()->getMesh().collide_line(position_, prevPosition_, (Vector3*)&hitpos)) {
+		position_ = hitpos + rotation_.Up()*(body_->radius() + body_->length()*0.5f);
+	}
+	if (world_->getFieldOnly()->getMesh().collide_line(position_, position_ + rotation_.Down()*(body_->radius() + body_->length()*0.5f + 2.f), (Vector3*)&hitpos)) {
+		result = hitpos;
+		return true;
+	}
+	return false;
 }
 
 

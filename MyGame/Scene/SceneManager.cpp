@@ -5,6 +5,7 @@
 SceneManager::SceneManager() :currentScene_(SceneType::SCENE_LOADING) {
 	//利用するシーンを作成し、シーンリストに追加する
 	scenes_[SceneType::SCENE_LOADING] = std::make_shared<LoadingScene>();
+	scenes_[SceneType::SCENE_TITLE] = std::make_shared<GameTitleScene>();
 	scenes_[SceneType::SCENE_GAMEPLAY] = std::make_shared<GamePlayScene>();
 }
 

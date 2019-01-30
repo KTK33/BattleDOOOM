@@ -1,11 +1,14 @@
 #include "LoadingScene.h"
 #include<string>
 
+#include "../Texture/Sprite.h"
 #include "../Skybox/Skybox.h"
 #include "../Mesh/CollisionMesh.h"
 #include "../Billboard/Billboard.h"
 #include "../Mesh/SkeletalMesh.h"
 #include "../Mesh/StaticMesh.h"
+
+#include "../Texture/SpriteID.h"
 
 LoadingScene::LoadingScene() {
 
@@ -38,8 +41,11 @@ void LoadingScene::end() {
 
 void LoadingScene::LoadSprite()
 {
+	Sprite::GetInstance().Load("asset/UI/PlayScene/TextFrame.png",SPRITE_ID::TEXTFRAME);
+	Sprite::GetInstance().Load("asset/UI/PlayScene/TextBossAppear.png", SPRITE_ID::TEXTBOSSAPPEAR);
+	Sprite::GetInstance().Load("asset/UI/PlayScene/TextDummyDead.png", SPRITE_ID::TEXTDUMMYDEAD);
 }
-void LoadingScene::LoadModel() 
+void LoadingScene::LoadModel()
 {
 	//モデルデータの読み込み
 	SkeletalMesh::load(0,"asset/MODEL/Model.mv1");

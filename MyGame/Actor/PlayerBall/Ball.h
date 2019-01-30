@@ -23,7 +23,11 @@ public:
 	virtual void draw() const;
 
 protected:
-	void lookPlayer();
+	//^‚Á’¼‚®”­Ë‚³‚ê‚é’e
+	void distance();
+
+	//“G‚ÉŒü‚©‚Á‚Ä‚¢‚­’e
+	void homing();
 
 	float target_angle() const;
 
@@ -39,4 +43,8 @@ private:
 	//’e‚ÌƒXƒs[ƒh
 	const float m_BallSPeed{ 1.0f };
 	const float TurnAngle{ 2.5f };
+
+	float deadTime;
+
+	Vector3 m_InitFar{ 0.0f,0.0f,0.0f };
 };

@@ -26,6 +26,7 @@ public:
 	virtual void send_message(EventMessage message, void* param = nullptr) = 0;
 	// フィールドを取得
 	virtual Field& field() = 0;
+	virtual std::shared_ptr<Field> getFieldOnly() = 0;
 };
 
 #endif

@@ -1,85 +1,138 @@
 #include "Sprite.h"
-#include "../Math/MathHelper.h"
-#include <cmath>
-#include <DxLib.h>
+#include"../Game/Define.h"
 
-// スプライトハンドル
-int Sprite::id_{ -1 };
-// スプライトデータ
-std::unordered_map<int, AnimatedSprite> Sprite::sprite_map_;
+#include<DxLib.h>
 
-// 初期化
-void Sprite::initialize() {
-    finalize();
+Vector2 Sprite::GetSize(const SPRITE_ID & id) const
+{
+	int x, y;
+	GetGraphSize(m_sprites.at(id), &x, &y);
+	return Vector2{ (float)x,(float)y };
 }
 
-// 画像ファイルの読み込み
-void Sprite::load(int id, const std::string& file_name) {
-    sprite_map_[id].load(file_name);
+Vector2 Sprite::GetSizeDiv(const SPRITE_ID & id) const
+{
+	if (m_divSprites.count(id) == 0) return Vector2::Zero;
+	float x, y;
+	GetGraphSizeF(m_divSprites.at(id).at(0), &x, &y);
+	return Vector2{ x,y };
 }
 
-// 画像ファイルの読み込み (分割指定あり）
-void Sprite::load(int id, const std::string& file_name, int row, int column) {
-    sprite_map_[id].load(file_name, row, column);
+int Sprite::GetHandle(const SPRITE_ID & id) const
+{
+	return m_sprites.at(id);
 }
 
-// バインド
-void Sprite::bind(int id) {
-    id_ = id;
+void Sprite::DrawPart(const SPRITE_ID & id, const Vector2 & position, int x, int y, int w, int h)
+{
+	DrawRectGraphF(position.x, position.y, x, y, w, h, m_sprites[id], TRUE, FALSE);
 }
 
-// 描画（画像全体）
-void Sprite::draw(const Vector2& position) {
-    sprite_map_[id_].draw(position);
+Sprite::~Sprite()
+{
+	InitGraph();
+	m_sprites.clear();
+	m_divSprites.clear();
 }
 
-// 描画（画像の１部分を描画）
-void Sprite::draw(const Vector2& position, int x, int y, int w, int h) {
-    sprite_map_[id_].draw(position, x, y, w, h);
+void Sprite::Initialize()
+{
+	InitGraph();
+	m_sprites.clear();
+	m_divSprites.clear();
 }
 
-// 描画（分割番号指定）
-void Sprite::draw(int div_no, const Vector2& position, const Vector2& center, const Vector2& scale, float rotation) {
-    sprite_map_[id_].draw(div_no, position, center, scale, rotation);
+void Sprite::Load(const std::string & filename, const SPRITE_ID & id)
+{
+	m_sprites[id] = LoadGraph(filename.c_str());
 }
 
-// 描画（アニメーション指定）
-void Sprite::draw(int animation, float time, const Vector2& position, const Vector2& center, const Vector2& scale, float rotation) {
-    sprite_map_[id_].draw(animation, time, position, center, scale, rotation);
+void Sprite::DivLoad(const std::string & filename, const SPRITE_ID & id, int spriteWidth, int spriteHeight, int divXSize, int divYSize, int divCount)
+{
+	int* temp = new int[divCount];
+
+	LoadDivGraph(filename.c_str(), divCount, divXSize, divYSize, spriteWidth, spriteHeight, temp);
+	m_sprites[id] = temp[0];
+	for (int i = 0; i < divCount; i++) {
+		m_divSprites[id].push_back(temp[i]);
+	}
+
+	delete[] temp;
+
 }
 
-// アニメーションの追加
-void Sprite::add_animation(int animation, int start, int end, float time) {
-    sprite_map_[id_].add_animation(animation, start, end, time);
+void Sprite::DeleteAll()
+{
+	std::unordered_map<SPRITE_ID, int>::iterator spritr = m_sprites.begin();
+	while (spritr != m_sprites.end()) {
+		DeleteGraph(spritr->second);
+		++spritr;
+	}
+	m_sprites.clear();
+
 }
 
-// キーフレームを追加
-void Sprite::add_key_frame(int animation, float time, int div_no) {
-    sprite_map_[id_].add_key_frame(animation, time, div_no);
+void Sprite::DrawSetCenter(const SPRITE_ID & id, const Vector2 & position)
+{
+	Draw(id, position, GetSize(id)*0.5f);
 }
 
-// キーフレームを追加
-void Sprite::add_key_frame(int animation, float time, int x, int y, int w, int h) {
-    sprite_map_[id_].add_key_frame(animation, time, x, y, w, h);
+void Sprite::Draw(const SPRITE_ID & id, const Vector2 & position, const Vector2 & origin, const Vector2 & scale, float angle)
+{
+	DrawRotaGraph3((int)position.x, WINDOW_HEIGHT - (int)position.y, (int)origin.x, (int)origin.y,
+		(double)scale.x, (double)scale.y, angle, m_sprites[id], true);
+
 }
 
-// スプライトの削除
-void Sprite::erase(int id) {
-    if (id == id_) {
-        id_ = -1;
-    }
-    sprite_map_.erase(id);
+void Sprite::DrawBillBoard(const SPRITE_ID & id, const Vector2 & position, const Vector2 & origin, float size, float angle)
+{
+	DrawBillboard3D(VGet(position.x, position.y, 0.0f), origin.x, origin.y, size, angle, m_sprites[id], TRUE);
+}
+#include"../Math/Vector3.h"
+#include"../Math/Matrix.h"
+void Sprite::Draw3D(SPRITE_ID id, const Vector2 & position, const Vector2& size, int r, int g, int b, int a, float startangle, float Xangle, float Zangle, float Zoffset) {
+	//ゲージ枠の描画情報を入力
+	VERTEX_3D vec[4];
+	Vector3 pos{ position.x,position.y,Zoffset };
+	vec[0].pos = pos + Vector3{ -size.x,0.0f,size.y }*Matrix::CreateRotationY(startangle)*Matrix::CreateRotationX(Xangle)*Matrix::CreateRotationZ(Zangle);
+	vec[1].pos = pos + Vector3{ size.x,0.0f,size.y }*Matrix::CreateRotationY(startangle)*Matrix::CreateRotationX(Xangle)*Matrix::CreateRotationZ(Zangle);
+	vec[2].pos = pos + Vector3{ -size.x,0.0f,-size.y }*Matrix::CreateRotationY(startangle)*Matrix::CreateRotationX(Xangle)*Matrix::CreateRotationZ(Zangle);
+	vec[3].pos = pos + Vector3{ size.x,0.0f,-size.y }*Matrix::CreateRotationY(startangle)*Matrix::CreateRotationX(Xangle)*Matrix::CreateRotationZ(Zangle);
+
+	vec[0].r = r;
+	vec[1].r = r;
+	vec[2].r = r;
+	vec[3].r = r;
+	vec[0].g = g;
+	vec[1].g = g;
+	vec[2].g = g;
+	vec[3].g = g;
+	vec[0].b = b;
+	vec[1].b = b;
+	vec[2].b = b;
+	vec[3].b = b;
+	vec[0].a = a;
+	vec[1].a = a;
+	vec[2].a = a;
+	vec[3].a = a;
+	vec[0].u = 0.0f;
+	vec[0].v = 0.0f;
+	vec[1].u = 1.0f;
+	vec[1].v = 0.0f;
+	vec[2].u = 0.0f;
+	vec[2].v = 1.0f;
+	vec[3].u = 1.0f;
+	vec[3].v = 1.0f;
+
+	SetUseGraphZBuffer(m_sprites[id], TRUE);
+	DrawPolygon3DBase(vec, 4, DX_PRIMTYPE_TRIANGLESTRIP, m_sprites[id], TRUE);
+	SetUseGraphZBuffer(m_sprites[id], FALSE);
 }
 
-// アニメーションの終了時間を取得
-float Sprite::get_animation_end_time(int animation) {
-    return sprite_map_[id_].animation_end_time(animation);
-}
+void Sprite::DrawDivSprite(const SPRITE_ID & id, const Vector2 & position, int divNum, const Vector2 & origin, const Vector2 & scale, float angle)
+{
+	if (divNum >= m_divSprites[id].size())return;
 
-// グラフィックスの終了処理
-void Sprite::finalize() {
-    sprite_map_.clear();
-    id_ = -1;
+	DrawRotaGraph3((int)position.x, WINDOW_HEIGHT - (int)position.y, (int)origin.x, (int)origin.y,
+		(double)scale.x, (double)scale.y, angle, m_divSprites[id].at(divNum), true);
 }
-
-// end of file

@@ -24,6 +24,10 @@ public:
     // 球体との衝突判定
     static bool collide_sphere(const Vector3& center, float radius, Vector3* result = nullptr);
 
+	bool collide_capsule(const Vector3& start, const Vector3& end, float radius, Vector3* result = nullptr);
+
+	bool collide_capsule(const Vector3& start1, const Vector3& end1, float radius1, const Vector3& start2, const Vector3& end2, float radius2, Vector3* result1 = nullptr, Vector3* result2 = nullptr);
+
 private:
     // 衝突判定用モデルハンドラ
     static int  model_;
