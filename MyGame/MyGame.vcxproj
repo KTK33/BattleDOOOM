@@ -143,9 +143,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Actor\Camera\Camera.cpp" />
+    <ClCompile Include="Actor\Enemy\BossEnemy.cpp" />
+    <ClCompile Include="Actor\Enemy\DummyEnemy.cpp" />
+    <ClCompile Include="Actor\Enemy\EnemySystem.cpp" />
     <ClCompile Include="Actor\PlayerBall\Ball.cpp" />
     <ClCompile Include="Actor\Player\Player.cpp" />
     <ClCompile Include="Actor\TestEnemy.cpp" />
+    <ClCompile Include="Actor\UIActor\AnyUI.cpp" />
+    <ClCompile Include="Actor\UIActor\EnemyDeadText.cpp" />
     <ClCompile Include="Animation\Animation.cpp" />
     <ClCompile Include="Animation\AnimationMesh.cpp" />
     <ClCompile Include="Animation\AnimatedSprite.cpp" />
@@ -156,7 +161,13 @@
     <ClCompile Include="Collision\OrientedBoundingBox.cpp" />
     <ClCompile Include="Collision\Ray.cpp" />
     <ClCompile Include="Conv\DXConverter.cpp" />
+    <ClCompile Include="Fiield\WorldContentManager\WorldContentManager.cpp" />
+    <ClCompile Include="Game\Time.cpp" />
+    <ClCompile Include="Scene\GameData\GameDataManager.cpp" />
+    <ClCompile Include="Scene\GameOverScene.cpp" />
     <ClCompile Include="Scene\GamePlayScene.cpp" />
+    <ClCompile Include="Scene\GameResult.cpp" />
+    <ClCompile Include="Scene\GameTitleScene.cpp" />
     <ClCompile Include="Scene\LoadingScene.cpp" />
     <ClCompile Include="Scene\SceneManager.cpp" />
     <ClCompile Include="Scene\SceneTemplate.cpp" />
@@ -194,10 +205,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor\Camera\Camera.h" />
+    <ClInclude Include="Actor\Enemy\BossEnemy.h" />
+    <ClInclude Include="Actor\Enemy\DummyEnemy.h" />
+    <ClInclude Include="Actor\Enemy\EnemySystem.h" />
     <ClInclude Include="Actor\PlayerBall\Ball.h" />
     <ClInclude Include="Actor\Player\Player.h" />
     <ClInclude Include="Actor\Player\PlayerState.h" />
     <ClInclude Include="Actor\TestEnemy.h" />
+    <ClInclude Include="Actor\UIActor\AnyUI.h" />
+    <ClInclude Include="Actor\UIActor\EnemyDeadText.h" />
     <ClInclude Include="Animation\Animation.h" />
     <ClInclude Include="Animation\AnimationMesh.h" />
     <ClInclude Include="Animation\AnimatedSprite.h" />
@@ -216,10 +232,16 @@
     <ClInclude Include="Collision\Ray.h" />
     <ClInclude Include="Conv\ByteConverter.h" />
     <ClInclude Include="Conv\DXConverter.h" />
+    <ClInclude Include="Fiield\WorldContentManager\WorldContentManager.h" />
     <ClInclude Include="Game\Define.h" />
     <ClInclude Include="Game\FpsSetting.h" />
+    <ClInclude Include="Game\Time.h" />
     <ClInclude Include="Math\MathH.h" />
+    <ClInclude Include="Scene\GameData\GameDataManager.h" />
+    <ClInclude Include="Scene\GameOverScene.h" />
     <ClInclude Include="Scene\GamePlayScene.h" />
+    <ClInclude Include="Scene\GameResult.h" />
+    <ClInclude Include="Scene\GameTitleScene.h" />
     <ClInclude Include="Scene\LoadingScene.h" />
     <ClInclude Include="Scene\Scene.h" />
     <ClInclude Include="Scene\SceneManager.h" />
@@ -245,6 +267,7 @@
     <ClInclude Include="Skybox\Skybox.h" />
     <ClInclude Include="Sound\Sound.h" />
     <ClInclude Include="Sound\SoundEffect.h" />
+    <ClInclude Include="Sound\SoundID.h" />
     <ClInclude Include="Texture\Sprite.h" />
     <ClInclude Include="Mesh\StaticMesh.h" />
     <ClInclude Include="Math\Vector2.h" />
@@ -257,6 +280,7 @@
     <ClInclude Include="Collision\BoundingSphere.h" />
     <ClInclude Include="Fiield\Field.h" />
     <ClInclude Include="Fiield\FieldPtr.h" />
+    <ClInclude Include="Texture\SpriteID.h" />
     <ClInclude Include="Texture\TextureAsset.h" />
     <ClInclude Include="World\IWorld.h" />
     <ClInclude Include="World\World.h" />

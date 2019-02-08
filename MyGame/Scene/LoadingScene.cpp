@@ -41,17 +41,22 @@ void LoadingScene::end() {
 
 void LoadingScene::LoadSprite()
 {
-	Sprite::GetInstance().Load("asset/UI/PlayScene/TextFrame.png",SPRITE_ID::TEXTFRAME);
-	Sprite::GetInstance().Load("asset/UI/PlayScene/TextBossAppear.png", SPRITE_ID::TEXTBOSSAPPEAR);
-	Sprite::GetInstance().Load("asset/UI/PlayScene/TextDummyDead.png", SPRITE_ID::TEXTDUMMYDEAD);
+	auto& sprite = Sprite::GetInstance();
+	sprite.Load("asset/UI/PlayScene/TextFrame.png",SPRITE_ID::TEXTFRAME);
+	sprite.Load("asset/UI/PlayScene/TextBossAppear.png", SPRITE_ID::TEXTBOSSAPPEAR);
+	sprite.Load("asset/UI/PlayScene/TextDummyDead.png", SPRITE_ID::TEXTDUMMYDEAD);
+	sprite.Load("asset/UI/PlayScene/HP_ui.png", SPRITE_ID::HP_UI);
+	sprite.Load("asset/UI/PlayScene/HP_gauge.png", SPRITE_ID::HP_GAUGE);
 }
 void LoadingScene::LoadModel()
 {
 	//モデルデータの読み込み
-	SkeletalMesh::load(0,"asset/MODEL/Model.mv1");
-	SkeletalMesh::load(1, "asset/ghoul.mv1");
-	StaticMesh::load(0, "asset/w_magun01.mv1");
+	SkeletalMesh::load(0,"asset/MODEL/Player/Model.mv1");
+	SkeletalMesh::load(1, "asset/MODEL/DummyEnemy/zombie.mv1");
+	SkeletalMesh::load(4, "asset/ghoul2.mv1");
 	SkeletalMesh::load(2, "asset/BaseBall.mv1");
+	SkeletalMesh::load(3, "asset/MODEL/BossMonster/Monster.mv1");
+	StaticMesh::load(0, "asset/w_magun01.mv1");
 
 }
 void LoadingScene::LoadAny()

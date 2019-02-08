@@ -13,4 +13,6 @@ public:
 
 	virtual void draw() const;
 
+private:
+	int m_playerHP;
 };

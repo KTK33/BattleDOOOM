@@ -2,8 +2,8 @@
 //#include "../Actor/Enemy/Enemy.h"
 #include "../Actor/PlayerBall/Ball.h"
 #include "../Actor/Player/Player.h"
-#include "../Actor/Enemy/TestEnemy.h"
 #include "../Actor/Enemy/DummyEnemy.h"
+#include "../Actor/Enemy/BossEnemy.h"
 #include "../Actor/Camera/Camera.h"
 #include "../Actor/ActorGroup.h"
 #include "../Fiield/Field.h"
@@ -39,12 +39,16 @@ void GamePlayScene::start() {
 
 	world_.add_actor(ActorGroup::Player, new_actor<Player>(0,0,&world_, Vector3{ 0.0f, 0.0f,0.0f }));
 
-	world_.add_actor(ActorGroup::Enemy, new_actor<TestEnemy>(1, &world_, Vector3{ 10.0f, 0.0f,0.0f }));
+	//world_.add_actor(ActorGroup::Enemy, new_actor<Enemy>(4, &world_, Vector3{ 10.0f, 0.0f,0.0f }));
 
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < 3; i++)
 	{
-		world_.add_actor(ActorGroup::Enemy, new_actor<DummyEnemy>(1, &world_, Vector3{ Random::rand(0.0f,150.0f), 0.0f,Random::rand(0.0f,150.0f) }));
+		auto dummy = new_actor<DummyEnemy>(1, &world_, Vector3{ Random::rand(0.0f,70.0f), 0.0f,Random::rand(0.0f,70.0f) }, Matrix::CreateRotationY(Random::rand(0.0f,360.0f)));
+		world_.add_actor(ActorGroup::Enemy,dummy);
 	}
+
+	world_.add_actor(ActorGroup::Enemy, new_actor<BossEnemy>(3, &world_, Vector3{ 10.0f, 0.0f,0.0f }));
+
 	world_.add_actor(ActorGroup::System, new_actor<Camera>(&world_));
 
 	world_.add_actor(ActorGroup::UI, new_actor<EnemyDeadText>(&world_));
@@ -63,7 +67,7 @@ void GamePlayScene::update(float deltaTime)
 	}
 
 	//if (world_.find_actor(ActorGroup::Enemy, "Enemy") == NULL) {
-	//	world_.add_actor(ActorGroup::Enemy, new_actor<TestEnemy>(1, &world_, 
+	//	world_.add_actor(ActorGroup::Enemy, new_actor<Enemy>(1, &world_, 
 	//		Vector3{ Random::rand(0.0f,300.0f), 0.0f,Random::rand(0.0f,300.0f)}));
 	//}
 
@@ -71,6 +75,17 @@ void GamePlayScene::update(float deltaTime)
 	{
 		Pause();
 	}
+
+	if (GameDataManager::getInstance().GetPlayerDead() == true)
+	{
+		next_ = SceneType::SCENE_GAMEOVER;
+		isEnd_ = true;
+	}
+
+	//if (GameDataManager::getInstance().GetDeadBossEnemy() == true) {
+	//	next_ = SceneType::SCENE_CLEAR;
+	//	isEnd_ = true;
+	//}
 }
 
 

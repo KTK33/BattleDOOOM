@@ -12,6 +12,7 @@
 #include "../Fiield/Field.h"
 #include "../Math/MathH.h"
 #include "../Game/Define.h"
+#include "ActorGroup.h"
 
 class IWorld;
 enum class EventMessage
@@ -22,6 +23,10 @@ enum class EventMessage
 	DEAD_ENEMY,
 	DUMMY_DEAD_ENEMY,
 	DEAD_DUMMY_ENEMY,
+	BOSS_DEAD,
+	PLAYER_HP,
+	SETGUNPOINT,
+	REMAINGUNPOINT,
 };
 //アクタークラス
 class Actor {

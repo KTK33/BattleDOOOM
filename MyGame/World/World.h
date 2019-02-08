@@ -8,6 +8,8 @@
 #include "../Fiield/WorldContentManager/WorldContentManager.h"
 #include <functional>
 
+#include "../Input/GamePad.h"
+
 enum class EventMessage;
 
 //ワールドクラス
@@ -50,6 +52,7 @@ public:
 	//
 	virtual Field& field() override;
 	virtual std::shared_ptr<Field> getFieldOnly() override;
+
 
 	//
 	World(const World& other) = delete;

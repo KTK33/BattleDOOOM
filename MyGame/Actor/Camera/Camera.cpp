@@ -1,5 +1,4 @@
 #include "Camera.h"
-#include "../ActorGroup.h"
 #include "../../Graphics/Graphics3D.h"
 #include "../../Game/Define.h"
 

@@ -13,7 +13,7 @@ class Player : public Actor {
 public:
 	Player(int model,int weapon,IWorld* world, const Vector3& position, const IBodyPtr& body = std::make_shared<BoundingCapsule>(Vector3{0.0f,5.0f,0.0f},Matrix::Identity,15.0f,4.0f));
 
-	virtual void initialize() override;
+	void initialize() override;
 
 	void update(float deltaTime);
 
@@ -26,28 +26,27 @@ private:
 	//壁と床の判定
 	void collision();
 
-	void gravity(float deltaTime);
-
 	//状態の更新
-	void update_state(float delta_time);
+	void update_state(float deltaTime);
 	//状態の変更
 	void change_state(PlayerState::State state, int motion);
-	//移動処理
-	void move(float delta_time);
-	//パンチ
-	void punch(float delta_time);
-	//キック
-	void kick(float delta_time);
-	//剣
-	void sword(float delta_time);
-	//銃
-	void gun(float delta_time);
-	//ダメージ中
-	void damage(float delta_time);
-	//ジャンプ中
-	void jump(float delta_time);
+	void PlayerInput();
+	void Idle();
+	void IdletoAim();
+	void AimtoIdle();
+	void IdleAiming();
+	void StopGun();
+	void Reload();
+	void GunPunch();
+	void GunMove(float X,float Y);
+	void Move(float X, float Y);
+	void Gun(PlayerState::State state);
+	void Damage();
+	void Dead();
 	//武器の描画
 	void draw_weapon() const;
+	//ディレイ系
+	void Delay();
 
 
 
@@ -57,38 +56,49 @@ private:
 	AnimatedMesh mesh_;
 	//モーション番号
 	int motion_;
+	int before_motion_;
 	//持ち物モデル
 	int weapon_;
 	//移動速度
 	const float WalkSpeed{ 0.25f };
 	//状態
 	PlayerState::State state_;
+	PlayerState::State before_state_;
 	//状態タイマ
 	float state_timer_;
 	//重力
 	const float Gravity{ -0.04f };
 
 	//残弾数
-	int RemainGun;
-
+	int SetRemainGun;
 	//ディレイタイム
 	int DelayGunTime;
+	bool CheckGun;
 
+	int invinciblyTime;
+	bool invinciblyCheck;
+
+	int weaponPos;
 };
 
 
 //モーション番号
 enum
 {
-	MotionIdel = 0,
-	MotionForwardWalk = 1,
-	MotionBackarWalk = 1,
-	MotionLeftWalk = 1,
-	MotionRightWalk = 1,
-	MotionPunch = 4,
-	MotionKick = 5,
-	MotionGun = 7,
-	MotionSword = 6,
-	MotionDamage = 8,
-	MotionJump = 3
+	MotionPlayerIdel = 0,
+	MotionPlayerStopGun = 1,
+	MotionPlayerForwardGun = 2,
+	MotionPlayerRightGun = 3,
+	MotionPlayerLeftGun = 4,
+	MotionPlayerBackGun = 5,
+	MotionPlayerReload = 6,
+	MotionPlayerIdleToAim = 7,
+	MotionPlayerAimToIdle = 8,
+	MotionPlayerIdle2 = 9,
+	MotionPlayerDamageGun = 10,
+	MotionPlayerDead = 11,
+	MotionPlayerGunPunch = 12,
+	MotionPlayerRun = 13,
+	MotionPlayerIdleAiming = 14,
+	MotionPlayerDamage = 15,
 };
