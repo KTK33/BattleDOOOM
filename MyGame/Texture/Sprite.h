@@ -5,6 +5,7 @@
 #include <vector>
 #include "SpriteID.h"
 #include"../Math/Vector2.h"
+#include"../Math/Vector3.h"
 
 class Sprite
 {
@@ -36,7 +37,7 @@ public:
 	void DrawSetCenter(const SPRITE_ID& id, const Vector2& position);
 	/// 通常画像の描画
 	void Draw(const SPRITE_ID& id, const Vector2& position, const Vector2& origin = Vector2::Zero, const Vector2& scale = Vector2::One, float angle = 0.0f);
-	void DrawBillBoard(const SPRITE_ID& id, const Vector2& position, const Vector2& origin = Vector2::Zero, float size = 0.0f, float angle = 0.0f);
+	void DrawBillBoard(const SPRITE_ID& id, const Vector3& position, const Vector2& origin = Vector2::Zero, float size = 1.0f, float angle = 0.0f);
 	void Draw3D(SPRITE_ID id, const Vector2& position, const Vector2& size, int r = 255, int g = 255, int b = 255, int a = 255, float startangle = 0.0f, float Xangle = 0.0f, float Zangle = 0.0f, float Zoffset = 0.0f);
 	/**
 		@param divNum 分割画像インデックス

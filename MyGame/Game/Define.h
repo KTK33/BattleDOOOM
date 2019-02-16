@@ -15,5 +15,7 @@ static int constexpr GRID_Y = 10;
 static constexpr int SEGMENT_VERTEX_COUNT = 2;
 
 static constexpr float FarSpeed = 2.0f;
+//プレイヤーの最大ＨＰ
 static constexpr int PlayerHP = 10;
+//一度にセットできる弾数
 static constexpr int SetGunPoint = 7;

@@ -43,9 +43,28 @@ void Actor::collide(Actor & other) {
 //ステージとの共通当たり判定
 bool Actor::field(Vector3 & result)
 {
+	//Vector3 hitPos;
+	//if (world_->getFieldOnly()->getMesh().collide_line(prevPosition_ + rotation_.Up()*(body_->length()*0.5f), position_ + rotation_.Up()*(body_->radius() + body_->length()*0.5f), (Vector3*)&hitPos))
+	//{
+	//	Vector3 upVec = rotation_.Up()*(body_->radius() + body_->length()*0.5f);
+	//	position_ = hitPos - upVec;
+	//}
+	//Vector3 hitcenter;
+	//if (world_->getFieldOnly()->getMesh().collide_capsule(
+	//	position_ + 
+	//	rotation_.Up()*(body_->length()*0.5f),
+	//	position_ + rotation_.Down()*(body_->length()*0.5f),
+	//	body_->radius(), 
+	//	(Vector3*)&hitcenter))
+	//{
+	//	result = hitcenter;
+
+	//	return true;
+	//}
+	//return false;
+
 	Vector3 hitPos;
-	if (world_->getFieldOnly()->getMesh().collide_line(prevPosition_ + rotation_.Up()*(body_->length()*0.5f), position_ + rotation_.Up()*(body_->radius() + body_->length()*0.5f), (Vector3*)&hitPos))
-	{
+	if (world_->field().getMesh().collide_line(prevPosition_ + rotation_.Up()*(body_->length()*0.5f), position_ + rotation_.Up()*(body_->radius() + body_->length()*0.5f), (Vector3*)&hitPos)){
 		Vector3 upVec = rotation_.Up()*(body_->radius() + body_->length()*0.5f);
 		position_ = hitPos - upVec;
 	}
@@ -62,6 +81,8 @@ bool Actor::field(Vector3 & result)
 		return true;
 	}
 	return false;
+
+
 }
 
 //ステージ床面限定当たり判定

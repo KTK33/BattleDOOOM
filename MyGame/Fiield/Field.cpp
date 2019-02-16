@@ -4,6 +4,8 @@
 Field::Field(int field) :
 	field_{ field }
 {
+	//ƒ‚ƒfƒ‹‚ªİ’è‚³‚ê‚Ä‚¢‚È‚©‚Á‚½‚ç•Ô‚·
+	if (field_ < 0) return;
 }
 
 void Field::update(float deltaTime)
@@ -17,7 +19,7 @@ void Field::draw() const
 
 int Field::modelHandle()
 {
-	return 0;
+	return field_;
 }
 
 CollisionMesh & Field::getMesh()

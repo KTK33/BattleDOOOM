@@ -7,6 +7,7 @@ enum class ActorGroup {
 	Player,       //プレイヤー
 	Enemy,        //敵
 	PlayerBullet, //プレイヤー弾
+	Item,
 	EnemyBullet,  //敵弾
 	Effect,       //エフェクト
 	Ball,         //ボール

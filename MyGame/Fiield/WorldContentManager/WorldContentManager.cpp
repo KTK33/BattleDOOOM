@@ -24,7 +24,7 @@ void WorldContentManager::setupWorld(IWorld* world)
 
 void WorldContentManager::update(float deltaTime)
 {
-	//if (field_ != nullptr) field_->update(deltaTime);
+	if (field_ != nullptr) field_->update(deltaTime);
 	//if (skybox_ != nullptr) skybox_->update(deltaTime);
 }
 

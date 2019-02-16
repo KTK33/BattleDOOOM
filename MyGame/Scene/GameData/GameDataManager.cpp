@@ -4,6 +4,7 @@ void GameDataManager::initialize()
 {
 	DeadBossEnemyCheck = false;
 	DeadPlayerCheck = false;
+	ItemBoxCheck = false;
 }
 
 void GameDataManager::update()
@@ -28,4 +29,14 @@ void GameDataManager::SetPlayerDead(bool pd)
 bool GameDataManager::GetPlayerDead()
 {
 	return DeadPlayerCheck;
+}
+
+void GameDataManager::SetItemBoxCheck(bool IB)
+{
+	ItemBoxCheck = IB;
+}
+
+bool GameDataManager::GetItemBoxCheck()
+{
+	return ItemBoxCheck;
 }

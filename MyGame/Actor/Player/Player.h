@@ -11,7 +11,7 @@
 
 class Player : public Actor {
 public:
-	Player(int model,int weapon,IWorld* world, const Vector3& position, const IBodyPtr& body = std::make_shared<BoundingCapsule>(Vector3{0.0f,5.0f,0.0f},Matrix::Identity,15.0f,4.0f));
+	Player(int model,int weapon,IWorld* world, const Vector3& position, std::weak_ptr<Actor> box,const IBodyPtr& body = std::make_shared<BoundingCapsule>(Vector3{0.0f,5.0f,0.0f},Matrix::Identity,15.0f,4.0f));
 
 	void initialize() override;
 
@@ -51,6 +51,7 @@ private:
 
 
 private:
+	std::weak_ptr<Actor> m_box{};
 	//World world__;
 	//アニメーションメッシュ
 	AnimatedMesh mesh_;
@@ -69,8 +70,10 @@ private:
 	//重力
 	const float Gravity{ -0.04f };
 
-	//残弾数
+	//残弾数(セットされている)
 	int SetRemainGun;
+	//現在持っている弾数
+	int HaveGun;
 	//ディレイタイム
 	int DelayGunTime;
 	bool CheckGun;

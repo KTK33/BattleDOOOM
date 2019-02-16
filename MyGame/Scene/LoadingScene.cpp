@@ -12,7 +12,7 @@
 
 LoadingScene::LoadingScene() {
 
-	next_ = SceneType::SCENE_GAMEPLAY;
+	next_ = SceneType::SCENE_TITLE;
 }
 
 void LoadingScene::start() {
@@ -42,11 +42,23 @@ void LoadingScene::end() {
 void LoadingScene::LoadSprite()
 {
 	auto& sprite = Sprite::GetInstance();
+	//タイトル画面のUI
+	sprite.Load("asset/UI/TitleScene/TitleName.png", SPRITE_ID::TITLENAME);
+
+	//ゲーム画面のUI
 	sprite.Load("asset/UI/PlayScene/TextFrame.png",SPRITE_ID::TEXTFRAME);
 	sprite.Load("asset/UI/PlayScene/TextBossAppear.png", SPRITE_ID::TEXTBOSSAPPEAR);
 	sprite.Load("asset/UI/PlayScene/TextDummyDead.png", SPRITE_ID::TEXTDUMMYDEAD);
 	sprite.Load("asset/UI/PlayScene/HP_ui.png", SPRITE_ID::HP_UI);
 	sprite.Load("asset/UI/PlayScene/HP_gauge.png", SPRITE_ID::HP_GAUGE);
+	sprite.Load("asset/UI/PlayScene/Number.png", SPRITE_ID::NUMBER);
+	sprite.Load("asset/UI/PlayScene/Number_thrash.png", SPRITE_ID::THRASH);
+	sprite.Load("asset/UI/PlayScene/GunFream.png", SPRITE_ID::GUN_FREAM);
+	sprite.Load("asset/UI/PlayScene/HPRecoverText.png", SPRITE_ID::HPRECOVERTEXT);
+	sprite.Load("asset/UI/PlayScene/RecoverItemUI.png", SPRITE_ID::HPRECOVERUI);
+
+	//ポーズ画面のUI
+	sprite.Load("asset/UI/Pause/PauseBack.png", SPRITE_ID::PAUSEBACK);
 }
 void LoadingScene::LoadModel()
 {
@@ -58,6 +70,7 @@ void LoadingScene::LoadModel()
 	SkeletalMesh::load(3, "asset/MODEL/BossMonster/Monster.mv1");
 	StaticMesh::load(0, "asset/w_magun01.mv1");
 
+	SkeletalMesh::load(10, "asset/MODEL/ExMonster/motion/parasite_l_starkie.mv1");
 }
 void LoadingScene::LoadAny()
 {
@@ -65,7 +78,7 @@ void LoadingScene::LoadAny()
 	//スカイボックスモデルの読み込み
 	Skybox::load(0, "asset/skybox/skydome.mv1");
 	//ビルボードの読み込み
-	Billboard::load(0, "asset/Particle02.png");
+	Billboard::load(0, "asset/UI/PlayScene/GunFream.png");
 }
 void LoadingScene::LoadShader() {
 }

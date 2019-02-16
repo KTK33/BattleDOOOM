@@ -1,5 +1,7 @@
 #include "DummyEnemy.h"
 #include "../../Scene/GameData/GameDataManager.h"
+#include "../ItemActor/BulletItem.h"
+#include "../ItemActor/ItemCreater.h"
 
 DummyEnemy::DummyEnemy(int model, IWorld * world, const Vector3 & position,const Matrix & rotation, const IBodyPtr & body) :
 	Actor(world, "DummyEnemy", position, body),
@@ -13,7 +15,7 @@ DummyEnemy::DummyEnemy(int model, IWorld * world, const Vector3 & position,const
 	rotation_ = rotation;
 	mesh_.transform(Getpose());
 
-	hp_ = 3;
+	hp_ = 1;
 	maxHp = hp_;
 	player_ = world_->find_actor(ActorGroup::Player, "Player").get();
 	if (player_ == nullptr) return;
@@ -37,11 +39,10 @@ void DummyEnemy::update(float deltaTime)
 void DummyEnemy::draw() const
 {
 	mesh_.draw();
-	//body_->transform(Getpose())->draw();
+	body_->transform(Getpose())->draw();
 
-	DrawFormatString(500, 500, GetColor(255, 255, 255), "%f", state_timer_);
-	DrawFormatString(500, 600, GetColor(255, 255, 255), "%f", mesh_.motion_end_time());
-
+	//DrawFormatString(500, 500, GetColor(255, 255, 255), "%f", state_timer_);
+	//DrawFormatString(500, 600, GetColor(255, 255, 255), "%f", mesh_.motion_end_time());
 }
 
 void DummyEnemy::onCollide(Actor & other)
@@ -66,9 +67,9 @@ void DummyEnemy::receiveMessage(EventMessage message, void * param)
 		}
 
 	}
-	if (message == EventMessage::DEAD_DUMMY_ENEMY){
-		die();
-	}
+	//if (message == EventMessage::DEAD_DUMMY_ENEMY){
+	//	die();
+	//}
 }
 
 void DummyEnemy::update_state(float deltaTime)
@@ -103,19 +104,28 @@ void DummyEnemy::Move()
 {
 	position_ = Vector3::Lerp(position_, player_->Getposition(), WalkSpeed);
 
-	if (Vector3::Distance(position_,player_->Getposition()) <= AttackDis)
-	{
-		change_state(DummyEnemyState::PUNCH, MotionDummyPunch);
-	}
-
 	//ƒ^[ƒQƒbƒg•ûŒü‚É­‚µ‚¸‚ÂŒü‚«‚ð•Ï‚¦‚é Clamp‚Å–³—‚â‚èŠp“x(-TurnAngle`TurnAngle)“à‚É
 	const auto angle = MathHelper::Clamp(PlayerDirection(player_, position_, rotation_), -2.5f, 2.5f);
 	rotation_ *= Matrix::CreateRotationY(angle);
+
+	if (Vector3::Distance(position_,player_->Getposition()) <= AttackDis && 
+		angle == 0)
+	{
+		change_state(DummyEnemyState::PUNCH, MotionDummyPunch);
+	}
 }
 
 void DummyEnemy::Punch()
 {
 	state_timer_ += 1.0f;
+	if (state_timer_ == 80)
+	{
+		auto Bullet = std::make_shared<EnemyAttack>(world_, Vector3{ position_ + Getpose().Forward() * 6 },
+			std::make_shared<BoundingCapsule>(Vector3{ 0.0f,0.0f,0.0f }, Matrix::Identity, 7.0f, 5.0f));
+		world_->add_actor(ActorGroup::EnemyBullet, Bullet);
+		Bullet->SetdeadTime(mesh_.motion_end_time() / 2);
+		Bullet->SetAttackParam(1);
+	}
 	if (state_timer_ >= mesh_.motion_end_time())
 	{
 		change_state(DummyEnemyState::MOVE, MotionDummyMove);
@@ -146,9 +156,10 @@ void DummyEnemy::Damage()
 void DummyEnemy::Dead()
 {
 	state_timer_ += 1.0f;
-	if (state_timer_ >= mesh_.motion_end_time())
+	if (state_timer_ >= mesh_.motion_end_time() + 100)
 	{
 		world_->send_message(EventMessage::DUMMY_DEAD_ENEMY, nullptr);
+		world_->add_actor(ActorGroup::Item, std::make_shared<ItemCreater>(world_, position_));
 		die();
 	}
 }

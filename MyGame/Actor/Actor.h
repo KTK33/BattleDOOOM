@@ -14,6 +14,8 @@
 #include "../Game/Define.h"
 #include "ActorGroup.h"
 
+#include "../Mesh/CollisionMesh.h"
+
 class IWorld;
 enum class EventMessage
 {
@@ -25,8 +27,11 @@ enum class EventMessage
 	DEAD_DUMMY_ENEMY,
 	BOSS_DEAD,
 	PLAYER_HP,
-	SETGUNPOINT,
-	REMAINGUNPOINT,
+	PLAYER_REMAINGUN,
+	PLAYER_HAVEGUN,
+	HIT_ENEMY_BULLET,
+	GET_BULLET,
+	GET_HPRECOVER,
 };
 //アクタークラス
 class Actor {
@@ -101,6 +106,8 @@ protected:
 	std::list<ActorPtr> children_;
 
 	int hp_{ 0 };
+
+	CollisionMesh mesh_;
 
 };
 #endif // !ACTOR_H_

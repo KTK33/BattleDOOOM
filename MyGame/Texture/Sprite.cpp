@@ -84,9 +84,10 @@ void Sprite::Draw(const SPRITE_ID & id, const Vector2 & position, const Vector2 
 
 }
 
-void Sprite::DrawBillBoard(const SPRITE_ID & id, const Vector2 & position, const Vector2 & origin, float size, float angle)
+void Sprite::DrawBillBoard(const SPRITE_ID & id, const Vector3 & position, const Vector2 & origin, float size, float angle)
 {
-	DrawBillboard3D(VGet(position.x, position.y, 0.0f), origin.x, origin.y, size, angle, m_sprites[id], TRUE);
+	DrawBillboard3D(VGet(position.x, position.y, position.z), origin.x, origin.y, size, angle, m_sprites[id], TRUE);
+
 }
 #include"../Math/Vector3.h"
 #include"../Math/Matrix.h"

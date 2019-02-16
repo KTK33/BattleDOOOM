@@ -6,12 +6,14 @@
 #include "../../Scene/GameData/GameDataManager.h"
 
 
-Player::Player(int model,int weapon,IWorld * world, const Vector3 & position, const IBodyPtr & body):
+Player::Player(int model,int weapon,IWorld * world, const Vector3 & position,std::weak_ptr<Actor> box,const IBodyPtr & body):
 	Actor(world,"Player",position,body),
+	m_box{box},
 	mesh_{model,weapon},
 	weapon_{weapon},
 	SetRemainGun{ SetGunPoint },
 	DelayGunTime{ 20 },
+	HaveGun{10},
 	CheckGun{false},
 	state_{ PlayerState::PlayerIdel },
 	before_state_{PlayerState::NONE},
@@ -39,8 +41,10 @@ void Player::update(float deltaTime)
 	Delay();
 
 	world_->send_message(EventMessage::PLAYER_HP, (void*)&hp_);
-	world_->send_message(EventMessage::REMAINGUNPOINT, (void*)&hp_);
-	world_->send_message(EventMessage::SETGUNPOINT, (void*)&SetRemainGun);
+	world_->send_message(EventMessage::PLAYER_REMAINGUN, (void*)&SetRemainGun);
+	world_->send_message(EventMessage::PLAYER_HAVEGUN, (void*)&HaveGun);
+
+	hp_ = MathHelper::Clamp(hp_, 0, 10);
 }
 
 void Player::draw() const
@@ -48,14 +52,6 @@ void Player::draw() const
 	mesh_.draw();
 	draw_weapon();
 	body_->transform(Getpose())->draw();
-
-
-	SetFontSize(64);
-	DrawFormatString(0, 400, GetColor(255, 255, 255), "%i", SetRemainGun);
-	DrawFormatString(0, 500, GetColor(255, 255, 255), "%i",DelayGunTime);
-	DrawFormatString(0, 900, GetColor(255, 255, 255), "%f", state_timer_);
-	DrawFormatString(0, 1000, GetColor(255, 255, 255), "%f", mesh_.motion_end_time());
-	SetFontSize(16);
 }
 
 void Player::onCollide(Actor & other)
@@ -68,12 +64,35 @@ void Player::receiveMessage(EventMessage message, void * param)
 {
 	if (!invinciblyCheck)
 	{
-		if (message == EventMessage::HIT_ENEMY)
+		if (message == EventMessage::HIT_ENEMY_BULLET)
 		{
-			hp_ = hp_ - 1;
+			hp_ = hp_ - *(int*)param;
 			change_state(PlayerState::PlayerDamage, MotionPlayerDamage);
 			invinciblyCheck = true;
 		}
+	}
+
+	if (message == EventMessage::GET_BULLET)
+	{
+		HaveGun += *(int*)param;
+	}
+
+	if (message == EventMessage::PLAYER_HP)
+	{
+		*(int*)param = hp_;
+	}
+	if (message == EventMessage::GET_HPRECOVER)
+	{
+		hp_ += *(int*)param;
+		m_box.lock()->receiveMessage(EventMessage::GET_HPRECOVER, nullptr);
+	}
+	if (message == EventMessage::PLAYER_REMAINGUN)
+	{
+		*(int*)param = SetRemainGun;
+	}
+	if (message == EventMessage::PLAYER_HAVEGUN)
+	{
+		*(int*)param = HaveGun;
 	}
 }
 
@@ -133,7 +152,7 @@ void Player::PlayerInput()
 	}
 
 	//ÉäÉçÅ[Éh
-	if (SetRemainGun < SetGunPoint &&
+	if (SetRemainGun < SetGunPoint && HaveGun > 0 &&
 		GamePad::GetInstance().ButtonStateUp(PADBUTTON::NUM6) &&
 		GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM3) &&
 		state_ != PlayerState::PlayerReload)
@@ -223,7 +242,14 @@ void Player::Reload()
 	state_timer_ += 1.0f;
 	if (state_timer_ >= mesh_.motion_end_time())
 	{
-		SetRemainGun = SetGunPoint;
+		int setpoint{ 0 };
+		if (HaveGun < SetGunPoint){
+			setpoint = HaveGun - SetGunPoint;
+		}
+
+		HaveGun = max(HaveGun + (SetRemainGun - SetGunPoint),0);
+		SetRemainGun = SetGunPoint +setpoint;
+
 		DelayGunTime = 30;
 
 		if (GamePad::GetInstance().ButtonStateUp(PADBUTTON::NUM5))

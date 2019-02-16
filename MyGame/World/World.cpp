@@ -15,8 +15,13 @@ void World::initialize()
 	actors_.add(ActorGroup::Enemy);
 	actors_.add(ActorGroup::EnemyBullet);
 	actors_.add(ActorGroup::Ball);
+	actors_.add(ActorGroup::Item);
 	actors_.add(ActorGroup::Effect);
 	actors_.add(ActorGroup::System);
+
+	worldManager_.initialize();
+	worldManager_.setupWorld(this);
+
 }
 
 void World::update(float delta_time)
@@ -25,12 +30,15 @@ void World::update(float delta_time)
 	actors_.update(delta_time);
 	actors_.collide(ActorGroup::Player, ActorGroup::Enemy);
 	actors_.collide(ActorGroup::Player, ActorGroup::EnemyBullet);
+	actors_.collide(ActorGroup::Player, ActorGroup::Item);
 	actors_.collide(ActorGroup::PlayerBullet, ActorGroup::Enemy);
 	actors_.collide(ActorGroup::Player, ActorGroup::Ball);
 	actors_.remove();
 	//camera_->update(delta_time);
 	//light_->update(delta_time);
 	//gsUpdateEffect(delta_time);
+
+	field_->update(delta_time);
 }
 
 void World::draw() const

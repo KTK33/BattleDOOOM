@@ -13,7 +13,7 @@ void GameResultScene::update(float deltaTime)
 {
 	if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM1))
 	{
-		next_ = SceneType::SCENE_GAMEPLAY;
+		next_ = SceneType::SCENE_TITLE;
 		isEnd_ = true;
 	}
 }

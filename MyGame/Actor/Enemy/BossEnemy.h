@@ -70,7 +70,7 @@ private:
 
 	Actor* player_;
 
-	float AttackDis{ 20.0f };
+	float AttackDis{ 15.0f };
 
 };
 
