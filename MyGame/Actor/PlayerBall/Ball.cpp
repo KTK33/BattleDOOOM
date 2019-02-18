@@ -13,6 +13,8 @@ Ball::Ball(int model, IWorld* world, const Vector3& position, const IBodyPtr& bo
 	mesh_.transform(Getpose());
 
 	m_InitFar = player_->Getpose().Forward();
+
+	rotation_ = -player_->Getrotation();
 }
 
 void Ball::initialize()
@@ -51,7 +53,7 @@ void Ball::receiveMessage(EventMessage message, void * param)
 void Ball::draw() const
 {
 	mesh_.draw();
-	body_->transform(Getpose())->draw();
+	//body_->transform(Getpose())->draw();
 }
 
 void Ball::distance()

@@ -15,7 +15,7 @@ DummyEnemy::DummyEnemy(int model, IWorld * world, const Vector3 & position,const
 	rotation_ = rotation;
 	mesh_.transform(Getpose());
 
-	hp_ = 1;
+	hp_ = 3;
 	maxHp = hp_;
 	player_ = world_->find_actor(ActorGroup::Player, "Player").get();
 	if (player_ == nullptr) return;
@@ -28,12 +28,15 @@ void DummyEnemy::initialize()
 
 void DummyEnemy::update(float deltaTime)
 {
-	mesh_.update(deltaTime);
-	mesh_.transform(Getpose());
-	mesh_.change_motion(motion_);
-	update_state(deltaTime);
+	if (world_->GetPauseCheck() == false)
+	{
+		mesh_.update(deltaTime);
+		mesh_.transform(Getpose());
+		mesh_.change_motion(motion_);
+		update_state(deltaTime);
 
-	Delay();
+		Delay();
+	}
 }
 
 void DummyEnemy::draw() const
@@ -65,6 +68,14 @@ void DummyEnemy::receiveMessage(EventMessage message, void * param)
 			change_state(DummyEnemyState::DAMAGE, MotionDummyDamage);
 			invinciblyCheck = true;
 		}
+
+		if (message == EventMessage::HIT_PLAYER_PUNCH)
+		{
+			hp_ = hp_ - *(int*)param;
+			change_state(DummyEnemyState::DAMAGE, MotionDummyDamage);
+			invinciblyCheck = true;
+		}
+
 
 	}
 	//if (message == EventMessage::DEAD_DUMMY_ENEMY){
@@ -121,9 +132,9 @@ void DummyEnemy::Punch()
 	if (state_timer_ == 80)
 	{
 		auto Bullet = std::make_shared<EnemyAttack>(world_, Vector3{ position_ + Getpose().Forward() * 6 },
-			std::make_shared<BoundingCapsule>(Vector3{ 0.0f,0.0f,0.0f }, Matrix::Identity, 7.0f, 5.0f));
+			std::make_shared<BoundingCapsule>(Vector3{ 0.0f,10.0f,0.0f }, Matrix::Identity, 3.0f, 3.0f));
 		world_->add_actor(ActorGroup::EnemyBullet, Bullet);
-		Bullet->SetdeadTime(mesh_.motion_end_time() / 2);
+		Bullet->SetdeadTime((int)mesh_.motion_end_time() / 2);
 		Bullet->SetAttackParam(1);
 	}
 	if (state_timer_ >= mesh_.motion_end_time())

@@ -33,6 +33,11 @@ void CollisionMesh::draw() {
     MV1DrawModel(model_);
 }
 
+int CollisionMesh::ModelHandle()
+{
+	return model_;
+}
+
 // íœ
 void CollisionMesh::erase(int id) {
     model_ = (model_ == asset_[id]) ? -1 : model_;

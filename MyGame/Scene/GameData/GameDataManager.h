@@ -18,12 +18,12 @@ public:
 	void SetPlayerDead(bool pd);
 	bool GetPlayerDead();
 
-	void SetItemBoxCheck(bool IB);
-	bool GetItemBoxCheck();
+	void SetRecoverItemCount(int RI);
+	int GetRecoverItemCount();
 
 private:
 
 	bool DeadBossEnemyCheck{ false };
 	bool DeadPlayerCheck{ false };
-	bool ItemBoxCheck{ false };
+	int RecoverItemCount{ 2 };
 };

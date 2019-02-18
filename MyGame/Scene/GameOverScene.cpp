@@ -11,9 +11,9 @@ void GameOrverScene::start()
 
 void GameOrverScene::update(float deltaTime)
 {
-	if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM1))
+	if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM2))
 	{
-		next_ = SceneType::SCENE_GAMEPLAY;
+		next_ = SceneType::SCENE_TITLE;
 		isEnd_ = true;
 	}
 }

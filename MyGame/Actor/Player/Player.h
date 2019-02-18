@@ -11,7 +11,7 @@
 
 class Player : public Actor {
 public:
-	Player(int model,int weapon,IWorld* world, const Vector3& position, std::weak_ptr<Actor> box,const IBodyPtr& body = std::make_shared<BoundingCapsule>(Vector3{0.0f,5.0f,0.0f},Matrix::Identity,15.0f,4.0f));
+	Player(int model,int weapon,IWorld* world, const Vector3& position, std::weak_ptr<Actor> ui,const IBodyPtr& body = std::make_shared<BoundingCapsule>(Vector3{0.0f,5.0f,0.0f},Matrix::Identity,15.0f,4.0f));
 
 	void initialize() override;
 
@@ -40,7 +40,7 @@ private:
 	void GunPunch();
 	void GunMove(float X,float Y);
 	void Move(float X, float Y);
-	void Gun(PlayerState::State state);
+	void Gun(PlayerState::State state,int motion);
 	void Damage();
 	void Dead();
 	//武器の描画
@@ -48,10 +48,12 @@ private:
 	//ディレイ系
 	void Delay();
 
+	void Hit(Vector3& dir);
+
 
 
 private:
-	std::weak_ptr<Actor> m_box{};
+	std::weak_ptr<Actor> m_ui{};
 	//World world__;
 	//アニメーションメッシュ
 	AnimatedMesh mesh_;
@@ -82,6 +84,8 @@ private:
 	bool invinciblyCheck;
 
 	int weaponPos;
+
+	bool collide{ false };
 };
 
 

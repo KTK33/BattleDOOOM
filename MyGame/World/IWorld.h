@@ -27,6 +27,12 @@ public:
 	// フィールドを取得
 	virtual Field& field() = 0;
 	virtual std::shared_ptr<Field> getFieldOnly() = 0;
+
+
+	virtual void SetPauseCheck(bool pc) =0;
+	virtual bool GetPauseCheck() =0;
+	virtual void SetBackTitleCheck(bool bt) = 0;
+	virtual bool GetBackTitleCheck() = 0;
 };
 
 #endif

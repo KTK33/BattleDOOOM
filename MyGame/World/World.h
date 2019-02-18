@@ -58,6 +58,12 @@ public:
 	World(const World& other) = delete;
 	World& operator=(const World& other) = delete;
 
+	virtual void SetPauseCheck(bool pc) override;
+	virtual bool GetPauseCheck() override;
+	virtual void SetBackTitleCheck(bool bt) override;
+	virtual bool GetBackTitleCheck() override;
+
+
 private:
 	//
 	ActorGroupManager    actors_;
@@ -71,6 +77,9 @@ private:
 	WorldContentManager worldManager_{};
 
 	EventMessageListener listener_{ [](EventMessage,void*) {} };
+
+	bool PauseCheck{ false };
+	bool BackTitleCheck{ false };
 };
 
 #endif // !WORLD_H_

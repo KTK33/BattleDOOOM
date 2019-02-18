@@ -69,7 +69,7 @@ bool Actor::field(Vector3 & result)
 		position_ = hitPos - upVec;
 	}
 	Vector3 hitcenter;
-	if (world_->getFieldOnly()->getMesh().collide_capsule(
+	if (world_->field().getMesh().collide_capsule(
 		position_ + 
 		rotation_.Up()*(body_->length()*0.5f),
 		position_ + rotation_.Down()*(body_->length()*0.5f),

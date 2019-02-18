@@ -32,28 +32,19 @@ void EnemyDeadText::receiveMessage(EventMessage message, void * param)
 		DeadEnemy = true;
 		world_->add_actor(ActorGroup::Enemy, new_actor<BossEnemy>(3, world_, Vector3{ 100.0f, 0.0f,0.0f }));
 	}
-
-	if (message == EventMessage::DUMMY_DEAD_ENEMY){
-		DummyDeadEnemy = true;
-		EnemyCount = EnemyCount - 1;
-	}
 }
 
 void EnemyDeadText::draw() const
 {
-	if (DeadEnemy){
-		Sprite::GetInstance().Draw(SPRITE_ID::TEXTBOSSAPPEAR, Vector2(WINDOW_WIDTH - Sprite::GetInstance().GetSize(SPRITE_ID::TEXTBOSSAPPEAR).x, WINDOW_HEIGHT));
+	//if (DeadEnemy){
+	//	Sprite::GetInstance().Draw(SPRITE_ID::TEXTBOSSAPPEAR, Vector2(WINDOW_WIDTH - Sprite::GetInstance().GetSize(SPRITE_ID::TEXTBOSSAPPEAR).x, WINDOW_HEIGHT));
 
-		if (world_->find_actor(ActorGroup::Enemy, "DummyEnemy") != NULL){
-			world_->send_message(EventMessage::DEAD_DUMMY_ENEMY, nullptr);
-		}
-	}
+	//	if (world_->find_actor(ActorGroup::Enemy, "DummyEnemy") != NULL){
+	//		world_->send_message(EventMessage::DEAD_DUMMY_ENEMY, nullptr);
+	//	}
+	//}
 
-	if (DummyDeadEnemy) {
-		Sprite::GetInstance().Draw(SPRITE_ID::TEXTDUMMYDEAD, Vector2(WINDOW_WIDTH - Sprite::GetInstance().GetSize(SPRITE_ID::TEXTDUMMYDEAD).x, WINDOW_HEIGHT));
-	}
-
-	SetFontSize(64);
-	DrawFormatString(0, 600, GetColor(255, 255, 255), "%d", EnemyCount);
-	SetFontSize(16);
+	//if (DummyDeadEnemy) {
+	//	Sprite::GetInstance().Draw(SPRITE_ID::TEXTDUMMYDEAD, Vector2(WINDOW_WIDTH - Sprite::GetInstance().GetSize(SPRITE_ID::TEXTDUMMYDEAD).x, WINDOW_HEIGHT));
+	//}
 }

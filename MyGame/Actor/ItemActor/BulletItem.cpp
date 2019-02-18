@@ -2,7 +2,7 @@
 #include "../../Texture/Sprite.h"
 
 BulletItem::BulletItem(int model, IWorld * world, const Vector3 & position, const IBodyPtr & body):
-	Actor(world, "EnemyAttack", position, body),
+	Actor(world, "BulletItem", position, body),
 	mesh_{ model }
 {
 }

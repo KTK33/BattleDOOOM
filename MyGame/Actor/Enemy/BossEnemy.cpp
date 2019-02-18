@@ -1,5 +1,6 @@
 #include "BossEnemy.h"
 #include "../../Scene/GameData/GameDataManager.h"
+#include "../../Texture/Sprite.h"
 
 BossEnemy::BossEnemy(int model, IWorld * world, const Vector3 & position, const IBodyPtr & body) :
 	Actor(world, "BossEnemy", position, body),
@@ -23,18 +24,27 @@ void BossEnemy::initialize()
 
 void BossEnemy::update(float deltaTime)
 {
-	mesh_.update(deltaTime);
-	mesh_.transform(Getpose());
-	mesh_.change_motion(motion_);
-	update_state(deltaTime);
+	if (world_->GetPauseCheck() == false)
+	{
+		mesh_.update(deltaTime);
+		mesh_.transform(Getpose());
+		mesh_.change_motion(motion_);
+		update_state(deltaTime);
 
-	Delay();
+		Delay();
+	}
 }
 
 void BossEnemy::draw() const
 {
 	mesh_.draw();
 	body_->transform(Getpose())->draw();
+
+	//HP
+	Sprite::GetInstance().Draw(SPRITE_ID::BOSSHP_UI, Vector2(0, Sprite::GetInstance().GetSize(SPRITE_ID::BOSSHP_UI).y));
+	Sprite::GetInstance().DrawPart(SPRITE_ID::BOSSHP_GAUGE, Vector2(492, WINDOW_HEIGHT - 70), 0, 0,
+		Sprite::GetInstance().GetSize(SPRITE_ID::BOSSHP_GAUGE).x / PlayerHP * hp_, Sprite::GetInstance().GetSize(SPRITE_ID::BOSSHP_GAUGE).y);
+
 }
 
 void BossEnemy::onCollide(Actor & other)
@@ -53,7 +63,6 @@ void BossEnemy::receiveMessage(EventMessage message, void * param)
 			change_state(BossEnemyState::DAMAGE, MotionBossDamage);
 			invinciblyCheck = true;
 		}
-
 	}
 }
 

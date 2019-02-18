@@ -18,6 +18,4 @@ private:
 	bool DeadEnemy{ false };
 	bool DummyDeadEnemy{ false };
 	int DummyDeadTextTime{ 90 };
-
-	int EnemyCount{ 10 };
 };

@@ -7,26 +7,19 @@
 
 Camera::Camera(IWorld * world) :
 	Actor(world, "Camera", Vector3::Zero)
-{
-	fps = false;
-}
+{}
 
 void Camera::update(float deltaTime)
 {
 	Actor* player_ = world_->find_actor(ActorGroup::Player, "Player").get();
 	if (player_ == nullptr) return;
 	const auto position = Vector3{ 0.0f,m_FarPoint.x,m_FarPoint.y } *player_->Getpose();
-	if (fps)
-	{
-		target_ = player_->Getposition()+ (player_->Getpose().Forward());
-	}
-	else
-	{
-		target_ = player_->Getposition() + Vector3{ 0.0f,20.0f,0.0f };
-	}
+	target_ = player_->Getposition() + Vector3{ 0.0f,20.0f,0.0f };
 	move(position, 1.0f, 0.2f, 0.8f);
 
-	PlayerInput();
+	if (world_->GetPauseCheck() == false){
+		PlayerInput();
+	}
 }
 
 void Camera::draw() const
@@ -66,18 +59,9 @@ void Camera::move(const Vector3 & rest_position, float stiffness, float friction
 
 void Camera::PlayerInput()
 {
-	m_FarPoint = Vector2::Clamp(m_FarPoint, Vector2(50.0f, 40.0f), Vector2(75.0f, 60.0f));
+	m_FarPoint = Vector2::Clamp(m_FarPoint, Vector2(30.0f, 20.0f), Vector2(75.0f, 60.0f));
 
 	m_FarPoint = m_FarPoint + GamePad::GetInstance().RightStick();
 
 
-	if (CheckHitKey(KEY_INPUT_G) || GamePad::GetInstance().ButtonStateDown(PADBUTTON::NUM10)){
-		fps = !fps;
-	}
-
-}
-
-void Camera::TPS()
-{
-	m_FarPoint = Vector2::Lerp(m_FarPoint, Vector2(50,40), 0.1f);
 }

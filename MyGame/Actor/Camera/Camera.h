@@ -20,12 +20,9 @@ public:
 
 	void PlayerInput();
 
-	void TPS();
 private:
 	//
 	Vector3 target_{ 0.0f,0.0f,0.0f };
 
 	Vector2 m_FarPoint{ 50.f,40.f };
-
-	bool fps;
 };

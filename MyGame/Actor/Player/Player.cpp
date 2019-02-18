@@ -4,11 +4,12 @@
 #include "../../Input/GamePad.h"
 #include "../../Texture/Sprite.h"
 #include "../../Scene/GameData/GameDataManager.h"
+#include "PlayerPunchAttack.h"
 
 
-Player::Player(int model,int weapon,IWorld * world, const Vector3 & position,std::weak_ptr<Actor> box,const IBodyPtr & body):
+Player::Player(int model,int weapon,IWorld * world, const Vector3 & position,std::weak_ptr<Actor> ui,const IBodyPtr & body):
 	Actor(world,"Player",position,body),
-	m_box{box},
+	m_ui{ui},
 	mesh_{model,weapon},
 	weapon_{weapon},
 	SetRemainGun{ SetGunPoint },
@@ -33,12 +34,15 @@ void Player::initialize()
 
 void Player::update(float deltaTime)
 {
-	mesh_.update(deltaTime);
-	mesh_.transform(Getpose());
-	update_state(deltaTime);
-	mesh_.change_motion(motion_);
-	PlayerInput();
-	Delay();
+	if (world_->GetPauseCheck() == false)
+	{
+		mesh_.update(deltaTime);
+		mesh_.transform(Getpose());
+		update_state(deltaTime);
+		mesh_.change_motion(motion_);
+		PlayerInput();
+		Delay();
+	}
 
 	world_->send_message(EventMessage::PLAYER_HP, (void*)&hp_);
 	world_->send_message(EventMessage::PLAYER_REMAINGUN, (void*)&SetRemainGun);
@@ -75,6 +79,7 @@ void Player::receiveMessage(EventMessage message, void * param)
 	if (message == EventMessage::GET_BULLET)
 	{
 		HaveGun += *(int*)param;
+		m_ui.lock()->receiveMessage(EventMessage::GET_BULLET, nullptr);
 	}
 
 	if (message == EventMessage::PLAYER_HP)
@@ -84,7 +89,7 @@ void Player::receiveMessage(EventMessage message, void * param)
 	if (message == EventMessage::GET_HPRECOVER)
 	{
 		hp_ += *(int*)param;
-		m_box.lock()->receiveMessage(EventMessage::GET_HPRECOVER, nullptr);
+		m_ui.lock()->receiveMessage(EventMessage::GET_HPRECOVER, nullptr);
 	}
 	if (message == EventMessage::PLAYER_REMAINGUN)
 	{
@@ -93,6 +98,11 @@ void Player::receiveMessage(EventMessage message, void * param)
 	if (message == EventMessage::PLAYER_HAVEGUN)
 	{
 		*(int*)param = HaveGun;
+	}
+
+	if (message == EventMessage::HIT_ENEMY)
+	{
+		Hit(*(Vector3*)param);
 	}
 }
 
@@ -162,7 +172,7 @@ void Player::PlayerInput()
 		change_state(PlayerState::PlayerReload, MotionPlayerReload);
 	}
 
-	if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM4)) {
+	if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM4) && state_ != PlayerState::PlayerGunPunch) {
 		before_motion_ = motion_;
 		before_state_ = state_;
 		change_state(PlayerState::PlayerGunPunch, MotionPlayerGunPunch);
@@ -215,7 +225,7 @@ void Player::IdleAiming()
 
 	if (GamePad::GetInstance().ButtonStateDown(PADBUTTON::NUM6)){
 		change_state(PlayerState::PlayerStopGun, MotionPlayerStopGun);
-		Gun(state_);
+		Gun(state_,motion_);
 	}
 
 	GunMove(GamePad::GetInstance().Stick().x, GamePad::GetInstance().Stick().y);
@@ -224,7 +234,7 @@ void Player::IdleAiming()
 
 void Player::StopGun()
 {
-	Gun(state_);
+	Gun(state_,motion_);
 
 	if (GamePad::GetInstance().ButtonTriggerUp(PADBUTTON::NUM5)){
 		change_state(PlayerState::PlayerAimToIdle, MotionPlayerAimToIdle);
@@ -267,6 +277,15 @@ void Player::Reload()
 void Player::GunPunch()
 {
 	state_timer_ += 1.0f;
+	if (state_timer_ == 60)
+	{
+		auto AttackPunch = std::make_shared<PlayerPunchAttack>(world_, Vector3{ position_ + Getpose().Forward() * 4 },
+			std::make_shared<BoundingCapsule>(Vector3{ 0.0f,13.0f,0.0f }, Matrix::Identity, 1.5f, 2.5f));
+		world_->add_actor(ActorGroup::PlayerBullet, AttackPunch);
+		AttackPunch->SetdeadTime(20);
+		AttackPunch->SetAttackParam(1);
+
+	}
 	if (state_timer_ >= mesh_.motion_end_time())
 	{
 		change_state(before_state_, before_motion_);
@@ -332,12 +351,12 @@ void Player::Move(float X, float Y)
 	position_ += velocity_ * 1.0f;
 }
 
-void Player::Gun(PlayerState::State state)
+void Player::Gun(PlayerState::State state,int motion)
 {
-	if (motion_ != MotionPlayerBackGun)
+	if (motion != MotionPlayerBackGun)
 	{
 		if (SetRemainGun > 0 && !CheckGun) {
-			world_->add_actor(ActorGroup::PlayerBullet, std::make_shared<Ball>(2, world_, Vector3{ position_.x,position_.y + 5.0f,position_.z }));
+			world_->add_actor(ActorGroup::PlayerBullet, std::make_shared<Ball>(5, world_, Vector3{ position_.x,position_.y + 10.0f,position_.z } +Getpose().Forward() * 10));
 			SetRemainGun -= 1;
 			CheckGun = true;
 		}
@@ -396,4 +415,12 @@ void Player::Delay()
 			state_ = PlayerState::PlayerDead;
 		}
 	}
+}
+
+void Player::Hit(Vector3 & dir)
+{
+	Vector3 dir_ = Vector3::Normalize(dir);
+	//アクターからプレイヤーの方向に移動
+	velocity_ = Vector3::Up * 7.0f + Vector3{ dir_.x,0.f,dir_.z } *2.0f;
+	//collide = true;
 }

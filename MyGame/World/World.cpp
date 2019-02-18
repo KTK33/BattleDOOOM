@@ -22,6 +22,8 @@ void World::initialize()
 	worldManager_.initialize();
 	worldManager_.setupWorld(this);
 
+	PauseCheck = false;
+	BackTitleCheck = false;
 }
 
 void World::update(float delta_time)
@@ -38,14 +40,14 @@ void World::update(float delta_time)
 	//light_->update(delta_time);
 	//gsUpdateEffect(delta_time);
 
-	field_->update(delta_time);
+	//field_->update(delta_time);
 }
 
 void World::draw() const
 {
 	//camera_->draw();
 	//light_->draw();
-	field_->draw();
+	//field_->draw();
 	actors_.draw();
 }
 
@@ -121,4 +123,24 @@ Field & World::field()
 std::shared_ptr<Field> World::getFieldOnly()
 {
 	return worldManager_.getField();
+}
+
+void World::SetPauseCheck(bool pc)
+{
+	PauseCheck = pc;
+}
+
+bool World::GetPauseCheck()
+{
+	return PauseCheck;
+}
+
+void World::SetBackTitleCheck(bool bt)
+{
+	BackTitleCheck = bt;
+}
+
+bool World::GetBackTitleCheck()
+{
+	return BackTitleCheck;
 }

@@ -56,9 +56,31 @@ void LoadingScene::LoadSprite()
 	sprite.Load("asset/UI/PlayScene/GunFream.png", SPRITE_ID::GUN_FREAM);
 	sprite.Load("asset/UI/PlayScene/HPRecoverText.png", SPRITE_ID::HPRECOVERTEXT);
 	sprite.Load("asset/UI/PlayScene/RecoverItemUI.png", SPRITE_ID::HPRECOVERUI);
+	sprite.Load("asset/UI/PlayScene/BulletGetText.png", SPRITE_ID::BULLETGETUI);
+	sprite.Load("asset/UI/PlayScene/MissionExtermination.png", SPRITE_ID::MISSION_ENEMY_EXTERMINATION);
+	sprite.Load("asset/UI/PlayScene/MissionNumber.png", SPRITE_ID::MISSION_NUMBER);
+	sprite.Load("asset/UI/PlayScene/MissionBossDefeat.png", SPRITE_ID::MISSION_BOSS_DEFEAT);
+
+	sprite.Load("asset/UI/PlayScene/Enemy/BossHP_.png", SPRITE_ID::BOSSHP_UI);
+	sprite.Load("asset/UI/PlayScene/Enemy/BossHP_gauge.png", SPRITE_ID::BOSSHP_GAUGE);
+	sprite.Load("asset/UI/PlayScene/Enemy/EnemyCountATO.png", SPRITE_ID::ENEMY_COUNT_ATO);
 
 	//É|Å[ÉYâÊñ ÇÃUI
 	sprite.Load("asset/UI/Pause/PauseBack.png", SPRITE_ID::PAUSEBACK);
+	sprite.Load("asset/UI/Pause/Item.png", SPRITE_ID::ITEM);
+	sprite.Load("asset/UI/Pause/ItemUI.png", SPRITE_ID::PAUSEITEM);
+	sprite.Load("asset/UI/Pause/Item_description.png", SPRITE_ID::PAUSEITEM_DESCRIPTION);
+	sprite.Load("asset/UI/Pause/Operation.png", SPRITE_ID::OPERATION);
+	sprite.Load("asset/UI/Pause/OperationUI.png", SPRITE_ID::PAUSEOPERATION);
+	sprite.Load("asset/UI/Pause/Operation_description.png", SPRITE_ID::PAUSEOPERATION_DESCRIPTION);
+	sprite.Load("asset/UI/Pause/System.png", SPRITE_ID::SYSTEM);
+	sprite.Load("asset/UI/Pause/SystemUI.png", SPRITE_ID::PAUSESYSTEM);
+	sprite.Load("asset/UI/Pause/System_description.png", SPRITE_ID::PAUSESYSTEM_DESCRIPTION);
+	sprite.Load("asset/UI/Pause/TitleUI.png", SPRITE_ID::PAUSETITLE);
+	sprite.Load("asset/UI/Pause/Title_description.png", SPRITE_ID::PAUSETITLE_DESCRIPTION);
+	sprite.Load("asset/UI/Pause/CircleAnime.png", SPRITE_ID::PAUSECIRCLE);
+
+
 }
 void LoadingScene::LoadModel()
 {
@@ -68,7 +90,11 @@ void LoadingScene::LoadModel()
 	SkeletalMesh::load(4, "asset/ghoul2.mv1");
 	SkeletalMesh::load(2, "asset/BaseBall.mv1");
 	SkeletalMesh::load(3, "asset/MODEL/BossMonster/Monster.mv1");
+	SkeletalMesh::load(5, "asset/Weapon/Bullet.mv1");
+	SkeletalMesh::load(6, "asset/MODEL/Item/HPRecover/Wine_Bottle_Red.mv1");
+	SkeletalMesh::load(7, "asset/MODEL/Item/Bullet/BulletItemEX.mv1");
 	StaticMesh::load(0, "asset/w_magun01.mv1");
+	StaticMesh::load(1, "asset/Weapon/m16.obj/m16.mv1");
 
 	SkeletalMesh::load(10, "asset/MODEL/ExMonster/motion/parasite_l_starkie.mv1");
 }

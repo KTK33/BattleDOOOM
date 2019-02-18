@@ -5,6 +5,18 @@
 ItemCreater::ItemCreater(IWorld * world, const Vector3 & position):
 	Actor(world,"ItemCreater",position)
 {
+	int ItemCreate = Random::rand(0, 1);
+	switch (ItemCreate)
+	{
+	case 0:
+		world_->add_actor(ActorGroup::Item, std::make_shared<BulletItem>(7, world_, position_));
+		break;
+	case 1:
+		world_->add_actor(ActorGroup::Item, std::make_shared<HPRecoverItem>(6, world_, position_));
+		break;
+	default:
+		break;
+	}
 }
 
 void ItemCreater::initialize()
@@ -13,16 +25,6 @@ void ItemCreater::initialize()
 
 void ItemCreater::update(float deltaTime)
 {
-	int ItemCreate = Random::rand(0, 1);
-	switch (ItemCreate)
-	{
-	case 0:
-		world_->add_actor(ActorGroup::Item, std::make_shared<BulletItem>(2, world_, position_));
-		break;
-	default:
-		world_->add_actor(ActorGroup::Item, std::make_shared<HPRecoverItem>(2, world_, position_));
-		break;
-	}
 	die();
 }
 

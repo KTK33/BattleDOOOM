@@ -13,5 +13,6 @@ enum class ActorGroup {
 	Ball,         //É{Å[Éã
 	System,
 	UI,
+	PauseUI,
 };
 #endif // !ACTOR_GROUP_H_

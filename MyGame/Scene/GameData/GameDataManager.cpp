@@ -4,7 +4,7 @@ void GameDataManager::initialize()
 {
 	DeadBossEnemyCheck = false;
 	DeadPlayerCheck = false;
-	ItemBoxCheck = false;
+	RecoverItemCount = 0;
 }
 
 void GameDataManager::update()
@@ -31,12 +31,12 @@ bool GameDataManager::GetPlayerDead()
 	return DeadPlayerCheck;
 }
 
-void GameDataManager::SetItemBoxCheck(bool IB)
+void GameDataManager::SetRecoverItemCount(int RI)
 {
-	ItemBoxCheck = IB;
+	RecoverItemCount = RI;
 }
 
-bool GameDataManager::GetItemBoxCheck()
+int GameDataManager::GetRecoverItemCount()
 {
-	return ItemBoxCheck;
+	return RecoverItemCount;
 }
