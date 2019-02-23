@@ -19,7 +19,7 @@ void HPRecoverItem::update(float deltaTime)
 void HPRecoverItem::draw() const
 {
 	mesh_.draw();
-	body_->transform(Getpose())->draw();
+	//body_->transform(Getpose())->draw();
 }
 
 void HPRecoverItem::onCollide(Actor & other)

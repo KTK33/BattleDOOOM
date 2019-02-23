@@ -21,7 +21,7 @@ public:
 
 class DummyEnemy : public Actor,public EnemySystem {
 public:
-	DummyEnemy(int model, IWorld* world, const Vector3& position,const Matrix& rotation, const IBodyPtr& body = std::make_shared<BoundingCapsule>(Vector3{ 0.0f,5.0f,0.0f }, Matrix::Identity, 15.0f, 3.5f));
+	DummyEnemy(int model, IWorld* world, const Vector3& position,const Matrix& rotation, const IBodyPtr& body = std::make_shared<BoundingCapsule>(Vector3{ 0.0f,9.0f,0.0f }, Matrix::Identity, 10.0f, 3.5f));
 
 	void initialize();
 
@@ -33,6 +33,7 @@ public:
 
 	virtual void receiveMessage(EventMessage message, void* param);
 
+	void collision();
 	//èÛë‘ÇÃçXêV
 	void update_state(float deltaTime);
 
@@ -80,6 +81,8 @@ private:
 	bool roarCheck;
 
 	float AttackDis{ 10.0f };
+
+	bool deadCheck;
 
 };
 

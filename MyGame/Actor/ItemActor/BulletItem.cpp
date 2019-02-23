@@ -20,7 +20,7 @@ void BulletItem::update(float deltaTime)
 void BulletItem::draw() const
 {
 	mesh_.draw();
-	body_->transform(Getpose())->draw();
+	//body_->transform(Getpose())->draw();
 
 	//Sprite::GetInstance().DrawBillBoard(SPRITE_ID::HP_GAUGE,position_ , Vector2::Zero, 30.0f);
 }

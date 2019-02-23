@@ -64,6 +64,7 @@ void LoadingScene::LoadSprite()
 	sprite.Load("asset/UI/PlayScene/Enemy/BossHP_.png", SPRITE_ID::BOSSHP_UI);
 	sprite.Load("asset/UI/PlayScene/Enemy/BossHP_gauge.png", SPRITE_ID::BOSSHP_GAUGE);
 	sprite.Load("asset/UI/PlayScene/Enemy/EnemyCountATO.png", SPRITE_ID::ENEMY_COUNT_ATO);
+	sprite.Load("asset/UI/PlayScene/Sight.png", SPRITE_ID::SIGHT);
 
 	//ポーズ画面のUI
 	sprite.Load("asset/UI/Pause/PauseBack.png", SPRITE_ID::PAUSEBACK);
@@ -100,7 +101,8 @@ void LoadingScene::LoadModel()
 }
 void LoadingScene::LoadAny()
 {
-	CollisionMesh::load(0, "asset/castle/SampleStage_Castle.mv1");
+	//CollisionMesh::load(0, "asset/castle/SampleStage_Castle.mv1");
+	CollisionMesh::load(0, "asset/stage/stage/Textures/Stage.mv1");
 	//スカイボックスモデルの読み込み
 	Skybox::load(0, "asset/skybox/skydome.mv1");
 	//ビルボードの読み込み

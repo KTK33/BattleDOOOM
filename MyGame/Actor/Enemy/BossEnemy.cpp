@@ -8,7 +8,8 @@ BossEnemy::BossEnemy(int model, IWorld * world, const Vector3 & position, const 
 	state_{BossEnemyState::IDLE},
 	state_timer_{ 0.0f },
 	invinciblyCheck{ false },
-	invinciblyTime{ 60 }
+	invinciblyTime{ 60 },
+	Ikari{false}
 {
 	rotation_ *= Matrix::CreateRotationY(180.0f);
 	mesh_.transform(Getpose());
@@ -32,6 +33,12 @@ void BossEnemy::update(float deltaTime)
 		update_state(deltaTime);
 
 		Delay();
+	}
+	//collision()
+
+	if (hp_ <= 5)
+	{
+		Ikari = true;
 	}
 }
 
@@ -63,6 +70,28 @@ void BossEnemy::receiveMessage(EventMessage message, void * param)
 			change_state(BossEnemyState::DAMAGE, MotionBossDamage);
 			invinciblyCheck = true;
 		}
+		if (message == EventMessage::HIT_PLAYER_PUNCH)
+		{
+			hp_ = hp_ - *(int*)param;
+			change_state(BossEnemyState::DAMAGE, MotionBossDamage);
+			invinciblyCheck = true;
+		}
+
+	}
+}
+
+void BossEnemy::collision()
+{
+	//‚Ô‚Â‚©‚Á‚½‚©
+	Vector3 result;
+	//•Ç‚Æ‚Ô‚Â‚¯‚Ä‚©‚ç
+	if (field(result)) {
+		position_ = result;
+	}
+
+	//°‚Æ‚ÌÚ’n”»’è
+	if (floor(result)) {
+		position_ = result + rotation_.Up() *(body_->length()*0.5f + body_->radius());
 	}
 }
 
@@ -87,7 +116,12 @@ void BossEnemy::Idle()
 
 void BossEnemy::MoveWalk()
 {
-	position_ = Vector3::Lerp(position_, player_->Getposition(), WalkSpeed);
+	if (Ikari){
+		position_ = Vector3::Lerp(position_, player_->Getposition(), WalkSpeed*1.5f);
+	}
+	else{
+		position_ = Vector3::Lerp(position_, player_->Getposition(), WalkSpeed);
+	}
 
 	//ƒ^[ƒQƒbƒg•ûŒü‚É­‚µ‚¸‚ÂŒü‚«‚ð•Ï‚¦‚é Clamp‚Å–³—‚â‚èŠp“x(-TurnAngle`TurnAngle)“à‚É
 	const auto angle = MathHelper::Clamp(PlayerDirection(player_,position_,rotation_), -2.5f, 2.5f);
@@ -96,7 +130,7 @@ void BossEnemy::MoveWalk()
 	if (Vector3::Distance(position_, player_->Getposition()) <= AttackDis && 
 		angle == 0)
 	{
-		if (hp_ <= hp_ / 2)
+		if (hp_ <= 5)
 		{
 			change_state(BossEnemyState::PUNCH, MotionBossPunch2);
 		}
@@ -125,7 +159,12 @@ void BossEnemy::Punch()
 	}
 	if (state_timer_ >= mesh_.motion_end_time())
 	{
-		change_state(BossEnemyState::WALK, MotionBossWalk);
+		if (Ikari) {
+			change_state(BossEnemyState::WALK, MotionBossRun);
+		}
+		else {
+			change_state(BossEnemyState::WALK, MotionBossWalk);
+		}
 	}
 }
 
@@ -134,7 +173,12 @@ void BossEnemy::Damage()
 	state_timer_ += 1.0f;
 	if (state_timer_ >= mesh_.motion_end_time())
 	{
-		change_state(BossEnemyState::WALK, MotionBossWalk);
+		if (Ikari) {
+			change_state(BossEnemyState::WALK, MotionBossRun);
+		}
+		else {
+			change_state(BossEnemyState::WALK, MotionBossWalk);
+		}
 	}
 }
 

@@ -24,5 +24,7 @@ private:
 	//
 	Vector3 target_{ 0.0f,0.0f,0.0f };
 
-	Vector2 m_FarPoint{ 50.f,40.f };
+	Vector2 m_FarPoint{ 0.f,0.f };
+
+	float angle{ 0 };
 };

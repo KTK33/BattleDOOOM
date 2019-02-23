@@ -21,7 +21,7 @@ public:
 
 class BossEnemy : public Actor,public EnemySystem  {
 public:
-	BossEnemy(int model, IWorld* world, const Vector3& position, const IBodyPtr& body = std::make_shared<BoundingCapsule>(Vector3{ 0.0f,5.0f,0.0f }, Matrix::Identity, 15.0f, 4.0f));
+	BossEnemy(int model, IWorld* world, const Vector3& position, const IBodyPtr& body = std::make_shared<BoundingCapsule>(Vector3{ 0.0f,9.0f,0.0f }, Matrix::Identity, 12.0f, 4.0f));
 
 	void initialize();
 
@@ -32,6 +32,8 @@ public:
 	virtual void onCollide(Actor& other);
 
 	virtual void receiveMessage(EventMessage message, void* param);
+
+	void collision();
 
 	//èÛë‘ÇÃçXêV
 	void update_state(float deltaTime);
@@ -71,6 +73,8 @@ private:
 	Actor* player_;
 
 	float AttackDis{ 15.0f };
+
+	bool Ikari;
 
 };
 

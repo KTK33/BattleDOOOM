@@ -11,7 +11,7 @@
 
 class Player : public Actor {
 public:
-	Player(int model,int weapon,IWorld* world, const Vector3& position, std::weak_ptr<Actor> ui,const IBodyPtr& body = std::make_shared<BoundingCapsule>(Vector3{0.0f,5.0f,0.0f},Matrix::Identity,15.0f,4.0f));
+	Player(int model,int weapon,IWorld* world, const Vector3& position, std::weak_ptr<Actor> ui,const IBodyPtr& body = std::make_shared<BoundingCapsule>(Vector3{0.0f,9.0f,0.0f},Matrix::Identity,10.0f,4.0f));
 
 	void initialize() override;
 
@@ -86,6 +86,10 @@ private:
 	int weaponPos;
 
 	bool collide{ false };
+
+	bool AimingCheck;
+
+	Vector2 AimPos;
 };
 
 

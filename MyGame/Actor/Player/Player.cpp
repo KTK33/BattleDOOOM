@@ -7,21 +7,23 @@
 #include "PlayerPunchAttack.h"
 
 
-Player::Player(int model,int weapon,IWorld * world, const Vector3 & position,std::weak_ptr<Actor> ui,const IBodyPtr & body):
-	Actor(world,"Player",position,body),
-	m_ui{ui},
-	mesh_{model,weapon},
-	weapon_{weapon},
+Player::Player(int model, int weapon, IWorld * world, const Vector3 & position, std::weak_ptr<Actor> ui, const IBodyPtr & body) :
+	Actor(world, "Player", position, body),
+	m_ui{ ui },
+	mesh_{ model,weapon },
+	weapon_{ weapon },
 	SetRemainGun{ SetGunPoint },
 	DelayGunTime{ 20 },
-	HaveGun{10},
-	CheckGun{false},
+	HaveGun{ 10 },
+	CheckGun{ false },
 	state_{ PlayerState::PlayerIdel },
-	before_state_{PlayerState::NONE},
-	state_timer_{0.0f},
-	weaponPos{100},
-	invinciblyCheck{false},
-	invinciblyTime{100}
+	before_state_{ PlayerState::NONE },
+	state_timer_{ 0.0f },
+	weaponPos{ 100 },
+	invinciblyCheck{ false },
+	invinciblyTime{ 100 },
+	AimingCheck{ false },
+	AimPos{1920/2,1080/2}
 {
 	rotation_ = Matrix::Identity;
 	mesh_.transform(Getpose());
@@ -49,6 +51,24 @@ void Player::update(float deltaTime)
 	world_->send_message(EventMessage::PLAYER_HAVEGUN, (void*)&HaveGun);
 
 	hp_ = MathHelper::Clamp(hp_, 0, 10);
+
+	//collision();
+
+
+	if (state_ == PlayerState::State::PlayerIdleAiming ||
+		state_ == PlayerState::State::PlayerStopGun)
+	{
+		AimingCheck = true;
+	}
+	else
+	{
+		AimingCheck = false;
+	}
+
+	if (AimingCheck)
+	{
+		AimPos += GamePad::GetInstance().RightStick() * 3;
+	}
 }
 
 void Player::draw() const
@@ -56,6 +76,11 @@ void Player::draw() const
 	mesh_.draw();
 	draw_weapon();
 	body_->transform(Getpose())->draw();
+
+	if (AimingCheck)
+	{
+		Sprite::GetInstance().Draw(SPRITE_ID::SIGHT, AimPos);
+	}
 }
 
 void Player::onCollide(Actor & other)
@@ -117,9 +142,14 @@ void Player::collision()
 
 	//°‚Æ‚ÌÚ’n”»’è
 	if (floor(result)) {
+		collide = true;
 		position_ = result + rotation_.Up() *(body_->length()*0.5f + body_->radius());
 	}
-
+	//else
+	//{
+	//	collide = false;
+	//	position_.y -= 0.5f;
+	//}
 }
 
 void Player::update_state(float deltaTime)
@@ -199,6 +229,11 @@ void Player::Idle()
 			change_state(PlayerState::PlayerIdel, MotionPlayerIdel);
 		}
 	}
+
+	float yaw_speed{ 0.0f };
+	yaw_speed = GamePad::GetInstance().RightStick().x;
+	rotation_ *= Matrix::CreateFromAxisAngle(rotation_.Up(), yaw_speed * 1.0f);
+	rotation_.NormalizeRotationMatrix();
 }
 
 void Player::IdletoAim()
@@ -302,10 +337,10 @@ void Player::GunMove(float X,float Y)
 	side_speed = -X * 0.25f;
 	forward_speed = Y * 0.25f;
 
-	yaw_speed = GamePad::GetInstance().RightStick().x;
+	//yaw_speed = GamePad::GetInstance().RightStick().x;
 
-	rotation_ *= Matrix::CreateFromAxisAngle(rotation_.Up(), yaw_speed * 1.0f);
-	rotation_.NormalizeRotationMatrix();
+	//rotation_ *= Matrix::CreateFromAxisAngle(rotation_.Up(), yaw_speed * 1.0f);
+	//rotation_.NormalizeRotationMatrix();
 	velocity_ += rotation_.Forward() * forward_speed;
 	velocity_ += rotation_.Left() * side_speed;
 	position_ += velocity_ * 1.0f;
@@ -343,9 +378,9 @@ void Player::Move(float X, float Y)
 	motion_ = MotionPlayerRun;
 
 	yaw_speed = GamePad::GetInstance().RightStick().x;
-
 	rotation_ *= Matrix::CreateFromAxisAngle(rotation_.Up(), yaw_speed * 1.0f);
 	rotation_.NormalizeRotationMatrix();
+
 	velocity_ += rotation_.Forward() * forward_speed;
 	velocity_ += rotation_.Left() * side_speed;
 	position_ += velocity_ * 1.0f;
@@ -353,10 +388,10 @@ void Player::Move(float X, float Y)
 
 void Player::Gun(PlayerState::State state,int motion)
 {
-	if (motion != MotionPlayerBackGun)
+	if (GamePad::GetInstance().Stick().y >= 0)
 	{
 		if (SetRemainGun > 0 && !CheckGun) {
-			world_->add_actor(ActorGroup::PlayerBullet, std::make_shared<Ball>(5, world_, Vector3{ position_.x,position_.y + 10.0f,position_.z } +Getpose().Forward() * 10));
+			world_->add_actor(ActorGroup::PlayerBullet, std::make_shared<Ball>(5, world_, Vector3{ position_.x,position_.y + 10.0f,position_.z } +Getpose().Forward() * 10,AimPos));
 			SetRemainGun -= 1;
 			CheckGun = true;
 		}

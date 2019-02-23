@@ -2,11 +2,12 @@
 #include "../../World/IWorld.h"
 #include "../ActorGroup.h"
 
-Ball::Ball(int model, IWorld* world, const Vector3& position, const IBodyPtr& body):
-	Actor(world,"Ball",position,body),
+Ball::Ball(int model, IWorld* world, const Vector3& P_position, Vector2& A_position, const IBodyPtr& body):
+	Actor(world,"Ball", P_position,body),
 	enemy_{ nullptr },
 	mesh_ {model},
-	deadTime{60}
+	deadTime{60},
+	m_GoPos{A_position}
 {
 	player_ = world_->find_actor(ActorGroup::Player, "Player").get();
 	enemy_ = world_->find_actor(ActorGroup::Enemy, "Enemy").get();
@@ -58,6 +59,8 @@ void Ball::draw() const
 
 void Ball::distance()
 {
+	position_.x = MathHelper::Lerp(position_.x, m_GoPos.x, 0.01f);
+	position_.y = MathHelper::Lerp(position_.y, m_GoPos.y, 0.01f);
 	position_ += m_InitFar * 3;
 }
 void Ball::homing()

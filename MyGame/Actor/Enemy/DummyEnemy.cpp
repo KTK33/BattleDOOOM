@@ -10,7 +10,8 @@ DummyEnemy::DummyEnemy(int model, IWorld * world, const Vector3 & position,const
 	state_timer_{ 0.0f },
 	invinciblyCheck{ false },
 	invinciblyTime{ 60 },
-	roarCheck{ false }
+	roarCheck{ false },
+	deadCheck{false}
 {
 	rotation_ = rotation;
 	mesh_.transform(Getpose());
@@ -19,6 +20,7 @@ DummyEnemy::DummyEnemy(int model, IWorld * world, const Vector3 & position,const
 	maxHp = hp_;
 	player_ = world_->find_actor(ActorGroup::Player, "Player").get();
 	if (player_ == nullptr) return;
+
 
 }
 
@@ -30,22 +32,25 @@ void DummyEnemy::update(float deltaTime)
 {
 	if (world_->GetPauseCheck() == false)
 	{
-		mesh_.update(deltaTime);
-		mesh_.transform(Getpose());
-		mesh_.change_motion(motion_);
-		update_state(deltaTime);
+		if (!deadCheck)
+		{
+			mesh_.update(deltaTime);
+			mesh_.transform(Getpose());
+			mesh_.change_motion(motion_);
+			update_state(deltaTime);
+
+		}
 
 		Delay();
 	}
+
+	//collision();
 }
 
 void DummyEnemy::draw() const
 {
 	mesh_.draw();
 	body_->transform(Getpose())->draw();
-
-	//DrawFormatString(500, 500, GetColor(255, 255, 255), "%f", state_timer_);
-	//DrawFormatString(500, 600, GetColor(255, 255, 255), "%f", mesh_.motion_end_time());
 }
 
 void DummyEnemy::onCollide(Actor & other)
@@ -81,6 +86,22 @@ void DummyEnemy::receiveMessage(EventMessage message, void * param)
 	//if (message == EventMessage::DEAD_DUMMY_ENEMY){
 	//	die();
 	//}
+}
+
+void DummyEnemy::collision()
+{
+	//‚Ô‚Â‚©‚Á‚½‚©
+	Vector3 result;
+	//•Ç‚Æ‚Ô‚Â‚¯‚Ä‚©‚ç
+	if (field(result)) {
+		position_ = result;
+	}
+
+	//°‚Æ‚ÌÚ’n”»’è
+	if (floor(result)) {
+		position_ = result + rotation_.Up() *(body_->length()*0.5f + body_->radius());
+	}
+
 }
 
 void DummyEnemy::update_state(float deltaTime)
@@ -171,6 +192,7 @@ void DummyEnemy::Dead()
 	{
 		world_->send_message(EventMessage::DUMMY_DEAD_ENEMY, nullptr);
 		world_->add_actor(ActorGroup::Item, std::make_shared<ItemCreater>(world_, position_));
+		deadCheck = true;
 		die();
 	}
 }

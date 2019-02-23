@@ -12,6 +12,7 @@ Field::Field(int field) :
 	// フィールドの拡大率指定
 	MV1SetScale(field_, Vector3::Vector3ToVECTOR(Vector3::One * 1.0f));
 
+
 }
 
 void Field::update(float deltaTime)

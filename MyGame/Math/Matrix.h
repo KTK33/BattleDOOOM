@@ -51,6 +51,8 @@ struct Matrix {
     static Matrix Transpose(const Matrix& matrix);
     // 2つの行列の対応する値の間を線形補間します
     static Matrix Lerp(const Matrix& value1, const Matrix& value2, float amount);
+	//各軸の角度を返します
+	static Vector3 Angle(Matrix& mat);
     // 3D スケール / 回転 / 変換(SRT) Matrix からスカラー、変換、回転のコンポーネントを取得します
     void Decompose(Vector3& scale, Quaternion& rotation, Vector3& translation) const;
     // 回転行列を正規化します。

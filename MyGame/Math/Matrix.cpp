@@ -242,6 +242,30 @@ Matrix Matrix::Lerp(const Matrix & value1, const Matrix & value2, float amount) 
     Vector3 translation = Vector3::Lerp(value1.Translation(), value2.Translation(), amount);
     return Matrix::CreateWorld(scale, rotate, translation);
 }
+Vector3 Matrix::Angle(Matrix & mat) {
+	float f = 0.0001f;
+	float x;
+	float y;
+	float z;
+	if (MathHelper::Abs(mat.m[2][1] - 1.0f) < f) {
+		x = MathHelper::Pi / 2;
+		y = 0;
+		z = MathHelper::ATan(mat.m[1][0], mat.m[0][0]);
+		return Vector3(x, y, z);
+	}
+	else if (MathHelper::Abs(mat.m[2][1] + 1.0f) < f) {
+		x = -MathHelper::Pi / 2;
+		y = 0;
+		z = MathHelper::ATan(mat.m[1][0], mat.m[0][0]);
+		return Vector3(x, y, z);
+	}
+	else {
+		x = MathHelper::ASin(mat.m[2][1]);
+		y = MathHelper::ATan(-mat.m[2][0], mat.m[2][2]);
+		z = MathHelper::ATan(-mat.m[0][1], mat.m[1][1]);
+		return Vector3(x, y, z);
+	}
+}
 
 void Matrix::Decompose(Vector3 & scale, Quaternion & rotation, Vector3 & translation) const {
     scale = Scale();
