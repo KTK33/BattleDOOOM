@@ -27,4 +27,6 @@ private:
 	Vector2 m_FarPoint{ 0.f,0.f };
 
 	float angle{ 0 };
+
+	Vector2 AimPosMove;
 };

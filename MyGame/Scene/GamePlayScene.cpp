@@ -48,7 +48,7 @@ void GamePlayScene::start() {
 	auto P_Text = new_actor<PlayerTextUI>(&world_);
 	world_.add_actor(ActorGroup::UI, P_Text);
 
-	auto P = new_actor<Player>(0, 0, &world_, Vector3{ 0.0f, -40.0f,0.0f }, P_Text);
+	auto P = new_actor<Player>(0, 1, &world_, Vector3{ 0.0f, -40.0f,0.0f }, P_Text);
 	world_.add_actor(ActorGroup::Player, P);
 
 	world_.add_actor(ActorGroup::UI, new_actor<AnyUI>(&world_,P));
@@ -59,7 +59,7 @@ void GamePlayScene::start() {
 
 	for (int i = 0; i < 5; i++)
 	{
-		auto dummy = new_actor<DummyEnemy>(1, &world_, Vector3{ Random::rand(-70.0f,70.0f), 0.0f,Random::rand(-70.0f,70.0f) }, Matrix::CreateRotationY(Random::rand(0.0f,360.0f)));
+		auto dummy = new_actor<DummyEnemy>(1, &world_, Vector3{ Random::rand(-70.0f,70.0f), -40.0,Random::rand(-70.0f,70.0f) }, Matrix::CreateRotationY(Random::rand(0.0f,360.0f)));
 		world_.add_actor(ActorGroup::Enemy,dummy);
 	}
 
@@ -79,7 +79,7 @@ void GamePlayScene::update(float deltaTime)
 
 	if (world_.find_actor(ActorGroup::Enemy, "DummyEnemy") == NULL && BossArleady == false)
 	{
-		world_.add_actor(ActorGroup::Enemy, new_actor<BossEnemy>(3, &world_, Vector3{ 10.0f, 0.0f,0.0f }));
+		world_.add_actor(ActorGroup::Enemy, new_actor<BossEnemy>(3, &world_, Vector3{ 10.0f, -40.0f,0.0f }));
 		BossArleady = true;
 	}
 

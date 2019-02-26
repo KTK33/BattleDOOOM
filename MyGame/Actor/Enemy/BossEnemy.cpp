@@ -117,7 +117,7 @@ void BossEnemy::Idle()
 void BossEnemy::MoveWalk()
 {
 	if (Ikari){
-		position_ = Vector3::Lerp(position_, player_->Getposition(), WalkSpeed*1.5f);
+		position_ = Vector3::Lerp(position_, player_->Getposition(), WalkSpeed*3.0f);
 	}
 	else{
 		position_ = Vector3::Lerp(position_, player_->Getposition(), WalkSpeed);
@@ -130,14 +130,17 @@ void BossEnemy::MoveWalk()
 	if (Vector3::Distance(position_, player_->Getposition()) <= AttackDis && 
 		angle == 0)
 	{
-		if (hp_ <= 5)
-		{
-			change_state(BossEnemyState::PUNCH, MotionBossPunch2);
-		}
-		else
-		{
-			change_state(BossEnemyState::PUNCH, MotionBossPunch);
-		}
+		//if (hp_ <= 5)
+		//{
+		//	change_state(BossEnemyState::PUNCH, MotionBossPunch2);
+		//}
+		//else
+		//{
+		//	change_state(BossEnemyState::PUNCH, MotionBossPunch);
+		//}
+
+		change_state(BossEnemyState::PUNCH, MotionBossPunch);
+
 	}
 }
 
@@ -185,7 +188,7 @@ void BossEnemy::Damage()
 void BossEnemy::Dead()
 {
 	state_timer_ += 1.0f;
-	if (state_timer_ >= mesh_.motion_end_time())
+	if (state_timer_ >= mesh_.motion_end_time() + 300)
 	{
 		world_->send_message(EventMessage::BOSS_DEAD, nullptr);
 		GameDataManager::getInstance().SetDeadBossEnemy(true);

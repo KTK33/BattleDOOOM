@@ -50,10 +50,9 @@ private:
 
 	void Hit(Vector3& dir);
 
-
-
 private:
 	std::weak_ptr<Actor> m_ui{};
+	std::weak_ptr<Actor> m_sight{};
 	//World world__;
 	//アニメーションメッシュ
 	AnimatedMesh mesh_;
@@ -89,7 +88,9 @@ private:
 
 	bool AimingCheck;
 
-	Vector2 AimPos;
+	Vector3 AimPos;
+	Vector2 AimPosMove;
+	Vector3 InitAimPos;
 };
 
 

@@ -33,17 +33,17 @@ void AnyUI::receiveMessage(EventMessage message, void * param)
 void AnyUI::draw() const
 {
 	//HP
-	Sprite::GetInstance().Draw(SPRITE_ID::HP_UI, Vector2(0, WINDOW_HEIGHT));
+	Sprite::GetInstance().Draw(SPRITE_ID::HP_UI, Vector2(0, 0));
 	Sprite::GetInstance().DrawPart(SPRITE_ID::HP_GAUGE, Vector2(169, 22), 0, 0,
 		Sprite::GetInstance().GetSize(SPRITE_ID::HP_GAUGE).x / PlayerHP * m_playerHP, Sprite::GetInstance().GetSize(SPRITE_ID::HP_GAUGE).y);
-	Sprite::GetInstance().Draw(SPRITE_ID::TEXTFRAME, Vector2((float)WINDOW_WIDTH - Sprite::GetInstance().GetSize(SPRITE_ID::TEXTFRAME).x, (float)WINDOW_HEIGHT));
+	Sprite::GetInstance().Draw(SPRITE_ID::TEXTFRAME, Vector2((float)WINDOW_WIDTH - Sprite::GetInstance().GetSize(SPRITE_ID::TEXTFRAME).x, 0));
 
 	//弾数
 	Vector2 GunFreamSize = Sprite::GetInstance().GetSize(SPRITE_ID::GUN_FREAM);
-	Sprite::GetInstance().Draw(SPRITE_ID::GUN_FREAM, Vector2((float)WINDOW_WIDTH - GunFreamSize.x, GunFreamSize.y));
+	Sprite::GetInstance().Draw(SPRITE_ID::GUN_FREAM, Vector2((float)WINDOW_WIDTH - GunFreamSize.x, (int)WINDOW_HEIGHT- GunFreamSize.y));
 	Vector2 NumSize = Sprite::GetInstance().GetSize(SPRITE_ID::NUMBER);
 	Sprite::GetInstance().DrawPart(SPRITE_ID::NUMBER, Vector2((float)WINDOW_WIDTH - GunFreamSize.x*0.95f, (float)WINDOW_HEIGHT - GunFreamSize.y*0.8f), NumSize.x / 10 * m_playerGunRemain, 0, NumSize.x / 10, NumSize.y); //セットされている弾数(１桁)
-	Sprite::GetInstance().Draw(SPRITE_ID::THRASH, Vector2((float)WINDOW_WIDTH - GunFreamSize.x*0.7f, GunFreamSize.y*0.8f));//スラッシュ
+	Sprite::GetInstance().Draw(SPRITE_ID::THRASH, Vector2((float)WINDOW_WIDTH - GunFreamSize.x*0.7f, (int)WINDOW_HEIGHT- GunFreamSize.y*0.8f));//スラッシュ
 	int m_P[2] = { m_playerHavegun / 10,m_playerHavegun % 10 };
 	if (m_P[0] != 0) {
 		Sprite::GetInstance().DrawPart(SPRITE_ID::NUMBER, Vector2((float)WINDOW_WIDTH - GunFreamSize.x*0.5f, (float)WINDOW_HEIGHT - GunFreamSize.y*0.8f), NumSize.x / 10 * m_P[0], 0, NumSize.x / 10, NumSize.y); //セットされている弾数(１桁)
@@ -53,14 +53,14 @@ void AnyUI::draw() const
 	//MissonUI
 	if (EnemyCount > 0)
 	{
-		Sprite::GetInstance().Draw(SPRITE_ID::MISSION_ENEMY_EXTERMINATION, Vector2(150, WINDOW_HEIGHT - 75));
+		Sprite::GetInstance().Draw(SPRITE_ID::MISSION_ENEMY_EXTERMINATION, Vector2(150, 75));
 
 		Vector2 Misson_NumSize = Sprite::GetInstance().GetSize(SPRITE_ID::MISSION_NUMBER);
 		Sprite::GetInstance().DrawPart(SPRITE_ID::MISSION_NUMBER, Vector2(150 + Sprite::GetInstance().GetSize(SPRITE_ID::MISSION_ENEMY_EXTERMINATION).x, 90), Misson_NumSize.x / 10 * EnemyCount, 0, Misson_NumSize.x / 10, Misson_NumSize.y);
 	}
 	else
 	{
-		Sprite::GetInstance().Draw(SPRITE_ID::MISSION_BOSS_DEFEAT, Vector2(150, WINDOW_HEIGHT - 75));
+		Sprite::GetInstance().Draw(SPRITE_ID::MISSION_BOSS_DEFEAT, Vector2(150, 75));
 	}
 
 }

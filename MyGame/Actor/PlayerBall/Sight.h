@@ -3,11 +3,12 @@
 #include "../Actor.h"
 #include "../Player/Player.h"
 #include "../../Math/MathH.h"
+#include "../../Animation/AnimationMesh.h"
 
 class Sight : public Actor
 {
 public:
-	Sight(int model, IWorld* world, const Vector3& P_position);
+	Sight(IWorld* world, const Vector3& P_position);
 
 	virtual void initialize() override;
 
@@ -18,5 +19,7 @@ public:
 	virtual void draw() const;
 
 private:
-	Vector2 m_GoPos;
+	Vector3 m_GoPos;
+	bool AimCheck;
+	Matrix p_rote;
 };

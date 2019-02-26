@@ -22,6 +22,7 @@ enum class EventMessage
 	HIT_PLAYER,
 	HIT_ENEMY,
 	HIT_BALL,
+	HIT_BALL_HEAD,
 	DEAD_ENEMY,
 	DUMMY_DEAD_ENEMY,
 	DEAD_DUMMY_ENEMY,
@@ -33,9 +34,13 @@ enum class EventMessage
 	HIT_ENEMY_BULLET,
 	GET_BULLET,
 	GET_HPRECOVER,
+	GETPLAYERPOS,
+	SIGHT_CHECK,
+	GETPLAYERROTATION,
+	GETENEMYPOS,
 };
 //アクタークラス
-class Actor {
+class Actor :public std::enable_shared_from_this<Actor> {
 public:
 	//コンストラクタ
 	Actor();

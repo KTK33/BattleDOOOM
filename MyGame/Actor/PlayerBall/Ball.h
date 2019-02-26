@@ -9,7 +9,7 @@
 class Ball : public Actor
 {
 public:
-	Ball(int model, IWorld* world, const Vector3& P_position,Vector2& A_position, const IBodyPtr& body = std::make_shared<BoundingCapsule>(Vector3{ 0.0f,0.0f,0.0f }, Matrix::Identity, 1.0f, 2.0f));
+	Ball(int model, IWorld* world, const Vector3& P_position,Vector3& A_position, const IBodyPtr& body = std::make_shared<BoundingCapsule>(Vector3{ 0.0f,0.0f,0.0f }, Matrix::Identity, 0.1f, 3.0f));
 
 	virtual void initialize() override;
 
@@ -47,5 +47,5 @@ private:
 
 	Vector3 m_InitFar{ 0.0f,0.0f,0.0f };
 
-	Vector2 m_GoPos;
+	Vector3 m_GoPos;
 };

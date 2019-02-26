@@ -8,7 +8,8 @@
 #include "TPSCamera.h"
 
 Camera::Camera(IWorld * world) :
-	Actor(world, "Camera", Vector3::Zero)
+	Actor(world, "Camera", Vector3::Zero),
+	AimPosMove{ 0,0 }
 {
 }
 
@@ -16,7 +17,7 @@ void Camera::update(float deltaTime)
 {
 	Actor* player_ = world_->find_actor(ActorGroup::Player, "Player").get();
 	if (player_ == nullptr) return;
-	const auto position = Vector3{ 0.0f,m_FarPoint.x,m_FarPoint.y } *player_->Getpose();
+	const auto position = Vector3{ 0.0f,m_FarPoint.x,m_FarPoint.y }*player_->Getpose();
 	//target_ = player_->Getposition(); /*+Vector3{ 0.0f,10.0f,0.0f }*/;
 	//target_ = player_->Getposition() + player_->Getrotation().Forward() *5;
 	if (world_->GetPauseCheck() == false){
@@ -47,6 +48,15 @@ void Camera::update(float deltaTime)
 
 	target_ = position_ + player_->Getrotation().Forward() * 50;
 
+	//AimPosMove.x += GamePad::GetInstance().RightStick().x;
+
+	//AimPosMove.y += GamePad::GetInstance().RightStick().y;
+
+	//target_.x += rotation_.Right().x * AimPosMove.x;
+	//target_.y += AimPosMove.y;
+	//target_.z += rotation_.Right().z * AimPosMove.x;
+
+
 	TPSCamera::GetInstance().SetRange(0.5f, 1000.0f);
 	TPSCamera::GetInstance().Position.Set(position_);
 	//TPSCamera::GetInstance().Position.Set(Vector3(100,100,100));
@@ -54,14 +64,17 @@ void Camera::update(float deltaTime)
 	TPSCamera::GetInstance().Up.Set(Vector3::Up);
 	TPSCamera::GetInstance().Update();
 
+	//Graphics3D::view_matrix(Matrix::CreateLookAt(position_, target_, Vector3::Up));
+
+
 	move(position, 1.0f, 0.2f, 0.8f);
 }
 
 void Camera::draw() const
 {
 
-	Graphics3D::view_matrix(Matrix::CreateLookAt(position_,
-		target_, { 0.0f,5.0f,0.0f }));
+	//Graphics3D::view_matrix(Matrix::CreateLookAt(position_,
+	//	target_, { 0.0f,5.0f,0.0f }));
 	//Graphics3D::projection_matrix(Matrix::CreatePerspectiveFieldOfView(
 	//	49.0f, 640.0f / 480.0f, 0.3f, 1000.0f));
 
@@ -71,8 +84,8 @@ void Camera::draw() const
 //Graphics3D::projection_matrix(Matrix::CreatePerspectiveFieldOfView(
 //	49.0f, 640.0f / 480.0f, 0.3f, 1000.0f));
 
-	DrawFormatString(600, 600, GetColor(255, 255, 255), "%f", GamePad::GetInstance().RightStick().y);
-	DrawFormatString(600, 700, GetColor(255, 255, 255), "%f",angle);
+	//DrawFormatString(600, 600, GetColor(255, 255, 255), "%f", GamePad::GetInstance().RightStick().y);
+	//DrawFormatString(600, 700, GetColor(255, 255, 255), "%f",angle);
 
 	//DrawFormatString(600, 700, GetColor(255, 255, 255), "%f", m_FarPoint.x);
 	//DrawFormatString(600, 800, GetColor(255, 255, 255), "%f", m_FarPoint.y);

@@ -5,6 +5,7 @@
 #include "../../Texture/Sprite.h"
 #include "../../Scene/GameData/GameDataManager.h"
 #include "PlayerPunchAttack.h"
+#include "../PlayerBall/Sight.h"
 
 
 Player::Player(int model, int weapon, IWorld * world, const Vector3 & position, std::weak_ptr<Actor> ui, const IBodyPtr & body) :
@@ -19,15 +20,22 @@ Player::Player(int model, int weapon, IWorld * world, const Vector3 & position, 
 	state_{ PlayerState::PlayerIdel },
 	before_state_{ PlayerState::NONE },
 	state_timer_{ 0.0f },
-	weaponPos{ 100 },
+	weaponPos{ 103 },
 	invinciblyCheck{ false },
 	invinciblyTime{ 100 },
 	AimingCheck{ false },
-	AimPos{1920/2,1080/2}
+	AimPos{ position_.x + rotation_.Forward().x * 10 + rotation_.Right().x * 5, position_.y + 15, position_.z + rotation_.Forward().z * 10 + rotation_.Right().z * 5 },
+	AimPosMove{ 0,0 }
 {
 	rotation_ = Matrix::Identity;
 	mesh_.transform(Getpose());
 	hp_ = PlayerHP;
+
+	auto sight = new_actor<Sight>(world_, AimPos);
+	world_->add_actor(ActorGroup::UI, sight);
+	m_sight = sight;
+
+	InitAimPos = AimPos;
 }
 
 void Player::initialize()
@@ -60,27 +68,56 @@ void Player::update(float deltaTime)
 	{
 		AimingCheck = true;
 	}
-	else
-	{
-		AimingCheck = false;
-	}
+	else AimingCheck = false;
 
 	if (AimingCheck)
 	{
-		AimPos += GamePad::GetInstance().RightStick() * 3;
+		AimPosMove.x += GamePad::GetInstance().RightStick().x;
+		AimPosMove.y += GamePad::GetInstance().RightStick().y;
+
+
+		AimPos = Vector3(position_.x + rotation_.Forward().x * 200 + rotation_.Right().x * 5, position_.y + 15, position_.z + rotation_.Forward().z * 200 + rotation_.Right().z * 5);
+
+		AimPos.x += rotation_.Right().x * AimPosMove.x;
+		AimPos.y += AimPosMove.y;
+		AimPos.z += rotation_.Right().z * AimPosMove.x;
+
+
+		//AimPosMove = Vector2::Clamp(AimPosMove, Vector2(-3.5f,0.6f), Vector2(0.5f,1.8f));
+
+		m_sight.lock()->receiveMessage(EventMessage::GETPLAYERPOS, (void*)&AimPos);
+		m_sight.lock()->receiveMessage(EventMessage::GETPLAYERROTATION, (void*)&rotation_);
 	}
+	else {
+		AimPos = InitAimPos;
+	}
+	m_sight.lock()->receiveMessage(EventMessage::SIGHT_CHECK, (void*)&AimingCheck);
+
+	if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM1))
+	{
+		weaponPos = weaponPos + 1;
+	}
+	if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM2))
+	{
+		weaponPos = weaponPos - 1;
+	}
+
 }
 
 void Player::draw() const
 {
 	mesh_.draw();
 	draw_weapon();
-	body_->transform(Getpose())->draw();
+	//body_->transform(Getpose())->draw();
 
-	if (AimingCheck)
-	{
-		Sprite::GetInstance().Draw(SPRITE_ID::SIGHT, AimPos);
-	}
+	//DrawFormatString(500, 500, GetColor(255, 255, 255), "%f", AimPosMove.x);
+	//DrawFormatString(700, 500, GetColor(255, 255, 255), "%f", AimPosMove.y);
+
+	//DrawLine3D(position_, AimPos, GetColor(255, 255, 255));
+
+	//DrawFormatString(700, 900, GetColor(255, 255, 255), "%i", weaponPos);
+
+
 }
 
 void Player::onCollide(Actor & other)
@@ -164,7 +201,7 @@ void Player::update_state(float deltaTime)
 	case PlayerState::State::PlayerStopGun:		StopGun();		break;
 	case PlayerState::State::PlayerReload:		Reload();		break;
 	case PlayerState::State::PlayerGunPunch:	GunPunch();		 break;
-	//case PlayerState::State::PlayerMove: GunMove(motion_,deltaTime); break;
+		//case PlayerState::State::PlayerMove: GunMove(motion_,deltaTime); break;
 	case PlayerState::State::PlayerDamage:		Damage();		break;
 	case PlayerState::State::PlayerDead:		Dead();			break;
 	default: break;
@@ -239,7 +276,7 @@ void Player::Idle()
 void Player::IdletoAim()
 {
 	state_timer_ += 1.0f;
-	if (state_timer_ >= mesh_.motion_end_time()){
+	if (state_timer_ >= mesh_.motion_end_time()) {
 		change_state(PlayerState::PlayerIdleAiming, MotionPlayerIdleAiming);
 	}
 }
@@ -247,20 +284,20 @@ void Player::IdletoAim()
 void Player::AimtoIdle()
 {
 	state_timer_ += 1.0f;
-	if (state_timer_ >= mesh_.motion_end_time()){
+	if (state_timer_ >= mesh_.motion_end_time()) {
 		change_state(PlayerState::PlayerIdel, MotionPlayerIdel);
 	}
 }
 
 void Player::IdleAiming()
 {
-	if (GamePad::GetInstance().ButtonTriggerUp(PADBUTTON::NUM5)){
+	if (GamePad::GetInstance().ButtonTriggerUp(PADBUTTON::NUM5)) {
 		change_state(PlayerState::PlayerAimToIdle, MotionPlayerAimToIdle);
 	}
 
-	if (GamePad::GetInstance().ButtonStateDown(PADBUTTON::NUM6)){
+	if (GamePad::GetInstance().ButtonStateDown(PADBUTTON::NUM6)) {
 		change_state(PlayerState::PlayerStopGun, MotionPlayerStopGun);
-		Gun(state_,motion_);
+		Gun(state_, motion_);
 	}
 
 	GunMove(GamePad::GetInstance().Stick().x, GamePad::GetInstance().Stick().y);
@@ -269,13 +306,13 @@ void Player::IdleAiming()
 
 void Player::StopGun()
 {
-	Gun(state_,motion_);
+	Gun(state_, motion_);
 
-	if (GamePad::GetInstance().ButtonTriggerUp(PADBUTTON::NUM5)){
+	if (GamePad::GetInstance().ButtonTriggerUp(PADBUTTON::NUM5)) {
 		change_state(PlayerState::PlayerAimToIdle, MotionPlayerAimToIdle);
 	}
 
-	if (GamePad::GetInstance().ButtonTriggerUp(PADBUTTON::NUM6)){
+	if (GamePad::GetInstance().ButtonTriggerUp(PADBUTTON::NUM6)) {
 		change_state(PlayerState::PlayerIdleAiming, MotionPlayerIdleAiming);
 	}
 
@@ -288,12 +325,12 @@ void Player::Reload()
 	if (state_timer_ >= mesh_.motion_end_time())
 	{
 		int setpoint{ 0 };
-		if (HaveGun < SetGunPoint){
+		if (HaveGun < SetGunPoint) {
 			setpoint = HaveGun - SetGunPoint;
 		}
 
-		HaveGun = max(HaveGun + (SetRemainGun - SetGunPoint),0);
-		SetRemainGun = SetGunPoint +setpoint;
+		HaveGun = max(HaveGun + (SetRemainGun - SetGunPoint), 0);
+		SetRemainGun = SetGunPoint + setpoint;
 
 		DelayGunTime = 30;
 
@@ -326,7 +363,7 @@ void Player::GunPunch()
 		change_state(before_state_, before_motion_);
 	}
 }
-void Player::GunMove(float X,float Y)
+void Player::GunMove(float X, float Y)
 {
 	//‘OŒã¶‰EˆÚ“®
 	velocity_ = Vector3::Zero;
@@ -345,16 +382,16 @@ void Player::GunMove(float X,float Y)
 	velocity_ += rotation_.Left() * side_speed;
 	position_ += velocity_ * 1.0f;
 
-	if (X > 0.0f){
+	if (X > 0.0f) {
 		motion_ = MotionPlayerLeftGun;
 	}
-	if (X < 0.0f){
+	if (X < 0.0f) {
 		motion_ = MotionPlayerLeftGun;
 	}
-	if (Y > 0.0f){
+	if (Y > 0.0f) {
 		motion_ = MotionPlayerForwardGun;
 	}
-	if (Y < 0.0f){
+	if (Y < 0.0f) {
 		motion_ = MotionPlayerBackGun;
 	}
 
@@ -386,12 +423,12 @@ void Player::Move(float X, float Y)
 	position_ += velocity_ * 1.0f;
 }
 
-void Player::Gun(PlayerState::State state,int motion)
+void Player::Gun(PlayerState::State state, int motion)
 {
 	if (GamePad::GetInstance().Stick().y >= 0)
 	{
 		if (SetRemainGun > 0 && !CheckGun) {
-			world_->add_actor(ActorGroup::PlayerBullet, std::make_shared<Ball>(5, world_, Vector3{ position_.x,position_.y + 10.0f,position_.z } +Getpose().Forward() * 10,AimPos));
+			world_->add_actor(ActorGroup::PlayerBullet, std::make_shared<Ball>(5, world_, Vector3{ position_.x,position_.y + 15.0f,position_.z } +rotation_.Forward() * 10, AimPos));
 			SetRemainGun -= 1;
 			CheckGun = true;
 		}
@@ -445,7 +482,7 @@ void Player::Delay()
 				invinciblyTime = 100;
 			}
 		}
-		else{
+		else {
 			motion_ = MotionPlayerDead;
 			state_ = PlayerState::PlayerDead;
 		}

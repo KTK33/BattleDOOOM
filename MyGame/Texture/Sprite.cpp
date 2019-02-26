@@ -79,7 +79,7 @@ void Sprite::DrawSetCenter(const SPRITE_ID & id, const Vector2 & position)
 
 void Sprite::Draw(const SPRITE_ID & id, const Vector2 & position, const Vector2 & origin, const Vector2 & scale, float angle)
 {
-	DrawRotaGraph3((int)position.x, WINDOW_HEIGHT - (int)position.y, (int)origin.x, (int)origin.y,
+	DrawRotaGraph3((int)position.x, (int)position.y, (int)origin.x, (int)origin.y,
 		(double)scale.x, (double)scale.y, angle, m_sprites[id], true);
 
 }

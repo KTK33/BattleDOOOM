@@ -21,7 +21,7 @@ public:
 
 class DummyEnemy : public Actor,public EnemySystem {
 public:
-	DummyEnemy(int model, IWorld* world, const Vector3& position,const Matrix& rotation, const IBodyPtr& body = std::make_shared<BoundingCapsule>(Vector3{ 0.0f,9.0f,0.0f }, Matrix::Identity, 10.0f, 3.5f));
+	DummyEnemy(int model, IWorld* world, const Vector3& position,const Matrix& rotation, const IBodyPtr& body = std::make_shared<BoundingCapsule>(Vector3{ 0.0f,7.0f,0.0f }, Matrix::Identity, 8.0f, 3.5f));
 
 	void initialize();
 
@@ -72,7 +72,7 @@ private:
 	int motionNum;
 
 	Actor* player_;
-
+	std::weak_ptr<Actor> m_HS{};
 	int invinciblyTime;
 	bool invinciblyCheck;
 

@@ -149,6 +149,7 @@
     <ClCompile Include="Actor\Enemy\BossEnemy.cpp" />
     <ClCompile Include="Actor\Enemy\DummyEnemy.cpp" />
     <ClCompile Include="Actor\Enemy\EnemyAttack.cpp" />
+    <ClCompile Include="Actor\Enemy\EnemyHeadShot.cpp" />
     <ClCompile Include="Actor\Enemy\EnemySystem.cpp" />
     <ClCompile Include="Actor\Enemy\ExEnemy.cpp" />
     <ClCompile Include="Actor\ItemActor\BulletItem.cpp" />
@@ -225,6 +226,7 @@
     <ClInclude Include="Actor\Enemy\BossEnemy.h" />
     <ClInclude Include="Actor\Enemy\DummyEnemy.h" />
     <ClInclude Include="Actor\Enemy\EnemyAttack.h" />
+    <ClInclude Include="Actor\Enemy\EnemyHeadShot.h" />
     <ClInclude Include="Actor\Enemy\EnemySystem.h" />
     <ClInclude Include="Actor\Enemy\ExEnemy.h" />
     <ClInclude Include="Actor\ItemActor\BulletItem.h" />

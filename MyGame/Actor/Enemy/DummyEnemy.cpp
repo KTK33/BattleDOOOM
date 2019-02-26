@@ -2,6 +2,8 @@
 #include "../../Scene/GameData/GameDataManager.h"
 #include "../ItemActor/BulletItem.h"
 #include "../ItemActor/ItemCreater.h"
+#include "EnemyHeadShot.h"
+#include <memory>
 
 DummyEnemy::DummyEnemy(int model, IWorld * world, const Vector3 & position,const Matrix & rotation, const IBodyPtr & body) :
 	Actor(world, "DummyEnemy", position, body),
@@ -18,10 +20,13 @@ DummyEnemy::DummyEnemy(int model, IWorld * world, const Vector3 & position,const
 
 	hp_ = 3;
 	maxHp = hp_;
+
+	auto EH = new_actor<EnemyHeadShot>(world_, position_,weak_from_this());
+	world_->add_actor(ActorGroup::Enemy, EH);
+	m_HS = EH;
+
 	player_ = world_->find_actor(ActorGroup::Player, "Player").get();
 	if (player_ == nullptr) return;
-
-
 }
 
 void DummyEnemy::initialize()
@@ -43,6 +48,8 @@ void DummyEnemy::update(float deltaTime)
 
 		Delay();
 	}
+	if (m_HS.expired()) return;
+	m_HS.lock()->receiveMessage(EventMessage::GETENEMYPOS, (void*)&position_);
 
 	//collision();
 }
@@ -69,7 +76,13 @@ void DummyEnemy::receiveMessage(EventMessage message, void * param)
 	{
 		if (message == EventMessage::HIT_BALL)
 		{
-			hp_ = hp_ - 1;
+			hp_ = hp_ - *(int*)param;
+			change_state(DummyEnemyState::DAMAGE, MotionDummyDamage);
+			invinciblyCheck = true;
+		}
+		if (message == EventMessage::HIT_BALL_HEAD)
+		{
+			hp_ = hp_ - *(int*)param;
 			change_state(DummyEnemyState::DAMAGE, MotionDummyDamage);
 			invinciblyCheck = true;
 		}
@@ -193,6 +206,7 @@ void DummyEnemy::Dead()
 		world_->send_message(EventMessage::DUMMY_DEAD_ENEMY, nullptr);
 		world_->add_actor(ActorGroup::Item, std::make_shared<ItemCreater>(world_, position_));
 		deadCheck = true;
+		m_HS.lock()->receiveMessage(EventMessage::DEAD_DUMMY_ENEMY, nullptr);
 		die();
 	}
 }

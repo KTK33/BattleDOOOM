@@ -95,7 +95,7 @@ void LoadingScene::LoadModel()
 	SkeletalMesh::load(6, "asset/MODEL/Item/HPRecover/Wine_Bottle_Red.mv1");
 	SkeletalMesh::load(7, "asset/MODEL/Item/Bullet/BulletItemEX.mv1");
 	StaticMesh::load(0, "asset/w_magun01.mv1");
-	StaticMesh::load(1, "asset/Weapon/m16.obj/m16.mv1");
+	StaticMesh::load(1, "asset/Weapon/Italian/Italian machine guns.mv1");
 
 	SkeletalMesh::load(10, "asset/MODEL/ExMonster/motion/parasite_l_starkie.mv1");
 }

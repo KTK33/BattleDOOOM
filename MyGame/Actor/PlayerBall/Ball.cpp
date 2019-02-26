@@ -2,7 +2,7 @@
 #include "../../World/IWorld.h"
 #include "../ActorGroup.h"
 
-Ball::Ball(int model, IWorld* world, const Vector3& P_position, Vector2& A_position, const IBodyPtr& body):
+Ball::Ball(int model, IWorld* world, const Vector3& P_position, Vector3& A_position, const IBodyPtr& body):
 	Actor(world,"Ball", P_position,body),
 	enemy_{ nullptr },
 	mesh_ {model},
@@ -10,12 +10,13 @@ Ball::Ball(int model, IWorld* world, const Vector3& P_position, Vector2& A_posit
 	m_GoPos{A_position}
 {
 	player_ = world_->find_actor(ActorGroup::Player, "Player").get();
-	enemy_ = world_->find_actor(ActorGroup::Enemy, "Enemy").get();
+	enemy_ = world_->find_actor(ActorGroup::System, "Camera").get();
 	mesh_.transform(Getpose());
 
-	m_InitFar = player_->Getpose().Forward();
+	m_InitFar = player_->Getpose().Backward();
 
 	rotation_ = -player_->Getrotation();
+
 }
 
 void Ball::initialize()
@@ -39,8 +40,9 @@ void Ball::update(float deltaTime)
 
 void Ball::onCollide(Actor & other)
 {
-	Vector3 hitdir = (other.Getposition() - position_);
-	other.receiveMessage(EventMessage::HIT_BALL,(void*)&hitdir);
+	//Vector3 hitdir = (other.Getposition() - position_);
+	int DamageVal = 1;
+	other.receiveMessage(EventMessage::HIT_BALL,(void*)&DamageVal);
 }
 
 void Ball::receiveMessage(EventMessage message, void * param)
@@ -54,14 +56,14 @@ void Ball::receiveMessage(EventMessage message, void * param)
 void Ball::draw() const
 {
 	mesh_.draw();
-	//body_->transform(Getpose())->draw();
+	body_->transform(Getpose())->draw();
 }
 
 void Ball::distance()
 {
-	position_.x = MathHelper::Lerp(position_.x, m_GoPos.x, 0.01f);
-	position_.y = MathHelper::Lerp(position_.y, m_GoPos.y, 0.01f);
-	position_ += m_InitFar * 3;
+	position_.x = MathHelper::Lerp(position_.x, m_GoPos.x, 0.1f);
+	position_.y = MathHelper::Lerp(position_.y, m_GoPos.y, 0.1f);
+	position_.z = MathHelper::Lerp(position_.z, m_GoPos.z, 0.1f);
 }
 void Ball::homing()
 {
