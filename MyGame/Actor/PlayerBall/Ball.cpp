@@ -6,14 +6,14 @@ Ball::Ball(int model, IWorld* world, const Vector3& P_position, Vector3& A_posit
 	Actor(world,"Ball", P_position,body),
 	enemy_{ nullptr },
 	mesh_ {model},
-	deadTime{60},
+	deadTime{20},
 	m_GoPos{A_position}
 {
 	player_ = world_->find_actor(ActorGroup::Player, "Player").get();
 	enemy_ = world_->find_actor(ActorGroup::System, "Camera").get();
 	mesh_.transform(Getpose());
 
-	m_InitFar = player_->Getpose().Backward();
+	m_InitFar = Vector3(m_GoPos.x - position_.x, m_GoPos.y - position_.y, m_GoPos.z - position_.z);
 
 	rotation_ = -player_->Getrotation();
 
@@ -40,9 +40,9 @@ void Ball::update(float deltaTime)
 
 void Ball::onCollide(Actor & other)
 {
-	//Vector3 hitdir = (other.Getposition() - position_);
+	Vector3 hitdir = position_;
 	int DamageVal = 1;
-	other.receiveMessage(EventMessage::HIT_BALL,(void*)&DamageVal);
+	other.receiveMessage(EventMessage::HIT_BALL,(void*)&hitdir);
 }
 
 void Ball::receiveMessage(EventMessage message, void * param)
@@ -61,9 +61,11 @@ void Ball::draw() const
 
 void Ball::distance()
 {
-	position_.x = MathHelper::Lerp(position_.x, m_GoPos.x, 0.1f);
-	position_.y = MathHelper::Lerp(position_.y, m_GoPos.y, 0.1f);
-	position_.z = MathHelper::Lerp(position_.z, m_GoPos.z, 0.1f);
+	//position_.x = MathHelper::Lerp(position_.x, m_GoPos.x, 0.3f);
+	//position_.y = MathHelper::Lerp(position_.y, m_GoPos.y, 0.3f);
+	//position_.z = MathHelper::Lerp(position_.z, m_GoPos.z, 0.3f);
+
+	position_ += m_InitFar * 0.3f;
 }
 void Ball::homing()
 {

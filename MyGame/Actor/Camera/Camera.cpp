@@ -1,15 +1,17 @@
 #include "Camera.h"
 #include "../../Graphics/Graphics3D.h"
-#include "../../Game/Define.h"
 
 #include "../../Input/GamePad.h"
 #include "../../Math/Vector2.h"
 
 #include "TPSCamera.h"
+#include "../../Scene/GameData/GameDataManager.h"
+#include "../../Texture/Sprite.h"
 
-Camera::Camera(IWorld * world) :
+Camera::Camera(IWorld * world, std::weak_ptr<Actor> m_Player) :
 	Actor(world, "Camera", Vector3::Zero),
-	AimPosMove{ 0,0 }
+	AimPosMove{ 0,0 },
+	m_player{m_Player}
 {
 }
 
@@ -20,12 +22,10 @@ void Camera::update(float deltaTime)
 	const auto position = Vector3{ 0.0f,m_FarPoint.x,m_FarPoint.y }*player_->Getpose();
 	//target_ = player_->Getposition(); /*+Vector3{ 0.0f,10.0f,0.0f }*/;
 	//target_ = player_->Getposition() + player_->Getrotation().Forward() *5;
+	target_ = position_ + player_->Getrotation().Forward() * 50;
 	if (world_->GetPauseCheck() == false){
 		PlayerInput();
 	}
-
-	float XX = GamePad::GetInstance().RightStick().x;
-	float YY = GamePad::GetInstance().RightStick().y;
 
 	//position_.x += GamePad::GetInstance().RightStick().x * 10;
 	//position_.z += GamePad::GetInstance().RightStick().x * 10;
@@ -46,26 +46,36 @@ void Camera::update(float deltaTime)
 		player_->Getposition().y + 18, 
 		player_->Getposition().z + 10 * player_->Getrotation().Backward().z + 5 * player_->Getrotation().Right().z);
 
-	target_ = position_ + player_->Getrotation().Forward() * 50;
+	AimPosMove += GamePad::GetInstance().RightStick() * (GameDataManager::getInstance().GetAIMSPD() * 0.1f);
 
-	//AimPosMove.x += GamePad::GetInstance().RightStick().x;
+	target_.x += player_->Getrotation().Right().x * AimPosMove.x;
+	target_.y += AimPosMove.y;
+	target_.z += player_->Getrotation().Right().z * AimPosMove.x;
 
-	//AimPosMove.y += GamePad::GetInstance().RightStick().y;
+	if (GameDataManager::getInstance().GetSightCheck() == true)
+	{
 
-	//target_.x += rotation_.Right().x * AimPosMove.x;
-	//target_.y += AimPosMove.y;
-	//target_.z += rotation_.Right().z * AimPosMove.x;
+		//target_ = position_ + player_->Getrotation().Forward() * 200;
+
+		target_ = Vector3::Lerp(target_, position_ + player_->Getrotation().Forward() * 1, 0.1f);
+
+		m_player.lock()->receiveMessage(EventMessage::SIGHT_POSITION, (void*)&target_);
+
+		AimPosMove = Vector2::Clamp(AimPosMove, Vector2(-10, -50), Vector2(0, 50));
+	}
+	else
+	{
+		target_ = Vector3::Lerp(target_, position_ + player_->Getrotation().Forward() * 1, 0.1f);
+		//AimPosMove = Vector2(0, 0);
+		AimPosMove = Vector2::Clamp(AimPosMove, Vector2(0, -50), Vector2(0, 50));
+	}
 
 
 	TPSCamera::GetInstance().SetRange(0.5f, 1000.0f);
 	TPSCamera::GetInstance().Position.Set(position_);
-	//TPSCamera::GetInstance().Position.Set(Vector3(100,100,100));
 	TPSCamera::GetInstance().Target.Set(target_);
 	TPSCamera::GetInstance().Up.Set(Vector3::Up);
 	TPSCamera::GetInstance().Update();
-
-	//Graphics3D::view_matrix(Matrix::CreateLookAt(position_, target_, Vector3::Up));
-
 
 	move(position, 1.0f, 0.2f, 0.8f);
 }
@@ -84,11 +94,9 @@ void Camera::draw() const
 //Graphics3D::projection_matrix(Matrix::CreatePerspectiveFieldOfView(
 //	49.0f, 640.0f / 480.0f, 0.3f, 1000.0f));
 
-	//DrawFormatString(600, 600, GetColor(255, 255, 255), "%f", GamePad::GetInstance().RightStick().y);
-	//DrawFormatString(600, 700, GetColor(255, 255, 255), "%f",angle);
+//	DrawFormatString(500, 500, GetColor(255, 255, 255), "%f", AimPosMove.x);
+//DrawFormatString(700, 500, GetColor(255, 255, 255), "%f", AimPosMove.y);
 
-	//DrawFormatString(600, 700, GetColor(255, 255, 255), "%f", m_FarPoint.x);
-	//DrawFormatString(600, 800, GetColor(255, 255, 255), "%f", m_FarPoint.y);
 
 
 }

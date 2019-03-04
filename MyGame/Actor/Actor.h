@@ -13,7 +13,6 @@
 #include "../Math/MathH.h"
 #include "../Game/Define.h"
 #include "ActorGroup.h"
-
 #include "../Mesh/CollisionMesh.h"
 
 class IWorld;
@@ -35,8 +34,7 @@ enum class EventMessage
 	GET_BULLET,
 	GET_HPRECOVER,
 	GETPLAYERPOS,
-	SIGHT_CHECK,
-	GETPLAYERROTATION,
+	SIGHT_POSITION,
 	GETENEMYPOS,
 };
 //アクタークラス
@@ -48,12 +46,21 @@ public:
 	Actor(IWorld* world, const std::string& name, const Vector3& position, const Matrix& rotation, const IBodyPtr& body = std::make_shared<DummyBody>());
 	//仮想デストラクタ
 	virtual ~Actor(){}
+	//子を初期化
+	void rootInitialize();
+	//子を更新
+	void rootUpdate(float deltaTime);
+	//子を描画
+	void rootDraw() const;
+	void rootShadowDraw()const;
+
 	//初期化
 	virtual void initialize();
 	//更新
 	virtual void update(float delta_time);
 	//描画
 	virtual void draw() const;
+	virtual void shadowDraw() const;
 	//衝突時リアクション
 	virtual void onCollide(Actor& other);
 	//メッセージ処理
@@ -64,6 +71,16 @@ public:
 	bool field(Vector3& result);
 	//ステージ床面限定当たり判定
 	bool floor(Vector3& result);
+	//子供を追加する
+	void addChild(ActorPtr child);
+	//識別番号の設定
+	void setNumber(int cn);
+	//識別番号の取得
+	int getNumber()const;
+	//種類の設定
+	void setGroup(ActorGroup group);
+	//種類の取得
+	ActorGroup getGroup()const;
 	//死亡する
 	void die();
 	//衝突判定しているか？
@@ -83,13 +100,41 @@ public:
 	//変換行列を取得
 	Matrix Getpose() const;
 
+	//子を全て消す
+	void clearChildren();
+	//名前を基準に検索を行う
+	ActorPtr findCildren(const std::string& name);
+	//関数の条件に合った対象のうち一番早く見つかった物を取ってくる
+	ActorPtr findCildren(std::function<bool(const Actor&)> fn);
+	void findCildren(const std::string & name, std::list<std::weak_ptr<Actor>>& actorList);
+
+	std::list<ActorPtr>& getChildren();
+
+	// 子を巡回
+	void eachChildren(std::function<void(Actor&)>  fn);
+	// 子を巡回 (const版）
+	void eachChildren(std::function<void(const Actor&)> fn) const;
+
+	void collideChildren(Actor& other);
+
+	//子の削除
+	void removeChildren();
+	//子の削除
+	void removeChildren(std::function<bool(Actor&)> fn);
+
 	void handleMessage(EventMessage message, void* param);
+
+	void setDraw(bool isDraw);
 
 	//コピー禁止
 	//Actor(const Actor& other) = delete;
 	//Actor& operator=(const Actor& other) = delete;
 
 protected:
+	//キャラクター識別番号
+	int characterNumber_{ -1 };
+	//自身の種類
+	ActorGroup group_;
 	//ワールド
 	IWorld* world_;
 	//名前
@@ -114,6 +159,8 @@ protected:
 	int hp_{ 0 };
 
 	CollisionMesh mesh_;
+
+	bool isDraw_{ true };
 
 };
 #endif // !ACTOR_H_

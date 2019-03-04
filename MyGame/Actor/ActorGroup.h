@@ -14,5 +14,7 @@ enum class ActorGroup {
 	System,
 	UI,
 	PauseUI,
+	ItemBoxUI,
+	ItemBoxUIUI,
 };
 #endif // !ACTOR_GROUP_H_

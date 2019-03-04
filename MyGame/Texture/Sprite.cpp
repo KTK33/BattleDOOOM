@@ -28,6 +28,17 @@ void Sprite::DrawPart(const SPRITE_ID & id, const Vector2 & position, int x, int
 	DrawRectGraphF(position.x, position.y, x, y, w, h, m_sprites[id], TRUE, FALSE);
 }
 
+void Sprite::DrawPartExtend(const SPRITE_ID & id, const Vector2 & position, const Vector2 & exposition, int x, int y, int w, int h)
+{
+	DrawRectExtendGraphF(position.x, position.y, exposition.x, exposition.y, x, y, w, h, m_sprites[id], TRUE);
+}
+
+void Sprite::DrawPartRota(const SPRITE_ID & id, const Vector2 & position, int x, int y, int w, int h, const Vector2 & origin, const Vector2 & scale, float angle)
+{
+	DrawRectRotaGraph3F(position.x, position.y, x, y, w, h, origin.x, origin.y, scale.x, scale.y, angle, m_sprites[id], TRUE);
+}
+
+
 Sprite::~Sprite()
 {
 	InitGraph();

@@ -33,7 +33,6 @@ void LoadingScene::update(float deltaTime) {
 }
 
 void LoadingScene::draw() const {
-
 }
 
 void LoadingScene::end() {
@@ -77,9 +76,16 @@ void LoadingScene::LoadSprite()
 	sprite.Load("asset/UI/Pause/System.png", SPRITE_ID::SYSTEM);
 	sprite.Load("asset/UI/Pause/SystemUI.png", SPRITE_ID::PAUSESYSTEM);
 	sprite.Load("asset/UI/Pause/System_description.png", SPRITE_ID::PAUSESYSTEM_DESCRIPTION);
+	sprite.Load("asset/UI/Pause/System_Fream.png", SPRITE_ID::PAUSESYSTEM_FREAM);
+	sprite.Load("asset/UI/Pause/System_FreamS.png", SPRITE_ID::PAUSESYSTEM_FREAMS);
+	sprite.Load("asset/UI/Pause/SystemCursor.png", SPRITE_ID::PAUSESYSTEM_CURSOR);
+
 	sprite.Load("asset/UI/Pause/TitleUI.png", SPRITE_ID::PAUSETITLE);
 	sprite.Load("asset/UI/Pause/Title_description.png", SPRITE_ID::PAUSETITLE_DESCRIPTION);
 	sprite.Load("asset/UI/Pause/CircleAnime.png", SPRITE_ID::PAUSECIRCLE);
+
+	//エフェクト
+	sprite.Load("asset/UI/Effect/BulletHit.png", SPRITE_ID::EFFECT_BULLETHIT);
 
 
 }
@@ -92,8 +98,9 @@ void LoadingScene::LoadModel()
 	SkeletalMesh::load(2, "asset/BaseBall.mv1");
 	SkeletalMesh::load(3, "asset/MODEL/BossMonster/Monster.mv1");
 	SkeletalMesh::load(5, "asset/Weapon/Bullet.mv1");
-	SkeletalMesh::load(6, "asset/MODEL/Item/HPRecover/Wine_Bottle_Red.mv1");
+	SkeletalMesh::load(6, "asset/MODEL/Item/HPRecover/firstaid.mv1");
 	SkeletalMesh::load(7, "asset/MODEL/Item/Bullet/BulletItemEX.mv1");
+	SkeletalMesh::load(8, "asset/MODEL/BossMonster/Fire/Meteor.mv1");
 	StaticMesh::load(0, "asset/w_magun01.mv1");
 	StaticMesh::load(1, "asset/Weapon/Italian/Italian machine guns.mv1");
 
@@ -103,6 +110,7 @@ void LoadingScene::LoadAny()
 {
 	//CollisionMesh::load(0, "asset/castle/SampleStage_Castle.mv1");
 	CollisionMesh::load(0, "asset/stage/stage/Textures/Stage.mv1");
+	//CollisionMesh::load(0, "asset/stage/stage/NonOBJStage/NonObjStage.mv1");
 	//スカイボックスモデルの読み込み
 	Skybox::load(0, "asset/skybox/skydome.mv1");
 	//ビルボードの読み込み

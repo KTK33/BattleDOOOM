@@ -5,7 +5,7 @@
 
 class PlayerItemBox : public Actor,public Menu {
 public:
-	PlayerItemBox(IWorld* world);
+	PlayerItemBox(IWorld* world, int HPItem);
 
 	void initialize();
 
@@ -21,4 +21,5 @@ private:
 	Actor* player_;
 
 	int countHPrecoverItem;
+
 };

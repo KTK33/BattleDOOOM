@@ -2,6 +2,7 @@
 #include "../Actor.h"
 #include "../../Math/Matrix.h"
 #include "EnemyAttack.h"
+#include "EnemyAttackFire.h"
 
 class EnemySystem
 {

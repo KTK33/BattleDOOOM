@@ -1,6 +1,8 @@
 #include "Pause.h"
 #include "../../Texture/Sprite.h"
 #include "../../Input/GamePad.h"
+#include "../../Scene/GameData/GameDataManager.h"
+#include "PauseSystem.h"
 
 PauseUI::PauseUI(IWorld * world):
 	Actor(world,"PauseUI",Vector3::Zero)
@@ -15,6 +17,8 @@ PauseUI::PauseUI(IWorld * world):
 	UISize[0] = 1;
 
 	PauseDecision = false;
+
+	areladySystemOpen = false;
 
 }
 
@@ -40,6 +44,20 @@ void PauseUI::update(float deltaTime)
 		PlayerInput();
 		Pause();
 	}
+	else
+	{
+		GameDataManager::getInstance().SetItemBoXOpen(false);
+		areladySystemOpen = false;
+	}
+
+	if (PauseDecision)
+	{
+
+	}
+	else
+	{
+		areladySystemOpen = false;
+	}
 }
 
 void PauseUI::receiveMessage(EventMessage message, void * param)
@@ -62,7 +80,11 @@ void PauseUI::draw() const
 		switch (cursorPos_){
 		case 3:
 			Sprite::GetInstance().DrawSetCenter(SPRITE_ID::PAUSEITEM_DESCRIPTION, Vector2(1050, WINDOW_HEIGHT - 50.0f));
-			if (PauseDecision) Sprite::GetInstance().Draw(SPRITE_ID::ITEM, Vector2(0, 0));
+			if (PauseDecision)
+			{
+				Sprite::GetInstance().Draw(SPRITE_ID::ITEM, Vector2(0, 0));
+				GameDataManager::getInstance().SetItemBoXOpen(true);
+			}
 			break;
 		case 2:
 			Sprite::GetInstance().DrawSetCenter(SPRITE_ID::PAUSEOPERATION_DESCRIPTION, Vector2(1050, WINDOW_HEIGHT - 50.0f));
@@ -79,7 +101,6 @@ void PauseUI::draw() const
 		default:break;
 		}
 	}
-
 }
 
 void PauseUI::PlayerInput()
@@ -89,6 +110,7 @@ void PauseUI::PlayerInput()
 		if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM1))
 		{
 			PauseDecision = false;
+			GameDataManager::getInstance().SetItemBoXOpen(false);
 		}
 	}
 	else
@@ -144,6 +166,7 @@ void PauseUI::Pause()
 		UISize[2] = 1.25f;
 		UISize[1] = 1;
 		UISize[0] = 1;
+		if(PauseDecision)SystemInput();
 		break;
 	case 2:
 		UISize[3] = 1;
@@ -159,5 +182,14 @@ void PauseUI::Pause()
 		break;
 
 	default:break;
+	}
+}
+
+void PauseUI::SystemInput()
+{
+	if (!areladySystemOpen)
+	{
+		world_->add_actor(ActorGroup::ItemBoxUI, new_actor<PauseSystem>(world_));
+		areladySystemOpen = true;
 	}
 }

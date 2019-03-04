@@ -14,6 +14,7 @@ public:
 		WALK,
 		RUN,
 		PUNCH,
+		FIRE,
 		DAMAGE,
 		DEAD, 
 	};
@@ -42,6 +43,7 @@ public:
 	void MoveWalk();
 	void MoveRun();
 	void Punch();
+	void AttackFire();
 	void Damage();
 	void Dead();
 

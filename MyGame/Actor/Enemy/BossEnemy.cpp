@@ -1,6 +1,7 @@
 #include "BossEnemy.h"
 #include "../../Scene/GameData/GameDataManager.h"
 #include "../../Texture/Sprite.h"
+#include "../UIActor/Effect.h"
 
 BossEnemy::BossEnemy(int model, IWorld * world, const Vector3 & position, const IBodyPtr & body) :
 	Actor(world, "BossEnemy", position, body),
@@ -48,7 +49,7 @@ void BossEnemy::draw() const
 	body_->transform(Getpose())->draw();
 
 	//HP
-	Sprite::GetInstance().Draw(SPRITE_ID::BOSSHP_UI, Vector2(0, Sprite::GetInstance().GetSize(SPRITE_ID::BOSSHP_UI).y));
+	Sprite::GetInstance().Draw(SPRITE_ID::BOSSHP_UI, Vector2(0, WINDOW_HEIGHT -  Sprite::GetInstance().GetSize(SPRITE_ID::BOSSHP_UI).y));
 	Sprite::GetInstance().DrawPart(SPRITE_ID::BOSSHP_GAUGE, Vector2(492, WINDOW_HEIGHT - 70), 0, 0,
 		Sprite::GetInstance().GetSize(SPRITE_ID::BOSSHP_GAUGE).x / PlayerHP * hp_, Sprite::GetInstance().GetSize(SPRITE_ID::BOSSHP_GAUGE).y);
 
@@ -69,6 +70,9 @@ void BossEnemy::receiveMessage(EventMessage message, void * param)
 			hp_ = hp_ - 1;
 			change_state(BossEnemyState::DAMAGE, MotionBossDamage);
 			invinciblyCheck = true;
+
+			world_->add_actor(ActorGroup::Effect, new_actor<Effect>(world_, *(Vector3*)param, Vector3::Distance(position_, player_->Getposition()), SPRITE_ID::EFFECT_BULLETHIT));
+
 		}
 		if (message == EventMessage::HIT_PLAYER_PUNCH)
 		{
@@ -103,6 +107,7 @@ void BossEnemy::update_state(float deltaTime)
 	case BossEnemyState::WALK:  MoveWalk();	break;
 	case BossEnemyState::RUN:	MoveRun();	break;
 	case BossEnemyState::PUNCH:	Punch();	break;
+	case BossEnemyState::FIRE:	AttackFire();	break;
 	case BossEnemyState::DAMAGE:Damage();	break;
 	case BossEnemyState::DEAD:	Dead();		break;
 	default:break;
@@ -127,20 +132,14 @@ void BossEnemy::MoveWalk()
 	const auto angle = MathHelper::Clamp(PlayerDirection(player_,position_,rotation_), -2.5f, 2.5f);
 	rotation_ *= Matrix::CreateRotationY(angle);
 
-	if (Vector3::Distance(position_, player_->Getposition()) <= AttackDis && 
-		angle == 0)
+	if (Vector3::Distance(position_, player_->Getposition()) <= AttackDis && angle == 0)
 	{
-		//if (hp_ <= 5)
-		//{
-		//	change_state(BossEnemyState::PUNCH, MotionBossPunch2);
-		//}
-		//else
-		//{
-		//	change_state(BossEnemyState::PUNCH, MotionBossPunch);
-		//}
-
 		change_state(BossEnemyState::PUNCH, MotionBossPunch);
+	}
 
+	if (Vector3::Distance(position_, player_->Getposition()) <= 70 && Ikari && angle == 0)
+	{
+		change_state(BossEnemyState::FIRE, MotionBossPunch2);
 	}
 }
 
@@ -168,6 +167,21 @@ void BossEnemy::Punch()
 		else {
 			change_state(BossEnemyState::WALK, MotionBossWalk);
 		}
+	}
+}
+
+void BossEnemy::AttackFire()
+{
+	state_timer_ += 1.0f;
+	if (state_timer_ == 20)
+	{
+		auto enemyFire = std::make_shared<EnemyAttackFire>(8,world_, Vector3{ position_.x,position_.y + 15.0f,position_.z } +rotation_.Forward() * 10);
+		world_->add_actor(ActorGroup::EnemyBullet, enemyFire);
+		enemyFire->GetEnemyForward(Getpose().Forward());
+	}
+	if (state_timer_ >= mesh_.motion_end_time())
+	{
+		change_state(BossEnemyState::WALK, MotionBossWalk);
 	}
 }
 

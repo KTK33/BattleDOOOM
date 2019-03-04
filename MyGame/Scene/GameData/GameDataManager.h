@@ -18,12 +18,28 @@ public:
 	void SetPlayerDead(bool pd);
 	bool GetPlayerDead();
 
-	void SetRecoverItemCount(int RI);
-	int GetRecoverItemCount();
+	void SetItemBoXOpen(bool IBX);
+	bool GetItemBoxOpen();
+
+	void SetSightCheck(bool SC);
+	bool GetSightCheck();
+
+	void SetBGMVAL(int BGM);
+	int GetBGMVAL();
+	void SetSEVAL(int SE);
+	int GetSEVAL();
+	void SetAIMSPD(int AIM);
+	int GetAIMSPD();
+
 
 private:
 
 	bool DeadBossEnemyCheck{ false };
 	bool DeadPlayerCheck{ false };
-	int RecoverItemCount{ 2 };
+	bool ItemBoxOpne{ false };
+	bool SightCheck{ false };
+
+	int BGMVAL;
+    int SE_VAL;
+	int AIM_SPD;
 };

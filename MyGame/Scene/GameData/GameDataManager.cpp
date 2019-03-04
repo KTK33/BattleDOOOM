@@ -4,7 +4,11 @@ void GameDataManager::initialize()
 {
 	DeadBossEnemyCheck = false;
 	DeadPlayerCheck = false;
-	RecoverItemCount = 0;
+	SightCheck = false;
+
+	BGMVAL = 5;
+	SE_VAL = 5;
+	AIM_SPD = 5;
 }
 
 void GameDataManager::update()
@@ -31,12 +35,52 @@ bool GameDataManager::GetPlayerDead()
 	return DeadPlayerCheck;
 }
 
-void GameDataManager::SetRecoverItemCount(int RI)
+void GameDataManager::SetItemBoXOpen(bool IBX)
 {
-	RecoverItemCount = RI;
+	ItemBoxOpne = IBX;
 }
 
-int GameDataManager::GetRecoverItemCount()
+bool GameDataManager::GetItemBoxOpen()
 {
-	return RecoverItemCount;
+	return ItemBoxOpne;
+}
+
+void GameDataManager::SetSightCheck(bool SC)
+{
+	SightCheck = SC;
+}
+
+bool GameDataManager::GetSightCheck()
+{
+	return SightCheck;
+}
+
+void GameDataManager::SetBGMVAL(int BGM)
+{
+	BGMVAL = BGM;
+}
+
+int GameDataManager::GetBGMVAL()
+{
+	return BGMVAL;
+}
+
+void GameDataManager::SetSEVAL(int SE)
+{
+	SE_VAL = SE;
+}
+
+int GameDataManager::GetSEVAL()
+{
+	return SE_VAL;
+}
+
+void GameDataManager::SetAIMSPD(int AIM)
+{
+	AIM_SPD = AIM;
+}
+
+int GameDataManager::GetAIMSPD()
+{
+	return AIM_SPD;
 }

@@ -18,6 +18,8 @@ public:
 
 	void Pause();
 
+	void SystemInput();
+
 private:
 
 	int animeTime;
@@ -26,4 +28,6 @@ private:
 	float UISize[4] = {};
 
 	bool PauseDecision;
+
+	bool areladySystemOpen;
 };

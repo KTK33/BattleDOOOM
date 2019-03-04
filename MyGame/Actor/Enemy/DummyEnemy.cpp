@@ -4,6 +4,7 @@
 #include "../ItemActor/ItemCreater.h"
 #include "EnemyHeadShot.h"
 #include <memory>
+#include "../UIActor/Effect.h"
 
 DummyEnemy::DummyEnemy(int model, IWorld * world, const Vector3 & position,const Matrix & rotation, const IBodyPtr & body) :
 	Actor(world, "DummyEnemy", position, body),
@@ -37,14 +38,10 @@ void DummyEnemy::update(float deltaTime)
 {
 	if (world_->GetPauseCheck() == false)
 	{
-		if (!deadCheck)
-		{
-			mesh_.update(deltaTime);
-			mesh_.transform(Getpose());
-			mesh_.change_motion(motion_);
-			update_state(deltaTime);
-
-		}
+		mesh_.update(deltaTime);
+		mesh_.transform(Getpose());
+		mesh_.change_motion(motion_);
+		update_state(deltaTime);
 
 		Delay();
 	}
@@ -76,9 +73,13 @@ void DummyEnemy::receiveMessage(EventMessage message, void * param)
 	{
 		if (message == EventMessage::HIT_BALL)
 		{
-			hp_ = hp_ - *(int*)param;
+			//hp_ = hp_ - *(int*)param;
+			hp_ = hp_ - 1;
 			change_state(DummyEnemyState::DAMAGE, MotionDummyDamage);
 			invinciblyCheck = true;
+
+			world_->add_actor(ActorGroup::Effect, new_actor<Effect>(world_, *(Vector3*)param ,Vector3::Distance(position_,player_->Getposition()),SPRITE_ID::EFFECT_BULLETHIT));
+
 		}
 		if (message == EventMessage::HIT_BALL_HEAD)
 		{
@@ -201,12 +202,13 @@ void DummyEnemy::Damage()
 void DummyEnemy::Dead()
 {
 	state_timer_ += 1.0f;
-	if (state_timer_ >= mesh_.motion_end_time() + 100)
+	if (state_timer_ >= mesh_.motion_end_time())
 	{
 		world_->send_message(EventMessage::DUMMY_DEAD_ENEMY, nullptr);
 		world_->add_actor(ActorGroup::Item, std::make_shared<ItemCreater>(world_, position_));
 		deadCheck = true;
-		m_HS.lock()->receiveMessage(EventMessage::DEAD_DUMMY_ENEMY, nullptr);
+		//if (m_HS.expired()) die(); return;
+		//m_HS.lock()->receiveMessage(EventMessage::DEAD_DUMMY_ENEMY, nullptr);
 		die();
 	}
 }

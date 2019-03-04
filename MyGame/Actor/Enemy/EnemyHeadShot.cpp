@@ -34,5 +34,5 @@ void EnemyHeadShot::receiveMessage(EventMessage message, void * param)
 
 void EnemyHeadShot::draw() const
 {
-	body_->transform(Getpose())->draw();
+	//body_->transform(Getpose())->draw();
 }

@@ -5,7 +5,7 @@
 class Camera : public Actor
 {
 public:
-	Camera(IWorld* world);
+	Camera(IWorld* world, std::weak_ptr<Actor> m_Player);
 
 	void update(float deltaTime);
 
@@ -29,4 +29,6 @@ private:
 	float angle{ 0 };
 
 	Vector2 AimPosMove;
+
+	std::weak_ptr<Actor> m_player{};
 };

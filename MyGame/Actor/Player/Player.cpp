@@ -5,7 +5,6 @@
 #include "../../Texture/Sprite.h"
 #include "../../Scene/GameData/GameDataManager.h"
 #include "PlayerPunchAttack.h"
-#include "../PlayerBall/Sight.h"
 
 
 Player::Player(int model, int weapon, IWorld * world, const Vector3 & position, std::weak_ptr<Actor> ui, const IBodyPtr & body) :
@@ -23,17 +22,12 @@ Player::Player(int model, int weapon, IWorld * world, const Vector3 & position, 
 	weaponPos{ 103 },
 	invinciblyCheck{ false },
 	invinciblyTime{ 100 },
-	AimingCheck{ false },
 	AimPos{ position_.x + rotation_.Forward().x * 10 + rotation_.Right().x * 5, position_.y + 15, position_.z + rotation_.Forward().z * 10 + rotation_.Right().z * 5 },
-	AimPosMove{ 0,0 }
+	RecoverItemCount{0}
 {
 	rotation_ = Matrix::Identity;
 	mesh_.transform(Getpose());
 	hp_ = PlayerHP;
-
-	auto sight = new_actor<Sight>(world_, AimPos);
-	world_->add_actor(ActorGroup::UI, sight);
-	m_sight = sight;
 
 	InitAimPos = AimPos;
 }
@@ -44,6 +38,10 @@ void Player::initialize()
 
 void Player::update(float deltaTime)
 {
+
+	prevPosition_ = position_;
+	prevRotation_ = rotation_;
+
 	if (world_->GetPauseCheck() == false)
 	{
 		mesh_.update(deltaTime);
@@ -66,41 +64,31 @@ void Player::update(float deltaTime)
 	if (state_ == PlayerState::State::PlayerIdleAiming ||
 		state_ == PlayerState::State::PlayerStopGun)
 	{
-		AimingCheck = true;
+		GameDataManager::getInstance().SetSightCheck(true);
 	}
-	else AimingCheck = false;
-
-	if (AimingCheck)
+	else
 	{
-		AimPosMove.x += GamePad::GetInstance().RightStick().x;
-		AimPosMove.y += GamePad::GetInstance().RightStick().y;
-
-
-		AimPos = Vector3(position_.x + rotation_.Forward().x * 200 + rotation_.Right().x * 5, position_.y + 15, position_.z + rotation_.Forward().z * 200 + rotation_.Right().z * 5);
-
-		AimPos.x += rotation_.Right().x * AimPosMove.x;
-		AimPos.y += AimPosMove.y;
-		AimPos.z += rotation_.Right().z * AimPosMove.x;
-
-
-		//AimPosMove = Vector2::Clamp(AimPosMove, Vector2(-3.5f,0.6f), Vector2(0.5f,1.8f));
-
-		m_sight.lock()->receiveMessage(EventMessage::GETPLAYERPOS, (void*)&AimPos);
-		m_sight.lock()->receiveMessage(EventMessage::GETPLAYERROTATION, (void*)&rotation_);
+		GameDataManager::getInstance().SetSightCheck(false);
+		AimPos = Vector3::Lerp(AimPos, InitAimPos, 0.1f);
 	}
-	else {
-		AimPos = InitAimPos;
-	}
-	m_sight.lock()->receiveMessage(EventMessage::SIGHT_CHECK, (void*)&AimingCheck);
 
-	if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM1))
-	{
-		weaponPos = weaponPos + 1;
-	}
-	if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM2))
-	{
-		weaponPos = weaponPos - 1;
-	}
+	//if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM1))
+	//{
+	//	weaponPos = weaponPos + 1;
+	//}
+	//if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM2))
+	//{
+	//	weaponPos = weaponPos - 1;
+	//}
+
+	//if (GamePad::GetInstance().ButtonStateDown(PADBUTTON::NUM1))
+	//{
+	//	position_.y -= 0.1f;
+	//}
+	//if (GamePad::GetInstance().ButtonStateDown(PADBUTTON::NUM2))
+	//{
+	//	position_.y += 0.1f;
+	//}
 
 }
 
@@ -108,14 +96,29 @@ void Player::draw() const
 {
 	mesh_.draw();
 	draw_weapon();
-	//body_->transform(Getpose())->draw();
+	body_->transform(Getpose())->draw();
 
 	//DrawFormatString(500, 500, GetColor(255, 255, 255), "%f", AimPosMove.x);
 	//DrawFormatString(700, 500, GetColor(255, 255, 255), "%f", AimPosMove.y);
 
-	//DrawLine3D(position_, AimPos, GetColor(255, 255, 255));
+	//DrawLine3D(Vector3{ position_.x,position_.y + 15.0f,position_.z } +rotation_.Forward() * 10, AimPos, GetColor(255, 255, 255));
 
 	//DrawFormatString(700, 900, GetColor(255, 255, 255), "%i", weaponPos);
+
+	if (collide)
+	{
+		DrawFormatString(700, 900, GetColor(255, 255, 255), "HIT");
+	}
+
+	if (floorcollide)
+	{
+		DrawFormatString(700, 1000, GetColor(255, 255, 255), "FloorHIT");
+	}
+
+	if (GameDataManager::getInstance().GetSightCheck() == true)
+	{
+		Sprite::GetInstance().DrawSetCenter(SPRITE_ID::SIGHT, Vector2(ConvWorldPosToScreenPos(AimPos).x, ConvWorldPosToScreenPos(AimPos).y));
+	}
 
 
 }
@@ -150,8 +153,9 @@ void Player::receiveMessage(EventMessage message, void * param)
 	}
 	if (message == EventMessage::GET_HPRECOVER)
 	{
-		hp_ += *(int*)param;
-		m_ui.lock()->receiveMessage(EventMessage::GET_HPRECOVER, nullptr);
+		//hp_ += *(int*)param;
+		RecoverItemCount = RecoverItemCount + 1;
+		m_ui.lock()->receiveMessage(EventMessage::GET_HPRECOVER, (void*)&RecoverItemCount);
 	}
 	if (message == EventMessage::PLAYER_REMAINGUN)
 	{
@@ -166,6 +170,11 @@ void Player::receiveMessage(EventMessage message, void * param)
 	{
 		Hit(*(Vector3*)param);
 	}
+
+	if (message == EventMessage::SIGHT_POSITION)
+	{
+		AimPos = *(Vector3*)param;
+	}
 }
 
 void Player::collision()
@@ -175,18 +184,23 @@ void Player::collision()
 	//•Ç‚Æ‚Ô‚Â‚¯‚Ä‚©‚ç
 	if (field(result)) {
 		position_ = result;
+		collide = true;
+	}
+	else
+	{
+		collide = false;
 	}
 
 	//°‚Æ‚ÌÚ’n”»’è
 	if (floor(result)) {
-		collide = true;
+		floorcollide = true;
 		position_ = result + rotation_.Up() *(body_->length()*0.5f + body_->radius());
 	}
-	//else
-	//{
-	//	collide = false;
-	//	position_.y -= 0.5f;
-	//}
+	else
+	{
+		floorcollide = false;
+		//position_.y -= 0.5f;
+	}
 }
 
 void Player::update_state(float deltaTime)

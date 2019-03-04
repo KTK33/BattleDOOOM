@@ -2,7 +2,6 @@
 //#include "../Actor/Enemy/Enemy.h"
 #include "../Actor/PlayerBall/Ball.h"
 #include "../Actor/Player/Player.h"
-#include "../Actor/Player/PlayerItemBox.h"
 #include "../Actor/Enemy/DummyEnemy.h"
 #include "../Actor/Enemy/BossEnemy.h"
 #include "../Actor/Camera/Camera.h"
@@ -24,6 +23,8 @@
 
 #include "../Actor/Enemy/ExEnemy.h"
 
+#include "../Actor/UIActor/Effect.h"
+
 #include<DxLib.h>
 
 //コンストラクタ
@@ -42,13 +43,10 @@ void GamePlayScene::start() {
 	menuSize_ = 4;
 	BossArleady = false;
 
-	//auto P_Box = new_actor<PlayerItemBox>(&world_);
-	//world_.add_actor(ActorGroup::Player, P_Box);
-
 	auto P_Text = new_actor<PlayerTextUI>(&world_);
 	world_.add_actor(ActorGroup::UI, P_Text);
 
-	auto P = new_actor<Player>(0, 1, &world_, Vector3{ 0.0f, -40.0f,0.0f }, P_Text);
+	auto P = new_actor<Player>(0, 1, &world_, Vector3{ 0.0f, -35.0f,0.0f }, P_Text);
 	world_.add_actor(ActorGroup::Player, P);
 
 	world_.add_actor(ActorGroup::UI, new_actor<AnyUI>(&world_,P));
@@ -59,7 +57,7 @@ void GamePlayScene::start() {
 
 	for (int i = 0; i < 5; i++)
 	{
-		auto dummy = new_actor<DummyEnemy>(1, &world_, Vector3{ Random::rand(-70.0f,70.0f), -40.0,Random::rand(-70.0f,70.0f) }, Matrix::CreateRotationY(Random::rand(0.0f,360.0f)));
+		auto dummy = new_actor<DummyEnemy>(1, &world_, Vector3{ Random::rand(-10.0f,120.0f), -35.0,Random::rand(0.0f,150.0f) }, Matrix::CreateRotationY(Random::rand(0.0f,360.0f)));
 		world_.add_actor(ActorGroup::Enemy,dummy);
 	}
 
@@ -67,19 +65,20 @@ void GamePlayScene::start() {
 
 	//world_.add_actor(ActorGroup::Enemy, new_actor<ExEnemy>(10, &world_, Vector3{ 20.0f, 0.0f,0.0f }));
 
-	world_.add_actor(ActorGroup::System, new_actor<Camera>(&world_));
+	world_.add_actor(ActorGroup::System, new_actor<Camera>(&world_,P));
 
 	world_.add_actor(ActorGroup::UI, new_actor<EnemyDeadText>(&world_));
+
+	//world_.add_actor(ActorGroup::Effect, new_actor<Effect>(&world_,Vector3(10,-30,10),0,SPRITE_ID::EFFECT_BULLETHIT));
 }
 
 void GamePlayScene::update(float deltaTime)
 {
 	world_.update(deltaTime);
-	//GameDataManager::getInstance().update();
 
 	if (world_.find_actor(ActorGroup::Enemy, "DummyEnemy") == NULL && BossArleady == false)
 	{
-		world_.add_actor(ActorGroup::Enemy, new_actor<BossEnemy>(3, &world_, Vector3{ 10.0f, -40.0f,0.0f }));
+		world_.add_actor(ActorGroup::Enemy, new_actor<BossEnemy>(3, &world_, Vector3{ 10.0f, -35.0f,0.0f }));
 		BossArleady = true;
 	}
 

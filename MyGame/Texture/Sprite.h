@@ -51,6 +51,9 @@ public:
 	int GetHandle(const SPRITE_ID& id) const;
 	//‰æ‘œ‚Ìw’è‚µ‚½ˆê•”‚Ì‚İ•`‰æ
 	void DrawPart(const SPRITE_ID& id, const Vector2& position, int x, int y, int w, int h);
+	void DrawPartExtend(const SPRITE_ID& id, const Vector2& position,const Vector2& exposition, int x, int y, int w, int h);
+	void DrawPartRota(const SPRITE_ID& id, const Vector2& position,int x, int y, int w, int h,const Vector2& origin = Vector2::Zero, const Vector2& scale = Vector2::One, float angle = 0.0f);
+
 
 private:
 	// ’Êí‰æ‘œ

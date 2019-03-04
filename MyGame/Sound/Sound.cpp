@@ -1,12 +1,13 @@
 #include "Sound.h"
 #include "../Game/Define.h"
+#include "../Scene/GameData/GameDataManager.h"
 #include "../math/MathHelper.h"
 #include <sstream>
 
 static constexpr float SOUND_RANGE = 256.0f;
 
 Sound::Sound() :
-	m_bgm_volume(BGMVOLUME), m_se_volume(SEVOLUME)
+	m_bgm_volume(GameDataManager::getInstance().GetBGMVAL()), m_se_volume(GameDataManager::getInstance().GetSEVAL())
 {
 
 }

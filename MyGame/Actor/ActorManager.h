@@ -22,6 +22,7 @@ public:
 	void update(float delta_time);
 	//•`‰æ
 	void draw() const;
+	void shadowDraw()const;
 	//Õ“Ë”»’è
 	void collide();
 	//Õ“Ë”»’è

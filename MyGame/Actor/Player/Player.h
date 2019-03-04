@@ -52,7 +52,6 @@ private:
 
 private:
 	std::weak_ptr<Actor> m_ui{};
-	std::weak_ptr<Actor> m_sight{};
 	//World world__;
 	//アニメーションメッシュ
 	AnimatedMesh mesh_;
@@ -85,12 +84,12 @@ private:
 	int weaponPos;
 
 	bool collide{ false };
-
-	bool AimingCheck;
+	bool floorcollide{ false };
 
 	Vector3 AimPos;
-	Vector2 AimPosMove;
 	Vector3 InitAimPos;
+
+	int RecoverItemCount;
 };
 
 
