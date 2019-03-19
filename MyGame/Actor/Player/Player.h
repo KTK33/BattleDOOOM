@@ -41,17 +41,20 @@ private:
 	void GunMove(float X,float Y);
 	void Move(float X, float Y);
 	void Gun(PlayerState::State state,int motion);
+	void JumpChacker(PlayerState::State state);
+	void Jump();
 	void Damage();
 	void Dead();
+	void Tyohatu();
 	//武器の描画
 	void draw_weapon() const;
 	//ディレイ系
 	void Delay();
 
 	void Hit(Vector3& dir);
-
 private:
 	std::weak_ptr<Actor> m_ui{};
+	IBodyPtr Initbody;
 	//World world__;
 	//アニメーションメッシュ
 	AnimatedMesh mesh_;
@@ -62,7 +65,9 @@ private:
 	int weapon_;
 	//移動速度
 	const float WalkSpeed{ 0.25f };
-	//状態
+
+	float gravity{ 9.8f*0.1f };
+	//状態,
 	PlayerState::State state_;
 	PlayerState::State before_state_;
 	//状態タイマ
@@ -90,26 +95,9 @@ private:
 	Vector3 InitAimPos;
 
 	int RecoverItemCount;
-};
+	int AttackItemCount;
 
+	int alreadyItem;
 
-//モーション番号
-enum
-{
-	MotionPlayerIdel = 0,
-	MotionPlayerStopGun = 1,
-	MotionPlayerForwardGun = 2,
-	MotionPlayerRightGun = 3,
-	MotionPlayerLeftGun = 4,
-	MotionPlayerBackGun = 5,
-	MotionPlayerReload = 6,
-	MotionPlayerIdleToAim = 7,
-	MotionPlayerAimToIdle = 8,
-	MotionPlayerIdle2 = 9,
-	MotionPlayerDamageGun = 10,
-	MotionPlayerDead = 11,
-	MotionPlayerGunPunch = 12,
-	MotionPlayerRun = 13,
-	MotionPlayerIdleAiming = 14,
-	MotionPlayerDamage = 15,
+	bool DeadCheck;
 };

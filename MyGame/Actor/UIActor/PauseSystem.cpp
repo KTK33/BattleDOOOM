@@ -55,8 +55,8 @@ void PauseSystem::draw() const
 	Sprite::GetInstance().DrawSetCenter(SPRITE_ID::PAUSESYSTEM_CURSOR, Vector2(802.f + GameDataManager::getInstance().GetAIMSPD() * 100.f, WINDOW_HEIGHT - 350.0f));
 
 	//DrawFormatString(1000, 700, GetColor(255, 0, 0), "%i", GameDataManager::getInstance().GetBGMVAL());
-	DrawFormatString(1000, 600, GetColor(255, 0, 0), "%i", GameDataManager::getInstance().GetSEVAL());
-	DrawFormatString(1000, 500, GetColor(255, 0, 0), "%i", GameDataManager::getInstance().GetAIMSPD());
+	//DrawFormatString(1000, 600, GetColor(255, 0, 0), "%i", GameDataManager::getInstance().GetSEVAL());
+	//DrawFormatString(1000, 500, GetColor(255, 0, 0), "%i", GameDataManager::getInstance().GetAIMSPD());
 
 }
 

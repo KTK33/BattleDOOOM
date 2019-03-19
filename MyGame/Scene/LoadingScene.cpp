@@ -12,27 +12,42 @@
 
 LoadingScene::LoadingScene() {
 
-	next_ = SceneType::SCENE_TITLE;
+	next_ = SceneType::SCENE_GAMEPLAY;
 }
 
 void LoadingScene::start() {
 	CollisionMesh::initialize();
 	Skybox::initialize();
 	Billboard::initialize();
-
+	//非同期開始
+	SetUseASyncLoadFlag(TRUE);
 	//各種リソースのロードを行う
 	LoadSprite();
 	LoadAny();
 	LoadModel();
 	LoadShader();
-	isEnd_ = true;
+	SetUseASyncLoadFlag(FALSE);
 }
 
 void LoadingScene::update(float deltaTime) {
 
+
+	if (GetASyncLoadNum() <= 0) 
+	{
+		isEnd_ = true;
+	}
 }
 
 void LoadingScene::draw() const {
+
+	int id[2] = {};
+	id[0] = LoadGraph("asset/UI/LoadScene/LoadGauge.png");
+	id[1] = LoadGraph("asset/UI/LoadScene/LoadFream.png");
+	DrawGraph(210, 800, id[1],FALSE);
+	DrawRectGraphF(215, 805, 0, 0, 30 * GetASyncLoadNum(), 40, id[0], false);
+	// 読み込んだ画像のグラフィックハンドルを削除
+	//DeleteGraph(gauge);
+
 }
 
 void LoadingScene::end() {
@@ -41,8 +56,16 @@ void LoadingScene::end() {
 void LoadingScene::LoadSprite()
 {
 	auto& sprite = Sprite::GetInstance();
+	sprite.Load("asset/UI/Fade/TitleBackBlack.png", SPRITE_ID::FADEBLACK);
 	//タイトル画面のUI
+	sprite.Load("asset/UI/TitleScene/TitleBack.png", SPRITE_ID::TITLEBACK);
 	sprite.Load("asset/UI/TitleScene/TitleName.png", SPRITE_ID::TITLENAME);
+	sprite.Load("asset/UI/TitleScene/TitleNameBack.png", SPRITE_ID::TITLENAMEBACK);
+	sprite.Load("asset/UI/TitleScene/PressStartUI.png", SPRITE_ID::TITLEPRESS_START);
+	sprite.Load("asset/UI/TitleScene/TitleBackWhite.png", SPRITE_ID::TITLEBACKWHITE);
+	sprite.Load("asset/UI/TitleScene/Choui.png", SPRITE_ID::TITLECHUI);
+	sprite.Load("asset/UI/TitleScene/Jikyo.png", SPRITE_ID::TITLEJIKYO);
+
 
 	//ゲーム画面のUI
 	sprite.Load("asset/UI/PlayScene/TextFrame.png",SPRITE_ID::TEXTFRAME);
@@ -65,11 +88,18 @@ void LoadingScene::LoadSprite()
 	sprite.Load("asset/UI/PlayScene/Enemy/EnemyCountATO.png", SPRITE_ID::ENEMY_COUNT_ATO);
 	sprite.Load("asset/UI/PlayScene/Sight.png", SPRITE_ID::SIGHT);
 
+	sprite.Load("asset/UI/PlayScene/ItemBox.png", SPRITE_ID::ITEMBOX);
+
+	sprite.Load("asset/UI/PlayScene/GameOverBack.png", SPRITE_ID::GAMEOVERBACK);
+	sprite.Load("asset/UI/PlayScene/GameOverName.png", SPRITE_ID::GAMEOVERNAME);
+
 	//ポーズ画面のUI
 	sprite.Load("asset/UI/Pause/PauseBack.png", SPRITE_ID::PAUSEBACK);
 	sprite.Load("asset/UI/Pause/Item.png", SPRITE_ID::ITEM);
 	sprite.Load("asset/UI/Pause/ItemUI.png", SPRITE_ID::PAUSEITEM);
 	sprite.Load("asset/UI/Pause/Item_description.png", SPRITE_ID::PAUSEITEM_DESCRIPTION);
+	sprite.Load("asset/UI/Pause/Item_tukau.png", SPRITE_ID::PAUSEITEM_TUKAU);
+	sprite.Load("asset/UI/Pause/Item_tukauBack.png", SPRITE_ID::PAUSEITEM_TUKAUBACK);
 	sprite.Load("asset/UI/Pause/Operation.png", SPRITE_ID::OPERATION);
 	sprite.Load("asset/UI/Pause/OperationUI.png", SPRITE_ID::PAUSEOPERATION);
 	sprite.Load("asset/UI/Pause/Operation_description.png", SPRITE_ID::PAUSEOPERATION_DESCRIPTION);
@@ -97,7 +127,7 @@ void LoadingScene::LoadModel()
 	SkeletalMesh::load(4, "asset/ghoul2.mv1");
 	SkeletalMesh::load(2, "asset/BaseBall.mv1");
 	SkeletalMesh::load(3, "asset/MODEL/BossMonster/Monster.mv1");
-	SkeletalMesh::load(5, "asset/Weapon/Bullet.mv1");
+	SkeletalMesh::load(5, "asset/Weapon/Bullet1.mv1");
 	SkeletalMesh::load(6, "asset/MODEL/Item/HPRecover/firstaid.mv1");
 	SkeletalMesh::load(7, "asset/MODEL/Item/Bullet/BulletItemEX.mv1");
 	SkeletalMesh::load(8, "asset/MODEL/BossMonster/Fire/Meteor.mv1");
@@ -108,9 +138,7 @@ void LoadingScene::LoadModel()
 }
 void LoadingScene::LoadAny()
 {
-	//CollisionMesh::load(0, "asset/castle/SampleStage_Castle.mv1");
-	CollisionMesh::load(0, "asset/stage/stage/Textures/Stage.mv1");
-	//CollisionMesh::load(0, "asset/stage/stage/NonOBJStage/NonObjStage.mv1");
+	CollisionMesh::load(0, "asset/stage/stage/Textures/Untitled.mv1");
 	//スカイボックスモデルの読み込み
 	Skybox::load(0, "asset/skybox/skydome.mv1");
 	//ビルボードの読み込み

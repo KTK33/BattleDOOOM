@@ -4,17 +4,21 @@
 //アクターグループ
 enum class ActorGroup {
 	ETCETERA_ACTOR,
-	Player,       //プレイヤー
 	Enemy,        //敵
+	EnemyHead,
 	PlayerBullet, //プレイヤー弾
 	Item,
 	EnemyBullet,  //敵弾
-	Effect,       //エフェクト
 	Ball,         //ボール
+	Effect,       //エフェクト
+	Player,       //プレイヤー
 	System,
+	UIBefore,
 	UI,
 	PauseUI,
 	ItemBoxUI,
 	ItemBoxUIUI,
+	GameOverUI,
+	Fade,
 };
 #endif // !ACTOR_GROUP_H_

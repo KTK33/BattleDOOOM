@@ -14,17 +14,14 @@ DummyEnemy::DummyEnemy(int model, IWorld * world, const Vector3 & position,const
 	invinciblyCheck{ false },
 	invinciblyTime{ 60 },
 	roarCheck{ false },
-	deadCheck{false}
+	deadCheck{false},
+	alreadyHS{false}
 {
 	rotation_ = rotation;
 	mesh_.transform(Getpose());
 
 	hp_ = 3;
 	maxHp = hp_;
-
-	auto EH = new_actor<EnemyHeadShot>(world_, position_,weak_from_this());
-	world_->add_actor(ActorGroup::Enemy, EH);
-	m_HS = EH;
 
 	player_ = world_->find_actor(ActorGroup::Player, "Player").get();
 	if (player_ == nullptr) return;
@@ -36,6 +33,14 @@ void DummyEnemy::initialize()
 
 void DummyEnemy::update(float deltaTime)
 {
+	if (!alreadyHS)
+	{
+		auto EH = new_actor<EnemyHeadShot>(world_, position_, weak_from_this());
+		world_->add_actor(ActorGroup::EnemyHead, EH);
+		m_HS = EH;
+
+		alreadyHS = true;
+	}
 	if (world_->GetPauseCheck() == false)
 	{
 		mesh_.update(deltaTime);
@@ -46,9 +51,11 @@ void DummyEnemy::update(float deltaTime)
 		Delay();
 	}
 	if (m_HS.expired()) return;
-	m_HS.lock()->receiveMessage(EventMessage::GETENEMYPOS, (void*)&position_);
+	m_HS.lock()->receiveMessage(EventMessage::GETENEMYPOS, (void*)&(position_ + HSPos));
 
-	//collision();
+	collision();
+
+	prevPosition_ = position_;
 }
 
 void DummyEnemy::draw() const
@@ -73,19 +80,19 @@ void DummyEnemy::receiveMessage(EventMessage message, void * param)
 	{
 		if (message == EventMessage::HIT_BALL)
 		{
-			//hp_ = hp_ - *(int*)param;
 			hp_ = hp_ - 1;
 			change_state(DummyEnemyState::DAMAGE, MotionDummyDamage);
 			invinciblyCheck = true;
 
-			world_->add_actor(ActorGroup::Effect, new_actor<Effect>(world_, *(Vector3*)param ,Vector3::Distance(position_,player_->Getposition()),SPRITE_ID::EFFECT_BULLETHIT));
+			world_->add_actor(ActorGroup::Effect, new_actor<Effect>(world_, *(Vector3*)param ,/*Vector3::Distance(position_,player_->Getposition())*/0.3f,SPRITE_ID::EFFECT_BULLETHIT));
 
 		}
 		if (message == EventMessage::HIT_BALL_HEAD)
 		{
-			hp_ = hp_ - *(int*)param;
+			hp_ = hp_ - 3;
 			change_state(DummyEnemyState::DAMAGE, MotionDummyDamage);
 			invinciblyCheck = true;
+			world_->add_actor(ActorGroup::Effect, new_actor<Effect>(world_, *(Vector3*)param,0.3f, SPRITE_ID::EFFECT_BULLETHIT));
 		}
 
 		if (message == EventMessage::HIT_PLAYER_PUNCH)
@@ -155,7 +162,8 @@ void DummyEnemy::Move()
 	rotation_ *= Matrix::CreateRotationY(angle);
 
 	if (Vector3::Distance(position_,player_->Getposition()) <= AttackDis && 
-		angle == 0)
+		angle == 0 && 
+		GameDataManager::getInstance().GetPlayerDead() == false)
 	{
 		change_state(DummyEnemyState::PUNCH, MotionDummyPunch);
 	}
@@ -202,13 +210,13 @@ void DummyEnemy::Damage()
 void DummyEnemy::Dead()
 {
 	state_timer_ += 1.0f;
-	if (state_timer_ >= mesh_.motion_end_time())
+	if (state_timer_ >= mesh_.motion_end_time() + 100)
 	{
-		world_->send_message(EventMessage::DUMMY_DEAD_ENEMY, nullptr);
+		//world_->send_message(EventMessage::DUMMY_DEAD_ENEMY, nullptr);
 		world_->add_actor(ActorGroup::Item, std::make_shared<ItemCreater>(world_, position_));
 		deadCheck = true;
-		//if (m_HS.expired()) die(); return;
-		//m_HS.lock()->receiveMessage(EventMessage::DEAD_DUMMY_ENEMY, nullptr);
+
+		m_HS.lock()->receiveMessage(EventMessage::DEAD_DUMMY_ENEMY, nullptr);
 		die();
 	}
 }

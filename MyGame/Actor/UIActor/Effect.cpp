@@ -1,8 +1,8 @@
 #include "Effect.h"
 
-Effect::Effect(IWorld * world, Vector3 & position, Vector3 distance, SPRITE_ID id):
+Effect::Effect(IWorld * world, Vector3 & position, int size, SPRITE_ID id):
 	Actor(world,"Effect",position),
-	P_distance{distance},
+	size_{size},
 	EffectID{id}
 {
 	effectTimer = 0;
@@ -44,6 +44,6 @@ void Effect::draw() const
 		(int)SpriteSize.x / 8,
 		(int)SpriteSize.y / 6,
 		Vector2(SpriteSize.x/8/2,SpriteSize.y/6/2),
-		Vector2(0.3f,0.3f)
+		Vector2(size_,size_)
 	);
 }

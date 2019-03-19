@@ -30,7 +30,7 @@ protected:
 		if (cursorPos_2 < 0) cursorPos_2 = 0;
 
 		// カーソル位置が最大値を超えるならゼロにする
-		if (cursorPos_2 > (menuSize_2 - 1)) cursorPos_2 = menuSize_2;
+		if (cursorPos_2 > (menuSize_2 - 1)) cursorPos_2 = menuSize_2-1;
 	}
 
 	void decisionCheck(){}

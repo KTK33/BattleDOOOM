@@ -20,8 +20,10 @@ public:
 		PlayerDead,
 		PlayerGunPunch,
 		PlayerRun,
-		PlayerIdleAiming ,
+		PlayerIdleAiming,
 		PlayerMove,
+		PlayerThohatu,
+		PlayerJump,
 		NONE,
 	};
 };

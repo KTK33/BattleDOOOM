@@ -51,7 +51,7 @@ void CollisionMesh::bind(int id) {
 
 // 線分との衝突判定
 bool CollisionMesh::collide_line(const Vector3 & start, const Vector3 & end, Vector3 * point, Vector3 * normal) {
-    const auto coll_poly = MV1CollCheck_Line(model_, 0, start, end);
+    const auto coll_poly = MV1CollCheck_Line(model_, -1, start, end);
     if (coll_poly.HitFlag == TRUE) {
         if (point != nullptr) {
             *point = coll_poly.HitPosition;
@@ -67,7 +67,7 @@ bool CollisionMesh::collide_line(const Vector3 & start, const Vector3 & end, Vec
 // 球体との衝突判定
 bool CollisionMesh::collide_sphere(const Vector3 & center, float radius, Vector3 * result) {
     // 球とメッシュの衝突判定
-    const auto coll_poly = MV1CollCheck_Sphere(model_, 0, center, radius);
+    const auto coll_poly = MV1CollCheck_Sphere(model_, -1, center, radius);
     // 衝突していなければ終了
     if (coll_poly.HitNum == 0) {
         // 衝突判定データの削除

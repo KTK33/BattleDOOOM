@@ -1,7 +1,6 @@
 #include "PlayerTextUI.h"
 #include "../../Texture/Sprite.h"
 #include "../../Scene/GameData/GameDataManager.h"
-#include "../Player/PlayerItemBox.h"
 
 PlayerTextUI::PlayerTextUI(IWorld * world):
 	Actor(world,"PlayerText",Vector3::Zero)
@@ -10,8 +9,6 @@ PlayerTextUI::PlayerTextUI(IWorld * world):
 	BulletTextTimer = 0;
 	GetRecoverCheck = false;
 	RecoverTextTimer = 0;
-	areladyItemBox = false;
-	RecoverItemCount = 0;
 }
 
 void PlayerTextUI::initialize()
@@ -40,17 +37,6 @@ void PlayerTextUI::update(float deltaTime)
 			GetRecoverCheck = false;
 		}
 	}
-
-	if (GameDataManager::getInstance().GetItemBoxOpen() == true){
-		if (!areladyItemBox){
-			world_->add_actor(ActorGroup::ItemBoxUI, new_actor<PlayerItemBox>(world_, RecoverItemCount));
-			areladyItemBox = true;
-		}
-	}
-	else
-	{
-		areladyItemBox = false;
-	}
 }
 
 void PlayerTextUI::receiveMessage(EventMessage message, void * param)
@@ -65,7 +51,6 @@ void PlayerTextUI::receiveMessage(EventMessage message, void * param)
 	{
 		GetRecoverCheck = true;
 		RecoverTextTimer = 0;
-		RecoverItemCount = *(int*)param;
 	}
 
 }

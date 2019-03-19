@@ -5,7 +5,7 @@
 class Effect : public Actor
 {
 public:
-	Effect(IWorld* world, Vector3 & position, Vector3 distance, SPRITE_ID id);
+	Effect(IWorld* world, Vector3 & position, int size, SPRITE_ID id);
 
 	virtual void initialize() override;
 
@@ -16,7 +16,7 @@ public:
 	virtual void draw() const;
 
 private:
-	Vector3 P_distance;
+	int size_;
 	SPRITE_ID EffectID;
 
 	int effectTimer;

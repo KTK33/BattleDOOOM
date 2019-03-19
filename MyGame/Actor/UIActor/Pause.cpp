@@ -28,15 +28,18 @@ void PauseUI::initialize()
 
 void PauseUI::update(float deltaTime)
 {
-	if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM8)){
-		PauseDecision = false;
-		if (world_->GetPauseCheck() == true)
-		{
-			world_->SetPauseCheck(false);
-		}
-		else
-		{
-			world_->SetPauseCheck(true);
+	if (GameDataManager::getInstance().GetPlayerDead() == false)
+	{
+		if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM8)) {
+			PauseDecision = false;
+			if (world_->GetPauseCheck() == true)
+			{
+				world_->SetPauseCheck(false);
+			}
+			else
+			{
+				world_->SetPauseCheck(true);
+			}
 		}
 	}
 	
@@ -46,15 +49,10 @@ void PauseUI::update(float deltaTime)
 	}
 	else
 	{
-		GameDataManager::getInstance().SetItemBoXOpen(false);
 		areladySystemOpen = false;
 	}
 
-	if (PauseDecision)
-	{
-
-	}
-	else
+	if (!PauseDecision)
 	{
 		areladySystemOpen = false;
 	}
@@ -80,11 +78,7 @@ void PauseUI::draw() const
 		switch (cursorPos_){
 		case 3:
 			Sprite::GetInstance().DrawSetCenter(SPRITE_ID::PAUSEITEM_DESCRIPTION, Vector2(1050, WINDOW_HEIGHT - 50.0f));
-			if (PauseDecision)
-			{
-				Sprite::GetInstance().Draw(SPRITE_ID::ITEM, Vector2(0, 0));
-				GameDataManager::getInstance().SetItemBoXOpen(true);
-			}
+			if (PauseDecision) Sprite::GetInstance().Draw(SPRITE_ID::ITEM, Vector2(0, 0));
 			break;
 		case 2:
 			Sprite::GetInstance().DrawSetCenter(SPRITE_ID::PAUSEOPERATION_DESCRIPTION, Vector2(1050, WINDOW_HEIGHT - 50.0f));

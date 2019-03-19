@@ -5,10 +5,13 @@
 #include "../../Texture/Sprite.h"
 #include "../../Scene/GameData/GameDataManager.h"
 #include "PlayerPunchAttack.h"
+#include "PlayerItemBox.h"
+#include "PlayerMotionNum.h"
 
 
 Player::Player(int model, int weapon, IWorld * world, const Vector3 & position, std::weak_ptr<Actor> ui, const IBodyPtr & body) :
 	Actor(world, "Player", position, body),
+	Initbody{body},
 	m_ui{ ui },
 	mesh_{ model,weapon },
 	weapon_{ weapon },
@@ -23,11 +26,14 @@ Player::Player(int model, int weapon, IWorld * world, const Vector3 & position, 
 	invinciblyCheck{ false },
 	invinciblyTime{ 100 },
 	AimPos{ position_.x + rotation_.Forward().x * 10 + rotation_.Right().x * 5, position_.y + 15, position_.z + rotation_.Forward().z * 10 + rotation_.Right().z * 5 },
-	RecoverItemCount{0}
+	RecoverItemCount{0},
+	AttackItemCount{0},
+	alreadyItem{false},
+	DeadCheck{false}
 {
 	rotation_ = Matrix::Identity;
 	mesh_.transform(Getpose());
-	hp_ = PlayerHP;
+	hp_ = PlayerHP - 9;
 
 	InitAimPos = AimPos;
 }
@@ -38,18 +44,17 @@ void Player::initialize()
 
 void Player::update(float deltaTime)
 {
-
-	prevPosition_ = position_;
-	prevRotation_ = rotation_;
-
 	if (world_->GetPauseCheck() == false)
 	{
-		mesh_.update(deltaTime);
-		mesh_.transform(Getpose());
-		update_state(deltaTime);
-		mesh_.change_motion(motion_);
-		PlayerInput();
-		Delay();
+		if (!DeadCheck)
+		{
+			mesh_.update(deltaTime);
+			mesh_.transform(Getpose());
+			update_state(deltaTime);
+			mesh_.change_motion(motion_);
+			PlayerInput();
+			Delay();
+		}
 	}
 
 	world_->send_message(EventMessage::PLAYER_HP, (void*)&hp_);
@@ -58,8 +63,16 @@ void Player::update(float deltaTime)
 
 	hp_ = MathHelper::Clamp(hp_, 0, 10);
 
-	//collision();
+	//velocity_ = Vector3::Zero;
+	velocity_ += Vector3::Up * -gravity;
+	position_ += velocity_;
+	velocity_ *= 0.8f;
+	if (velocity_.Length() < 0.01f) {
+		velocity_ = 0.0f;
+	}
 
+	collision();
+	if (floorcollide) gravity = 0.0f;
 
 	if (state_ == PlayerState::State::PlayerIdleAiming ||
 		state_ == PlayerState::State::PlayerStopGun)
@@ -81,15 +94,19 @@ void Player::update(float deltaTime)
 	//	weaponPos = weaponPos - 1;
 	//}
 
-	//if (GamePad::GetInstance().ButtonStateDown(PADBUTTON::NUM1))
-	//{
-	//	position_.y -= 0.1f;
-	//}
-	//if (GamePad::GetInstance().ButtonStateDown(PADBUTTON::NUM2))
-	//{
-	//	position_.y += 0.1f;
-	//}
+	if (GetJoypadPOVState(DX_INPUT_PAD1, 0) == 9000 && !alreadyItem && state_ == PlayerState::State::PlayerIdel && GameDataManager::getInstance().GetPlayerDead() == false)
+	{
+		if (world_->find_actor(ActorGroup::ItemBoxUI, "PlayerBox") == NULL)
+		{
+			world_->add_actor(ActorGroup::ItemBoxUI, new_actor<PlayerItemBox>(world_, RecoverItemCount, AttackItemCount, weak_from_this()));
+		}
+		alreadyItem = true;
+	}
+	else{
+		alreadyItem = false;
+	}
 
+	prevPosition_ = position_;
 }
 
 void Player::draw() const
@@ -103,23 +120,28 @@ void Player::draw() const
 
 	//DrawLine3D(Vector3{ position_.x,position_.y + 15.0f,position_.z } +rotation_.Forward() * 10, AimPos, GetColor(255, 255, 255));
 
-	//DrawFormatString(700, 900, GetColor(255, 255, 255), "%i", weaponPos);
+	//DrawFormatString(700, 900, GetColor(255, 255, 255), "%f", position_.x);
+	//DrawFormatString(700, 950, GetColor(255, 255, 255), "%f", position_.y);
+	//DrawFormatString(700, 1000, GetColor(255, 255, 255), "%f", position_.z);
+
+	DrawFormatString(700, 900, GetColor(255, 255, 255), "%f", GamePad::GetInstance().Stick().x);
+	DrawFormatString(700, 950, GetColor(255, 255, 255), "%f", GamePad::GetInstance().Stick().y);
+
+
 
 	if (collide)
 	{
-		DrawFormatString(700, 900, GetColor(255, 255, 255), "HIT");
+		DrawFormatString(600, 900, GetColor(255, 255, 255), "HIT");
 	}
-
 	if (floorcollide)
 	{
-		DrawFormatString(700, 1000, GetColor(255, 255, 255), "FloorHIT");
+		DrawFormatString(600, 950, GetColor(255, 255, 255), "FloorHIT");
 	}
 
 	if (GameDataManager::getInstance().GetSightCheck() == true)
 	{
 		Sprite::GetInstance().DrawSetCenter(SPRITE_ID::SIGHT, Vector2(ConvWorldPosToScreenPos(AimPos).x, ConvWorldPosToScreenPos(AimPos).y));
 	}
-
 
 }
 
@@ -136,7 +158,7 @@ void Player::receiveMessage(EventMessage message, void * param)
 		if (message == EventMessage::HIT_ENEMY_BULLET)
 		{
 			hp_ = hp_ - *(int*)param;
-			change_state(PlayerState::PlayerDamage, MotionPlayerDamage);
+			change_state(PlayerState::PlayerDamage, PlayerMotion::Motion::MotionPlayerDamage);
 			invinciblyCheck = true;
 		}
 	}
@@ -155,7 +177,7 @@ void Player::receiveMessage(EventMessage message, void * param)
 	{
 		//hp_ += *(int*)param;
 		RecoverItemCount = RecoverItemCount + 1;
-		m_ui.lock()->receiveMessage(EventMessage::GET_HPRECOVER, (void*)&RecoverItemCount);
+		m_ui.lock()->receiveMessage(EventMessage::GET_HPRECOVER, nullptr);
 	}
 	if (message == EventMessage::PLAYER_REMAINGUN)
 	{
@@ -175,6 +197,17 @@ void Player::receiveMessage(EventMessage message, void * param)
 	{
 		AimPos = *(Vector3*)param;
 	}
+	if (message == EventMessage::SIGHT_ROTATION)
+	{
+		float rote = *(float*)param;
+		rotation_ *= Matrix::CreateFromAxisAngle(rotation_.Up(), *(float*)param);
+		rotation_.NormalizeRotationMatrix();
+	}
+	if (message == EventMessage::HP_RECOVER)
+	{
+		hp_ += *(int*)param;
+		RecoverItemCount = RecoverItemCount - 1;
+	}
 }
 
 void Player::collision()
@@ -183,7 +216,8 @@ void Player::collision()
 	Vector3 result;
 	//壁とぶつけてから
 	if (field(result)) {
-		position_ = result;
+		position_.x = result.x;
+		position_.z = result.z;
 		collide = true;
 	}
 	else
@@ -193,13 +227,15 @@ void Player::collision()
 
 	//床との接地判定
 	if (floor(result)) {
-		floorcollide = true;
-		position_ = result + rotation_.Up() *(body_->length()*0.5f + body_->radius());
+		//if (result.y > 0.0f)result.y = 0.0f;
+		if (state_ != PlayerState::State::PlayerJump)
+		{
+			floorcollide = true;
+			position_ = result+rotation_.Up()*(body_->length()*0.5f + body_->radius()*0.5f);
+		}
 	}
-	else
-	{
+	else{
 		floorcollide = false;
-		//position_.y -= 0.5f;
 	}
 }
 
@@ -214,8 +250,9 @@ void Player::update_state(float deltaTime)
 	case PlayerState::State::PlayerIdleAiming:	IdleAiming();	break;
 	case PlayerState::State::PlayerStopGun:		StopGun();		break;
 	case PlayerState::State::PlayerReload:		Reload();		break;
-	case PlayerState::State::PlayerGunPunch:	GunPunch();		 break;
-		//case PlayerState::State::PlayerMove: GunMove(motion_,deltaTime); break;
+	case PlayerState::State::PlayerGunPunch:	GunPunch();	    break;
+	case PlayerState::State::PlayerJump:		Jump();			break;
+	case PlayerState::State::PlayerThohatu:	    Tyohatu();	    break;
 	case PlayerState::State::PlayerDamage:		Damage();		break;
 	case PlayerState::State::PlayerDead:		Dead();			break;
 	default: break;
@@ -225,7 +262,9 @@ void Player::update_state(float deltaTime)
 
 void Player::change_state(PlayerState::State state, int motion)
 {
+	before_motion_ = motion_;
 	motion_ = motion;
+	before_state_ = state_;
 	state_ = state;
 	state_timer_ = 0.0f;
 }
@@ -237,7 +276,7 @@ void Player::PlayerInput()
 		if (state_ != PlayerState::PlayerReload)
 		{
 			if (GamePad::GetInstance().ButtonTriggerUp(PADBUTTON::NUM5)) {
-				change_state(PlayerState::PlayerAimToIdle, MotionPlayerAimToIdle);
+				change_state(PlayerState::PlayerAimToIdle, PlayerMotion::Motion::MotionPlayerAimToIdle);
 			}
 		}
 	}
@@ -248,15 +287,11 @@ void Player::PlayerInput()
 		GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM3) &&
 		state_ != PlayerState::PlayerReload)
 	{
-		before_motion_ = motion_;
-		before_state_ = state_;
-		change_state(PlayerState::PlayerReload, MotionPlayerReload);
+		change_state(PlayerState::PlayerReload, PlayerMotion::Motion::MotionPlayerReload);
 	}
 
 	if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM4) && state_ != PlayerState::PlayerGunPunch) {
-		before_motion_ = motion_;
-		before_state_ = state_;
-		change_state(PlayerState::PlayerGunPunch, MotionPlayerGunPunch);
+		change_state(PlayerState::PlayerGunPunch, PlayerMotion::Motion::MotionPlayerGunPunch);
 	}
 }
 
@@ -267,17 +302,17 @@ void Player::Idle()
 		Move(GamePad::GetInstance().Stick().x, GamePad::GetInstance().Stick().y);
 
 		if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM5)) {
-			change_state(PlayerState::PlayerIdleToAim, MotionPlayerIdleToAim);
+			change_state(PlayerState::PlayerIdleToAim, PlayerMotion::Motion::MotionPlayerIdleToAim);
 		}
 	}
 	else
 	{
 		if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM5)) {
-			change_state(PlayerState::PlayerIdleToAim, MotionPlayerIdleToAim);
+			change_state(PlayerState::PlayerIdleToAim, PlayerMotion::Motion::MotionPlayerIdleToAim);
 		}
 		else
 		{
-			change_state(PlayerState::PlayerIdel, MotionPlayerIdel);
+			change_state(PlayerState::PlayerIdel, PlayerMotion::Motion::MotionPlayerIdel);
 		}
 	}
 
@@ -285,13 +320,23 @@ void Player::Idle()
 	yaw_speed = GamePad::GetInstance().RightStick().x;
 	rotation_ *= Matrix::CreateFromAxisAngle(rotation_.Up(), yaw_speed * 1.0f);
 	rotation_.NormalizeRotationMatrix();
+
+	if (GetJoypadPOVState(DX_INPUT_PAD1, 0) == 18000)
+	{
+		change_state(PlayerState::PlayerThohatu, PlayerMotion::Motion::MotionPlayerTyohatu);
+	}
+
+	if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM1))
+	{
+		JumpChacker(state_);
+	}
 }
 
 void Player::IdletoAim()
 {
 	state_timer_ += 1.0f;
 	if (state_timer_ >= mesh_.motion_end_time()) {
-		change_state(PlayerState::PlayerIdleAiming, MotionPlayerIdleAiming);
+		change_state(PlayerState::PlayerIdleAiming, PlayerMotion::Motion::MotionPlayerIdleAiming);
 	}
 }
 
@@ -299,18 +344,23 @@ void Player::AimtoIdle()
 {
 	state_timer_ += 1.0f;
 	if (state_timer_ >= mesh_.motion_end_time()) {
-		change_state(PlayerState::PlayerIdel, MotionPlayerIdel);
+		change_state(PlayerState::PlayerIdel, PlayerMotion::Motion::MotionPlayerIdel);
+	}
+
+	if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM5))
+	{
+		change_state(PlayerState::PlayerIdleAiming, PlayerMotion::Motion::MotionPlayerIdleAiming);
 	}
 }
 
 void Player::IdleAiming()
 {
 	if (GamePad::GetInstance().ButtonTriggerUp(PADBUTTON::NUM5)) {
-		change_state(PlayerState::PlayerAimToIdle, MotionPlayerAimToIdle);
+		change_state(PlayerState::PlayerAimToIdle, PlayerMotion::Motion::MotionPlayerAimToIdle);
 	}
 
 	if (GamePad::GetInstance().ButtonStateDown(PADBUTTON::NUM6)) {
-		change_state(PlayerState::PlayerStopGun, MotionPlayerStopGun);
+		change_state(PlayerState::PlayerStopGun, PlayerMotion::Motion::MotionPlayerStopGun);
 		Gun(state_, motion_);
 	}
 
@@ -323,11 +373,11 @@ void Player::StopGun()
 	Gun(state_, motion_);
 
 	if (GamePad::GetInstance().ButtonTriggerUp(PADBUTTON::NUM5)) {
-		change_state(PlayerState::PlayerAimToIdle, MotionPlayerAimToIdle);
+		change_state(PlayerState::PlayerAimToIdle, PlayerMotion::Motion::MotionPlayerAimToIdle);
 	}
 
 	if (GamePad::GetInstance().ButtonTriggerUp(PADBUTTON::NUM6)) {
-		change_state(PlayerState::PlayerIdleAiming, MotionPlayerIdleAiming);
+		change_state(PlayerState::PlayerIdleAiming, PlayerMotion::Motion::MotionPlayerIdleAiming);
 	}
 
 	GunMove(GamePad::GetInstance().Stick().x, GamePad::GetInstance().Stick().y);
@@ -338,19 +388,27 @@ void Player::Reload()
 	state_timer_ += 1.0f;
 	if (state_timer_ >= mesh_.motion_end_time())
 	{
-		int setpoint{ 0 };
+		int setpoint = 0;
 		if (HaveGun < SetGunPoint) {
-			setpoint = HaveGun - SetGunPoint;
+			if (HaveGun + SetRemainGun < SetGunPoint)
+			{
+				setpoint = SetRemainGun;
+			}
+			else {
+				setpoint = SetGunPoint - SetRemainGun;
+			}
 		}
-
-		HaveGun = max(HaveGun + (SetRemainGun - SetGunPoint), 0);
-		SetRemainGun = SetGunPoint + setpoint;
+		else{
+			setpoint = SetGunPoint - SetRemainGun;
+		}
+		HaveGun -= setpoint;
+		SetRemainGun += setpoint;
 
 		DelayGunTime = 30;
 
 		if (GamePad::GetInstance().ButtonStateUp(PADBUTTON::NUM5))
 		{
-			change_state(PlayerState::PlayerIdel, MotionPlayerIdel);
+			change_state(PlayerState::PlayerIdel, PlayerMotion::Motion::MotionPlayerIdel);
 		}
 		else
 		{
@@ -365,7 +423,7 @@ void Player::GunPunch()
 	state_timer_ += 1.0f;
 	if (state_timer_ == 60)
 	{
-		auto AttackPunch = std::make_shared<PlayerPunchAttack>(world_, Vector3{ position_ + Getpose().Forward() * 4 },
+		auto AttackPunch = std::make_shared<PlayerPunchAttack>(world_, Vector3{ position_ + Getpose().Forward() * 6},
 			std::make_shared<BoundingCapsule>(Vector3{ 0.0f,13.0f,0.0f }, Matrix::Identity, 1.5f, 2.5f));
 		world_->add_actor(ActorGroup::PlayerBullet, AttackPunch);
 		AttackPunch->SetdeadTime(20);
@@ -392,26 +450,31 @@ void Player::GunMove(float X, float Y)
 
 	//rotation_ *= Matrix::CreateFromAxisAngle(rotation_.Up(), yaw_speed * 1.0f);
 	//rotation_.NormalizeRotationMatrix();
+
+	//yaw_speed = GamePad::GetInstance().RightStick().x * (GameDataManager::getInstance().GetAIMSPD() * 0.2f);
+	//rotation_ *= Matrix::CreateFromAxisAngle(rotation_.Up(), yaw_speed * 1.0f);
+	//rotation_.NormalizeRotationMatrix();
+
 	velocity_ += rotation_.Forward() * forward_speed;
 	velocity_ += rotation_.Left() * side_speed;
 	position_ += velocity_ * 1.0f;
 
 	if (X > 0.0f) {
-		motion_ = MotionPlayerLeftGun;
+		motion_ = PlayerMotion::Motion::MotionPlayerLeftGun;
 	}
 	if (X < 0.0f) {
-		motion_ = MotionPlayerLeftGun;
+		motion_ = PlayerMotion::Motion::MotionPlayerLeftGun;
 	}
 	if (Y > 0.0f) {
-		motion_ = MotionPlayerForwardGun;
+		motion_ = PlayerMotion::Motion::MotionPlayerForwardGun;
 	}
 	if (Y < 0.0f) {
-		motion_ = MotionPlayerBackGun;
+		motion_ = PlayerMotion::Motion::MotionPlayerBackGun;
 	}
 
 	if (side_speed == 0.0f && forward_speed == 0.0f)
 	{
-		change_state(PlayerState::PlayerIdleAiming, MotionPlayerIdleAiming);
+		change_state(PlayerState::PlayerIdleAiming, PlayerMotion::Motion::MotionPlayerIdleAiming);
 	}
 
 }
@@ -423,18 +486,41 @@ void Player::Move(float X, float Y)
 	float side_speed{ 0 };
 	float yaw_speed{ 0.0f };
 
-	side_speed = -X * 0.75f;
-	forward_speed = Y * 0.75f;
+	side_speed = -X * 0.5f;
+	forward_speed = Y * 0.5f;
 
-	motion_ = MotionPlayerRun;
+	if (MathHelper::Abs(X) >= 0.75f)
+	{
+		motion_ = PlayerMotion::Motion::MotionPlayerRun;
+	}
+	else if(MathHelper::Abs(Y) >= 0.75f)
+	{
+		motion_ = PlayerMotion::Motion::MotionPlayerRun;
+	}
+	else if (MathHelper::Abs(X) < 0.75f)
+	{
+		motion_ = PlayerMotion::Motion::MotionPlayerWalk;
+	}
+	else if (MathHelper::Abs(Y) < 0.75f)
+	{
+		motion_ = PlayerMotion::Motion::MotionPlayerWalk;
+	}
 
-	yaw_speed = GamePad::GetInstance().RightStick().x;
-	rotation_ *= Matrix::CreateFromAxisAngle(rotation_.Up(), yaw_speed * 1.0f);
-	rotation_.NormalizeRotationMatrix();
+	//yaw_speed = GamePad::GetInstance().RightStick().x;
+	//rotation_ *= Matrix::CreateFromAxisAngle(rotation_.Up(), yaw_speed * 1.0f);
+	//rotation_.NormalizeRotationMatrix();
+
 
 	velocity_ += rotation_.Forward() * forward_speed;
 	velocity_ += rotation_.Left() * side_speed;
 	position_ += velocity_ * 1.0f;
+
+	if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM1))
+	{
+		JumpChacker(state_);
+	}
+
+	prevPosition_ = position_;
 }
 
 void Player::Gun(PlayerState::State state, int motion)
@@ -442,10 +528,52 @@ void Player::Gun(PlayerState::State state, int motion)
 	if (GamePad::GetInstance().Stick().y >= 0)
 	{
 		if (SetRemainGun > 0 && !CheckGun) {
-			world_->add_actor(ActorGroup::PlayerBullet, std::make_shared<Ball>(5, world_, Vector3{ position_.x,position_.y + 15.0f,position_.z } +rotation_.Forward() * 10, AimPos));
+			world_->add_actor(ActorGroup::PlayerBullet, std::make_shared<Ball>(world_, Vector3{ position_.x,position_.y + 13.0f,position_.z } +rotation_.Forward() * 4 + rotation_.Right() * 3, AimPos));
 			SetRemainGun -= 1;
 			CheckGun = true;
 		}
+	}
+}
+
+void Player::JumpChacker(PlayerState::State state)
+{
+	switch (state)
+	{
+	case PlayerState::PlayerIdel:
+		change_state(PlayerState::PlayerJump, PlayerMotion::Motion::MotionPlayerJump);
+		break;
+	case PlayerState::PlayerRun:
+		change_state(PlayerState::PlayerJump, PlayerMotion::Motion::MotionPlayerRunJump);
+		break;
+	}
+}
+
+void Player::Jump()
+{
+	//前後左右移動
+	velocity_ = Vector3::Zero;
+	float forward_speed{ 0.0f };
+	float side_speed{ 0 };
+	float yaw_speed{ 0.0f };
+	side_speed = -GamePad::GetInstance().Stick().x * 0.25f;
+	forward_speed = GamePad::GetInstance().Stick().y * 0.25f;
+
+	velocity_ += rotation_.Forward() * forward_speed;
+	velocity_ += rotation_.Left() * side_speed;
+	position_ += velocity_ * 1.0f;
+
+	state_timer_ += 1.0f;
+
+	if (state_timer_ >= mesh_.motion_end_time() *0.7f){
+		body_ = std::make_shared<BoundingCapsule>(Vector3{ 0.0f,15.0f,0.0f }, Matrix::Identity, 6.0f, 4.0f);
+	}
+	if (state_timer_ >= mesh_.motion_end_time() +15) {
+		body_ = Initbody;
+	}
+	if (state_timer_ >= mesh_.motion_end_time()+30)
+	{
+		gravity = 9.8f*0.1f;
+		change_state(PlayerState::PlayerIdel, before_motion_);
 	}
 }
 
@@ -454,7 +582,7 @@ void Player::Damage()
 	state_timer_ += 1.0f;
 	if (state_timer_ >= mesh_.motion_end_time())
 	{
-		change_state(PlayerState::PlayerIdel, MotionPlayerIdel);
+		change_state(PlayerState::PlayerIdel, PlayerMotion::Motion::MotionPlayerIdel);
 	}
 }
 
@@ -463,8 +591,18 @@ void Player::Dead()
 	state_timer_ += 1.0f;
 	if (state_timer_ >= mesh_.motion_end_time() + 100)
 	{
-		GameDataManager::getInstance().SetPlayerDead(true);
-		die();
+		DeadCheck = true;
+		//GameDataManager::getInstance().SetPlayerDead(true);
+		//die();
+	}
+}
+
+void Player::Tyohatu()
+{
+	state_timer_ += 1.0f;
+	if (state_timer_ >= mesh_.motion_end_time() + 50)
+	{
+		change_state(PlayerState::PlayerIdel, PlayerMotion::Motion::MotionPlayerIdel);
 	}
 }
 
@@ -497,8 +635,9 @@ void Player::Delay()
 			}
 		}
 		else {
-			motion_ = MotionPlayerDead;
+			motion_ = PlayerMotion::Motion::MotionPlayerDead;
 			state_ = PlayerState::PlayerDead;
+			GameDataManager::getInstance().SetPlayerDead(true);
 		}
 	}
 }
@@ -508,5 +647,7 @@ void Player::Hit(Vector3 & dir)
 	Vector3 dir_ = Vector3::Normalize(dir);
 	//アクターからプレイヤーの方向に移動
 	velocity_ = Vector3::Up * 7.0f + Vector3{ dir_.x,0.f,dir_.z } *2.0f;
+	//position_.x += velocity_.x * 1.0f;
+	//position_.z += velocity_.z * 1.0f;
 	//collide = true;
 }

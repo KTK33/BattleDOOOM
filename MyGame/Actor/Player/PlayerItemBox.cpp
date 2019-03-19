@@ -2,15 +2,18 @@
 #include "../../Texture/Sprite.h"
 #include "../../Input/GamePad.h"
 #include "../../Scene/GameData/GameDataManager.h"
-#include "../UIActor/HPRecoverUI.h"
 
-PlayerItemBox::PlayerItemBox(IWorld * world,int HPItem):
+PlayerItemBox::PlayerItemBox(IWorld * world,int HPItem,int AttackItem, std::weak_ptr<Actor> player):
 	Actor(world,"PlayerBox",Vector3::Zero),
-	countHPrecoverItem{ HPItem }
+	countHPrecoverItem{ HPItem },
+	countAttackUPItem{AttackItem},
+	m_player{player}
 {
-	menuSize_ = 3;
+	menuSize_2 = 2;
+	alphaTimer = 255;
+	alphaCheck = false;
 
-	world_->add_actor(ActorGroup::ItemBoxUIUI, new_actor<HPRecoverUI>(6,world_, Vector3(0,-30,0)));
+	GameDataManager::getInstance().SetItemBoXOpen(true);
 }
 
 void PlayerItemBox::initialize()
@@ -20,16 +23,43 @@ void PlayerItemBox::initialize()
 void PlayerItemBox::update(float deltaTime)
 {
 	PlayerInput();
+
+	if (alphaCheck)
+	{
+		alphaTimer = min(alphaTimer + 5, 255);
+		if (alphaTimer == 255) alphaCheck = false;
+	}
+	else
+	{
+		alphaTimer = max(alphaTimer - 5, 0);
+		if (alphaTimer == 0) alphaCheck = true;
+	}
+
+	if(GetJoypadPOVState(DX_INPUT_PAD1, 0) == -1)
+	{
+		GameDataManager::getInstance().SetItemBoXOpen(false);
+		die();
+	}
 }
 
 void PlayerItemBox::draw() const
 {
-	Sprite::GetInstance().Draw(SPRITE_ID::HPRECOVERUI, Vector2(700 , 300));
+	Sprite::GetInstance().DrawSetCenter(SPRITE_ID::ITEMBOX, Vector2(WINDOW_WIDTH - Sprite::GetInstance().GetSize(SPRITE_ID::ITEMBOX).x/2, WINDOW_HEIGHT / 2));
 
-	DrawBox(500 + 200 * cursorPos_, 400, 700 + 200 * cursorPos_, 500, GetColor(255, 255, 255), TRUE);
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, alphaTimer);
+	Sprite::GetInstance().Draw(SPRITE_ID::PAUSEITEM_TUKAUBACK, Vector2(1580.0f, 420 + cursorPos_2 * 125));
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+
+	//Sprite::GetInstance().Draw(SPRITE_ID::PAUSEITEM_TUKAU, Vector2(980.0f, 360));
+	//Sprite::GetInstance().Draw(SPRITE_ID::PAUSEITEM_TUKAU, Vector2(980.0f, 520));
 
 	Vector2 NumSize = Sprite::GetInstance().GetSize(SPRITE_ID::NUMBER);
-	Sprite::GetInstance().DrawPart(SPRITE_ID::NUMBER, Vector2(150 ,90), NumSize.x / 10 * countHPrecoverItem, 0, NumSize.x / 10, NumSize.y);}
+
+	Sprite::GetInstance().DrawPart(SPRITE_ID::NUMBER, Vector2(1830.f ,445.f), NumSize.x / 10 * countHPrecoverItem, 0, NumSize.x / 10, NumSize.y);
+
+	Sprite::GetInstance().DrawPart(SPRITE_ID::NUMBER, Vector2(1830.f, 570.f), NumSize.x / 10 * countAttackUPItem, 0, NumSize.x / 10, NumSize.y);
+}
+
 
 void PlayerItemBox::receiveMessage(EventMessage message, void * param)
 {
@@ -37,18 +67,36 @@ void PlayerItemBox::receiveMessage(EventMessage message, void * param)
 
 void PlayerItemBox::PlayerInput()	
 {
-	if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::RIGHT))
+	if (GamePad::GetInstance().RightStick().y < -0.5f)
 	{
-		moveCursor(1);
+		moveCursor2(1);
+		alphaTimer = 255;
+		alphaCheck = false;
 	}
 
-	if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::LEFT))
+	if (GamePad::GetInstance().RightStick().y > 0.5f)
 	{
-		moveCursor(-1);
+		moveCursor2(-1);
+		alphaTimer = 255;
+		alphaCheck = false;
 	}
 
 	if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM1))
 	{
-		die();
+		int HPVal = 3;
+		switch (cursorPos_2)
+		{
+		case 0:
+			if (countHPrecoverItem > 0)
+			{
+				m_player.lock()->receiveMessage(EventMessage::HP_RECOVER, (void*)&HPVal);
+				countHPrecoverItem = countHPrecoverItem - 1;
+			}
+			break;
+		case 1:
+			break;
+		default:
+			break;
+		}
 	}
 }

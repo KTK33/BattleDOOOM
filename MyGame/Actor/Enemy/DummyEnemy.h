@@ -73,6 +73,8 @@ private:
 
 	Actor* player_;
 	std::weak_ptr<Actor> m_HS{};
+	bool alreadyHS;
+	Vector3 HSPos{ 0.0f,15.0f,0.0f };
 	int invinciblyTime;
 	bool invinciblyCheck;
 

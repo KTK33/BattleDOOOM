@@ -20,5 +20,5 @@ private:
 	int m_playerHavegun;
 	int m_playerGunRemain;
 
-	int EnemyCount{ 5 };
+	int EnemyCount{ 3 };
 };

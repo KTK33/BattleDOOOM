@@ -7,7 +7,7 @@
 class EnemyHeadShot : public Actor
 {
 public:
-	EnemyHeadShot(IWorld* world, const Vector3& position, std::weak_ptr<Actor> ene,const IBodyPtr& body = std::make_shared<BoundingSphere>(Vector3{ 0.0f,15.0f,0.0f }, 1.0f));
+	EnemyHeadShot(IWorld* world, const Vector3& position, std::weak_ptr<Actor> ene,const IBodyPtr& body = std::make_shared<BoundingSphere>(Vector3{ 0.0f,0.0f,0.0f }, 2.0f));
 
 	virtual void initialize() override;
 
@@ -16,6 +16,9 @@ public:
 	virtual void receiveMessage(EventMessage message, void * param) override;
 
 	virtual void draw() const;
+
+	virtual void onCollide(Actor& other);
+
 
 private:
 	std::weak_ptr<Actor> m_Enemy{};

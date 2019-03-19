@@ -20,15 +20,23 @@ public:
 
 	void PlayerInput();
 
+	void PlayerGameOver();
+
 private:
+	Actor* player_;
 	//
 	Vector3 target_{ 0.0f,0.0f,0.0f };
 
-	Vector2 m_FarPoint{ 0.f,0.f };
+	Vector2 m_FarPoint{ 30.f,20.f };
 
 	float angle{ 0 };
 
 	Vector2 AimPosMove;
 
 	std::weak_ptr<Actor> m_player{};
+
+	Vector3 DeadCamera{ 20,20,20 };
+	bool alreadyGO;
+
+	float AHUAH;
 };

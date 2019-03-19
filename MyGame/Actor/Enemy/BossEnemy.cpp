@@ -71,7 +71,7 @@ void BossEnemy::receiveMessage(EventMessage message, void * param)
 			change_state(BossEnemyState::DAMAGE, MotionBossDamage);
 			invinciblyCheck = true;
 
-			world_->add_actor(ActorGroup::Effect, new_actor<Effect>(world_, *(Vector3*)param, Vector3::Distance(position_, player_->Getposition()), SPRITE_ID::EFFECT_BULLETHIT));
+			world_->add_actor(ActorGroup::Effect, new_actor<Effect>(world_, *(Vector3*)param,0.3f, SPRITE_ID::EFFECT_BULLETHIT));
 
 		}
 		if (message == EventMessage::HIT_PLAYER_PUNCH)
@@ -137,7 +137,7 @@ void BossEnemy::MoveWalk()
 		change_state(BossEnemyState::PUNCH, MotionBossPunch);
 	}
 
-	if (Vector3::Distance(position_, player_->Getposition()) <= 70 && Ikari && angle == 0)
+	if (Vector3::Distance(position_, player_->Getposition()) <= 70 && Vector3::Distance(position_, player_->Getposition()) >= 30 && Ikari && angle == 0)
 	{
 		change_state(BossEnemyState::FIRE, MotionBossPunch2);
 	}

@@ -13,6 +13,9 @@ public:
 
 	void update();
 
+	void SetTitleCheck(bool Stc);
+	bool GetTitleCheck();
+
 	void SetDeadBossEnemy(bool db);
 	bool GetDeadBossEnemy();
 	void SetPlayerDead(bool pd);
@@ -34,6 +37,7 @@ public:
 
 private:
 
+	bool TitleCheck{ false };
 	bool DeadBossEnemyCheck{ false };
 	bool DeadPlayerCheck{ false };
 	bool ItemBoxOpne{ false };

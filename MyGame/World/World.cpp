@@ -9,6 +9,7 @@ World::World()
 
 void World::initialize()
 {
+	SetDrawScreen(DX_SCREEN_BACK);
 	clear();
 	actors_.add(ActorGroup::Player);
 	actors_.add(ActorGroup::PlayerBullet);
@@ -18,6 +19,9 @@ void World::initialize()
 	actors_.add(ActorGroup::Item);
 	actors_.add(ActorGroup::Effect);
 	actors_.add(ActorGroup::System);
+	actors_.add(ActorGroup::UI);
+	actors_.add(ActorGroup::PauseUI);
+	actors_.add(ActorGroup::ItemBoxUI);
 
 	worldManager_.initialize();
 	worldManager_.setupWorld(this);
@@ -34,6 +38,7 @@ void World::update(float delta_time)
 	actors_.collide(ActorGroup::Player, ActorGroup::EnemyBullet);
 	actors_.collide(ActorGroup::Player, ActorGroup::Item);
 	actors_.collide(ActorGroup::PlayerBullet, ActorGroup::Enemy);
+	actors_.collide(ActorGroup::PlayerBullet, ActorGroup::EnemyHead);
 	actors_.collide(ActorGroup::Player, ActorGroup::Ball);
 	actors_.remove();
 	//camera_->update(delta_time);

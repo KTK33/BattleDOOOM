@@ -2,16 +2,14 @@
 #include "../../World/IWorld.h"
 #include "../ActorGroup.h"
 
-Ball::Ball(int model, IWorld* world, const Vector3& P_position, Vector3& A_position, const IBodyPtr& body):
+Ball::Ball(IWorld* world, const Vector3& P_position, Vector3& A_position, const IBodyPtr& body):
 	Actor(world,"Ball", P_position,body),
 	enemy_{ nullptr },
-	mesh_ {model},
 	deadTime{20},
 	m_GoPos{A_position}
 {
 	player_ = world_->find_actor(ActorGroup::Player, "Player").get();
 	enemy_ = world_->find_actor(ActorGroup::System, "Camera").get();
-	mesh_.transform(Getpose());
 
 	m_InitFar = Vector3(m_GoPos.x - position_.x, m_GoPos.y - position_.y, m_GoPos.z - position_.z);
 
@@ -26,10 +24,6 @@ void Ball::initialize()
 
 void Ball::update(float deltaTime)
 {
-	mesh_.update(deltaTime);
-	//s—ñ‚ÌÝ’è
-	mesh_.transform(Getpose());
-
 	distance();
 
 	//position_ = Vector3::Lerp(position_, Vector3(enemy_->Getposition().x,enemy_->Getposition().y + 10.0f,enemy_->Getposition().z),0.1f);
@@ -61,10 +55,6 @@ void Ball::draw() const
 
 void Ball::distance()
 {
-	//position_.x = MathHelper::Lerp(position_.x, m_GoPos.x, 0.3f);
-	//position_.y = MathHelper::Lerp(position_.y, m_GoPos.y, 0.3f);
-	//position_.z = MathHelper::Lerp(position_.z, m_GoPos.z, 0.3f);
-
 	position_ += m_InitFar * 0.3f;
 }
 void Ball::homing()

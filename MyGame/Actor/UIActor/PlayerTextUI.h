@@ -20,7 +20,4 @@ private:
 	int BulletTextTimer;
 	bool GetRecoverCheck;
 	int RecoverTextTimer;
-
-	bool areladyItemBox;
-	int RecoverItemCount;
 };

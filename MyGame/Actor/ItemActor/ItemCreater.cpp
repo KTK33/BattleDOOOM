@@ -18,14 +18,14 @@ ItemCreater::ItemCreater(IWorld * world, const Vector3 & position):
 	//	break;
 	//}
 
-	//if (ItemCreate == 3) {
-	//	world_->add_actor(ActorGroup::Item, std::make_shared<HPRecoverItem>(6, world_, position_));
-	//}
-	//else {
-	//	world_->add_actor(ActorGroup::Item, std::make_shared<BulletItem>(7, world_, position_));
-	//}
+	if (ItemCreate == 3) {
+		world_->add_actor(ActorGroup::Item, std::make_shared<HPRecoverItem>(6, world_, position_));
+	}
+	else {
+		world_->add_actor(ActorGroup::Item, std::make_shared<BulletItem>(7, world_, position_));
+	}
 
-	world_->add_actor(ActorGroup::Item, std::make_shared<HPRecoverItem>(6, world_, position_));
+	//world_->add_actor(ActorGroup::Item, std::make_shared<HPRecoverItem>(6, world_, position_));
 
 }
 

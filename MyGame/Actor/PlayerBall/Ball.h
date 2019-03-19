@@ -1,7 +1,6 @@
 #pragma once
 
 #include "../Actor.h"
-#include "../../Animation/AnimationMesh.h"
 #include "../../Collision/BoundingCapsule.h"
 #include "../Player/Player.h"
 #include "../../Math/MathH.h"
@@ -9,7 +8,7 @@
 class Ball : public Actor
 {
 public:
-	Ball(int model, IWorld* world, const Vector3& P_position,Vector3& A_position, const IBodyPtr& body = std::make_shared<BoundingCapsule>(Vector3{ 0.0f,0.0f,0.0f }, Matrix::Identity, 0.1f, 3.0f));
+	Ball(IWorld* world, const Vector3& P_position,Vector3& A_position, const IBodyPtr& body = std::make_shared<BoundingCapsule>(Vector3{ 0.0f,0.0f,0.0f }, Matrix::Identity, 0.5f, 0.5f));
 
 	virtual void initialize() override;
 
@@ -31,8 +30,6 @@ protected:
 	float target_angle() const;
 
 private:
-	AnimatedMesh mesh_;
-
 	Actor* player_;
 
 	Actor* enemy_;

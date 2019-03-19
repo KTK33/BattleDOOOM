@@ -22,5 +22,4 @@ private:
 	void LoadShader();
 	//‰æ‘œƒf[ƒ^‚Ì”jŠü
 	void DeleteRes();
-
 };

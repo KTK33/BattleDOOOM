@@ -5,7 +5,7 @@
 
 class PlayerItemBox : public Actor,public Menu {
 public:
-	PlayerItemBox(IWorld* world, int HPItem);
+	PlayerItemBox(IWorld* world, int HPItem,int AttackItem, std::weak_ptr<Actor> player);
 
 	void initialize();
 
@@ -18,8 +18,12 @@ public:
 	void PlayerInput();
 
 private:
-	Actor* player_;
+
+	std::weak_ptr<Actor> m_player{};
 
 	int countHPrecoverItem;
+	int countAttackUPItem;
 
+	int alphaTimer;
+	bool alphaCheck;
 };
