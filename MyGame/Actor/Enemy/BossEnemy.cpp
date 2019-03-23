@@ -1,4 +1,5 @@
 #include "BossEnemy.h"
+#include "../UIActor/BossEnemyUI.h"
 #include "../../Scene/GameData/GameDataManager.h"
 #include "../../Texture/Sprite.h"
 #include "../UIActor/Effect.h"
@@ -10,10 +11,17 @@ BossEnemy::BossEnemy(int model, IWorld * world, const Vector3 & position, const 
 	state_timer_{ 0.0f },
 	invinciblyCheck{ false },
 	invinciblyTime{ 60 },
-	Ikari{false}
+	Ikari{false},
+	FireCheck{false},
+	FireCount{0},
+	WalkVal{1.0f}
 {
 	rotation_ *= Matrix::CreateRotationY(180.0f);
 	mesh_.transform(Getpose());
+
+	auto UI = new_actor<BossEnemyUI>(world_);
+	world_->add_actor(ActorGroup::UI, UI);
+	m_ui = UI;
 
 	hp_ = 10;
 	player_ = world_->find_actor(ActorGroup::Player, "Player").get();
@@ -37,10 +45,18 @@ void BossEnemy::update(float deltaTime)
 	}
 	//collision()
 
-	if (hp_ <= 5)
-	{
+	if (hp_ <= 5){
 		Ikari = true;
 	}
+
+	FireCount++;
+
+	if (FireCount >= 600)
+	{
+		FireCheck = true;
+	}
+
+	m_ui.lock()->receiveMessage(EventMessage::BOSSHP, (int*)&hp_);
 }
 
 void BossEnemy::draw() const
@@ -63,10 +79,8 @@ void BossEnemy::onCollide(Actor & other)
 
 void BossEnemy::receiveMessage(EventMessage message, void * param)
 {
-	if (!invinciblyCheck)
-	{
-		if (message == EventMessage::HIT_BALL)
-		{
+	if (!invinciblyCheck){
+		if (message == EventMessage::HIT_BALL){
 			hp_ = hp_ - 1;
 			change_state(BossEnemyState::DAMAGE, MotionBossDamage);
 			invinciblyCheck = true;
@@ -74,13 +88,11 @@ void BossEnemy::receiveMessage(EventMessage message, void * param)
 			world_->add_actor(ActorGroup::Effect, new_actor<Effect>(world_, *(Vector3*)param,0.3f, SPRITE_ID::EFFECT_BULLETHIT));
 
 		}
-		if (message == EventMessage::HIT_PLAYER_PUNCH)
-		{
+		if (message == EventMessage::HIT_PLAYER_PUNCH){
 			hp_ = hp_ - *(int*)param;
 			change_state(BossEnemyState::DAMAGE, MotionBossDamage);
 			invinciblyCheck = true;
 		}
-
 	}
 }
 
@@ -107,7 +119,9 @@ void BossEnemy::update_state(float deltaTime)
 	case BossEnemyState::WALK:  MoveWalk();	break;
 	case BossEnemyState::RUN:	MoveRun();	break;
 	case BossEnemyState::PUNCH:	Punch();	break;
+	case BossEnemyState::FIRE_BEFO:	AttackFireBefo();	break;
 	case BossEnemyState::FIRE:	AttackFire();	break;
+	case BossEnemyState::FIRE_AFTE:	AttackFireAfte();	break;
 	case BossEnemyState::DAMAGE:Damage();	break;
 	case BossEnemyState::DEAD:	Dead();		break;
 	default:break;
@@ -116,16 +130,22 @@ void BossEnemy::update_state(float deltaTime)
 
 void BossEnemy::Idle()
 {
-	change_state(BossEnemyState::IDLE, MotionBossIdel);
+	change_state(BossEnemyState::WALK, MotionBossWalk);
 }
 
 void BossEnemy::MoveWalk()
 {
 	if (Ikari){
-		position_ = Vector3::Lerp(position_, player_->Getposition(), WalkSpeed*3.0f);
+		WalkVal = 3.0f;
+		position_ = Vector3::Lerp(position_, player_->Getposition(), WalkSpeed*WalkVal);
+		if (FireCheck)
+		{
+			change_state(BossEnemyState::FIRE_BEFO, MotionBossFireBefo);
+		}
 	}
 	else{
-		position_ = Vector3::Lerp(position_, player_->Getposition(), WalkSpeed);
+		WalkVal = 1.0f;
+		position_ = Vector3::Lerp(position_, player_->Getposition(), WalkSpeed*WalkVal);
 	}
 
 	//ƒ^[ƒQƒbƒg•ûŒü‚É­‚µ‚¸‚ÂŒü‚«‚ð•Ï‚¦‚é Clamp‚Å–³—‚â‚èŠp“x(-TurnAngle`TurnAngle)“à‚É
@@ -135,11 +155,6 @@ void BossEnemy::MoveWalk()
 	if (Vector3::Distance(position_, player_->Getposition()) <= AttackDis && angle == 0)
 	{
 		change_state(BossEnemyState::PUNCH, MotionBossPunch);
-	}
-
-	if (Vector3::Distance(position_, player_->Getposition()) <= 70 && Vector3::Distance(position_, player_->Getposition()) >= 30 && Ikari && angle == 0)
-	{
-		change_state(BossEnemyState::FIRE, MotionBossPunch2);
 	}
 }
 
@@ -170,6 +185,16 @@ void BossEnemy::Punch()
 	}
 }
 
+void BossEnemy::AttackFireBefo()
+{
+	state_timer_ += 1.0f;
+	if (state_timer_ >= mesh_.motion_end_time() + 60)
+	{
+		change_state(BossEnemyState::FIRE, MotionBossPunch2);
+	}
+
+}
+
 void BossEnemy::AttackFire()
 {
 	state_timer_ += 1.0f;
@@ -179,10 +204,16 @@ void BossEnemy::AttackFire()
 		world_->add_actor(ActorGroup::EnemyBullet, enemyFire);
 		enemyFire->GetEnemyForward(Getpose().Forward());
 	}
-	if (state_timer_ >= mesh_.motion_end_time())
+	if (state_timer_ >= mesh_.motion_end_time() + 50)
 	{
-		change_state(BossEnemyState::WALK, MotionBossWalk);
+		FireCheck = false;
+		FireCount = 0;
+		change_state(BossEnemyState::WALK, MotionBossFireAfte);
 	}
+}
+
+void BossEnemy::AttackFireAfte()
+{
 }
 
 void BossEnemy::Damage()

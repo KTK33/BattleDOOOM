@@ -3,6 +3,7 @@
 void GameDataManager::initialize()
 {
 	TitleCheck = false;
+	StartCheck = false;
 	DeadBossEnemyCheck = false;
 	DeadPlayerCheck = false;
 	SightCheck = false;
@@ -24,6 +25,16 @@ void GameDataManager::SetTitleCheck(bool Stc)
 bool GameDataManager::GetTitleCheck()
 {
 	return TitleCheck;
+}
+
+void GameDataManager::SetPlayerStart(bool Sps)
+{
+	StartCheck = Sps;
+}
+
+bool GameDataManager::GettPlayerStart()
+{
+	return StartCheck;
 }
 
 void GameDataManager::SetDeadBossEnemy(bool db)

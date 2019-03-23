@@ -1,6 +1,7 @@
 #include "FadeUI.h"
 #include "../../Texture/Sprite.h"
 #include "../../Scene/GameData/GameDataManager.h"
+#include "../Player/PlayerAdvent.h"
 
 FadeUI::FadeUI(IWorld * world, int FadeCheck,int SceneNum):
 	Actor(world,"FadeUI",Vector3::Zero),
@@ -39,6 +40,10 @@ void FadeUI::update(float deltaTime)
 		FadeAlpha = max(FadeAlpha - 2.55f, 0);
 		if (FadeAlpha == 0)
 		{
+			if (m_SceneNum == 2)
+			{
+				world_->add_actor(ActorGroup::GameStartUI, new_actor<PlayerAdvent>(world_));
+			}
 		}
 	}
 }

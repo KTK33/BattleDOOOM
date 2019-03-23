@@ -27,6 +27,8 @@
 
 #include "../Actor/UIActor/FadeUI.h"
 
+#include "../Actor/UIActor/PlaySceneUI/GameClearUIh.h"
+
 #include<DxLib.h>
 
 //コンストラクタ
@@ -44,6 +46,7 @@ void GamePlayScene::start() {
 
 	menuSize_ = 4;
 	BossArleady = false;
+	ClearUIArleady = false;
 
 	world_.add_actor(ActorGroup::Fade, new_actor<FadeUI>(&world_, 1, 2));
 
@@ -53,15 +56,16 @@ void GamePlayScene::start() {
 	auto P = new_actor<Player>(0, 1, &world_, Vector3{ 20.0f, -35.0f,130.0f }, P_Text);
 	world_.add_actor(ActorGroup::Player, P);
 
-	world_.add_actor(ActorGroup::UI, new_actor<AnyUI>(&world_,P));
+	auto ANYUI = new_actor<AnyUI>(&world_,P);
+	world_.add_actor(ActorGroup::UI, ANYUI);
 
 	world_.add_actor(ActorGroup::PauseUI, new_actor<PauseUI>(&world_));
 
 	//world_.add_actor(ActorGroup::Enemy, new_actor<Enemy>(4, &world_, Vector3{ 10.0f, 0.0f,0.0f }));
 
-	for (int i = 0; i < 3; i++)
+	for (int i = 0; i < 0; i++)
 	{
-		auto dummy = new_actor<DummyEnemy>(1, &world_, Vector3{ Random::rand(-40.0f,80.0f), -35.0,Random::rand(10.0f,130.0f) }, Matrix::CreateRotationY(Random::rand(0.0f,360.0f)));
+		auto dummy = new_actor<DummyEnemy>(1, &world_, Vector3{ Random::rand(-40.0f,80.0f), -35.0,Random::rand(10.0f,130.0f) }, Matrix::CreateRotationY(Random::rand(0.0f,360.0f)), ANYUI);
 		world_.add_actor(ActorGroup::Enemy,dummy);
 	}
 
@@ -97,9 +101,18 @@ void GamePlayScene::update(float deltaTime)
 	}
 
 	if (GameDataManager::getInstance().GetDeadBossEnemy() == true) {
-		next_ = SceneType::SCENE_CLEAR;
 
-		isEnd_ = true;
+		if (!ClearUIArleady)
+		{
+			world_.add_actor(ActorGroup::GameFinishUI, new_actor<GameClearUI>(&world_));
+			ClearUIArleady = true;
+		}
+
+		if (GamePad::GetInstance().ButtonTriggerUp(PADBUTTON::NUM2))
+		{
+			next_ = SceneType::SCENE_TITLE;
+			isEnd_ = true;
+		}
 	}
 
 	if (world_.GetBackTitleCheck() == true) {

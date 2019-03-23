@@ -33,7 +33,7 @@ Player::Player(int model, int weapon, IWorld * world, const Vector3 & position, 
 {
 	rotation_ = Matrix::Identity;
 	mesh_.transform(Getpose());
-	hp_ = PlayerHP - 9;
+	hp_ = PlayerHP;
 
 	InitAimPos = AimPos;
 }
@@ -227,7 +227,6 @@ void Player::collision()
 
 	//床との接地判定
 	if (floor(result)) {
-		//if (result.y > 0.0f)result.y = 0.0f;
 		if (state_ != PlayerState::State::PlayerJump)
 		{
 			floorcollide = true;
@@ -592,7 +591,6 @@ void Player::Dead()
 	if (state_timer_ >= mesh_.motion_end_time() + 100)
 	{
 		DeadCheck = true;
-		//GameDataManager::getInstance().SetPlayerDead(true);
 		//die();
 	}
 }
@@ -646,8 +644,8 @@ void Player::Hit(Vector3 & dir)
 {
 	Vector3 dir_ = Vector3::Normalize(dir);
 	//アクターからプレイヤーの方向に移動
-	velocity_ = Vector3::Up * 7.0f + Vector3{ dir_.x,0.f,dir_.z } *2.0f;
-	//position_.x += velocity_.x * 1.0f;
-	//position_.z += velocity_.z * 1.0f;
+	//velocity_ = Vector3::Up * 7.0f + Vector3{ dir_.x,0.f,dir_.z } *2.0f;
+	velocity_.x = Vector3::Up.x * 7.0f + dir_.x*2.0f;
+	velocity_.z = Vector3::Up.z * 7.0f + dir_.z*2.0f;
 	//collide = true;
 }

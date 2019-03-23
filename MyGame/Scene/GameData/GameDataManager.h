@@ -16,6 +16,9 @@ public:
 	void SetTitleCheck(bool Stc);
 	bool GetTitleCheck();
 
+	void SetPlayerStart(bool Sps);
+	bool GettPlayerStart();
+
 	void SetDeadBossEnemy(bool db);
 	bool GetDeadBossEnemy();
 	void SetPlayerDead(bool pd);
@@ -38,6 +41,7 @@ public:
 private:
 
 	bool TitleCheck{ false };
+	bool StartCheck{ false };
 	bool DeadBossEnemyCheck{ false };
 	bool DeadPlayerCheck{ false };
 	bool ItemBoxOpne{ false };

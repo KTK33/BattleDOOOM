@@ -37,7 +37,8 @@ enum class EventMessage
 	SIGHT_POSITION,
 	SIGHT_ROTATION,
 	GETENEMYPOS,
-	HP_RECOVER
+	HP_RECOVER,
+	BOSSHP,
 };
 //アクタークラス
 class Actor :public std::enable_shared_from_this<Actor> {

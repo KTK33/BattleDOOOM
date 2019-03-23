@@ -14,7 +14,9 @@ public:
 		WALK,
 		RUN,
 		PUNCH,
+		FIRE_BEFO,
 		FIRE,
+		FIRE_AFTE,
 		DAMAGE,
 		DEAD, 
 	};
@@ -43,7 +45,9 @@ public:
 	void MoveWalk();
 	void MoveRun();
 	void Punch();
+	void AttackFireBefo();
 	void AttackFire();
+	void AttackFireAfte();
 	void Damage();
 	void Dead();
 
@@ -63,6 +67,7 @@ private:
 	int motion_;
 	//移動速度
 	const float WalkSpeed{ 0.005f };
+	float WalkVal;
 	//状態
 	BossEnemyState::State state_;
 	//状態タイマ
@@ -78,6 +83,12 @@ private:
 
 	bool Ikari;
 
+	std::weak_ptr<Actor> m_ui{};
+
+	bool FireCheck;
+	int FireCount;
+
+
 };
 
 
@@ -85,10 +96,12 @@ private:
 enum
 {
 	MotionBossIdel = 0,
-	MotionBossWalk = 1,
-	MotionBossRun = 2,
-	MotionBossPunch = 3,
-	MotionBossPunch2 = 4,
-	MotionBossDamage = 5,
-	MotionBossDead = 6,
+	MotionBossWalk,
+	MotionBossRun,
+	MotionBossPunch,
+	MotionBossPunch2,
+	MotionBossDamage,
+	MotionBossDead,
+	MotionBossFireBefo,
+	MotionBossFireAfte,
 };

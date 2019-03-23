@@ -6,11 +6,12 @@
 #include <memory>
 #include "../UIActor/Effect.h"
 
-DummyEnemy::DummyEnemy(int model, IWorld * world, const Vector3 & position,const Matrix & rotation, const IBodyPtr & body) :
+DummyEnemy::DummyEnemy(int model, IWorld * world, const Vector3 & position,const Matrix & rotation, std::weak_ptr<Actor> m_ui,const IBodyPtr & body) :
 	Actor(world, "DummyEnemy", position, body),
 	mesh_{ model },
 	state_{ DummyEnemyState::IDLE },
 	state_timer_{ 0.0f },
+	m_UI{m_ui},
 	invinciblyCheck{ false },
 	invinciblyTime{ 60 },
 	roarCheck{ false },
@@ -217,6 +218,7 @@ void DummyEnemy::Dead()
 		deadCheck = true;
 
 		m_HS.lock()->receiveMessage(EventMessage::DEAD_DUMMY_ENEMY, nullptr);
+		m_UI.lock()->receiveMessage(EventMessage::DUMMY_DEAD_ENEMY, nullptr);
 		die();
 	}
 }

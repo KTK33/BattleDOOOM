@@ -22,11 +22,12 @@ void LoadingScene::start() {
 	//非同期開始
 	SetUseASyncLoadFlag(TRUE);
 	//各種リソースのロードを行う
-	LoadSprite();
 	LoadAny();
 	LoadModel();
 	LoadShader();
+	LoadSprite();
 	SetUseASyncLoadFlag(FALSE);
+	Countres = GetASyncLoadNum();
 }
 
 void LoadingScene::update(float deltaTime) {
@@ -44,13 +45,47 @@ void LoadingScene::draw() const {
 	id[0] = LoadGraph("asset/UI/LoadScene/LoadGauge.png");
 	id[1] = LoadGraph("asset/UI/LoadScene/LoadFream.png");
 	DrawGraph(210, 800, id[1],FALSE);
-	DrawRectGraphF(215, 805, 0, 0, 30 * GetASyncLoadNum(), 40, id[0], false);
+	DrawRectGraphF(215, 805, 0, 0, 1490 / Countres * (Countres - GetASyncLoadNum()), 40, id[0], false);
 	// 読み込んだ画像のグラフィックハンドルを削除
-	//DeleteGraph(gauge);
+	if (GetASyncLoadNum() <= 0)
+	{
+		for (int i = 0; i < 2; i++)
+		{
+			DeleteGraph(id[i]);
+		}
+	}
 
 }
 
 void LoadingScene::end() {
+}
+
+void LoadingScene::LoadModel()
+{
+	//モデルデータの読み込み
+	SkeletalMesh::load(0,"asset/MODEL/Player/Model.mv1");
+	SkeletalMesh::load(1, "asset/MODEL/DummyEnemy/zombie.mv1");
+	SkeletalMesh::load(4, "asset/ghoul2.mv1");
+	SkeletalMesh::load(2, "asset/BaseBall.mv1");
+	SkeletalMesh::load(3, "asset/MODEL/BossMonster/Monster.mv1");
+	SkeletalMesh::load(5, "asset/Weapon/Bullet1.mv1");
+	SkeletalMesh::load(6, "asset/MODEL/Item/HPRecover/firstaid.mv1");
+	SkeletalMesh::load(7, "asset/MODEL/Item/Bullet/BulletItemEX.mv1");
+	SkeletalMesh::load(8, "asset/MODEL/BossMonster/Fire/Meteor.mv1");
+	StaticMesh::load(0, "asset/w_magun01.mv1");
+	StaticMesh::load(1, "asset/Weapon/Italian/Italian machine guns.mv1");
+
+	SkeletalMesh::load(10, "asset/MODEL/ExMonster/motion/parasite_l_starkie.mv1");
+}
+void LoadingScene::LoadAny()
+{
+	CollisionMesh::load(0, "asset/stage/stage/Textures/Untitled.mv1");
+	//スカイボックスモデルの読み込み
+	Skybox::load(0, "asset/skybox/skydome.mv1");
+	//ビルボードの読み込み
+	Billboard::load(0, "asset/UI/PlayScene/GunFream.png");
+}
+void LoadingScene::LoadShader() {
 }
 
 void LoadingScene::LoadSprite()
@@ -68,7 +103,7 @@ void LoadingScene::LoadSprite()
 
 
 	//ゲーム画面のUI
-	sprite.Load("asset/UI/PlayScene/TextFrame.png",SPRITE_ID::TEXTFRAME);
+	sprite.Load("asset/UI/PlayScene/TextFrame.png", SPRITE_ID::TEXTFRAME);
 	sprite.Load("asset/UI/PlayScene/TextBossAppear.png", SPRITE_ID::TEXTBOSSAPPEAR);
 	sprite.Load("asset/UI/PlayScene/TextDummyDead.png", SPRITE_ID::TEXTDUMMYDEAD);
 	sprite.Load("asset/UI/PlayScene/HP_ui.png", SPRITE_ID::HP_UI);
@@ -118,33 +153,6 @@ void LoadingScene::LoadSprite()
 	sprite.Load("asset/UI/Effect/BulletHit.png", SPRITE_ID::EFFECT_BULLETHIT);
 
 
-}
-void LoadingScene::LoadModel()
-{
-	//モデルデータの読み込み
-	SkeletalMesh::load(0,"asset/MODEL/Player/Model.mv1");
-	SkeletalMesh::load(1, "asset/MODEL/DummyEnemy/zombie.mv1");
-	SkeletalMesh::load(4, "asset/ghoul2.mv1");
-	SkeletalMesh::load(2, "asset/BaseBall.mv1");
-	SkeletalMesh::load(3, "asset/MODEL/BossMonster/Monster.mv1");
-	SkeletalMesh::load(5, "asset/Weapon/Bullet1.mv1");
-	SkeletalMesh::load(6, "asset/MODEL/Item/HPRecover/firstaid.mv1");
-	SkeletalMesh::load(7, "asset/MODEL/Item/Bullet/BulletItemEX.mv1");
-	SkeletalMesh::load(8, "asset/MODEL/BossMonster/Fire/Meteor.mv1");
-	StaticMesh::load(0, "asset/w_magun01.mv1");
-	StaticMesh::load(1, "asset/Weapon/Italian/Italian machine guns.mv1");
-
-	SkeletalMesh::load(10, "asset/MODEL/ExMonster/motion/parasite_l_starkie.mv1");
-}
-void LoadingScene::LoadAny()
-{
-	CollisionMesh::load(0, "asset/stage/stage/Textures/Untitled.mv1");
-	//スカイボックスモデルの読み込み
-	Skybox::load(0, "asset/skybox/skydome.mv1");
-	//ビルボードの読み込み
-	Billboard::load(0, "asset/UI/PlayScene/GunFream.png");
-}
-void LoadingScene::LoadShader() {
 }
 
 void LoadingScene::DeleteRes()

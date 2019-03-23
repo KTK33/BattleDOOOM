@@ -18,7 +18,8 @@ enum class ActorGroup {
 	PauseUI,
 	ItemBoxUI,
 	ItemBoxUIUI,
-	GameOverUI,
+	GameStartUI,
+	GameFinishUI,
 	Fade,
 };
 #endif // !ACTOR_GROUP_H_

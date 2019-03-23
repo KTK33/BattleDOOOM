@@ -183,7 +183,7 @@ void Camera::PlayerGameOver()
 
 	if (!alreadyGO)
 	{
-		world_->add_actor(ActorGroup::GameOverUI, new_actor<GameOverUI>(world_));
+		world_->add_actor(ActorGroup::GameFinishUI, new_actor<GameOverUI>(world_));
 		alreadyGO = true;
 	}
 }

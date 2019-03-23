@@ -23,8 +23,11 @@ public:
 
 private:
 	AnimatedMesh mesh_;
+	Actor* player_;
 
 	Vector3 EnemyForward;
 
 	int DeadTimer{ 0 };
+
+	Vector3 plyaerVector;
 };
