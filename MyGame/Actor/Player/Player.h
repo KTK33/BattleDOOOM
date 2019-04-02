@@ -8,8 +8,9 @@
 #include "../../Animation/AnimationMesh.h"
 #include "PlayerState.h"
 #include "../../World/World.h"
+#include "../ActorSystem.h"
 
-class Player : public Actor {
+class Player : public Actor,public ActorSystem{
 public:
 	Player(int model,int weapon,IWorld* world, const Vector3& position, std::weak_ptr<Actor> ui,const IBodyPtr& body = std::make_shared<BoundingCapsule>(Vector3{0.0f,9.0f,0.0f},Matrix::Identity,10.0f,4.0f));
 
@@ -35,12 +36,12 @@ private:
 	void IdletoAim();
 	void AimtoIdle();
 	void IdleAiming();
-	void StopGun();
 	void Reload();
 	void GunPunch();
 	void GunMove(float X,float Y);
 	void Move(float X, float Y);
-	void Gun(PlayerState::State state,int motion);
+	void Gun();
+	void PlayerGunFire();
 	void JumpChacker(PlayerState::State state);
 	void Jump();
 	void Damage();
@@ -66,7 +67,6 @@ private:
 	//移動速度
 	const float WalkSpeed{ 0.25f };
 
-	float gravity{ 9.8f*0.1f };
 	//状態,
 	PlayerState::State state_;
 	PlayerState::State before_state_;
@@ -81,15 +81,11 @@ private:
 	int HaveGun;
 	//ディレイタイム
 	int DelayGunTime;
-	bool CheckGun;
 
 	int invinciblyTime;
 	bool invinciblyCheck;
 
 	int weaponPos;
-
-	bool collide{ false };
-	bool floorcollide{ false };
 
 	Vector3 AimPos;
 	Vector3 InitAimPos;
@@ -100,4 +96,6 @@ private:
 	int alreadyItem;
 
 	bool DeadCheck;
+
+	bool GunPossible;
 };

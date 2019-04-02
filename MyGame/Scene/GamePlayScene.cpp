@@ -14,14 +14,12 @@
 #include "../Fiield/WorldContentManager/WorldContentManager.h"
 #include "GameData/GameDataManager.h"
 #include "../Input/GamePad.h"
-#include "../Actor/UIActor/EnemyDeadText.h"
+#include "../Input/Keyboard.h"
 #include "../Texture/Sprite.h"
 #include "../Game/Define.h"
 #include "../Actor/UIActor/AnyUI.h"
 #include "../Actor/UIActor/PlayerTextUI.h"
 #include "../Actor/UIActor/Pause.h"
-
-#include "../Actor/Enemy/ExEnemy.h"
 
 #include "../Actor/UIActor/Effect.h"
 
@@ -46,14 +44,13 @@ void GamePlayScene::start() {
 
 	menuSize_ = 4;
 	BossArleady = false;
-	ClearUIArleady = false;
 
 	world_.add_actor(ActorGroup::Fade, new_actor<FadeUI>(&world_, 1, 2));
 
 	auto P_Text = new_actor<PlayerTextUI>(&world_);
 	world_.add_actor(ActorGroup::UI, P_Text);
 
-	auto P = new_actor<Player>(0, 1, &world_, Vector3{ 20.0f, -35.0f,130.0f }, P_Text);
+	auto P = new_actor<Player>(0, 1, &world_, Vector3{ 0.0f, -20.0f,0.0f }, P_Text);
 	world_.add_actor(ActorGroup::Player, P);
 
 	auto ANYUI = new_actor<AnyUI>(&world_,P);
@@ -63,19 +60,24 @@ void GamePlayScene::start() {
 
 	//world_.add_actor(ActorGroup::Enemy, new_actor<Enemy>(4, &world_, Vector3{ 10.0f, 0.0f,0.0f }));
 
-	for (int i = 0; i < 0; i++)
-	{
-		auto dummy = new_actor<DummyEnemy>(1, &world_, Vector3{ Random::rand(-40.0f,80.0f), -35.0,Random::rand(10.0f,130.0f) }, Matrix::CreateRotationY(Random::rand(0.0f,360.0f)), ANYUI);
-		world_.add_actor(ActorGroup::Enemy,dummy);
-	}
+	//for (int i = 0; i < 1; i++)
+	//{
+	//	auto dummy = new_actor<DummyEnemy>(1, &world_, Vector3{ Random::rand(-120.0f,120.0f), 10.0,Random::rand(-190.0f,190.0f) }, Matrix::CreateRotationY(Random::rand(0.0f,360.0f)), ANYUI);
+	//	world_.add_actor(ActorGroup::Enemy,dummy);
+	//}
+
+	auto dummy1 = new_actor<DummyEnemy>(11, &world_, Vector3{ Random::rand(-200.0f,60.0f), -20.0,Random::rand(-200.0f,60.0f) }, Matrix::CreateRotationY(Random::rand(0.0f,360.0f)), ANYUI);
+	world_.add_actor(ActorGroup::Enemy,dummy1);
+
+	auto dummy2 = new_actor<DummyEnemy>(12, &world_, Vector3{ Random::rand(-200.0f,60.0f), -20.0,Random::rand(-200.0f,60.0f) }, Matrix::CreateRotationY(Random::rand(0.0f, 360.0f)), ANYUI);
+	world_.add_actor(ActorGroup::Enemy, dummy2);
+
+	auto dummy3 = new_actor<DummyEnemy>(13, &world_, Vector3{ Random::rand(-200.0f,60.0f), -20.0,Random::rand(-200.0f,60.0f) }, Matrix::CreateRotationY(Random::rand(0.0f, 360.0f)), ANYUI);
+	world_.add_actor(ActorGroup::Enemy, dummy3);
 
 	//world_.add_actor(ActorGroup::Enemy, new_actor<BossEnemy>(3, &world_, Vector3{ 10.0f, 0.0f,0.0f }));
 
-	//world_.add_actor(ActorGroup::Enemy, new_actor<ExEnemy>(10, &world_, Vector3{ 20.0f, 0.0f,0.0f }));
-
 	world_.add_actor(ActorGroup::System, new_actor<Camera>(&world_,P));
-
-	world_.add_actor(ActorGroup::UI, new_actor<EnemyDeadText>(&world_));
 
 	//world_.add_actor(ActorGroup::Effect, new_actor<Effect>(&world_,Vector3(10,-30,10),0,SPRITE_ID::EFFECT_BULLETHIT));
 }
@@ -93,7 +95,7 @@ void GamePlayScene::update(float deltaTime)
 
 	if (GameDataManager::getInstance().GetPlayerDead() == true)
 	{
-		if (GamePad::GetInstance().ButtonTriggerUp(PADBUTTON::NUM2))
+		if (GamePad::GetInstance().ButtonTriggerUp(PADBUTTON::NUM2) || Keyboard::GetInstance().KeyTriggerDown(KEYCODE::SPACE))
 		{
 			next_ = SceneType::SCENE_TITLE;
 			isEnd_ = true;
@@ -102,13 +104,7 @@ void GamePlayScene::update(float deltaTime)
 
 	if (GameDataManager::getInstance().GetDeadBossEnemy() == true) {
 
-		if (!ClearUIArleady)
-		{
-			world_.add_actor(ActorGroup::GameFinishUI, new_actor<GameClearUI>(&world_));
-			ClearUIArleady = true;
-		}
-
-		if (GamePad::GetInstance().ButtonTriggerUp(PADBUTTON::NUM2))
+		if (GamePad::GetInstance().ButtonTriggerUp(PADBUTTON::NUM2) || Keyboard::GetInstance().KeyTriggerDown(KEYCODE::SPACE))
 		{
 			next_ = SceneType::SCENE_TITLE;
 			isEnd_ = true;

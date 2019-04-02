@@ -24,6 +24,8 @@ DummyEnemy::DummyEnemy(int model, IWorld * world, const Vector3 & position,const
 	hp_ = 3;
 	maxHp = hp_;
 
+	ActorSystem::TransparenceInit();
+
 	player_ = world_->find_actor(ActorGroup::Player, "Player").get();
 	if (player_ == nullptr) return;
 }
@@ -54,7 +56,22 @@ void DummyEnemy::update(float deltaTime)
 	if (m_HS.expired()) return;
 	m_HS.lock()->receiveMessage(EventMessage::GETENEMYPOS, (void*)&(position_ + HSPos));
 
+	velocity_ += Vector3::Up * -gravity;
+	position_ += velocity_;
+	velocity_ *= 0.8f;
+	if (velocity_.Length() < 0.01f) {
+		velocity_ = 0.0f;
+	}
 	collision();
+	if (Floorcollide) gravity = 0.0f;
+	else gravity = 9.8f*0.1f;
+
+	if (invinciblyCheck) {
+		ActorTransparence();
+	}
+	else {
+		TransparenceInit();
+	}
 
 	prevPosition_ = position_;
 }
@@ -85,7 +102,7 @@ void DummyEnemy::receiveMessage(EventMessage message, void * param)
 			change_state(DummyEnemyState::DAMAGE, MotionDummyDamage);
 			invinciblyCheck = true;
 
-			world_->add_actor(ActorGroup::Effect, new_actor<Effect>(world_, *(Vector3*)param ,/*Vector3::Distance(position_,player_->Getposition())*/0.3f,SPRITE_ID::EFFECT_BULLETHIT));
+			world_->add_actor(ActorGroup::Effect, new_actor<Effect>(world_, *(Vector3*)param ,/*Vector3::Distance(position_,player_->Getposition())*/1.0f,SPRITE_ID::EFFECT_BULLETHIT));
 
 		}
 		if (message == EventMessage::HIT_BALL_HEAD)
@@ -93,7 +110,7 @@ void DummyEnemy::receiveMessage(EventMessage message, void * param)
 			hp_ = hp_ - 3;
 			change_state(DummyEnemyState::DAMAGE, MotionDummyDamage);
 			invinciblyCheck = true;
-			world_->add_actor(ActorGroup::Effect, new_actor<Effect>(world_, *(Vector3*)param,0.3f, SPRITE_ID::EFFECT_BULLETHIT));
+			world_->add_actor(ActorGroup::Effect, new_actor<Effect>(world_, *(Vector3*)param,1.0f, SPRITE_ID::EFFECT_BULLETHIT));
 		}
 
 		if (message == EventMessage::HIT_PLAYER_PUNCH)
@@ -114,16 +131,25 @@ void DummyEnemy::collision()
 {
 	//‚Ô‚Â‚©‚Á‚½‚©
 	Vector3 result;
-	//•Ç‚Æ‚Ô‚Â‚¯‚Ä‚©‚ç
-	if (field(result)) {
-		position_ = result;
-	}
+	////•Ç‚Æ‚Ô‚Â‚¯‚Ä‚©‚ç
+	//if (field(result)) {
+	//	position_.x = result.x;
+	//	position_.z = result.z;
+	//	Stagecollide = true;
+	//}
+	//else
+	//{
+	//	Stagecollide = false;
+	//}
 
 	//°‚Æ‚ÌÚ’n”»’è
 	if (floor(result)) {
-		position_ = result + rotation_.Up() *(body_->length()*0.5f + body_->radius());
+		Floorcollide = true;
+		position_ = result + rotation_.Up()*(body_->length()*0.5f + body_->radius()*0.5f);
 	}
-
+	else {
+		Floorcollide = false;
+	}
 }
 
 void DummyEnemy::update_state(float deltaTime)
@@ -156,14 +182,30 @@ void DummyEnemy::Roar()
 
 void DummyEnemy::Move()
 {
+	state_timer_ += 1.0f;
+	if (state_timer_ <= 30 && state_timer_ >= 10)
+	{
+		WalkSpeed = 0.005f;
+	}
+	else
+	{
+		WalkSpeed = max(WalkSpeed - 0.001f, 0.0f);
+	}
+
+	if (state_timer_ >= mesh_.motion_end_time())
+	{
+		state_timer_ = 0.0f;
+	}
+
 	position_ = Vector3::Lerp(position_, player_->Getposition(), WalkSpeed);
 
 	//ƒ^[ƒQƒbƒg•ûŒü‚É­‚µ‚¸‚ÂŒü‚«‚ð•Ï‚¦‚é Clamp‚Å–³—‚â‚èŠp“x(-TurnAngle`TurnAngle)“à‚É
 	const auto angle = MathHelper::Clamp(PlayerDirection(player_, position_, rotation_), -2.5f, 2.5f);
+
 	rotation_ *= Matrix::CreateRotationY(angle);
 
 	if (Vector3::Distance(position_,player_->Getposition()) <= AttackDis && 
-		angle == 0 && 
+		(angle <= 0.1f || angle >= -0.1f) && 
 		GameDataManager::getInstance().GetPlayerDead() == false)
 	{
 		change_state(DummyEnemyState::PUNCH, MotionDummyPunch);

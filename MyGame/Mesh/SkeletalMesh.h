@@ -39,6 +39,8 @@ public:
     // 終了時間を返す
     static float end_time(int motion);
 
+	static void Transparence(float alpha);
+
 private:
     // バインド中のモデル
     static int model_;

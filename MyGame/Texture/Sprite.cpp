@@ -35,7 +35,7 @@ void Sprite::DrawPartExtend(const SPRITE_ID & id, const Vector2 & position, cons
 
 void Sprite::DrawPartRota(const SPRITE_ID & id, const Vector2 & position, int x, int y, int w, int h, const Vector2 & origin, const Vector2 & scale, float angle)
 {
-	DrawRectRotaGraph3F(position.x, position.y, x, y, w, h, origin.x, origin.y, scale.x, scale.y, angle, m_sprites[id], TRUE);
+	DrawRectRotaGraph3F(position.x, position.y, x, y, w, h, origin.x, origin.y, (double)scale.x, (double)scale.y, angle, m_sprites[id], TRUE);
 }
 
 

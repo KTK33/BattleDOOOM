@@ -23,6 +23,8 @@ BossEnemy::BossEnemy(int model, IWorld * world, const Vector3 & position, const 
 	world_->add_actor(ActorGroup::UI, UI);
 	m_ui = UI;
 
+	ActorSystem::TransparenceInit();
+
 	hp_ = 10;
 	player_ = world_->find_actor(ActorGroup::Player, "Player").get();
 	if (player_ == nullptr) return;
@@ -43,7 +45,16 @@ void BossEnemy::update(float deltaTime)
 
 		Delay();
 	}
-	//collision()
+
+	velocity_ += Vector3::Up * -gravity;
+	position_ += velocity_;
+	velocity_ *= 0.8f;
+	if (velocity_.Length() < 0.01f) {
+		velocity_ = 0.0f;
+	}
+	collision();
+	if (Floorcollide) gravity = 0.0f;
+	else gravity = 9.8f*0.1f;
 
 	if (hp_ <= 5){
 		Ikari = true;
@@ -57,6 +68,14 @@ void BossEnemy::update(float deltaTime)
 	}
 
 	m_ui.lock()->receiveMessage(EventMessage::BOSSHP, (int*)&hp_);
+
+	if (invinciblyCheck) {
+		ActorTransparence();
+	}
+	else {
+		TransparenceInit();
+	}
+
 }
 
 void BossEnemy::draw() const
@@ -82,15 +101,18 @@ void BossEnemy::receiveMessage(EventMessage message, void * param)
 	if (!invinciblyCheck){
 		if (message == EventMessage::HIT_BALL){
 			hp_ = hp_ - 1;
+			if(state_ != BossEnemyState::FIRE_BEFO)
 			change_state(BossEnemyState::DAMAGE, MotionBossDamage);
 			invinciblyCheck = true;
 
-			world_->add_actor(ActorGroup::Effect, new_actor<Effect>(world_, *(Vector3*)param,0.3f, SPRITE_ID::EFFECT_BULLETHIT));
+			world_->add_actor(ActorGroup::Effect, new_actor<Effect>(world_, *(Vector3*)param,1.0f, SPRITE_ID::EFFECT_BULLETHIT));
 
 		}
 		if (message == EventMessage::HIT_PLAYER_PUNCH){
 			hp_ = hp_ - *(int*)param;
-			change_state(BossEnemyState::DAMAGE, MotionBossDamage);
+			if (state_ != BossEnemyState::FIRE_BEFO) {
+				change_state(BossEnemyState::DAMAGE, MotionBossDamage);
+			}
 			invinciblyCheck = true;
 		}
 	}
@@ -100,14 +122,24 @@ void BossEnemy::collision()
 {
 	//‚Ô‚Â‚©‚Á‚½‚©
 	Vector3 result;
-	//•Ç‚Æ‚Ô‚Â‚¯‚Ä‚©‚ç
-	if (field(result)) {
-		position_ = result;
-	}
+	////•Ç‚Æ‚Ô‚Â‚¯‚Ä‚©‚ç
+	//if (field(result)) {
+	//	position_.x = result.x;
+	//	position_.z = result.z;
+	//	Stagecollide = true;
+	//}
+	//else
+	//{
+	//	Stagecollide = false;
+	//}
 
 	//°‚Æ‚ÌÚ’n”»’è
 	if (floor(result)) {
-		position_ = result + rotation_.Up() *(body_->length()*0.5f + body_->radius());
+		Floorcollide = true;
+		position_ = result + rotation_.Up()*(body_->length()*0.5f + body_->radius()*0.5f);
+	}
+	else {
+		Floorcollide = false;
 	}
 }
 
@@ -136,7 +168,7 @@ void BossEnemy::Idle()
 void BossEnemy::MoveWalk()
 {
 	if (Ikari){
-		WalkVal = 3.0f;
+		WalkVal = 6.0f;
 		position_ = Vector3::Lerp(position_, player_->Getposition(), WalkSpeed*WalkVal);
 		if (FireCheck)
 		{
@@ -144,7 +176,7 @@ void BossEnemy::MoveWalk()
 		}
 	}
 	else{
-		WalkVal = 1.0f;
+		WalkVal = 3.0f;
 		position_ = Vector3::Lerp(position_, player_->Getposition(), WalkSpeed*WalkVal);
 	}
 
@@ -152,7 +184,9 @@ void BossEnemy::MoveWalk()
 	const auto angle = MathHelper::Clamp(PlayerDirection(player_,position_,rotation_), -2.5f, 2.5f);
 	rotation_ *= Matrix::CreateRotationY(angle);
 
-	if (Vector3::Distance(position_, player_->Getposition()) <= AttackDis && angle == 0)
+	if (Vector3::Distance(position_, player_->Getposition()) <= AttackDis 
+		&& (angle <= 0.1f || angle >= -0.1f) &&
+		GameDataManager::getInstance().GetPlayerDead() == false)
 	{
 		change_state(BossEnemyState::PUNCH, MotionBossPunch);
 	}
@@ -233,7 +267,7 @@ void BossEnemy::Damage()
 void BossEnemy::Dead()
 {
 	state_timer_ += 1.0f;
-	if (state_timer_ >= mesh_.motion_end_time() + 300)
+	if (state_timer_ >= mesh_.motion_end_time() + 10)
 	{
 		world_->send_message(EventMessage::BOSS_DEAD, nullptr);
 		GameDataManager::getInstance().SetDeadBossEnemy(true);

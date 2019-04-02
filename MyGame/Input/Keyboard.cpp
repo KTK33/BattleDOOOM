@@ -19,7 +19,7 @@ void Keyboard::InputStop()
 // キーを押した時のトリガー判定
 bool Keyboard::KeyTriggerDown(UINT keycode)
 {
-	if (m_keycode[keycode] != 0&& m_prevkeycode[keycode] == 0)	return true;
+	if (m_keycode[keycode] != 0 && m_prevkeycode[keycode] == 0)	return true;
 	return false;
 }
 

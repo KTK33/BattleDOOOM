@@ -2,12 +2,14 @@
 #include "../../Graphics/Graphics3D.h"
 
 #include "../../Input/GamePad.h"
+#include "../../Input/Keyboard.h"
 #include "../../Math/Vector2.h"
 
 #include "TPSCamera.h"
 #include "../../Scene/GameData/GameDataManager.h"
 #include "../../Texture/Sprite.h"
 #include "../UIActor/PlaySceneUI/GameOverUI.h"
+#include "../UIActor/PlaySceneUI/GameClearUIh.h"
 
 Camera::Camera(IWorld * world, std::weak_ptr<Actor> m_Player) :
 	Actor(world, "Camera", Vector3::Zero),
@@ -26,9 +28,10 @@ void Camera::update(float deltaTime)
 	//target_ = player_->Getposition(); /*+Vector3{ 0.0f,10.0f,0.0f }*/;
 	//target_ = player_->Getposition() + player_->Getrotation().Forward() *5;
 
-	if (GameDataManager::getInstance().GetPlayerDead() == true)
+	if (GameDataManager::getInstance().GetPlayerDead() == true || 
+		GameDataManager::getInstance().GetDeadBossEnemy() == true)
 	{
-		PlayerGameOver();
+		PlayerGameFinish();
 	}
 	else
 	{
@@ -110,7 +113,16 @@ void Camera::PlayerInput()
 	{
 		if (GameDataManager::getInstance().GetSightCheck() == true)
 		{
+			if (Keyboard::GetInstance().KeyStateDown(KEYCODE::UP))
+			{
+				AimPosMove.y += 1.0f * (GameDataManager::getInstance().GetAIMSPD() * 0.2f);
+			}
+			if (Keyboard::GetInstance().KeyStateDown(KEYCODE::DOWN))
+			{
+				AimPosMove.y -= 1.0f* (GameDataManager::getInstance().GetAIMSPD() * 0.2f);
+			}
 			AimPosMove += GamePad::GetInstance().RightStick() * (GameDataManager::getInstance().GetAIMSPD() * 0.2f);
+
 		}
 		else
 		{
@@ -134,10 +146,18 @@ void Camera::PlayerInput()
 		m_player.lock()->receiveMessage(EventMessage::SIGHT_POSITION, (void*)&target_);
 
 		float XX = 0;
-		XX = GamePad::GetInstance().RightStick().x * (GameDataManager::getInstance().GetAIMSPD() * 0.25f);
+		if (Keyboard::GetInstance().KeyStateDown(KEYCODE::RIGHT)){
+			XX = 1.0f* (GameDataManager::getInstance().GetAIMSPD() * 0.25f);
+		}
+		else if (Keyboard::GetInstance().KeyStateDown(KEYCODE::LEFT)){
+			XX = -1.0f * (GameDataManager::getInstance().GetAIMSPD() * 0.25f);
+		}
+		else{
+			XX = GamePad::GetInstance().RightStick().x * (GameDataManager::getInstance().GetAIMSPD() * 0.25f);
+		}
 		m_player.lock()->receiveMessage(EventMessage::SIGHT_ROTATION, (void*)&XX);
 
-		AimPosMove = Vector2::Clamp(AimPosMove, Vector2(15, -15), Vector2(30, 0));
+		AimPosMove = Vector2::Clamp(AimPosMove, Vector2(15, -20), Vector2(15, 15));
 
 	}
 	else
@@ -146,6 +166,8 @@ void Camera::PlayerInput()
 			player_->Getposition().x + 10 * player_->Getrotation().Backward().x + 5 * player_->Getrotation().Right().x,
 			player_->Getposition().y + 18,
 			player_->Getposition().z + 10 * player_->Getrotation().Backward().z + 5 * player_->Getrotation().Right().z);
+
+		//position_ = Vector3::Lerp(position_, Sposition_, 0.1f);
 
 		target_ = Vector3::Lerp(target_, position_ + player_->Getrotation().Forward(), 0.1f);
 		AimPosMove = Vector2::Clamp(AimPosMove, Vector2(0, -30), Vector2(0, 30));
@@ -159,7 +181,7 @@ void Camera::PlayerInput()
 
 }
 
-void Camera::PlayerGameOver()
+void Camera::PlayerGameFinish()
 {
 	position_ = Vector3(
 		player_->Getposition().x + DeadCamera.x * player_->Getrotation().Forward().x + 1 * player_->Getrotation().Right().x,
@@ -177,13 +199,26 @@ void Camera::PlayerGameOver()
 	if (GameDataManager::getInstance().GetPlayerDead() == true)
 	{
 		DeadCamera += Vector3::One * 0.25f;
+
+		DeadCamera = Vector3::Clamp(DeadCamera, Vector3::Zero, Vector3(100, 100, 100));
+
+		if (!alreadyGO)
+		{
+			world_->add_actor(ActorGroup::GameFinishUI, new_actor<GameOverUI>(world_));
+			alreadyGO = true;
+		}
+
 	}
-
-	DeadCamera = Vector3::Clamp(DeadCamera, Vector3::Zero, Vector3(100,100,100));
-
-	if (!alreadyGO)
+	else if (GameDataManager::getInstance().GetDeadBossEnemy() == true)
 	{
-		world_->add_actor(ActorGroup::GameFinishUI, new_actor<GameOverUI>(world_));
-		alreadyGO = true;
+		DeadCamera += Vector3::One * 0.25f;
+
+		DeadCamera = Vector3::Clamp(DeadCamera, Vector3::Zero, Vector3(100, 100, 100));
+
+		if (!alreadyGO)
+		{
+			world_->add_actor(ActorGroup::GameFinishUI, new_actor<GameClearUI>(world_));
+			alreadyGO = true;
+		}
 	}
 }

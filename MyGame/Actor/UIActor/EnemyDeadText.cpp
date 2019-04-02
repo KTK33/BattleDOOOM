@@ -30,7 +30,6 @@ void EnemyDeadText::receiveMessage(EventMessage message, void * param)
 {
 	if (message == EventMessage::BOSS_DEAD){
 		DeadEnemy = true;
-		world_->add_actor(ActorGroup::Enemy, new_actor<BossEnemy>(3, world_, Vector3{ 100.0f, 0.0f,0.0f }));
 	}
 }
 

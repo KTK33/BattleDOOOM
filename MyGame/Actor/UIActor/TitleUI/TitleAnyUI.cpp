@@ -2,6 +2,7 @@
 #include "../../../Texture/Sprite.h"
 #include "../../../Scene/GameData/GameDataManager.h"
 #include "../../../Input/GamePad.h"
+#include "../../../Input/Keyboard.h"
 #include "TitleBack.h"
 #include "../FadeUI.h"
 
@@ -52,7 +53,7 @@ void TitleAnyUI::update(float deltaTime)
 			world_->add_actor(ActorGroup::UIBefore, new_actor<TitleBack>(world_));
 			alreadyTitleBack = true;
 		}
-		if (GamePad::GetInstance().AnyTriggerDown())
+		if (GamePad::GetInstance().AnyTriggerDown() || Keyboard::GetInstance().AnyTriggerDown())
 		{
 			StartDecision = true;
 		}

@@ -35,7 +35,6 @@ void Ball::update(float deltaTime)
 void Ball::onCollide(Actor & other)
 {
 	Vector3 hitdir = position_;
-	int DamageVal = 1;
 	other.receiveMessage(EventMessage::HIT_BALL,(void*)&hitdir);
 }
 
@@ -51,6 +50,7 @@ void Ball::draw() const
 {
 	mesh_.draw();
 	body_->transform(Getpose())->draw();
+
 }
 
 void Ball::distance()

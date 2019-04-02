@@ -2,23 +2,22 @@
 #include "../PlayerBall/Ball.h"
 #include "../ActorGroup.h"
 #include "../../Input/GamePad.h"
+#include "../../Input/Keyboard.h"
 #include "../../Texture/Sprite.h"
 #include "../../Scene/GameData/GameDataManager.h"
 #include "PlayerPunchAttack.h"
 #include "PlayerItemBox.h"
 #include "PlayerMotionNum.h"
 
-
 Player::Player(int model, int weapon, IWorld * world, const Vector3 & position, std::weak_ptr<Actor> ui, const IBodyPtr & body) :
 	Actor(world, "Player", position, body),
-	Initbody{body},
+	Initbody{ body },
 	m_ui{ ui },
 	mesh_{ model,weapon },
 	weapon_{ weapon },
 	SetRemainGun{ SetGunPoint },
-	DelayGunTime{ 20 },
+	DelayGunTime{ 0 },
 	HaveGun{ 10 },
-	CheckGun{ false },
 	state_{ PlayerState::PlayerIdel },
 	before_state_{ PlayerState::NONE },
 	state_timer_{ 0.0f },
@@ -26,14 +25,17 @@ Player::Player(int model, int weapon, IWorld * world, const Vector3 & position, 
 	invinciblyCheck{ false },
 	invinciblyTime{ 100 },
 	AimPos{ position_.x + rotation_.Forward().x * 10 + rotation_.Right().x * 5, position_.y + 15, position_.z + rotation_.Forward().z * 10 + rotation_.Right().z * 5 },
-	RecoverItemCount{0},
-	AttackItemCount{0},
-	alreadyItem{false},
-	DeadCheck{false}
+	RecoverItemCount{ 0 },
+	AttackItemCount{ 0 },
+	alreadyItem{ false },
+	DeadCheck{ false },
+	GunPossible{ false }
 {
 	rotation_ = Matrix::Identity;
 	mesh_.transform(Getpose());
 	hp_ = PlayerHP;
+
+	ActorSystem::TransparenceInit();
 
 	InitAimPos = AimPos;
 }
@@ -44,8 +46,8 @@ void Player::initialize()
 
 void Player::update(float deltaTime)
 {
-	if (world_->GetPauseCheck() == false)
-	{
+	if (world_->GetPauseCheck() == false 
+		&& GameDataManager::getInstance().GetDeadBossEnemy() == false)	{
 		if (!DeadCheck)
 		{
 			mesh_.update(deltaTime);
@@ -72,10 +74,10 @@ void Player::update(float deltaTime)
 	}
 
 	collision();
-	if (floorcollide) gravity = 0.0f;
-
-	if (state_ == PlayerState::State::PlayerIdleAiming ||
-		state_ == PlayerState::State::PlayerStopGun)
+	if (Floorcollide) gravity = 0.0f;
+	else gravity = 9.8f*0.1f;
+	
+	if(GunPossible)
 	{
 		GameDataManager::getInstance().SetSightCheck(true);
 	}
@@ -94,16 +96,26 @@ void Player::update(float deltaTime)
 	//	weaponPos = weaponPos - 1;
 	//}
 
-	if (GetJoypadPOVState(DX_INPUT_PAD1, 0) == 9000 && !alreadyItem && state_ == PlayerState::State::PlayerIdel && GameDataManager::getInstance().GetPlayerDead() == false)
+	if (GetJoypadPOVState(DX_INPUT_PAD1, 0) == 9000 || Keyboard::GetInstance().KeyStateDown(KEYCODE::F))
 	{
-		if (world_->find_actor(ActorGroup::ItemBoxUI, "PlayerBox") == NULL)
+		if (!alreadyItem && state_ == PlayerState::State::PlayerIdel && GameDataManager::getInstance().GetPlayerDead() == false)
 		{
-			world_->add_actor(ActorGroup::ItemBoxUI, new_actor<PlayerItemBox>(world_, RecoverItemCount, AttackItemCount, weak_from_this()));
+			if (world_->find_actor(ActorGroup::ItemBoxUI, "PlayerBox") == NULL)
+			{
+				world_->add_actor(ActorGroup::ItemBoxUI, new_actor<PlayerItemBox>(world_, RecoverItemCount, AttackItemCount, weak_from_this()));
+			}
+			alreadyItem = true;
 		}
-		alreadyItem = true;
 	}
 	else{
 		alreadyItem = false;
+	}
+
+	if (invinciblyCheck) {
+		ActorTransparence();
+	}
+	else {
+		TransparenceInit();
 	}
 
 	prevPosition_ = position_;
@@ -113,6 +125,18 @@ void Player::draw() const
 {
 	mesh_.draw();
 	draw_weapon();
+
+	if (GameDataManager::getInstance().GetSightCheck() == true)
+	{
+		Sprite::GetInstance().DrawSetCenter(SPRITE_ID::SIGHT, Vector2(ConvWorldPosToScreenPos(AimPos).x, ConvWorldPosToScreenPos(AimPos).y));
+	}
+
+	if (SetRemainGun == 0)
+	{
+		Sprite::GetInstance().DrawSetCenter(SPRITE_ID::BULLET_EMPTY, Vector2(960, 800));
+	}
+
+#ifdef _DEBUG
 	body_->transform(Getpose())->draw();
 
 	//DrawFormatString(500, 500, GetColor(255, 255, 255), "%f", AimPosMove.x);
@@ -120,28 +144,27 @@ void Player::draw() const
 
 	//DrawLine3D(Vector3{ position_.x,position_.y + 15.0f,position_.z } +rotation_.Forward() * 10, AimPos, GetColor(255, 255, 255));
 
-	//DrawFormatString(700, 900, GetColor(255, 255, 255), "%f", position_.x);
-	//DrawFormatString(700, 950, GetColor(255, 255, 255), "%f", position_.y);
-	//DrawFormatString(700, 1000, GetColor(255, 255, 255), "%f", position_.z);
+	DrawFormatString(700, 900, GetColor(255, 255, 255), "%f", position_.x);
+	DrawFormatString(700, 950, GetColor(255, 255, 255), "%f", position_.y);
+	DrawFormatString(700, 1000, GetColor(255, 255, 255), "%f", position_.z);
 
-	DrawFormatString(700, 900, GetColor(255, 255, 255), "%f", GamePad::GetInstance().Stick().x);
-	DrawFormatString(700, 950, GetColor(255, 255, 255), "%f", GamePad::GetInstance().Stick().y);
+	//DrawFormatString(700, 900, GetColor(255, 255, 255), "%f", GamePad::GetInstance().Stick().x);
+	//DrawFormatString(700, 950, GetColor(255, 255, 255), "%f", GamePad::GetInstance().Stick().y);
 
 
 
-	if (collide)
+	if (Stagecollide)
 	{
 		DrawFormatString(600, 900, GetColor(255, 255, 255), "HIT");
 	}
-	if (floorcollide)
+	if (Floorcollide)
 	{
 		DrawFormatString(600, 950, GetColor(255, 255, 255), "FloorHIT");
 	}
 
-	if (GameDataManager::getInstance().GetSightCheck() == true)
-	{
-		Sprite::GetInstance().DrawSetCenter(SPRITE_ID::SIGHT, Vector2(ConvWorldPosToScreenPos(AimPos).x, ConvWorldPosToScreenPos(AimPos).y));
-	}
+	DrawFormatString(300, 300, GetColor(255, 255, 255), "%i", motion_);
+
+#endif // _DEBUG
 
 }
 
@@ -218,23 +241,24 @@ void Player::collision()
 	if (field(result)) {
 		position_.x = result.x;
 		position_.z = result.z;
-		collide = true;
+
+		Stagecollide = true;
 	}
 	else
 	{
-		collide = false;
+		Stagecollide = false;
 	}
 
 	//床との接地判定
 	if (floor(result)) {
 		if (state_ != PlayerState::State::PlayerJump)
 		{
-			floorcollide = true;
+			Floorcollide = true;
 			position_ = result+rotation_.Up()*(body_->length()*0.5f + body_->radius()*0.5f);
 		}
 	}
 	else{
-		floorcollide = false;
+		Floorcollide = false;
 	}
 }
 
@@ -247,7 +271,7 @@ void Player::update_state(float deltaTime)
 	case PlayerState::State::PlayerIdleToAim:	IdletoAim();	break;
 	case PlayerState::State::PlayerAimToIdle:	AimtoIdle();	break;
 	case PlayerState::State::PlayerIdleAiming:	IdleAiming();	break;
-	case PlayerState::State::PlayerStopGun:		StopGun();		break;
+	case PlayerState::State::PlayerGun:			PlayerGunFire();break;
 	case PlayerState::State::PlayerReload:		Reload();		break;
 	case PlayerState::State::PlayerGunPunch:	GunPunch();	    break;
 	case PlayerState::State::PlayerJump:		Jump();			break;
@@ -274,39 +298,55 @@ void Player::PlayerInput()
 	{
 		if (state_ != PlayerState::PlayerReload)
 		{
-			if (GamePad::GetInstance().ButtonTriggerUp(PADBUTTON::NUM5)) {
+			if (GamePad::GetInstance().ButtonTriggerUp(PADBUTTON::NUM5)||Keyboard::GetInstance().KeyTriggerUp(KEYCODE::LSHIFT)) {
 				change_state(PlayerState::PlayerAimToIdle, PlayerMotion::Motion::MotionPlayerAimToIdle);
 			}
 		}
 	}
 
 	//リロード
-	if (SetRemainGun < SetGunPoint && HaveGun > 0 &&
-		GamePad::GetInstance().ButtonStateUp(PADBUTTON::NUM6) &&
-		GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM3) &&
-		state_ != PlayerState::PlayerReload)
+	if (SetRemainGun < SetGunPoint && HaveGun > 0)
 	{
-		change_state(PlayerState::PlayerReload, PlayerMotion::Motion::MotionPlayerReload);
+		if (state_ != PlayerState::PlayerReload)
+{
+			if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM3))
+			{
+				if (GamePad::GetInstance().ButtonStateUp(PADBUTTON::NUM6))
+				{
+					change_state(PlayerState::PlayerReload, PlayerMotion::Motion::MotionPlayerReload);
+				}
+			}
+			else if (Keyboard::GetInstance().KeyTriggerDown(KEYCODE::R))
+			{
+				if (Keyboard::GetInstance().KeyStateUp(KEYCODE::SPACE))
+				{
+					change_state(PlayerState::PlayerReload, PlayerMotion::Motion::MotionPlayerReload);
+				}
+			}
+		}
 	}
 
-	if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM4) && state_ != PlayerState::PlayerGunPunch) {
+	if ((GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM4) || Keyboard::GetInstance().KeyTriggerDown(KEYCODE::Q)) && state_ != PlayerState::PlayerGunPunch) {
 		change_state(PlayerState::PlayerGunPunch, PlayerMotion::Motion::MotionPlayerGunPunch);
 	}
 }
 
 void Player::Idle()
 {
-	if (GamePad::GetInstance().Stick().x != 0.0f || GamePad::GetInstance().Stick().y != 0.0f)
+	GunPossible = false;
+	if (GamePad::GetInstance().Stick().x != 0.0f || GamePad::GetInstance().Stick().y != 0.0f || 
+		Keyboard::GetInstance().KeyStateDown(KEYCODE::D) || Keyboard::GetInstance().KeyStateDown(KEYCODE::A)||
+		Keyboard::GetInstance().KeyStateDown(KEYCODE::W) || Keyboard::GetInstance().KeyStateDown(KEYCODE::S))
 	{
 		Move(GamePad::GetInstance().Stick().x, GamePad::GetInstance().Stick().y);
 
-		if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM5)) {
+		if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM5)|| Keyboard::GetInstance().KeyTriggerDown(KEYCODE::LSHIFT)) {
 			change_state(PlayerState::PlayerIdleToAim, PlayerMotion::Motion::MotionPlayerIdleToAim);
 		}
 	}
 	else
 	{
-		if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM5)) {
+		if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM5) || Keyboard::GetInstance().KeyTriggerDown(KEYCODE::LSHIFT)) {
 			change_state(PlayerState::PlayerIdleToAim, PlayerMotion::Motion::MotionPlayerIdleToAim);
 		}
 		else
@@ -316,16 +356,28 @@ void Player::Idle()
 	}
 
 	float yaw_speed{ 0.0f };
-	yaw_speed = GamePad::GetInstance().RightStick().x;
+	if( Keyboard::GetInstance().KeyStateDown(KEYCODE::RIGHT))
+	{
+		yaw_speed = 1.0f;
+	}
+	else if (Keyboard::GetInstance().KeyStateDown(KEYCODE::LEFT))
+	{
+		yaw_speed = -1.0f;
+	}
+	else
+	{
+		yaw_speed = GamePad::GetInstance().RightStick().x;
+	}
+			
 	rotation_ *= Matrix::CreateFromAxisAngle(rotation_.Up(), yaw_speed * 1.0f);
 	rotation_.NormalizeRotationMatrix();
 
-	if (GetJoypadPOVState(DX_INPUT_PAD1, 0) == 18000)
+	if (GetJoypadPOVState(DX_INPUT_PAD1, 0) == 18000 || Keyboard::GetInstance().KeyTriggerDown(KEYCODE::Y))
 	{
 		change_state(PlayerState::PlayerThohatu, PlayerMotion::Motion::MotionPlayerTyohatu);
 	}
 
-	if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM1))
+	if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM1) || Keyboard::GetInstance().KeyTriggerDown(KEYCODE::LCTRL))
 	{
 		JumpChacker(state_);
 	}
@@ -333,6 +385,7 @@ void Player::Idle()
 
 void Player::IdletoAim()
 {
+	GunPossible = false;
 	state_timer_ += 1.0f;
 	if (state_timer_ >= mesh_.motion_end_time()) {
 		change_state(PlayerState::PlayerIdleAiming, PlayerMotion::Motion::MotionPlayerIdleAiming);
@@ -341,12 +394,13 @@ void Player::IdletoAim()
 
 void Player::AimtoIdle()
 {
+	GunPossible = false;
 	state_timer_ += 1.0f;
 	if (state_timer_ >= mesh_.motion_end_time()) {
 		change_state(PlayerState::PlayerIdel, PlayerMotion::Motion::MotionPlayerIdel);
 	}
 
-	if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM5))
+	if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM5) || Keyboard::GetInstance().KeyTriggerDown(KEYCODE::LSHIFT))
 	{
 		change_state(PlayerState::PlayerIdleAiming, PlayerMotion::Motion::MotionPlayerIdleAiming);
 	}
@@ -354,36 +408,23 @@ void Player::AimtoIdle()
 
 void Player::IdleAiming()
 {
-	if (GamePad::GetInstance().ButtonTriggerUp(PADBUTTON::NUM5)) {
+	if (GamePad::GetInstance().ButtonTriggerUp(PADBUTTON::NUM5) || Keyboard::GetInstance().KeyTriggerUp(KEYCODE::LSHIFT)) {
 		change_state(PlayerState::PlayerAimToIdle, PlayerMotion::Motion::MotionPlayerAimToIdle);
 	}
 
-	if (GamePad::GetInstance().ButtonStateDown(PADBUTTON::NUM6)) {
-		change_state(PlayerState::PlayerStopGun, PlayerMotion::Motion::MotionPlayerStopGun);
-		Gun(state_, motion_);
+	if (SetRemainGun > 0 && motion_ != PlayerMotion::Motion::MotionPlayerBackGun)
+	{
+		if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM6) || Keyboard::GetInstance().KeyTriggerDown(KEYCODE::SPACE)) {
+			change_state(PlayerState::PlayerGun, PlayerMotion::Motion::MotionPlayerStopGun);
+		}
 	}
 
 	GunMove(GamePad::GetInstance().Stick().x, GamePad::GetInstance().Stick().y);
 
 }
-
-void Player::StopGun()
-{
-	Gun(state_, motion_);
-
-	if (GamePad::GetInstance().ButtonTriggerUp(PADBUTTON::NUM5)) {
-		change_state(PlayerState::PlayerAimToIdle, PlayerMotion::Motion::MotionPlayerAimToIdle);
-	}
-
-	if (GamePad::GetInstance().ButtonTriggerUp(PADBUTTON::NUM6)) {
-		change_state(PlayerState::PlayerIdleAiming, PlayerMotion::Motion::MotionPlayerIdleAiming);
-	}
-
-	GunMove(GamePad::GetInstance().Stick().x, GamePad::GetInstance().Stick().y);
-}
-
 void Player::Reload()
 {
+	GunPossible = false;
 	state_timer_ += 1.0f;
 	if (state_timer_ >= mesh_.motion_end_time())
 	{
@@ -391,7 +432,7 @@ void Player::Reload()
 		if (HaveGun < SetGunPoint) {
 			if (HaveGun + SetRemainGun < SetGunPoint)
 			{
-				setpoint = SetRemainGun;
+				setpoint = HaveGun;
 			}
 			else {
 				setpoint = SetGunPoint - SetRemainGun;
@@ -405,7 +446,7 @@ void Player::Reload()
 
 		DelayGunTime = 30;
 
-		if (GamePad::GetInstance().ButtonStateUp(PADBUTTON::NUM5))
+		if (GamePad::GetInstance().ButtonStateUp(PADBUTTON::NUM5) || Keyboard::GetInstance().KeyStateUp(KEYCODE::LSHIFT))
 		{
 			change_state(PlayerState::PlayerIdel, PlayerMotion::Motion::MotionPlayerIdel);
 		}
@@ -442,6 +483,22 @@ void Player::GunMove(float X, float Y)
 	float side_speed{ 0 };
 	float yaw_speed{ 0.0f };
 
+	if (Keyboard::GetInstance().KeyStateDown(KEYCODE::A))
+	{
+		X = -0.5f;
+	}
+	else if (Keyboard::GetInstance().KeyStateDown(KEYCODE::D))
+	{
+		X = 0.75f;
+	}
+	else if (Keyboard::GetInstance().KeyStateDown(KEYCODE::W)){
+		Y = 0.75f;
+
+	}
+	else if (Keyboard::GetInstance().KeyStateDown(KEYCODE::S)){
+		Y = -0.75f;
+	}
+
 	side_speed = -X * 0.25f;
 	forward_speed = Y * 0.25f;
 
@@ -460,22 +517,29 @@ void Player::GunMove(float X, float Y)
 
 	if (X > 0.0f) {
 		motion_ = PlayerMotion::Motion::MotionPlayerLeftGun;
+		GunPossible = true;
 	}
 	if (X < 0.0f) {
 		motion_ = PlayerMotion::Motion::MotionPlayerLeftGun;
+		GunPossible = true;
 	}
 	if (Y > 0.0f) {
 		motion_ = PlayerMotion::Motion::MotionPlayerForwardGun;
+		GunPossible = true;
 	}
 	if (Y < 0.0f) {
 		motion_ = PlayerMotion::Motion::MotionPlayerBackGun;
+		GunPossible = false;
 	}
 
-	if (side_speed == 0.0f && forward_speed == 0.0f)
+	if (state_ != PlayerState::State::PlayerGun)
 	{
-		change_state(PlayerState::PlayerIdleAiming, PlayerMotion::Motion::MotionPlayerIdleAiming);
+		if (side_speed == 0.0f && forward_speed == 0.0f)
+		{
+			GunPossible = true;
+			change_state(PlayerState::PlayerIdleAiming, PlayerMotion::Motion::MotionPlayerIdleAiming);
+		}
 	}
-
 }
 void Player::Move(float X, float Y)
 {
@@ -484,6 +548,22 @@ void Player::Move(float X, float Y)
 	float forward_speed{ 0.0f };
 	float side_speed{ 0 };
 	float yaw_speed{ 0.0f };
+
+	if (Keyboard::GetInstance().KeyStateDown(KEYCODE::A))
+	{
+		X = -1.0f;
+	}
+	else if (Keyboard::GetInstance().KeyStateDown(KEYCODE::D))
+	{
+		X = 1.0f;
+	}
+	else if (Keyboard::GetInstance().KeyStateDown(KEYCODE::W)) {
+		Y = 1.0f;
+
+	}
+	else if (Keyboard::GetInstance().KeyStateDown(KEYCODE::S)) {
+		Y = -1.0f;
+	}
 
 	side_speed = -X * 0.5f;
 	forward_speed = Y * 0.5f;
@@ -514,7 +594,7 @@ void Player::Move(float X, float Y)
 	velocity_ += rotation_.Left() * side_speed;
 	position_ += velocity_ * 1.0f;
 
-	if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM1))
+	if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM1) || Keyboard::GetInstance().KeyTriggerDown(KEYCODE::LCTRL))
 	{
 		JumpChacker(state_);
 	}
@@ -522,15 +602,19 @@ void Player::Move(float X, float Y)
 	prevPosition_ = position_;
 }
 
-void Player::Gun(PlayerState::State state, int motion)
+void Player::Gun()
 {
-	if (GamePad::GetInstance().Stick().y >= 0)
+	world_->add_actor(ActorGroup::PlayerBullet, std::make_shared<Ball>(world_, Vector3{ position_.x,position_.y + 13.0f,position_.z } +rotation_.Forward() * 4 + rotation_.Right() * 3, AimPos));
+	SetRemainGun = SetRemainGun - 1;
+}
+
+void Player::PlayerGunFire()
+{
+	if (state_timer_ == 5)Gun();
+	state_timer_ += 1.0f;
+	if (state_timer_ >= mesh_.motion_end_time())
 	{
-		if (SetRemainGun > 0 && !CheckGun) {
-			world_->add_actor(ActorGroup::PlayerBullet, std::make_shared<Ball>(world_, Vector3{ position_.x,position_.y + 13.0f,position_.z } +rotation_.Forward() * 4 + rotation_.Right() * 3, AimPos));
-			SetRemainGun -= 1;
-			CheckGun = true;
-		}
+		change_state(before_state_, before_motion_);
 	}
 }
 
@@ -613,15 +697,6 @@ void Player::draw_weapon() const
 
 void Player::Delay()
 {
-	if (CheckGun) {
-		DelayGunTime--;
-		if (DelayGunTime <= 0)
-		{
-			CheckGun = false;
-			DelayGunTime = 20;
-		}
-	}
-
 	if (invinciblyCheck) {
 		if (hp_ > 0)
 		{
@@ -645,7 +720,7 @@ void Player::Hit(Vector3 & dir)
 	Vector3 dir_ = Vector3::Normalize(dir);
 	//アクターからプレイヤーの方向に移動
 	//velocity_ = Vector3::Up * 7.0f + Vector3{ dir_.x,0.f,dir_.z } *2.0f;
-	velocity_.x = Vector3::Up.x * 7.0f + dir_.x*2.0f;
-	velocity_.z = Vector3::Up.z * 7.0f + dir_.z*2.0f;
+	//velocity_.x = Vector3::Up.x * 7.0f + dir_.x*2.0f;
+	//velocity_.z = Vector3::Up.z * 7.0f + dir_.z*2.0f;
 	//collide = true;
 }

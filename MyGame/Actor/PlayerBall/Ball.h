@@ -2,13 +2,14 @@
 
 #include "../Actor.h"
 #include "../../Collision/BoundingCapsule.h"
+#include "../../Collision/BoundingSphere.h"
 #include "../Player/Player.h"
 #include "../../Math/MathH.h"
 
 class Ball : public Actor
 {
 public:
-	Ball(IWorld* world, const Vector3& P_position,Vector3& A_position, const IBodyPtr& body = std::make_shared<BoundingCapsule>(Vector3{ 0.0f,0.0f,0.0f }, Matrix::Identity, 0.5f, 0.5f));
+	Ball(IWorld* world, const Vector3& P_position,Vector3& A_position, const IBodyPtr& body = std::make_shared<BoundingSphere>(Vector3{ 0.0f,0.0f,0.0f }, 1.5f));
 
 	virtual void initialize() override;
 

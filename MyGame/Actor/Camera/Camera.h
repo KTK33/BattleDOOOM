@@ -20,7 +20,7 @@ public:
 
 	void PlayerInput();
 
-	void PlayerGameOver();
+	void PlayerGameFinish();
 
 private:
 	Actor* player_;

@@ -1,6 +1,7 @@
 #include "Pause.h"
 #include "../../Texture/Sprite.h"
 #include "../../Input/GamePad.h"
+#include "../../Input/Keyboard.h"
 #include "../../Scene/GameData/GameDataManager.h"
 #include "PauseSystem.h"
 
@@ -28,9 +29,9 @@ void PauseUI::initialize()
 
 void PauseUI::update(float deltaTime)
 {
-	if (GameDataManager::getInstance().GetPlayerDead() == false)
+	if (GameDataManager::getInstance().GetPlayerDead() == false && GameDataManager::getInstance().GetDeadBossEnemy() == false)
 	{
-		if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM8)) {
+		if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM8) || Keyboard::GetInstance().KeyTriggerDown(KEYCODE::T)) {
 			PauseDecision = false;
 			if (world_->GetPauseCheck() == true)
 			{
@@ -101,7 +102,7 @@ void PauseUI::PlayerInput()
 {
 	if (PauseDecision)
 	{
-		if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM1))
+		if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM1) || Keyboard::GetInstance().KeyTriggerDown(KEYCODE::LCTRL))
 		{
 			PauseDecision = false;
 			GameDataManager::getInstance().SetItemBoXOpen(false);
@@ -109,24 +110,24 @@ void PauseUI::PlayerInput()
 	}
 	else
 	{
-		if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM1))
+		if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM1) || Keyboard::GetInstance().KeyTriggerDown(KEYCODE::LCTRL))
 		{
 			world_->SetPauseCheck(false);
 		}
 
-		if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::UP))
+		if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::UP) || Keyboard::GetInstance().KeyTriggerDown(KEYCODE::UP))
 		{
 			moveCursor(1);
 			//animeTime = 0;
 			//anime = 0;
 		}
-		if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::DOWN))
+		if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::DOWN) || Keyboard::GetInstance().KeyTriggerDown(KEYCODE::DOWN))
 		{
 			moveCursor(-1);
 			//animeTime = 0;
 			//anime = 0;
 		}
-		if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM2))
+		if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM2) || Keyboard::GetInstance().KeyTriggerDown(KEYCODE::SPACE))
 		{
 			PauseDecision = true;
 		}

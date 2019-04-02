@@ -3,7 +3,7 @@
 #include "../Actor.h"
 #include "../../Collision/BoundingCapsule.h"
 #include "../../Animation/AnimationMesh.h"
-#include "EnemySystem.h"
+#include "../ActorSystem.h"
 
 class BossEnemyState
 {
@@ -22,7 +22,7 @@ public:
 	};
 };
 
-class BossEnemy : public Actor,public EnemySystem  {
+class BossEnemy : public Actor,public ActorSystem {
 public:
 	BossEnemy(int model, IWorld* world, const Vector3& position, const IBodyPtr& body = std::make_shared<BoundingCapsule>(Vector3{ 0.0f,9.0f,0.0f }, Matrix::Identity, 12.0f, 4.0f));
 
@@ -66,7 +66,7 @@ private:
 	//ƒ‚[ƒVƒ‡ƒ“”Ô†
 	int motion_;
 	//ˆÚ“®‘¬“x
-	const float WalkSpeed{ 0.005f };
+	const float WalkSpeed{ 0.001f };
 	float WalkVal;
 	//ó‘Ô
 	BossEnemyState::State state_;

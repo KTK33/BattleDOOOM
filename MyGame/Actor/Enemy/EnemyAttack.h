@@ -3,7 +3,6 @@
 #include "../Actor.h"
 #include "../../Collision/BoundingCapsule.h"
 #include "../../Animation/AnimationMesh.h"
-#include "EnemySystem.h"
 
 
 class EnemyAttack : public Actor{

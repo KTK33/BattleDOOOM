@@ -2,6 +2,7 @@
 #include <DxLib.h>
 
 #include "../Input/GamePad.h"
+#include "../Input/Keyboard.h"
 #include "../Input/Mouse.h"
 #include "../Math/Random.h"
 #include "../Graphics/Graphics2D.h"
@@ -20,6 +21,7 @@ Game::Game(int width, int height, bool full_screen,float fps) :
 
 	// 実行
 int Game::run() {
+	SetMainWindowText("BattleDOOOM");
     SetWindowSize(window_width_, window_height_);
     // フルスクリーンモード時の解像度を設定
     SetFullScreenResolutionMode(DX_FSRESOLUTIONMODE_NATIVE);
@@ -56,7 +58,7 @@ int Game::run() {
 	fps.initialize();
 
     // メインループ(何かキーが押されたらループを抜ける)
-    while (ProcessMessage() == 0 && is_running()) {
+    while (ProcessMessage() == 0 && is_running() && is_runningPad()) {
 		Time::GetInstance().update();
         // 更新
         update(1.0f);
@@ -99,6 +101,7 @@ void Game::start() {
 void Game::update(float) {
 	// ゲームパッドの更新
 	GamePad::GetInstance().Update();
+	Keyboard::GetInstance().Update();
 	// マウスの更新
 	Mouse::update();
 	sceneManager_.update(60.0f / 60.0f);
@@ -121,6 +124,10 @@ void Game::end() {
 bool Game::is_running() const {
     // エスケープキーで強制終了
     return CheckHitKey(KEY_INPUT_ESCAPE) == 0;
+}
+
+bool Game::is_runningPad() const{
+	return GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM7) == 0;
 }
 
 

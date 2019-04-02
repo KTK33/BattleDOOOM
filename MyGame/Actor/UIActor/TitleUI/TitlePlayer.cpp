@@ -11,6 +11,8 @@ TitlePlayer::TitlePlayer(int model, int weapon, IWorld * world, const Vector3 & 
 	rotation_ = Matrix::Identity;
 	mesh_.transform(Getpose());
 
+	ActorSystem::TransparenceInit();
+
 	motion_ = PlayerMotion::Motion::MotionPlayerIdleAiming;
 }
 

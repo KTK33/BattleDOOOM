@@ -31,6 +31,7 @@ private:
     virtual void end();
     // 実行中か？
     virtual bool is_running() const;
+	virtual bool is_runningPad() const;
 
 private:
     // ウィンドウの幅

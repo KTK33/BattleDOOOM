@@ -27,7 +27,7 @@ void TitleBullet::update(float deltaTime)
 
 	if (Timer == 150)
 	{
-		world_->add_actor(ActorGroup::Effect, new_actor<Effect>(world_, position_,4.0f, SPRITE_ID::EFFECT_BULLETHIT));
+		world_->add_actor(ActorGroup::Effect, new_actor<Effect>(world_, position_,8.0f, SPRITE_ID::EFFECT_BULLETHIT));
 	}
 
 	if (Timer > 150)

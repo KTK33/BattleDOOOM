@@ -28,10 +28,10 @@ void EnemyAttackFire::update(float deltaTime)
 	//	position_ += plyaerVector * 0.1f;
 	//}
 
-	position_ += plyaerVector * 0.1f;
+	position_ += plyaerVector * 0.01f;
 
 	DeadTimer++;
-	if (DeadTimer >= 60) die();
+	if (DeadTimer >= 120) die();
 }
 
 void EnemyAttackFire::onCollide(Actor & other)

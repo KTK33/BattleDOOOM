@@ -12,7 +12,7 @@
 
 LoadingScene::LoadingScene() {
 
-	next_ = SceneType::SCENE_GAMEPLAY;
+	next_ = SceneType::SCENE_TITLE;
 }
 
 void LoadingScene::start() {
@@ -64,7 +64,9 @@ void LoadingScene::LoadModel()
 {
 	//モデルデータの読み込み
 	SkeletalMesh::load(0,"asset/MODEL/Player/Model.mv1");
-	SkeletalMesh::load(1, "asset/MODEL/DummyEnemy/zombie.mv1");
+	SkeletalMesh::load(11, "asset/MODEL/DummyEnemy/Zombei_1/zombie.mv1");
+	SkeletalMesh::load(12, "asset/MODEL/DummyEnemy/Zombei_2/zombie.mv1");
+	SkeletalMesh::load(13, "asset/MODEL/DummyEnemy/Zombei_3/zombie.mv1");
 	SkeletalMesh::load(4, "asset/ghoul2.mv1");
 	SkeletalMesh::load(2, "asset/BaseBall.mv1");
 	SkeletalMesh::load(3, "asset/MODEL/BossMonster/Monster.mv1");
@@ -79,7 +81,7 @@ void LoadingScene::LoadModel()
 }
 void LoadingScene::LoadAny()
 {
-	CollisionMesh::load(0, "asset/stage/stage/Textures/Untitled.mv1");
+	CollisionMesh::load(0, "asset/stage/stage/Textures/stage.mv1");
 	//スカイボックスモデルの読み込み
 	Skybox::load(0, "asset/skybox/skydome.mv1");
 	//ビルボードの読み込み
@@ -128,6 +130,9 @@ void LoadingScene::LoadSprite()
 	sprite.Load("asset/UI/PlayScene/GameOverBack.png", SPRITE_ID::GAMEOVERBACK);
 	sprite.Load("asset/UI/PlayScene/GameOverName.png", SPRITE_ID::GAMEOVERNAME);
 
+	sprite.Load("asset/UI/PlayScene/GameClearBack.png", SPRITE_ID::GAMECLEARBACK);
+	sprite.Load("asset/UI/PlayScene/GameClearName.png", SPRITE_ID::GAMECLEARNAME);
+	sprite.Load("asset/UI/PlayScene/BulletEmpty.png", SPRITE_ID::BULLET_EMPTY);
 	//ポーズ画面のUI
 	sprite.Load("asset/UI/Pause/PauseBack.png", SPRITE_ID::PAUSEBACK);
 	sprite.Load("asset/UI/Pause/Item.png", SPRITE_ID::ITEM);

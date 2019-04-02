@@ -18,5 +18,4 @@ private:
 	World world_;
 
 	bool BossArleady;
-	bool ClearUIArleady;
 };

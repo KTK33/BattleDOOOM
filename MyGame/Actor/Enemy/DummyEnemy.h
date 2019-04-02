@@ -3,7 +3,7 @@
 #include "../Actor.h"
 #include "../../Collision/BoundingCapsule.h"
 #include "../../Animation/AnimationMesh.h"
-#include "EnemySystem.h"
+#include "../ActorSystem.h"
 
 class DummyEnemyState
 {
@@ -19,7 +19,7 @@ public:
 	};
 };
 
-class DummyEnemy : public Actor,public EnemySystem {
+class DummyEnemy : public Actor,public ActorSystem {
 public:
 	DummyEnemy(int model, IWorld* world, const Vector3& position,const Matrix& rotation, std::weak_ptr<Actor> m_ui,const IBodyPtr& body = std::make_shared<BoundingCapsule>(Vector3{ 0.0f,7.0f,0.0f }, Matrix::Identity, 8.0f, 3.5f));
 
@@ -63,7 +63,7 @@ private:
 	//モーション番号
 	int motion_;
 	//移動速度
-	const float WalkSpeed{ 0.005f };
+	float WalkSpeed{ 0.005f };
 	//状態
 	DummyEnemyState::State state_;
 	//状態タイマ

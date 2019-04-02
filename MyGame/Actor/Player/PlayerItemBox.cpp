@@ -1,6 +1,7 @@
 #include "PlayerItemBox.h"
 #include "../../Texture/Sprite.h"
 #include "../../Input/GamePad.h"
+#include "../../Input/Keyboard.h"
 #include "../../Scene/GameData/GameDataManager.h"
 
 PlayerItemBox::PlayerItemBox(IWorld * world,int HPItem,int AttackItem, std::weak_ptr<Actor> player):
@@ -35,7 +36,7 @@ void PlayerItemBox::update(float deltaTime)
 		if (alphaTimer == 0) alphaCheck = true;
 	}
 
-	if(GetJoypadPOVState(DX_INPUT_PAD1, 0) == -1)
+	if(GetJoypadPOVState(DX_INPUT_PAD1, 0) == -1 && Keyboard::GetInstance().KeyStateUp(KEYCODE::F))
 	{
 		GameDataManager::getInstance().SetItemBoXOpen(false);
 		die();
@@ -67,21 +68,21 @@ void PlayerItemBox::receiveMessage(EventMessage message, void * param)
 
 void PlayerItemBox::PlayerInput()	
 {
-	if (GamePad::GetInstance().RightStick().y < -0.5f)
+	if (GamePad::GetInstance().RightStick().y < -0.5f || Keyboard::GetInstance().KeyTriggerDown(KEYCODE::DOWN))
 	{
 		moveCursor2(1);
 		alphaTimer = 255;
 		alphaCheck = false;
 	}
 
-	if (GamePad::GetInstance().RightStick().y > 0.5f)
+	if (GamePad::GetInstance().RightStick().y > 0.5f || Keyboard::GetInstance().KeyTriggerDown(KEYCODE::UP))
 	{
 		moveCursor2(-1);
 		alphaTimer = 255;
 		alphaCheck = false;
 	}
 
-	if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM1))
+	if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM2) || Keyboard::GetInstance().KeyTriggerDown(KEYCODE::SPACE))
 	{
 		int HPVal = 3;
 		switch (cursorPos_2)

@@ -124,3 +124,8 @@ int SkeletalMesh::bone_count() {
 float SkeletalMesh::end_time(int motion) {
     return MV1GetAnimTotalTime(model_, motion);
 }
+
+void SkeletalMesh::Transparence(float alpha)
+{
+	MV1SetOpacityRate(model_, alpha);
+}

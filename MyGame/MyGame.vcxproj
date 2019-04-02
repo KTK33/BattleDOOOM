@@ -70,20 +70,20 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>E:\ProGame\MyGame\MyGame\プロジェクトに追加すべきファイル_VC用;$(IncludePath)</IncludePath>
-    <LibraryPath>E:\ProGame\MyGame\MyGame\プロジェクトに追加すべきファイル_VC用;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>E:\ProGame\MyGame\MyGame\プロジェクトに追加すべきファイル_VC用;$(IncludePath)</IncludePath>
-    <LibraryPath>E:\ProGame\MyGame\MyGame\プロジェクトに追加すべきファイル_VC用;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>E:\ProGame\MyGame\MyGame\プロジェクトに追加すべきファイル_VC用;$(IncludePath)</IncludePath>
-    <LibraryPath>E:\ProGame\MyGame\MyGame\プロジェクトに追加すべきファイル_VC用;$(LibraryPath)</LibraryPath>
+    <IncludePath>E:\ProGame\MyGame\DX;$(IncludePath)</IncludePath>
+    <LibraryPath>E:\ProGame\MyGame\DX;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>E:\ProGame\MyGame\MyGame\プロジェクトに追加すべきファイル_VC用;$(IncludePath)</IncludePath>
-    <LibraryPath>E:\ProGame\MyGame\MyGame\プロジェクトに追加すべきファイル_VC用;$(LibraryPath)</LibraryPath>
+    <IncludePath>E:\ProGame\MyGame\DX;$(IncludePath)</IncludePath>
+    <LibraryPath>E:\ProGame\MyGame\DX;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -92,6 +92,8 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <AdditionalIncludeDirectories>..\MyGame\Effekseer;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -104,6 +106,8 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <AdditionalIncludeDirectories>..\MyGame\Effekseer;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -118,6 +122,8 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <AdditionalIncludeDirectories>..\MyGame\Effekseer;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -134,6 +140,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <AdditionalIncludeDirectories>..\MyGame\Effekseer;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -152,8 +159,7 @@
     <ClCompile Include="Actor\Enemy\EnemyAttack.cpp" />
     <ClCompile Include="Actor\Enemy\EnemyAttackFire.cpp" />
     <ClCompile Include="Actor\Enemy\EnemyHeadShot.cpp" />
-    <ClCompile Include="Actor\Enemy\EnemySystem.cpp" />
-    <ClCompile Include="Actor\Enemy\ExEnemy.cpp" />
+    <ClCompile Include="Actor\ActorSystem.cpp" />
     <ClCompile Include="Actor\ItemActor\BulletItem.cpp" />
     <ClCompile Include="Actor\ItemActor\HPRecoverItem.cpp" />
     <ClCompile Include="Actor\ItemActor\ItemCreater.cpp" />
@@ -162,7 +168,6 @@
     <ClCompile Include="Actor\Player\PlayerAdvent.cpp" />
     <ClCompile Include="Actor\Player\PlayerItemBox.cpp" />
     <ClCompile Include="Actor\Player\PlayerPunchAttack.cpp" />
-    <ClCompile Include="Actor\TestEnemy.cpp" />
     <ClCompile Include="Actor\UIActor\AnyUI.cpp" />
     <ClCompile Include="Actor\UIActor\BossEnemyUI.cpp" />
     <ClCompile Include="Actor\UIActor\Effect.cpp" />
@@ -241,8 +246,7 @@
     <ClInclude Include="Actor\Enemy\EnemyAttack.h" />
     <ClInclude Include="Actor\Enemy\EnemyAttackFire.h" />
     <ClInclude Include="Actor\Enemy\EnemyHeadShot.h" />
-    <ClInclude Include="Actor\Enemy\EnemySystem.h" />
-    <ClInclude Include="Actor\Enemy\ExEnemy.h" />
+    <ClInclude Include="Actor\ActorSystem.h" />
     <ClInclude Include="Actor\ItemActor\BulletItem.h" />
     <ClInclude Include="Actor\ItemActor\HPRecoverItem.h" />
     <ClInclude Include="Actor\ItemActor\ItemCreater.h" />

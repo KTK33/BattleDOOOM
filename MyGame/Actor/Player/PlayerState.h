@@ -7,7 +7,7 @@ public:
 	enum  State
 	{
 		PlayerIdel,
-		PlayerStopGun,
+		PlayerGun,
 		PlayerForwardGun,
 		PlayerRightGun,
 		PlayerLeftGun,
