@@ -9,7 +9,7 @@
 class Ball : public Actor
 {
 public:
-	Ball(IWorld* world, const Vector3& P_position,Vector3& A_position, const IBodyPtr& body = std::make_shared<BoundingSphere>(Vector3{ 0.0f,0.0f,0.0f }, 1.5f));
+	Ball(IWorld* world, const Vector3& P_position,Vector3& A_position,int AttackParam,const IBodyPtr& body = std::make_shared<BoundingSphere>(Vector3{ 0.0f,0.0f,0.0f }, 1.5f));
 
 	virtual void initialize() override;
 
@@ -24,9 +24,6 @@ public:
 protected:
 	//ê^Ç¡íºÇÆî≠éÀÇ≥ÇÍÇÈíe
 	void distance();
-
-	//ìGÇ…å¸Ç©Ç¡ÇƒÇ¢Ç≠íe
-	void homing();
 
 	float target_angle() const;
 

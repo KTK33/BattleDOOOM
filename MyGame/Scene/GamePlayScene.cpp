@@ -21,8 +21,6 @@
 #include "../Actor/UIActor/PlayerTextUI.h"
 #include "../Actor/UIActor/Pause.h"
 
-#include "../Actor/UIActor/Effect.h"
-
 #include "../Actor/UIActor/FadeUI.h"
 
 #include "../Actor/UIActor/PlaySceneUI/GameClearUIh.h"
@@ -58,14 +56,6 @@ void GamePlayScene::start() {
 
 	world_.add_actor(ActorGroup::PauseUI, new_actor<PauseUI>(&world_));
 
-	//world_.add_actor(ActorGroup::Enemy, new_actor<Enemy>(4, &world_, Vector3{ 10.0f, 0.0f,0.0f }));
-
-	//for (int i = 0; i < 1; i++)
-	//{
-	//	auto dummy = new_actor<DummyEnemy>(1, &world_, Vector3{ Random::rand(-120.0f,120.0f), 10.0,Random::rand(-190.0f,190.0f) }, Matrix::CreateRotationY(Random::rand(0.0f,360.0f)), ANYUI);
-	//	world_.add_actor(ActorGroup::Enemy,dummy);
-	//}
-
 	auto dummy1 = new_actor<DummyEnemy>(11, &world_, Vector3{ Random::rand(-200.0f,60.0f), -20.0,Random::rand(-200.0f,60.0f) }, Matrix::CreateRotationY(Random::rand(0.0f,360.0f)), ANYUI);
 	world_.add_actor(ActorGroup::Enemy,dummy1);
 
@@ -75,11 +65,9 @@ void GamePlayScene::start() {
 	auto dummy3 = new_actor<DummyEnemy>(13, &world_, Vector3{ Random::rand(-200.0f,60.0f), -20.0,Random::rand(-200.0f,60.0f) }, Matrix::CreateRotationY(Random::rand(0.0f, 360.0f)), ANYUI);
 	world_.add_actor(ActorGroup::Enemy, dummy3);
 
-	//world_.add_actor(ActorGroup::Enemy, new_actor<BossEnemy>(3, &world_, Vector3{ 10.0f, 0.0f,0.0f }));
 
 	world_.add_actor(ActorGroup::System, new_actor<Camera>(&world_,P));
 
-	//world_.add_actor(ActorGroup::Effect, new_actor<Effect>(&world_,Vector3(10,-30,10),0,SPRITE_ID::EFFECT_BULLETHIT));
 }
 
 void GamePlayScene::update(float deltaTime)

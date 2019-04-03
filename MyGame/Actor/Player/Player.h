@@ -98,4 +98,8 @@ private:
 	bool DeadCheck;
 
 	bool GunPossible;
+
+	int AttackParam;
+	bool AttackUpCheck;
+	int AttackUpTime;
 };

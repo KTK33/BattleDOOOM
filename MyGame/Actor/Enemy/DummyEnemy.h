@@ -87,6 +87,8 @@ private:
 
 	bool deadCheck;
 
+	int DamageParam;
+
 };
 
 //ƒ‚[ƒVƒ‡ƒ“”Ô†

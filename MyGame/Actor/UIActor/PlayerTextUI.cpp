@@ -9,6 +9,9 @@ PlayerTextUI::PlayerTextUI(IWorld * world):
 	BulletTextTimer = 0;
 	GetRecoverCheck = false;
 	RecoverTextTimer = 0;
+	AttackUpCheck = false;
+	AttackUpTime = 600;
+
 }
 
 void PlayerTextUI::initialize()
@@ -37,6 +40,15 @@ void PlayerTextUI::update(float deltaTime)
 			GetRecoverCheck = false;
 		}
 	}
+	if (AttackUpCheck)
+	{
+		AttackUpTime = max(AttackUpTime - 1, 0);
+		if (AttackUpTime == 0)
+		{
+			AttackUpTime = 600;
+			AttackUpCheck = false;
+		}
+	}
 }
 
 void PlayerTextUI::receiveMessage(EventMessage message, void * param)
@@ -53,6 +65,11 @@ void PlayerTextUI::receiveMessage(EventMessage message, void * param)
 		RecoverTextTimer = 0;
 	}
 
+	if (message == EventMessage::ATTACK_UP)
+	{
+		AttackUpCheck = *(bool*)param;
+	}
+
 }
 
 void PlayerTextUI::draw() const
@@ -65,5 +82,8 @@ void PlayerTextUI::draw() const
 	{
 		Sprite::GetInstance().Draw(SPRITE_ID::HPRECOVERTEXT, Vector2(WINDOW_WIDTH - Sprite::GetInstance().GetSize(SPRITE_ID::HPRECOVERTEXT).x, 0));
 	}
-
+	if (AttackUpCheck)
+	{
+		Sprite::GetInstance().Draw(SPRITE_ID::ATTACK_UPNOW, Vector2(1300.0f, 150.0f));
+	}
 }

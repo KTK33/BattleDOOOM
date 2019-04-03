@@ -68,23 +68,7 @@ void Camera::update(float deltaTime)
 
 }
 
-void Camera::draw() const
-{
-
-	//Graphics3D::view_matrix(Matrix::CreateLookAt(position_,
-	//	target_, { 0.0f,5.0f,0.0f }));
-	//Graphics3D::projection_matrix(Matrix::CreatePerspectiveFieldOfView(
-	//	49.0f, 640.0f / 480.0f, 0.3f, 1000.0f));
-
-	//ÉJÉÅÉâÇÃê›íË
-//Graphics3D::view_matrix(Matrix::CreateLookAt(position_,
-//	target_, { 0.0f,5.0f,0.0f }));
-//Graphics3D::projection_matrix(Matrix::CreatePerspectiveFieldOfView(
-//	49.0f, 640.0f / 480.0f, 0.3f, 1000.0f));
-
-//	DrawFormatString(500, 500, GetColor(255, 255, 255), "%f", AimPosMove.x);
-//DrawFormatString(700, 500, GetColor(255, 255, 255), "%f", AimPosMove.y);
-}
+void Camera::draw() const{}
 
 void Camera::move(const Vector3 & rest_position, float stiffness, float friction, float mass)
 {

@@ -85,6 +85,7 @@ void PlayerItemBox::PlayerInput()
 	if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM2) || Keyboard::GetInstance().KeyTriggerDown(KEYCODE::SPACE))
 	{
 		int HPVal = 3;
+		bool Attackup = true;
 		switch (cursorPos_2)
 		{
 		case 0:
@@ -95,6 +96,11 @@ void PlayerItemBox::PlayerInput()
 			}
 			break;
 		case 1:
+			if (countAttackUPItem > 0)
+			{
+				m_player.lock()->receiveMessage(EventMessage::ATTACK_UP, (void*)&Attackup);
+				countAttackUPItem = countAttackUPItem - 1;
+			}
 			break;
 		default:
 			break;

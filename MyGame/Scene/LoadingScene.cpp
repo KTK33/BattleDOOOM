@@ -133,6 +133,7 @@ void LoadingScene::LoadSprite()
 	sprite.Load("asset/UI/PlayScene/GameClearBack.png", SPRITE_ID::GAMECLEARBACK);
 	sprite.Load("asset/UI/PlayScene/GameClearName.png", SPRITE_ID::GAMECLEARNAME);
 	sprite.Load("asset/UI/PlayScene/BulletEmpty.png", SPRITE_ID::BULLET_EMPTY);
+	sprite.Load("asset/UI/PlayScene/AttackUp.png", SPRITE_ID::ATTACK_UPNOW);
 	//É|Å[ÉYâÊñ ÇÃUI
 	sprite.Load("asset/UI/Pause/PauseBack.png", SPRITE_ID::PAUSEBACK);
 	sprite.Load("asset/UI/Pause/Item.png", SPRITE_ID::ITEM);

@@ -1,5 +1,4 @@
 #include "BulletItem.h"
-#include "../../Texture/Sprite.h"
 
 BulletItem::BulletItem(int model, IWorld * world, const Vector3 & position, const IBodyPtr & body):
 	Actor(world, "BulletItem", position, body),
@@ -21,8 +20,6 @@ void BulletItem::draw() const
 {
 	mesh_.draw();
 	//body_->transform(Getpose())->draw();
-
-	//Sprite::GetInstance().DrawBillBoard(SPRITE_ID::HP_GAUGE,position_ , Vector2::Zero, 30.0f);
 }
 
 void BulletItem::onCollide(Actor & other)

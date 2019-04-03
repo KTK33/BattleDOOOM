@@ -25,15 +25,19 @@ Player::Player(int model, int weapon, IWorld * world, const Vector3 & position, 
 	invinciblyCheck{ false },
 	invinciblyTime{ 100 },
 	AimPos{ position_.x + rotation_.Forward().x * 10 + rotation_.Right().x * 5, position_.y + 15, position_.z + rotation_.Forward().z * 10 + rotation_.Right().z * 5 },
-	RecoverItemCount{ 0 },
-	AttackItemCount{ 0 },
+	RecoverItemCount{ 1 },
+	AttackItemCount{ 1 },
 	alreadyItem{ false },
 	DeadCheck{ false },
-	GunPossible{ false }
+	GunPossible{ false },
+	AttackUpCheck{false},
+	AttackUpTime{600}
 {
 	rotation_ = Matrix::Identity;
 	mesh_.transform(Getpose());
 	hp_ = PlayerHP;
+
+	AttackParam = 1;
 
 	ActorSystem::TransparenceInit();
 
@@ -87,14 +91,6 @@ void Player::update(float deltaTime)
 		AimPos = Vector3::Lerp(AimPos, InitAimPos, 0.1f);
 	}
 
-	//if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM1))
-	//{
-	//	weaponPos = weaponPos + 1;
-	//}
-	//if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM2))
-	//{
-	//	weaponPos = weaponPos - 1;
-	//}
 
 	if (GetJoypadPOVState(DX_INPUT_PAD1, 0) == 9000 || Keyboard::GetInstance().KeyStateDown(KEYCODE::F))
 	{
@@ -118,6 +114,21 @@ void Player::update(float deltaTime)
 		TransparenceInit();
 	}
 
+	if (AttackUpCheck){
+		AttackParam = 2;
+		AttackUpTime = max(AttackUpTime - 1, 0);
+		if (AttackUpTime == 0)
+		{
+			AttackUpTime = 600;
+			AttackUpCheck = false;	
+			int DamageParam = 1;
+			world_->send_message(EventMessage::DAMAGEPARAM, (void*)&DamageParam);
+		}
+	}
+	else{
+		AttackParam = 1;
+	}
+
 	prevPosition_ = position_;
 }
 
@@ -135,37 +146,6 @@ void Player::draw() const
 	{
 		Sprite::GetInstance().DrawSetCenter(SPRITE_ID::BULLET_EMPTY, Vector2(960, 800));
 	}
-
-#ifdef _DEBUG
-	body_->transform(Getpose())->draw();
-
-	//DrawFormatString(500, 500, GetColor(255, 255, 255), "%f", AimPosMove.x);
-	//DrawFormatString(700, 500, GetColor(255, 255, 255), "%f", AimPosMove.y);
-
-	//DrawLine3D(Vector3{ position_.x,position_.y + 15.0f,position_.z } +rotation_.Forward() * 10, AimPos, GetColor(255, 255, 255));
-
-	DrawFormatString(700, 900, GetColor(255, 255, 255), "%f", position_.x);
-	DrawFormatString(700, 950, GetColor(255, 255, 255), "%f", position_.y);
-	DrawFormatString(700, 1000, GetColor(255, 255, 255), "%f", position_.z);
-
-	//DrawFormatString(700, 900, GetColor(255, 255, 255), "%f", GamePad::GetInstance().Stick().x);
-	//DrawFormatString(700, 950, GetColor(255, 255, 255), "%f", GamePad::GetInstance().Stick().y);
-
-
-
-	if (Stagecollide)
-	{
-		DrawFormatString(600, 900, GetColor(255, 255, 255), "HIT");
-	}
-	if (Floorcollide)
-	{
-		DrawFormatString(600, 950, GetColor(255, 255, 255), "FloorHIT");
-	}
-
-	DrawFormatString(300, 300, GetColor(255, 255, 255), "%i", motion_);
-
-#endif // _DEBUG
-
 }
 
 void Player::onCollide(Actor & other)
@@ -230,6 +210,12 @@ void Player::receiveMessage(EventMessage message, void * param)
 	{
 		hp_ += *(int*)param;
 		RecoverItemCount = RecoverItemCount - 1;
+	}
+	if (message == EventMessage::ATTACK_UP)
+	{
+		AttackUpCheck = *(bool*)param;
+		m_ui.lock()->receiveMessage(EventMessage::ATTACK_UP, (bool*)param);
+		AttackItemCount = AttackItemCount - 1;
 	}
 }
 
@@ -604,7 +590,7 @@ void Player::Move(float X, float Y)
 
 void Player::Gun()
 {
-	world_->add_actor(ActorGroup::PlayerBullet, std::make_shared<Ball>(world_, Vector3{ position_.x,position_.y + 13.0f,position_.z } +rotation_.Forward() * 4 + rotation_.Right() * 3, AimPos));
+	world_->add_actor(ActorGroup::PlayerBullet, std::make_shared<Ball>(world_, Vector3{ position_.x,position_.y + 13.0f,position_.z } +rotation_.Forward() * 4 + rotation_.Right() * 3, AimPos,AttackParam));
 	SetRemainGun = SetRemainGun - 1;
 }
 

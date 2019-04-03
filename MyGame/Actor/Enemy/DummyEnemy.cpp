@@ -24,6 +24,8 @@ DummyEnemy::DummyEnemy(int model, IWorld * world, const Vector3 & position,const
 	hp_ = 3;
 	maxHp = hp_;
 
+	DamageParam = 1;
+
 	ActorSystem::TransparenceInit();
 
 	player_ = world_->find_actor(ActorGroup::Player, "Player").get();
@@ -94,11 +96,15 @@ void DummyEnemy::receiveMessage(EventMessage message, void * param)
 	{
 		hit_player(*(Vector3*)param);
 	}
+	if (message == EventMessage::DAMAGEPARAM)
+	{
+		DamageParam = *(int*)param;
+	}
 	if (!invinciblyCheck)
 	{
 		if (message == EventMessage::HIT_BALL)
 		{
-			hp_ = hp_ - 1;
+			hp_ = hp_ - DamageParam;
 			change_state(DummyEnemyState::DAMAGE, MotionDummyDamage);
 			invinciblyCheck = true;
 
@@ -122,9 +128,6 @@ void DummyEnemy::receiveMessage(EventMessage message, void * param)
 
 
 	}
-	//if (message == EventMessage::DEAD_DUMMY_ENEMY){
-	//	die();
-	//}
 }
 
 void DummyEnemy::collision()

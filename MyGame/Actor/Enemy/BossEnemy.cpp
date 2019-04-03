@@ -26,6 +26,9 @@ BossEnemy::BossEnemy(int model, IWorld * world, const Vector3 & position, const 
 	ActorSystem::TransparenceInit();
 
 	hp_ = 10;
+
+	DamageParam = 1;
+
 	player_ = world_->find_actor(ActorGroup::Player, "Player").get();
 	if (player_ == nullptr) return;
 }
@@ -98,11 +101,17 @@ void BossEnemy::onCollide(Actor & other)
 
 void BossEnemy::receiveMessage(EventMessage message, void * param)
 {
+	if (message == EventMessage::DAMAGEPARAM)
+	{
+		DamageParam = *(int*)param;
+	}
 	if (!invinciblyCheck){
 		if (message == EventMessage::HIT_BALL){
-			hp_ = hp_ - 1;
-			if(state_ != BossEnemyState::FIRE_BEFO)
-			change_state(BossEnemyState::DAMAGE, MotionBossDamage);
+			hp_ = hp_ - DamageParam;
+			if (state_ != BossEnemyState::FIRE_BEFO)
+			{
+				change_state(BossEnemyState::DAMAGE, MotionBossDamage);
+			}
 			invinciblyCheck = true;
 
 			world_->add_actor(ActorGroup::Effect, new_actor<Effect>(world_, *(Vector3*)param,1.0f, SPRITE_ID::EFFECT_BULLETHIT));

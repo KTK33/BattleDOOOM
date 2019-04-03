@@ -20,4 +20,6 @@ private:
 	int BulletTextTimer;
 	bool GetRecoverCheck;
 	int RecoverTextTimer;
+	bool AttackUpCheck;
+	int AttackUpTime;
 };

@@ -88,7 +88,7 @@ private:
 	bool FireCheck;
 	int FireCount;
 
-
+	int DamageParam;
 };
 
 
