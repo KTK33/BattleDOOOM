@@ -5,6 +5,7 @@
 #include "../../../Input/Keyboard.h"
 #include "TitleBack.h"
 #include "../FadeUI.h"
+#include "../Sound/Sound.h"
 
 TitleAnyUI::TitleAnyUI(IWorld * world) :
 	Actor(world, "TitleAnuUI", Vector3::Zero),
@@ -48,6 +49,10 @@ void TitleAnyUI::update(float deltaTime)
 
 	if (NameBackAlpha == 0)
 	{
+		if (!Sound::GetInstance().IsPlayBGM())
+		{
+			Sound::GetInstance().PlayBGM(BGM_ID::TITLE_BGM, DX_PLAYTYPE_LOOP);
+		}
 		if (!alreadyTitleBack)
 		{
 			world_->add_actor(ActorGroup::UIBefore, new_actor<TitleBack>(world_));
@@ -56,6 +61,7 @@ void TitleAnyUI::update(float deltaTime)
 		if (GamePad::GetInstance().AnyTriggerDown() || Keyboard::GetInstance().AnyTriggerDown())
 		{
 			StartDecision = true;
+			Sound::GetInstance().PlaySE_IsNotPlay(SE_ID::TITLEKETTEI_SE);
 		}
 	}
 

@@ -23,11 +23,6 @@ void EnemyAttackFire::update(float deltaTime)
 	//s—ñ‚ÌÝ’è
 	mesh_.transform(Getpose());
 
-	//if (Vector3::Distance(position_, player_->Getposition()) >= 30)
-	//{
-	//	position_ += plyaerVector * 0.1f;
-	//}
-
 	position_ += plyaerVector * 0.01f;
 
 	DeadTimer++;

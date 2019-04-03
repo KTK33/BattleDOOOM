@@ -3,6 +3,7 @@
 #include "../../Scene/GameData/GameDataManager.h"
 #include "../../Texture/Sprite.h"
 #include "../UIActor/Effect.h"
+#include "../Sound/Sound.h"
 
 BossEnemy::BossEnemy(int model, IWorld * world, const Vector3 & position, const IBodyPtr & body) :
 	Actor(world, "BossEnemy", position, body),
@@ -115,7 +116,7 @@ void BossEnemy::receiveMessage(EventMessage message, void * param)
 			invinciblyCheck = true;
 
 			world_->add_actor(ActorGroup::Effect, new_actor<Effect>(world_, *(Vector3*)param,1.0f, SPRITE_ID::EFFECT_BULLETHIT));
-
+			Sound::GetInstance().PlaySE_IsNotPlay(SE_ID::DAMAGEENEMY_SE);
 		}
 		if (message == EventMessage::HIT_PLAYER_PUNCH){
 			hp_ = hp_ - *(int*)param;
@@ -123,6 +124,7 @@ void BossEnemy::receiveMessage(EventMessage message, void * param)
 				change_state(BossEnemyState::DAMAGE, MotionBossDamage);
 			}
 			invinciblyCheck = true;
+			Sound::GetInstance().PlaySE_IsNotPlay(SE_ID::ATTACK_SE);
 		}
 	}
 }

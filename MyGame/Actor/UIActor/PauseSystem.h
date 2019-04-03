@@ -18,7 +18,7 @@ public:
 	void PlayerInput();
 
 private:
-	int bgmval;
-	int seval;
+	float bgmval;
+	float seval;
 	int aimval;
 };

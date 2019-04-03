@@ -1,6 +1,7 @@
 #include "TitleBullet.h"
 #include "../Effect.h"
 #include "TitleAnyUI.h"
+#include "../Sound/Sound.h"
 
 TitleBullet::TitleBullet(int model, IWorld * world, const Vector3 & position,Vector3 move):
 	Actor(world,"TitleBullet",position),
@@ -28,6 +29,7 @@ void TitleBullet::update(float deltaTime)
 	if (Timer == 150)
 	{
 		world_->add_actor(ActorGroup::Effect, new_actor<Effect>(world_, position_,8.0f, SPRITE_ID::EFFECT_BULLETHIT));
+		Sound::GetInstance().PlaySE_IsNotPlay(SE_ID::DAMAGEENEMY_SE);
 	}
 
 	if (Timer > 150)

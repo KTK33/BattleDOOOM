@@ -203,7 +203,6 @@
     <ClCompile Include="Scene\LoadingScene.cpp" />
     <ClCompile Include="Scene\SceneManager.cpp" />
     <ClCompile Include="Scene\SceneTemplate.cpp" />
-    <ClCompile Include="Sound\BackgroundMusic.cpp" />
     <ClCompile Include="Billboard\Billboard.cpp" />
     <ClCompile Include="Mesh\CollisionMesh.cpp" />
     <ClCompile Include="Collision\CollisionTriangle.cpp" />
@@ -308,7 +307,6 @@
     <ClInclude Include="Scene\Scenes.h" />
     <ClInclude Include="Scene\SceneTemplate.h" />
     <ClInclude Include="Scene\SceneType.h" />
-    <ClInclude Include="Sound\BackgroundMusic.h" />
     <ClInclude Include="Billboard\Billboard.h" />
     <ClInclude Include="Mesh\CollisionMesh.h" />
     <ClInclude Include="Collision\CollisionTriangle.h" />

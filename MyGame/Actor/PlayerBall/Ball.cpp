@@ -1,6 +1,7 @@
 #include "Ball.h"
 #include "../../World/IWorld.h"
 #include "../ActorGroup.h"
+#include "../Sound/Sound.h"
 
 Ball::Ball(IWorld * world, const Vector3 & P_position, Vector3 & A_position, int AttackParam, const IBodyPtr & body):
 	Actor(world, "Ball", P_position, body),
@@ -16,6 +17,8 @@ Ball::Ball(IWorld * world, const Vector3 & P_position, Vector3 & A_position, int
 	rotation_ = -player_->Getrotation();
 
 	world_->send_message(EventMessage::DAMAGEPARAM, (void*)&AttackParam);
+
+	Sound::GetInstance().PlaySE(SE_ID::SHOOT_SE);
 }
 
 void Ball::initialize()

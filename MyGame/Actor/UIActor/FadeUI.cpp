@@ -2,6 +2,7 @@
 #include "../../Texture/Sprite.h"
 #include "../../Scene/GameData/GameDataManager.h"
 #include "../Player/PlayerAdvent.h"
+#include "../Sound/Sound.h"
 
 FadeUI::FadeUI(IWorld * world, int FadeCheck,int SceneNum):
 	Actor(world,"FadeUI",Vector3::Zero),
@@ -33,6 +34,8 @@ void FadeUI::update(float deltaTime)
 			{
 				GameDataManager::getInstance().SetTitleCheck(true);
 			}
+			Sound::GetInstance().StopBGM();
+			Sound::GetInstance().StopSE();
 		}
 	}
 	else

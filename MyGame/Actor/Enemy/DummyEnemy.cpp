@@ -5,6 +5,7 @@
 #include "EnemyHeadShot.h"
 #include <memory>
 #include "../UIActor/Effect.h"
+#include "../Sound/Sound.h"
 
 DummyEnemy::DummyEnemy(int model, IWorld * world, const Vector3 & position,const Matrix & rotation, std::weak_ptr<Actor> m_ui,const IBodyPtr & body) :
 	Actor(world, "DummyEnemy", position, body),
@@ -109,7 +110,7 @@ void DummyEnemy::receiveMessage(EventMessage message, void * param)
 			invinciblyCheck = true;
 
 			world_->add_actor(ActorGroup::Effect, new_actor<Effect>(world_, *(Vector3*)param ,/*Vector3::Distance(position_,player_->Getposition())*/1.0f,SPRITE_ID::EFFECT_BULLETHIT));
-
+			Sound::GetInstance().PlaySE_IsNotPlay(SE_ID::DAMAGEENEMY_SE);
 		}
 		if (message == EventMessage::HIT_BALL_HEAD)
 		{
@@ -117,6 +118,7 @@ void DummyEnemy::receiveMessage(EventMessage message, void * param)
 			change_state(DummyEnemyState::DAMAGE, MotionDummyDamage);
 			invinciblyCheck = true;
 			world_->add_actor(ActorGroup::Effect, new_actor<Effect>(world_, *(Vector3*)param,1.0f, SPRITE_ID::EFFECT_BULLETHIT));
+			Sound::GetInstance().PlaySE_IsNotPlay(SE_ID::DAMAGEENEMY_SE);
 		}
 
 		if (message == EventMessage::HIT_PLAYER_PUNCH)
@@ -124,6 +126,7 @@ void DummyEnemy::receiveMessage(EventMessage message, void * param)
 			hp_ = hp_ - *(int*)param;
 			change_state(DummyEnemyState::DAMAGE, MotionDummyDamage);
 			invinciblyCheck = true;
+			Sound::GetInstance().PlaySE_IsNotPlay(SE_ID::ATTACK_SE);
 		}
 
 
@@ -176,6 +179,7 @@ void DummyEnemy::Idle()
 
 void DummyEnemy::Roar()
 {
+	Sound::GetInstance().PlaySE_IsNotPlay(SE_ID::ENEMYDOAR_SE);
 	state_timer_ += 1.0f;
 	if (state_timer_ >= mesh_.motion_end_time() + 100)
 	{

@@ -1,5 +1,5 @@
 #pragma once
-//#include "../../Sound/Sound.h"
+#include "../Sound/Sound.h"
 
 class Menu
 {
@@ -10,7 +10,7 @@ protected:
 		// カーソルの値を変更
 		cursorPos_ += moveWidth;
 
-		//Sound::GetInstance().PlaySE_IsNotPlay(SE_ID::CURSOR_SE);
+		Sound::GetInstance().PlaySE(SE_ID::PAUSECURSOR_SE);
 
 		// カーソル位置がマイナスになるなら最大値にする
 		if (cursorPos_ < 0) cursorPos_ = (menuSize_ - 1);

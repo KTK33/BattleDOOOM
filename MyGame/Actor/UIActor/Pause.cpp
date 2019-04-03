@@ -4,12 +4,12 @@
 #include "../../Input/Keyboard.h"
 #include "../../Scene/GameData/GameDataManager.h"
 #include "PauseSystem.h"
+#include "../Sound/Sound.h"
 
 PauseUI::PauseUI(IWorld * world):
 	Actor(world,"PauseUI",Vector3::Zero)
 {
 	menuSize_ = 4;
-	animeTime = 0;
 	cursorPos_ = 3;
 
 	UISize[3] = 1.2f;
@@ -32,6 +32,7 @@ void PauseUI::update(float deltaTime)
 	if (GameDataManager::getInstance().GetPlayerDead() == false && GameDataManager::getInstance().GetDeadBossEnemy() == false)
 	{
 		if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM8) || Keyboard::GetInstance().KeyTriggerDown(KEYCODE::T)) {
+			Sound::GetInstance().PlaySE_IsNotPlay(SE_ID::PAUSEKETTEI_SE);
 			PauseDecision = false;
 			if (world_->GetPauseCheck() == true)
 			{
@@ -118,17 +119,14 @@ void PauseUI::PlayerInput()
 		if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::UP) || Keyboard::GetInstance().KeyTriggerDown(KEYCODE::UP))
 		{
 			moveCursor(1);
-			//animeTime = 0;
-			//anime = 0;
 		}
 		if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::DOWN) || Keyboard::GetInstance().KeyTriggerDown(KEYCODE::DOWN))
 		{
 			moveCursor(-1);
-			//animeTime = 0;
-			//anime = 0;
 		}
 		if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM2) || Keyboard::GetInstance().KeyTriggerDown(KEYCODE::SPACE))
 		{
+			Sound::GetInstance().PlaySE_IsNotPlay(SE_ID::PAUSEKETTEI_SE);
 			PauseDecision = true;
 		}
 
@@ -139,15 +137,6 @@ void PauseUI::PlayerInput()
 
 void PauseUI::Pause()
 {
-	//animeTime++;
-	//if (animeTime % 5 == 0)
-	//{
-	//	if (anime < 5)
-	//	{
-	//		anime += 1;
-	//	}
-	//}
-
 	switch (cursorPos_){
 	case 0:	
 		UISize[3] = 1.25f;

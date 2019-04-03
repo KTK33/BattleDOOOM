@@ -15,8 +15,7 @@ Camera::Camera(IWorld * world, std::weak_ptr<Actor> m_Player) :
 	Actor(world, "Camera", Vector3::Zero),
 	AimPosMove{ 0,0 },
 	m_player{m_Player},
-	alreadyGO{false},
-	AHUAH{1}
+	alreadyGO{false}
 {
 }
 
@@ -24,9 +23,6 @@ void Camera::update(float deltaTime)
 {
 	player_ = world_->find_actor(ActorGroup::Player, "Player").get();
 	if (player_ == nullptr) return;
-	//const auto position = Vector3{ 0.0f,m_FarPoint.x,m_FarPoint.y }*player_->Getpose();
-	//target_ = player_->Getposition(); /*+Vector3{ 0.0f,10.0f,0.0f }*/;
-	//target_ = player_->Getposition() + player_->Getrotation().Forward() *5;
 
 	if (GameDataManager::getInstance().GetPlayerDead() == true || 
 		GameDataManager::getInstance().GetDeadBossEnemy() == true)
@@ -38,34 +34,7 @@ void Camera::update(float deltaTime)
 		PlayerInput();
 	}
 
-	//position_.x += GamePad::GetInstance().RightStick().x * 10;
-	//position_.z += GamePad::GetInstance().RightStick().x * 10;
-
-	//Vector3 P_T = Vector3::Distance(position_, target_);
-	//P_T = Vector3::Clamp(P_T, Vector3(0, 0, 0), Vector3(10, 10, 10));
-
-	//Vector3 fw = Vector3::CreateFromYawPitch(XX, target_.x);
-
-	//angle += XX;
-	//position_.x += MathHelper::Sin(angle) * P_T.x;
-	//position_.z += MathHelper::Cos(angle) * P_T.x;
-
-	//position_ = position_ + target_;
-
-
 	move(position_, 1.0f, 0.2f, 0.8f);
-
-	if (CheckHitKey(KEY_INPUT_U))
-	{
-		AHUAH += 0.0005f;
-	}
-
-	if (CheckHitKey(KEY_INPUT_I	))
-	{
-		AHUAH -= 0.0005f;
-	}
-
-
 }
 
 void Camera::draw() const{}

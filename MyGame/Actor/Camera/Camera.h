@@ -37,6 +37,4 @@ private:
 
 	Vector3 DeadCamera{ 20,20,20 };
 	bool alreadyGO;
-
-	float AHUAH;
 };

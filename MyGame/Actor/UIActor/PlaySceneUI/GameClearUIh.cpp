@@ -1,10 +1,13 @@
 #include "GameClearUIh.h"
 #include "../../../Texture/Sprite.h"
+#include "../Sound/Sound.h"
 
 GameClearUI::GameClearUI(IWorld * world):
 	Actor(world,"GameClearUI",Vector3::Zero),
 	GameClearBackAlpha{0}
 {
+	Sound::GetInstance().StopBGM();
+	Sound::GetInstance().PlayBGM(BGM_ID::WIN_BGM);
 }
 
 void GameClearUI::initialize()

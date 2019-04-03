@@ -3,6 +3,7 @@
 #include "../../Input/GamePad.h"
 #include "../../Input/Keyboard.h"
 #include "../../Scene/GameData/GameDataManager.h"
+#include "../../Sound/Sound.h"
 
 PauseSystem::PauseSystem(IWorld * world):
 	Actor(world,"PauseSytem",Vector3::Zero)
@@ -12,8 +13,8 @@ PauseSystem::PauseSystem(IWorld * world):
 	cursorPos_ = 0;
 	cursorPos_2 = 5;
 
-	bgmval = GameDataManager::getInstance().GetBGMVAL();
-	seval = GameDataManager::getInstance().GetSEVAL();
+	bgmval = GameDataManager::getInstance().GetBGMVAL()*10;
+	seval = GameDataManager::getInstance().GetSEVAL()*10;
 	aimval = GameDataManager::getInstance().GetAIMSPD();
 
 }
@@ -25,6 +26,9 @@ void PauseSystem::initialize()
 void PauseSystem::update(float deltaTime)
 {
 	PlayerInput();
+
+	Sound::GetInstance().SetAllBGMVolume(GameDataManager::getInstance().GetBGMVAL());
+	Sound::GetInstance().SetAllSEVolume(GameDataManager::getInstance().GetSEVAL());
 }
 
 void PauseSystem::draw() const
@@ -51,9 +55,9 @@ void PauseSystem::draw() const
 		break;
 	}
 
-	Sprite::GetInstance().DrawSetCenter(SPRITE_ID::PAUSESYSTEM_CURSOR, Vector2(802.f + GameDataManager::getInstance().GetBGMVAL() * 100.f, WINDOW_HEIGHT - 650.0f));
-	Sprite::GetInstance().DrawSetCenter(SPRITE_ID::PAUSESYSTEM_CURSOR, Vector2(802.f + GameDataManager::getInstance().GetSEVAL() * 100.f, WINDOW_HEIGHT - 500.0f));
-	Sprite::GetInstance().DrawSetCenter(SPRITE_ID::PAUSESYSTEM_CURSOR, Vector2(802.f + GameDataManager::getInstance().GetAIMSPD() * 100.f, WINDOW_HEIGHT - 350.0f));
+	Sprite::GetInstance().DrawSetCenter(SPRITE_ID::PAUSESYSTEM_CURSOR, Vector2(802.f + bgmval * 100.f, WINDOW_HEIGHT - 650.0f));
+	Sprite::GetInstance().DrawSetCenter(SPRITE_ID::PAUSESYSTEM_CURSOR, Vector2(802.f + seval * 100.f, WINDOW_HEIGHT - 500.0f));
+	Sprite::GetInstance().DrawSetCenter(SPRITE_ID::PAUSESYSTEM_CURSOR, Vector2(802.f + aimval * 100.f, WINDOW_HEIGHT - 350.0f));
 
 	//DrawFormatString(1000, 700, GetColor(255, 0, 0), "%i", GameDataManager::getInstance().GetBGMVAL());
 	//DrawFormatString(1000, 600, GetColor(255, 0, 0), "%i", GameDataManager::getInstance().GetSEVAL());
@@ -115,7 +119,7 @@ void PauseSystem::PlayerInput()
 	{
 		moveCursor(1);
 	}
-	if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM1) || Keyboard::GetInstance().KeyTriggerDown(KEYCODE::C))
+	if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM1) || Keyboard::GetInstance().KeyTriggerDown(KEYCODE::LCTRL))
 	{
 		die();
 	}

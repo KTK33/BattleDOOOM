@@ -1,5 +1,4 @@
 #include "GamePlayScene.h"
-//#include "../Actor/Enemy/Enemy.h"
 #include "../Actor/PlayerBall/Ball.h"
 #include "../Actor/Player/Player.h"
 #include "../Actor/Enemy/DummyEnemy.h"
@@ -20,10 +19,9 @@
 #include "../Actor/UIActor/AnyUI.h"
 #include "../Actor/UIActor/PlayerTextUI.h"
 #include "../Actor/UIActor/Pause.h"
-
 #include "../Actor/UIActor/FadeUI.h"
-
 #include "../Actor/UIActor/PlaySceneUI/GameClearUIh.h"
+#include "../Sound/Sound.h"
 
 #include<DxLib.h>
 
@@ -40,6 +38,8 @@ void GamePlayScene::start() {
 	world_.initialize();
 	GameDataManager::getInstance().initialize();
 
+	Sound::GetInstance().PlayBGM(BGM_ID::PLAYE_BGM, DX_PLAYTYPE_LOOP);
+	//Sound::GetInstance().SetBGMVolume(BGM_ID::PLAYE_BGM, 1.0f);
 	menuSize_ = 4;
 	BossArleady = false;
 

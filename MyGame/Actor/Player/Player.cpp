@@ -525,6 +525,9 @@ void Player::GunMove(float X, float Y)
 			GunPossible = true;
 			change_state(PlayerState::PlayerIdleAiming, PlayerMotion::Motion::MotionPlayerIdleAiming);
 		}
+		else {
+			Sound::GetInstance().PlaySE_IsNotPlay(SE_ID::WALKSTEP_SE);
+		}
 	}
 }
 void Player::Move(float X, float Y)
@@ -571,11 +574,6 @@ void Player::Move(float X, float Y)
 		motion_ = PlayerMotion::Motion::MotionPlayerWalk;
 	}
 
-	//yaw_speed = GamePad::GetInstance().RightStick().x;
-	//rotation_ *= Matrix::CreateFromAxisAngle(rotation_.Up(), yaw_speed * 1.0f);
-	//rotation_.NormalizeRotationMatrix();
-
-
 	velocity_ += rotation_.Forward() * forward_speed;
 	velocity_ += rotation_.Left() * side_speed;
 	position_ += velocity_ * 1.0f;
@@ -584,6 +582,8 @@ void Player::Move(float X, float Y)
 	{
 		JumpChacker(state_);
 	}
+
+	Sound::GetInstance().PlaySE_IsNotPlay(SE_ID::WALKSTEP_SE);
 
 	prevPosition_ = position_;
 }
@@ -667,9 +667,11 @@ void Player::Dead()
 
 void Player::Tyohatu()
 {
+	Sound::GetInstance().PlaySE_IsNotPlay(SE_ID::TYOHATU_SE);
 	state_timer_ += 1.0f;
 	if (state_timer_ >= mesh_.motion_end_time() + 50)
 	{
+		Sound::GetInstance().StopSE(SE_ID::TYOHATU_SE);
 		change_state(PlayerState::PlayerIdel, PlayerMotion::Motion::MotionPlayerIdel);
 	}
 }

@@ -8,8 +8,6 @@ void GameDataManager::initialize()
 	DeadPlayerCheck = false;
 	SightCheck = false;
 
-	BGMVAL = 5;
-	SE_VAL = 5;
 	AIM_SPD = 5;
 }
 
@@ -82,9 +80,9 @@ void GameDataManager::SetBGMVAL(int BGM)
 	BGMVAL = BGM;
 }
 
-int GameDataManager::GetBGMVAL()
+float GameDataManager::GetBGMVAL()
 {
-	return BGMVAL;
+	return BGMVAL*0.1f;
 }
 
 void GameDataManager::SetSEVAL(int SE)
@@ -92,9 +90,9 @@ void GameDataManager::SetSEVAL(int SE)
 	SE_VAL = SE;
 }
 
-int GameDataManager::GetSEVAL()
+float GameDataManager::GetSEVAL()
 {
-	return SE_VAL;
+	return SE_VAL*0.1f;
 }
 
 void GameDataManager::SetAIMSPD(int AIM)

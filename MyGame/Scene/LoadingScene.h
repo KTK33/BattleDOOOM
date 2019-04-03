@@ -18,6 +18,8 @@ private:
 	void LoadAny();
 	//シェーダーの読み込み
 	void LoadShader();
+	//サウンドの読み込み
+	void LoadSound();
 	//画像の読み込み
 	void LoadSprite();
 	//画像データの破棄

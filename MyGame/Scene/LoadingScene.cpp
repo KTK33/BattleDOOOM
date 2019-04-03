@@ -9,6 +9,7 @@
 #include "../Mesh/StaticMesh.h"
 
 #include "../Texture/SpriteID.h"
+#include "../Sound/Sound.h"
 
 LoadingScene::LoadingScene() {
 
@@ -25,6 +26,7 @@ void LoadingScene::start() {
 	LoadAny();
 	LoadModel();
 	LoadShader();
+	LoadSound();
 	LoadSprite();
 	SetUseASyncLoadFlag(FALSE);
 	Countres = GetASyncLoadNum();
@@ -88,6 +90,26 @@ void LoadingScene::LoadAny()
 	Billboard::load(0, "asset/UI/PlayScene/GunFream.png");
 }
 void LoadingScene::LoadShader() {
+}
+
+void LoadingScene::LoadSound()
+{
+	Sound::GetInstance().LoadBGM("asset/Sound/BGM/TitleSceneBGM.mp3", BGM_ID::TITLE_BGM);
+	Sound::GetInstance().LoadBGM("asset/Sound/BGM/PlayeSceneBGM.mp3", BGM_ID::PLAYE_BGM);
+	Sound::GetInstance().LoadBGM("asset/Sound/BGM/GameClearBGM.mp3", BGM_ID::WIN_BGM);
+	Sound::GetInstance().LoadBGM("asset/Sound/BGM/GameOverBGM.mp3", BGM_ID::LOSE_BGM);
+
+	Sound::GetInstance().LoadSE("asset/Sound/SE/AttackSE.mp3", SE_ID::ATTACK_SE);
+	Sound::GetInstance().LoadSE("asset/Sound/SE/DamageEnemySE.mp3", SE_ID::DAMAGEENEMY_SE);
+	Sound::GetInstance().LoadSE("asset/Sound/SE/EnemyroarSE.mp3", SE_ID::ENEMYDOAR_SE);
+	Sound::GetInstance().LoadSE("asset/Sound/SE/ItemUseSE.mp3", SE_ID::ITEMUSE_SE);
+	Sound::GetInstance().LoadSE("asset/Sound/SE/PauseCursorSE.mp3", SE_ID::PAUSECURSOR_SE);
+	Sound::GetInstance().LoadSE("asset/Sound/SE/PauseKetteiSE.mp3", SE_ID::PAUSEKETTEI_SE);
+	Sound::GetInstance().LoadSE("asset/Sound/SE/ShootSE.mp3", SE_ID::SHOOT_SE);
+	Sound::GetInstance().LoadSE("asset/Sound/SE/TitleKetteiSE.mp3", SE_ID::TITLEKETTEI_SE);
+	Sound::GetInstance().LoadSE("asset/Sound/SE/Walkstep.mp3", SE_ID::WALKSTEP_SE);
+	Sound::GetInstance().LoadSE("asset/Sound/SE/Tyouhatu.mp3", SE_ID::TYOHATU_SE);
+	Sound::GetInstance().LoadSE("asset/Sound/SE/ItemGet.mp3", SE_ID::ITEMGET_SE);
 }
 
 void LoadingScene::LoadSprite()

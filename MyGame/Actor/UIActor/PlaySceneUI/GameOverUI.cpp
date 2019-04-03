@@ -1,10 +1,13 @@
 #include "GameOverUI.h"
 #include "../../../Texture/Sprite.h"
+#include "../Sound/Sound.h"
 
 GameOverUI::GameOverUI(IWorld * world):
 	Actor(world,"GameOverBack",Vector3::Zero),
 	GameOverBackAlpha{0}
 {
+	Sound::GetInstance().StopBGM();
+	Sound::GetInstance().PlayBGM(BGM_ID::LOSE_BGM, DX_PLAYTYPE_LOOP);
 }
 
 void GameOverUI::initialize()

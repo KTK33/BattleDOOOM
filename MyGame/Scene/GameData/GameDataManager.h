@@ -31,9 +31,9 @@ public:
 	bool GetSightCheck();
 
 	void SetBGMVAL(int BGM);
-	int GetBGMVAL();
+	float GetBGMVAL();
 	void SetSEVAL(int SE);
-	int GetSEVAL();
+	float GetSEVAL();
 	void SetAIMSPD(int AIM);
 	int GetAIMSPD();
 
@@ -47,7 +47,7 @@ private:
 	bool ItemBoxOpne{ false };
 	bool SightCheck{ false };
 
-	int BGMVAL;
-    int SE_VAL;
+	int BGMVAL{ 5 };
+	int SE_VAL{ 7 };
 	int AIM_SPD;
 };

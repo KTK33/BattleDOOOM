@@ -21,10 +21,6 @@ public:
 	void SystemInput();
 
 private:
-
-	int animeTime;
-	int anime{ 0 };
-
 	float UISize[4] = {};
 
 	bool PauseDecision;

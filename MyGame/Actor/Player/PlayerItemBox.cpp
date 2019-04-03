@@ -51,9 +51,6 @@ void PlayerItemBox::draw() const
 	Sprite::GetInstance().Draw(SPRITE_ID::PAUSEITEM_TUKAUBACK, Vector2(1580.0f, 420 + cursorPos_2 * 125));
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 
-	//Sprite::GetInstance().Draw(SPRITE_ID::PAUSEITEM_TUKAU, Vector2(980.0f, 360));
-	//Sprite::GetInstance().Draw(SPRITE_ID::PAUSEITEM_TUKAU, Vector2(980.0f, 520));
-
 	Vector2 NumSize = Sprite::GetInstance().GetSize(SPRITE_ID::NUMBER);
 
 	Sprite::GetInstance().DrawPart(SPRITE_ID::NUMBER, Vector2(1830.f ,445.f), NumSize.x / 10 * countHPrecoverItem, 0, NumSize.x / 10, NumSize.y);
@@ -93,6 +90,7 @@ void PlayerItemBox::PlayerInput()
 			{
 				m_player.lock()->receiveMessage(EventMessage::HP_RECOVER, (void*)&HPVal);
 				countHPrecoverItem = countHPrecoverItem - 1;
+				Sound::GetInstance().PlaySE(SE_ID::ITEMUSE_SE);
 			}
 			break;
 		case 1:
@@ -100,6 +98,7 @@ void PlayerItemBox::PlayerInput()
 			{
 				m_player.lock()->receiveMessage(EventMessage::ATTACK_UP, (void*)&Attackup);
 				countAttackUPItem = countAttackUPItem - 1;
+				Sound::GetInstance().PlaySE(SE_ID::ITEMUSE_SE);
 			}
 			break;
 		default:

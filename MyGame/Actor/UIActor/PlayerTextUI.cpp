@@ -1,6 +1,7 @@
 #include "PlayerTextUI.h"
 #include "../../Texture/Sprite.h"
 #include "../../Scene/GameData/GameDataManager.h"
+#include "../Sound/Sound.h"
 
 PlayerTextUI::PlayerTextUI(IWorld * world):
 	Actor(world,"PlayerText",Vector3::Zero)
@@ -57,12 +58,14 @@ void PlayerTextUI::receiveMessage(EventMessage message, void * param)
 	{
 		GetBulletCheck = true;
 		BulletTextTimer = 0;
+		Sound::GetInstance().PlaySE(SE_ID::ITEMGET_SE);
 	}
 
 	if (message == EventMessage::GET_HPRECOVER)
 	{
 		GetRecoverCheck = true;
 		RecoverTextTimer = 0;
+		Sound::GetInstance().PlaySE(SE_ID::ITEMGET_SE);
 	}
 
 	if (message == EventMessage::ATTACK_UP)
