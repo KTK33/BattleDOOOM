@@ -99,7 +99,6 @@ Vector3 Vector3::Transform(const Vector3 & position, const Matrix & matrix) {
         (position.x * matrix.m[0][1] + position.y * matrix.m[1][1] + position.z * matrix.m[2][1] + matrix.m[3][1]) / w,
         (position.x * matrix.m[0][2] + position.y * matrix.m[1][2] + position.z * matrix.m[2][2] + matrix.m[3][2]) / w);
 }
-
 Vector3 Vector3::TransformNormal(const Vector3 & position, const Matrix & matrix) {
     return Vector3(
         position.x * matrix.m[0][0] + position.y * matrix.m[1][0] + position.z * matrix.m[2][0],

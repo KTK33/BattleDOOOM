@@ -31,7 +31,7 @@ void Camera::update(float deltaTime)
 	}
 	else
 	{
-		PlayerInput();
+		PlayerInput(deltaTime);
 	}
 
 	move(position_, 1.0f, 0.2f, 0.8f);
@@ -53,7 +53,7 @@ void Camera::move(const Vector3 & rest_position, float stiffness, float friction
 	position_ += velocity_;
 }
 
-void Camera::PlayerInput()
+void Camera::PlayerInput(float deltaTime)
 {
 	target_ = position_ + player_->Getrotation().Forward() * 50;
 
@@ -131,7 +131,6 @@ void Camera::PlayerInput()
 	TPSCamera::GetInstance().Target.Set(target_);
 	TPSCamera::GetInstance().Up.Set(Vector3::Up);
 	TPSCamera::GetInstance().Update();
-
 }
 
 void Camera::PlayerGameFinish()

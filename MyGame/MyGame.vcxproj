@@ -149,6 +149,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Actor\Camera\ActionCamera\ActionCamera.cpp" />
     <ClCompile Include="Actor\Camera\Camera.cpp" />
     <ClCompile Include="Actor\Camera\FPSCamera.cpp" />
     <ClCompile Include="Actor\Camera\MatrixRotation.cpp" />
@@ -195,6 +196,7 @@
     <ClCompile Include="Fiield\WorldContentManager\WorldContentManager.cpp" />
     <ClCompile Include="Game\Time.cpp" />
     <ClCompile Include="Input\Keyboard.cpp" />
+    <ClCompile Include="Scene\ActionPlayScene\ActionPlayScene.cpp" />
     <ClCompile Include="Scene\GameData\GameDataManager.cpp" />
     <ClCompile Include="Scene\GameOverScene.cpp" />
     <ClCompile Include="Scene\GamePlayScene.cpp" />
@@ -235,6 +237,7 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Actor\Camera\ActionCamera\ActionCamera.h" />
     <ClInclude Include="Actor\Camera\Camera.h" />
     <ClInclude Include="Actor\Camera\FPSCamera.h" />
     <ClInclude Include="Actor\Camera\MatrixRotation.h" />
@@ -295,6 +298,7 @@
     <ClInclude Include="Game\Time.h" />
     <ClInclude Include="Input\Keyboard.h" />
     <ClInclude Include="Math\MathH.h" />
+    <ClInclude Include="Scene\ActionPlayScene\ActionPlayScene.h" />
     <ClInclude Include="Scene\GameData\GameDataManager.h" />
     <ClInclude Include="Scene\GameOverScene.h" />
     <ClInclude Include="Scene\GamePlayScene.h" />

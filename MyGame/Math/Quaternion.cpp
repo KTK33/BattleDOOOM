@@ -95,6 +95,14 @@ Quaternion Quaternion::CreateFromRotationMatrix(const Matrix & matrix)
     return result;
 }
 
+Vector3 Quaternion::Transform(const Vector3 & position, const Quaternion & q)
+{
+	Vector3 qv(q.x,q.y,q.z);
+	Vector3 retVal = position;
+	retVal += 2.0f * Vector3::Cross(qv, Vector3::Cross(qv, position) + q.w * position);
+	return retVal;
+}
+
 // 単項演算子オーバーロード
 Quaternion operator - (const Quaternion& q) {
     return Quaternion(-q.x, -q.y, -q.z, -q.w);

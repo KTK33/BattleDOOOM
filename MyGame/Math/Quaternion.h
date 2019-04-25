@@ -34,6 +34,8 @@ struct Quaternion {
 
     // 単位クオータニオン
     static const Quaternion Identity;
+
+	static Vector3 Transform(const Vector3 & position, const Quaternion & q);
 };
 
 // 単項演算子オーバーロード

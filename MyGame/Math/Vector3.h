@@ -4,6 +4,7 @@
 #include <DxLib.h>
 
 struct Matrix;
+struct Quaternion;
 
 // 3Dベクトル
 struct Vector3 {
@@ -42,6 +43,7 @@ struct Vector3 {
     static Vector3 Transform(const Vector3& position, const Matrix& matrix);
     // 指定された Matrix によって、法線ベクトルをトランスフォームします
     static Vector3 TransformNormal(const Vector3& position, const Matrix& matrix);
+
     // ヨー・ピッチからベクトルを作成
     static Vector3 CreateFromYawPitch(float yaw, float pitch);
     // ピッチを取得

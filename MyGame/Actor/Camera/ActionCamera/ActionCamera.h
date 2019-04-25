@@ -1,11 +1,11 @@
 #pragma once
 
-#include "../Actor.h"
+#include "../Actor/Actor.h"
 
-class Camera : public Actor
+class ActionCamera : public Actor
 {
 public:
-	Camera(IWorld* world, std::weak_ptr<Actor> m_Player);
+	ActionCamera(IWorld* world, std::weak_ptr<Actor> m_Player);
 
 	void update(float deltaTime);
 
@@ -20,8 +20,6 @@ public:
 
 	void PlayerInput(float deltaTime);
 
-	void PlayerGameFinish();
-
 private:
 	Actor* player_;
 	//
@@ -29,12 +27,12 @@ private:
 
 	Vector2 m_FarPoint{ 30.f,20.f };
 
-	float angle{ 0 };
-
-	Vector2 AimPosMove;
-
-	std::weak_ptr<Actor> m_player{};
-
-	Vector3 DeadCamera{ 20,20,20 };
-	bool alreadyGO;
+	//ターゲットからのオフセット
+	Vector3 m_Offset;
+	//カメラの上方向ベクトル
+	Vector3 m_Up;
+	//ピッチの角速度
+	float m_PitchSpeed;
+	//ヨーの角速度
+	float m_YawSpeed;
 };
