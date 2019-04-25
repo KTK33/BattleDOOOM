@@ -1,11 +1,11 @@
 #include "ActionCamera.h"
-#include "../../../Input/GamePad.h"
-#include "../../../Input/Keyboard.h"
-#include "../../../Math/Vector2.h"
+#include "../Input/GamePad/GamePad.h"
+#include "../Input/Keyboard/Keyboard.h"
+#include "../Math/Vector2.h"
 
 #include "../TPSCamera.h"
-#include "../../../Scene/GameData/GameDataManager.h"
-#include "../../../Texture/Sprite.h"
+#include "../Scene/GameData/GameDataManager.h"
+#include "../Texture/Sprite.h"
 
 ActionCamera::ActionCamera(IWorld * world, std::weak_ptr<Actor> m_Player) :
 	Actor(world, "Camera", Vector3::Zero)

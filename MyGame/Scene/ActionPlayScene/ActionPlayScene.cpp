@@ -1,7 +1,7 @@
 #include "ActionPlayScene.h"
 #include "../Graphics/Graphics3D.h"
-#include "../Actor/Player/Player.h"
-#include "../Actor/UIActor/PlayerTextUI.h"
+#include "../Actor/Player/Player/Player.h"
+#include "../Actor/UIActor/PlayerTextUI/PlayerTextUI.h"
 #include "../Actor/Camera/ActionCamera/ActionCamera.h"
 
 ActionPlayScene::ActionPlayScene()

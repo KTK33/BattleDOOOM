@@ -1,5 +1,5 @@
 #include "GameClearUIh.h"
-#include "../../../Texture/Sprite.h"
+#include "../Texture/Sprite.h"
 #include "../Sound/Sound.h"
 
 GameClearUI::GameClearUI(IWorld * world):

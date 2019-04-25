@@ -1,5 +1,5 @@
 #include "PlayerAdvent.h"
-#include "../../Scene/GameData/GameDataManager.h"
+#include "../Scene/GameData/GameDataManager.h"
 
 PlayerAdvent::PlayerAdvent(IWorld * world):
 	Actor(world,"PlayerAdvent",Vector3::Zero),

@@ -1,5 +1,5 @@
 #include "GameOverUI.h"
-#include "../../../Texture/Sprite.h"
+#include "../Texture/Sprite.h"
 #include "../Sound/Sound.h"
 
 GameOverUI::GameOverUI(IWorld * world):

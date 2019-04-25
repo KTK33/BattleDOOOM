@@ -1,9 +1,9 @@
 #include "Game.h"
 #include <DxLib.h>
 
-#include "../Input/GamePad.h"
-#include "../Input/Keyboard.h"
-#include "../Input/Mouse.h"
+#include "../Input/GamePad/GamePad.h"
+#include "../Input/KeyBoard/Keyboard.h"
+#include "../Input/Mouse/Mouse.h"
 #include "../Math/Random.h"
 #include "../Graphics/Graphics2D.h"
 #include "../Sound/Sound.h"

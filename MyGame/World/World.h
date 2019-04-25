@@ -8,8 +8,6 @@
 #include "../Fiield/WorldContentManager/WorldContentManager.h"
 #include <functional>
 
-#include "../Input/GamePad.h"
-
 enum class EventMessage;
 
 //ワールドクラス
