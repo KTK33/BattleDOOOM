@@ -5,7 +5,7 @@
 #include "../Input/Keyboard/Keyboard.h"
 #include "../Texture/Sprite.h"
 #include "../Scene/GameData/GameDataManager.h"
-#include "../PlayerGunAttack/PlayerGunAttack.h"
+#include "../Actor/PlayerAttackCollision/PlayerAttackCollision.h"
 #include "../PlayerItemBox/PlayerItemBox.h"
 #include "../PlayerMotionNum.h"
 
@@ -449,7 +449,7 @@ void Player::GunPunch()
 	state_timer_ += 1.0f;
 	if (state_timer_ == 60)
 	{
-		auto AttackPunch = std::make_shared<PlayerGunAttack>(world_, Vector3{ position_ + Getpose().Forward() * 6},
+		auto AttackPunch = std::make_shared<PlayerAttackCollision>(world_, Vector3{ position_ + Getpose().Forward() * 6},
 			std::make_shared<BoundingCapsule>(Vector3{ 0.0f,13.0f,0.0f }, Matrix::Identity, 1.5f, 2.5f));
 		world_->add_actor(ActorGroup::PlayerBullet, AttackPunch);
 		AttackPunch->SetdeadTime(20);

@@ -37,6 +37,9 @@ public:
 	void SetAIMSPD(int AIM);
 	int GetAIMSPD();
 
+	void SetSceneNum(int scene);
+	int GetSceneNum();
+
 
 private:
 
@@ -50,4 +53,6 @@ private:
 	int BGMVAL{ 5 };
 	int SE_VAL{ 7 };
 	int AIM_SPD;
+
+	int SceneNumber{ 2 };
 };

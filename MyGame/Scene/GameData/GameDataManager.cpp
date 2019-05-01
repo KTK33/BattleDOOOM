@@ -9,6 +9,7 @@ void GameDataManager::initialize()
 	SightCheck = false;
 
 	AIM_SPD = 5;
+	SceneNumber = 0;
 }
 
 void GameDataManager::update()
@@ -103,4 +104,14 @@ void GameDataManager::SetAIMSPD(int AIM)
 int GameDataManager::GetAIMSPD()
 {
 	return AIM_SPD;
+}
+
+void GameDataManager::SetSceneNum(int scene)
+{
+	SceneNumber = scene;
+}
+
+int GameDataManager::GetSceneNum()
+{
+	return SceneNumber;
 }

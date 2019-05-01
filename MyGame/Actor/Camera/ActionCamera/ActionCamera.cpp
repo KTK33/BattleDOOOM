@@ -8,11 +8,12 @@
 #include "../Texture/Sprite.h"
 
 ActionCamera::ActionCamera(IWorld * world, std::weak_ptr<Actor> m_Player) :
-	Actor(world, "Camera", Vector3::Zero)
-	, m_Offset(-30.0f, 0.0f, 0.0f)
-	, m_Up(Vector3::UnitY)
-	, m_PitchSpeed(0.0f)
-	, m_YawSpeed(0.0f)
+	Actor(world, "ActionCamera", Vector3::Zero),
+	m_player{m_Player},
+	m_Offset(-30.0f, 0.0f, 0.0f),
+	m_Up(Vector3::UnitY),
+	m_PitchSpeed(0.0f),
+	m_YawSpeed(0.0f)
 {
 }
 
@@ -26,7 +27,8 @@ void ActionCamera::update(float deltaTime)
 	move(position_, 1.0f, 0.2f, 0.8f);
 }
 
-void ActionCamera::draw() const {}
+void ActionCamera::draw() const {
+}
 
 void ActionCamera::move(const Vector3 & rest_position, float stiffness, float friction, float mass)
 {
@@ -60,6 +62,9 @@ void ActionCamera::PlayerInput(float deltaTime)
 	Vector3 right = Vector3::Cross(m_Up, forward);
 	right.Normalize();
 
+	m_player.lock()->receiveMessage(EventMessage::ACTION_CAMERA_FORWARD, (void*)&forward);
+	m_player.lock()->receiveMessage(EventMessage::ACTION_CAMERA_RIGHT, (void*)&right);
+
 	//カメラ右方向を軸とするピッチのクォータニオンを作成
 	Quaternion pitch(right, m_PitchSpeed * deltaTime);
 	//カメラのオフセットと上方ベクトルをピッチで変換
@@ -67,11 +72,12 @@ void ActionCamera::PlayerInput(float deltaTime)
 	m_Up = Quaternion::Transform(m_Up, pitch);
 
 	target_ = player_->Getposition();
+	target_.y = target_.y + PlayerHeight;
 	position_ = target_ + m_Offset;
 
 	TPSCamera::GetInstance().SetRange(0.5f, 1000.0f);
 	TPSCamera::GetInstance().Position.Set(position_);
 	TPSCamera::GetInstance().Target.Set(target_);
-	TPSCamera::GetInstance().Up.Set(Vector3::Up);
+	TPSCamera::GetInstance().Up.Set(m_Up);
 	TPSCamera::GetInstance().Update();
 }

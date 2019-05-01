@@ -1,22 +1,13 @@
 #include "LoadingScene.h"
-#include<string>
-
-#include "../Texture/Sprite.h"
-#include "../Skybox/Skybox.h"
-#include "../Mesh/CollisionMesh.h"
-#include "../Billboard/Billboard.h"
-#include "../Mesh/SkeletalMesh.h"
-#include "../Mesh/StaticMesh.h"
-
-#include "../Texture/SpriteID.h"
-#include "../Sound/Sound.h"
+#include "LoadingSceneInc.h"
 
 LoadingScene::LoadingScene() {
 
-	next_ = SceneType::SCENE_TITLE;
+	next_ = SceneType::SCENE_SHOOTING_PLAY;
 }
 
 void LoadingScene::start() {
+
 	CollisionMesh::initialize();
 	Skybox::initialize();
 	Billboard::initialize();
@@ -33,7 +24,6 @@ void LoadingScene::start() {
 }
 
 void LoadingScene::update(float deltaTime) {
-
 
 	if (GetASyncLoadNum() <= 0) 
 	{
@@ -79,7 +69,11 @@ void LoadingScene::LoadModel()
 	StaticMesh::load(0, "asset/w_magun01.mv1");
 	StaticMesh::load(1, "asset/Weapon/Italian/Italian machine guns.mv1");
 
-	SkeletalMesh::load(10, "asset/MODEL/ExMonster/motion/parasite_l_starkie.mv1");
+	SkeletalMesh::load(50, "asset/MODEL/ActionPlayer/ActionPlayer.mv1");
+	SkeletalMesh::load(51, "asset/MODEL/RedSamurai/RedSamurai.mv1");
+	StaticMesh::load(10, "asset/Weapon/ActionPlayer/dagger.mv1");
+	StaticMesh::load(11, "asset/Weapon/Samurai/katana.mv1");
+
 }
 void LoadingScene::LoadAny()
 {

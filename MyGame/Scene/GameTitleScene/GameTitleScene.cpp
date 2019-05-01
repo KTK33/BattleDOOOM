@@ -25,7 +25,7 @@ void GameTitleScene::update(float deltaTime)
 
 	if (GameDataManager::getInstance().GetTitleCheck() == true)
 	{
-		next_ = SceneType::SCENE_SHOOTING_PLAY_SCENE;
+		next_ = SceneType::SCENE_SHOOTING_PLAY;
 		isEnd_ = true;
 	}
 }

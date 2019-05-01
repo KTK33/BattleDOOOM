@@ -1,6 +1,7 @@
 #include "ActionPlayScene.h"
 #include "../Graphics/Graphics3D.h"
-#include "../Actor/Player/Player/Player.h"
+#include "../Actor/ActionPlayerMode/ActionPlayer/ActionPlayer.h"
+#include "../Actor/ActionPlayerMode/RedSamurai/RedSamurai.h"
 #include "../Actor/UIActor/PlayerTextUI/PlayerTextUI.h"
 #include "../Actor/Camera/ActionCamera/ActionCamera.h"
 
@@ -15,8 +16,11 @@ void ActionPlayScene::start()
 	auto P_Text = new_actor<PlayerTextUI>(&world_);
 	world_.add_actor(ActorGroup::UI, P_Text);
 
-	auto P = new_actor<Player>(0, 1, &world_, Vector3{ 0.0f, -20.0f,0.0f }, P_Text);
+	auto P = new_actor<ActionPlayer>(50, 10, &world_, Vector3{ 0.0f, -20.0f,0.0f }, P_Text);
 	world_.add_actor(ActorGroup::Player, P);
+
+	auto Samurai = new_actor<RedSamurai>(51, 11, &world_, Vector3{ 50.0f, -20.0f,0.0f }, P_Text);
+	world_.add_actor(ActorGroup::Enemy, Samurai);
 
 	world_.add_actor(ActorGroup::System, new_actor<ActionCamera>(&world_, P));
 

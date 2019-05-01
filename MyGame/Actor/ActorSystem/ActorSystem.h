@@ -1,7 +1,7 @@
 #pragma once
 #include "../Actor.h"
 #include "../Math/Matrix.h"
-#include "../Enemy/EnemyAttack/EnemyAttack.h"
+#include "../Actor/EnemyAttackCollison/EnemyAttackCollison.h"
 #include "../Enemy/EnemyAttackFire/EnemyAttackFire.h"
 
 class ActorSystem

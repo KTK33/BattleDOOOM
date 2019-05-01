@@ -55,13 +55,13 @@ void ShootingPlayScene::start() {
 
 	world_.add_actor(ActorGroup::PauseUI, new_actor<PauseUI>(&world_));
 
-	auto dummy1 = new_actor<NormalEnemy>(11, &world_, Vector3{ Random::rand(-200.0f,60.0f), -20.0,Random::rand(-200.0f,60.0f) }, Matrix::CreateRotationY(Random::rand(0.0f,360.0f)), ANYUI);
+	auto dummy1 = new_actor<NormalEnemy>(11, &world_, Vector3{ -160.0f, -20.0f,  20.0f }, Matrix::CreateRotationY(Random::rand(0.0f,360.0f)), ANYUI);
 	world_.add_actor(ActorGroup::Enemy,dummy1);
 
-	auto dummy2 = new_actor<NormalEnemy>(12, &world_, Vector3{ Random::rand(-200.0f,60.0f), -20.0,Random::rand(-200.0f,60.0f) }, Matrix::CreateRotationY(Random::rand(0.0f, 360.0f)), ANYUI);
+	auto dummy2 = new_actor<NormalEnemy>(12, &world_, Vector3{ -125.0f, -20.0f, -118.0f}, Matrix::CreateRotationY(Random::rand(0.0f, 360.0f)), ANYUI);
 	world_.add_actor(ActorGroup::Enemy, dummy2);
 
-	auto dummy3 = new_actor<NormalEnemy>(13, &world_, Vector3{ Random::rand(-200.0f,60.0f), -20.0,Random::rand(-200.0f,60.0f) }, Matrix::CreateRotationY(Random::rand(0.0f, 360.0f)), ANYUI);
+	auto dummy3 = new_actor<NormalEnemy>(13, &world_, Vector3{ -10.0f , -20.0f, -80.0f }, Matrix::CreateRotationY(Random::rand(0.0f, 360.0f)), ANYUI);
 	world_.add_actor(ActorGroup::Enemy, dummy3);
 
 

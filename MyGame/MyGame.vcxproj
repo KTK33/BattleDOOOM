@@ -149,13 +149,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Actor\ActionPlayerMode\ActionPlayer\ActionPlayerMotionNum.h" />
+    <ClCompile Include="Actor\ActionPlayerMode\ActionPlayer\ActionPlayer.cpp" />
+    <ClCompile Include="Actor\ActionPlayerMode\RedSamurai\RedSamurai.cpp" />
     <ClCompile Include="Actor\Camera\ActionCamera\ActionCamera.cpp" />
     <ClCompile Include="Actor\Camera\ShootingCamera\ShootingCamera.cpp" />
     <ClCompile Include="Actor\Camera\TitleSceneCamera\TitleCamera.cpp" />
     <ClCompile Include="Actor\Camera\TPSCmaera.cpp" />
     <ClCompile Include="Actor\Enemy\BossEnemy\BossEnemy.cpp" />
     <ClCompile Include="Actor\Enemy\NormalEnemy\NormalEnemy.cpp" />
-    <ClCompile Include="Actor\Enemy\EnemyAttack\EnemyAttack.cpp" />
+    <ClCompile Include="Actor\EnemyAttackCollison\EnemyAttackCollison.cpp" />
     <ClCompile Include="Actor\Enemy\EnemyAttackFire\EnemyAttackFire.cpp" />
     <ClCompile Include="Actor\Enemy\EnemyHeadShot\EnemyHeadShot.cpp" />
     <ClCompile Include="Actor\ActorSystem\ActorSystem.cpp" />
@@ -166,7 +169,7 @@
     <ClCompile Include="Actor\Player\Player\Player.cpp" />
     <ClCompile Include="Actor\Player\PlayerAdvent.cpp" />
     <ClCompile Include="Actor\Player\PlayerItemBox\PlayerItemBox.cpp" />
-    <ClCompile Include="Actor\Player\PlayerGunAttack\PlayerGunAttack.cpp" />
+    <ClCompile Include="Actor\PlayerAttackCollision\PlayerAttackCollision.cpp" />
     <ClCompile Include="Actor\UIActor\AnyUI\AnyUI.cpp" />
     <ClCompile Include="Actor\UIActor\BossEnemyUI\BossEnemyUI.cpp" />
     <ClCompile Include="Actor\UIActor\Effect2D\Effect2D.cpp" />
@@ -195,6 +198,7 @@
     <ClCompile Include="Input\Keyboard\Keyboard.cpp" />
     <ClCompile Include="Scene\ActionPlayScene\ActionPlayScene.cpp" />
     <ClCompile Include="Scene\GameData\GameDataManager.cpp" />
+    <ClCompile Include="Scene\GameLoadingScene\ActionModeLoadingScene.cpp" />
     <ClCompile Include="Scene\GameOverScene\GameOverScene.cpp" />
     <ClCompile Include="Scene\ShootingPlayScene\ShootingPlayScene.cpp" />
     <ClCompile Include="Scene\GameResultScene\GameResultScene.cpp" />
@@ -234,25 +238,30 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Actor\ActionPlayerMode\RedSamurai\RedSamurai.h" />
+    <ClInclude Include="Actor\ActionPlayerMode\RedSamurai\RedSamuraiMotionNum.h" />
+    <ClInclude Include="Actor\ActionPlayerMode\RedSamurai\RedSamuraiState.h" />
     <ClInclude Include="Actor\Camera\ActionCamera\ActionCamera.h" />
     <ClInclude Include="Actor\Camera\ShootingCamera\ShootingCamera.h" />
     <ClInclude Include="Actor\Camera\TitleSceneCamera\TitleCamera.h" />
     <ClInclude Include="Actor\Camera\TPSCamera.h" />
     <ClInclude Include="Actor\Enemy\BossEnemy\BossEnemy.h" />
     <ClInclude Include="Actor\Enemy\NormalEnemy\NormalEnemy.h" />
-    <ClInclude Include="Actor\Enemy\EnemyAttack\EnemyAttack.h" />
+    <ClInclude Include="Actor\EnemyAttackCollison\EnemyAttackCollison.h" />
     <ClInclude Include="Actor\Enemy\EnemyAttackFire\EnemyAttackFire.h" />
     <ClInclude Include="Actor\Enemy\EnemyHeadShot\EnemyHeadShot.h" />
     <ClInclude Include="Actor\ActorSystem\ActorSystem.h" />
     <ClInclude Include="Actor\ItemActor\BulletItem\BulletItem.h" />
     <ClInclude Include="Actor\ItemActor\HPRecoverItem\HPRecoverItem.h" />
     <ClInclude Include="Actor\ItemActor\ItemCreater\ItemCreater.h" />
+    <ClInclude Include="Actor\ActionPlayerMode\ActionPlayer\ActionPlayerState.h" />
+    <ClInclude Include="Actor\ActionPlayerMode\ActionPlayer\ActionPlayer.h" />
     <ClInclude Include="Actor\PlayerBullet\PlayerBullet.h" />
     <ClInclude Include="Actor\Player\Player\Player.h" />
     <ClInclude Include="Actor\Player\PlayerAdvent.h" />
     <ClInclude Include="Actor\Player\PlayerItemBox\PlayerItemBox.h" />
     <ClInclude Include="Actor\Player\PlayerMotionNum.h" />
-    <ClInclude Include="Actor\Player\PlayerGunAttack\PlayerGunAttack.h" />
+    <ClInclude Include="Actor\PlayerAttackCollision\PlayerAttackCollision.h" />
     <ClInclude Include="Actor\Player\PlayerState.h" />
     <ClInclude Include="Actor\TestEnemy.h" />
     <ClInclude Include="Actor\UIActor\AnyUI\AnyUI.h" />
@@ -294,6 +303,8 @@
     <ClInclude Include="Math\MathH.h" />
     <ClInclude Include="Scene\ActionPlayScene\ActionPlayScene.h" />
     <ClInclude Include="Scene\GameData\GameDataManager.h" />
+    <ClInclude Include="Scene\GameLoadingScene\ActionModeLoadingScene.h" />
+    <ClInclude Include="Scene\GameLoadingScene\LoadingSceneInc.h" />
     <ClInclude Include="Scene\GameOverScene\GameOverScene.h" />
     <ClInclude Include="Scene\ShootingPlayScene\ShootingPlayScene.h" />
     <ClInclude Include="Scene\GameResultScene\GameResultScene.h" />

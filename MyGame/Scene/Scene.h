@@ -23,5 +23,5 @@ public:
 
 protected:
 	bool isEnd_{ false };
-	SceneType next_{ SceneType::SCENE_SHOOTING_PLAY_SCENE };
+	SceneType next_{ SceneType::SCENE_SHOOTING_PLAY };
 };

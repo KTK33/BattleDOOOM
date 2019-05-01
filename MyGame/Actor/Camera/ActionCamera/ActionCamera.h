@@ -27,6 +27,8 @@ private:
 
 	Vector2 m_FarPoint{ 30.f,20.f };
 
+	std::weak_ptr<Actor> m_player{};
+
 	//ターゲットからのオフセット
 	Vector3 m_Offset;
 	//カメラの上方向ベクトル
@@ -35,4 +37,6 @@ private:
 	float m_PitchSpeed;
 	//ヨーの角速度
 	float m_YawSpeed;
+
+	int PlayerHeight{ 15 };
 };

@@ -224,7 +224,7 @@ void NormalEnemy::Punch()
 	state_timer_ += 1.0f;
 	if (state_timer_ == 80)
 	{
-		auto Bullet = std::make_shared<EnemyAttack>(world_, Vector3{ position_ + Getpose().Forward() * 6 },
+		auto Bullet = std::make_shared<EnemyAttackCollison>(world_, Vector3{ position_ + Getpose().Forward() * 6 },
 			std::make_shared<BoundingCapsule>(Vector3{ 0.0f,10.0f,0.0f }, Matrix::Identity, 3.0f, 3.0f));
 		world_->add_actor(ActorGroup::EnemyBullet, Bullet);
 		Bullet->SetdeadTime((int)mesh_.motion_end_time() / 2);
