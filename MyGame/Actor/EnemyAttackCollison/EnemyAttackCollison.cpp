@@ -2,30 +2,25 @@
 
 EnemyAttackCollison::EnemyAttackCollison(IWorld * world, const Vector3 & position, const IBodyPtr & body):
 	Actor(world,"EnemyAttackCollison",position,body),
-	deadTime{0},
-	attackparam{0}
+	mdeadCheck{false},
+	mdeadTime{0},
+	mattackparam{0}
 {
 }
 
-void EnemyAttackCollison::initialize()
+void EnemyAttackCollison::SetParam(bool deadCheck, int deadTime, int attackParam)
 {
-}
-
-void EnemyAttackCollison::SetdeadTime(int time)
-{
-	deadTime = time;
-}
-
-void EnemyAttackCollison::SetAttackParam(int param)
-{
-	attackparam = param;
+	mdeadCheck = deadCheck;
+	mdeadTime = deadTime;
+	mattackparam = attackParam;
 }
 
 void EnemyAttackCollison::update(float deltaTime)
 {
-	deadTime = max(deadTime - 1, 0);
+	if (mdeadCheck) return;
+	mdeadTime = max(mdeadTime - 1, 0);
 
-	if (deadTime <= 0)
+	if (mdeadTime <= 0)
 	{
 		die();
 	}
@@ -39,7 +34,7 @@ void EnemyAttackCollison::draw() const
 void EnemyAttackCollison::onCollide(Actor & other)
 {
 	Vector3 hitdir(other.Getposition() - position_);
-	other.receiveMessage(EventMessage::HIT_ENEMY_BULLET, (void*)&attackparam);
+	other.receiveMessage(EventMessage::HIT_ENEMY_BULLET, (void*)&mattackparam);
 }
 
 void EnemyAttackCollison::receiveMessage(EventMessage message, void * param)

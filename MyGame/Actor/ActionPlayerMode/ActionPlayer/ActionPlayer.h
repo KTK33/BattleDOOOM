@@ -34,6 +34,7 @@ private:
 	void Movement(float spped, Vector2 input);
 	void Avoidance();
 	void Attack();
+	void AttackSystem();
 	void Motion(float deltaTime);
 	//•Ší‚Ì•`‰æ
 	void draw_weapon() const;
@@ -78,4 +79,5 @@ private:
 
 	int mAttackCount;
 	bool mAttackcheck;
+	bool mweaponalready;
 };

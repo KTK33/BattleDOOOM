@@ -216,8 +216,7 @@ void BossEnemy::Punch()
 		auto Bullet = std::make_shared<EnemyAttackCollison>(world_, Vector3{ position_ + Getpose().Forward() * 6 },
 			std::make_shared<BoundingCapsule>(Vector3{ 0.0f,5.0f,0.0f }, Matrix::Identity, 10.0f, 5.0f));
 		world_->add_actor(ActorGroup::EnemyBullet, Bullet);
-		Bullet->SetdeadTime(mesh_.motion_end_time()/2);
-		Bullet->SetAttackParam(3);
+		Bullet->SetParam(false,(int)mesh_.motion_end_time() / 2, 3);
 	}
 	if (state_timer_ >= mesh_.motion_end_time())
 	{

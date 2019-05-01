@@ -9,11 +9,7 @@ class EnemyAttackCollison : public Actor{
 public:
 	EnemyAttackCollison(IWorld* world, const Vector3& position, const IBodyPtr& body = std::make_shared<BoundingCapsule>(Vector3{ 0.0f,5.0f,0.0f }, Matrix::Identity, 10.0f, 3.5f));
 
-	void initialize();
-
-	void SetdeadTime(int time);
-
-	void SetAttackParam(int param);
+	void SetParam(bool deadCheck, int deadTime, int attackParam);
 
 	void update(float deltaTime);
 
@@ -24,8 +20,8 @@ public:
 	virtual void receiveMessage(EventMessage message, void* param);
 
 private:
-	int deadTime;
-
-	int attackparam;
+	bool mdeadCheck;
+	int mdeadTime;
+	int mattackparam;
 
 };

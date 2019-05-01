@@ -2,31 +2,25 @@
 
 PlayerAttackCollision::PlayerAttackCollision(IWorld * world, const Vector3 & position, const IBodyPtr & body):
 	Actor(world, "AttackCollision", position, body),
-	deadTime{ 0 },
-	attackparam{ 0 }
+	mdeadCheck{false},
+	mdeadTime{ 0 },
+	mattackparam{ 0 }
 
-{
-}
+{}
 
-void PlayerAttackCollision::initialize()
+void PlayerAttackCollision::SetParam(bool leaveCheck, int deadTime, int attackParam)
 {
-}
-
-void PlayerAttackCollision::SetdeadTime(int time)
-{
-	deadTime = time;
-}
-
-void PlayerAttackCollision::SetAttackParam(int param)
-{
-	attackparam = param;
+	mdeadCheck = leaveCheck;
+	mdeadTime = deadTime;
+	mattackparam = attackParam;
 }
 
 void PlayerAttackCollision::update(float deltaTime)
 {
-	deadTime = max(deadTime - 1, 0);
+	if (mdeadCheck) return;
+	mdeadTime = max(mdeadTime - 1, 0);
 
-	if (deadTime <= 0)
+	if (mdeadTime <= 0)
 	{
 		die();
 	}
@@ -40,9 +34,17 @@ void PlayerAttackCollision::draw() const
 void PlayerAttackCollision::onCollide(Actor & other)
 {
 	Vector3 hitdir(other.Getposition() - position_);
-	other.receiveMessage(EventMessage::HIT_PLAYER_PUNCH, (void*)&attackparam);
+	other.receiveMessage(EventMessage::HIT_PLAYER_PUNCH, (void*)&mattackparam);
 }
 
 void PlayerAttackCollision::receiveMessage(EventMessage message, void * param)
 {
+	if (message == EventMessage::GETPLAYERPOS)
+	{
+		position_ = *(Vector3*)param;
+	}
+	if (message == EventMessage::DEAD_PLAYER)
+	{
+		die();
+	}
 }

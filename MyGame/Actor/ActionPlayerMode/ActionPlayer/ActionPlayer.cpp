@@ -24,7 +24,8 @@ ActionPlayer::ActionPlayer(int model, int weapon, IWorld * world, const Vector3 
 	invinciblyTime{ 100 },
 	DeadCheck{ false },
 	m_ActionCameraForward{ 0 },
-	m_ActionCameraRight{ 0 }
+	m_ActionCameraRight{ 0 },
+	mweaponalready{false}
 {
 	rotation_ = Matrix::Identity;
 	mesh_.transform(Getpose());
@@ -102,8 +103,6 @@ void ActionPlayer::draw() const
 	DrawFormatString(500, 500, GetColor(255, 255, 255), "%f", mesh_.motion_end_time());
 	DrawFormatString(500, 400, GetColor(255, 255, 255), "%i", motion_);
 
-
-	DrawFormatString(500, 400, GetColor(255, 0, 255), "%i", mRightweaponPos);
 
 	if(mAttackcheck)
 	DrawFormatString(600, 600, GetColor(255, 255, 255), "B");
@@ -188,11 +187,8 @@ void ActionPlayer::Idle()
 
 	if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM2))
 	{
-		change_state(ActionPlayerState::ActionPlayerAttack, ActionPlayerMotion::Motion::MotionPlayerAttack1);
+		Attack();
 	}
-
-	mAttackCount = 0;
-	mAttackcheck = false;
 }
 
 void ActionPlayer::Move(Vector2 input)
@@ -270,8 +266,23 @@ void ActionPlayer::Avoidance()
 
 void ActionPlayer::Attack()
 {
+	mAttackCount += 1;
+	switch (mAttackCount){
+	case 1:
+		change_state(ActionPlayerState::ActionPlayerAttack, ActionPlayerMotion::Motion::MotionPlayerAttack1);break;
+	case 2:
+		change_state(ActionPlayerState::ActionPlayerAttack, ActionPlayerMotion::Motion::MotionPlayerAttack2);break;
+	case 3:
+		change_state(ActionPlayerState::ActionPlayerAttack, ActionPlayerMotion::Motion::MotionPlayerAttack3);break;
+	default:break;
+	}
+}
+
+void ActionPlayer::AttackSystem()
+{
+	//çUåÇÉLÉÉÉìÉZÉã
 	if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM1)){
-		change_state(ActionPlayerState::ActionPlayerAvoidance, ActionPlayerMotion::Motion::MotionPlayerAvoidance);
+	change_state(ActionPlayerState::ActionPlayerAvoidance, ActionPlayerMotion::Motion::MotionPlayerAvoidance);
 	}
 
 	if (state_timer_ > mesh_.motion_end_time() - 20)
@@ -279,19 +290,8 @@ void ActionPlayer::Attack()
 		mAttackcheck = true;
 		if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM2))
 		{
-			mAttackCount += 1;
 			mAttackcheck = false;
-			switch (mAttackCount)
-			{
-			case 1:
-				change_state(ActionPlayerState::ActionPlayerAttack, ActionPlayerMotion::Motion::MotionPlayerAttack2);
-				break;
-			case 2:
-				change_state(ActionPlayerState::ActionPlayerAttack, ActionPlayerMotion::Motion::MotionPlayerAttack3);
-				break;
-			default:
-				break;
-			}
+			Attack();
 		}
 	}
 }
@@ -301,39 +301,39 @@ void ActionPlayer::Motion(float deltaTime)
 	state_timer_ += deltaTime/2;
 
 	if (state_ == ActionPlayerState::ActionPlayerAttack){
-		Attack();
+		AttackSystem();
 	}
 
 	if (state_timer_ > mesh_.motion_end_time()-5)
 	{
 		switch (state_){
 		case ActionPlayerState::State::ActionPlayerAttack:
-			change_state(ActionPlayerState::ActionPlayerIdel, ActionPlayerMotion::Motion::MotionPlayerIdel);
-			break;
+			change_state(ActionPlayerState::ActionPlayerIdel, ActionPlayerMotion::Motion::MotionPlayerIdel);break;
 		case ActionPlayerState::State::ActionPlayerAvoidance:
-			change_state(ActionPlayerState::ActionPlayerIdel, ActionPlayerMotion::Motion::MotionPlayerIdel);
-			break;
+			change_state(ActionPlayerState::ActionPlayerIdel, ActionPlayerMotion::Motion::MotionPlayerIdel);break;
 		case ActionPlayerState::State::ActionPlayerDamage:
-			change_state(ActionPlayerState::ActionPlayerIdel, ActionPlayerMotion::Motion::MotionPlayerIdel);
-			break;
+			change_state(ActionPlayerState::ActionPlayerIdel, ActionPlayerMotion::Motion::MotionPlayerIdel);break;
 		case ActionPlayerState::State::ActionPlayerDead:
-			DeadCheck = true;
-			break;
+			DeadCheck = true;break;
 		default: break;
 		};
+
+		mAttackCount = 0;
+		mAttackcheck = false;
 	}
 }
 
 void ActionPlayer::draw_weapon() const
 {
+	//âEéËÇ…éùÇ¡ÇƒÇ¢ÇÈïêäÌ
 	StaticMesh::bind(weapon_);
 	StaticMesh::transform(mesh_.bone_matrix(mRightweaponPos));
 	StaticMesh::draw();
 
+	//ç∂éËÇ…éùÇ¡ÇƒÇ¢ÇÈïêäÌ
 	StaticMesh::bind(weapon_);
 	StaticMesh::transform(mesh_.bone_matrix(mLeftweaponPos));
 	StaticMesh::draw();
-
 }
 
 void ActionPlayer::Delay()

@@ -452,8 +452,7 @@ void Player::GunPunch()
 		auto AttackPunch = std::make_shared<PlayerAttackCollision>(world_, Vector3{ position_ + Getpose().Forward() * 6},
 			std::make_shared<BoundingCapsule>(Vector3{ 0.0f,13.0f,0.0f }, Matrix::Identity, 1.5f, 2.5f));
 		world_->add_actor(ActorGroup::PlayerBullet, AttackPunch);
-		AttackPunch->SetdeadTime(20);
-		AttackPunch->SetAttackParam(1);
+		AttackPunch->SetParam(false, 20, 1);
 
 	}
 	if (state_timer_ >= mesh_.motion_end_time())
