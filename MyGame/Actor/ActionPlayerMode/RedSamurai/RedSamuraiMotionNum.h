@@ -12,5 +12,9 @@ public:
 		MotionRedSamuraiAttack1,
 		MotionRedSamuraiAttack2,
 		MotionRedSamuraiDead,
+		MotionRedSamuraiArrowAttack,
+		MotionRedSamuraiRun,
+		MotionRedSamuraiSwardDraw1,
+		MotionRedSamuraiSwardDraw2,
 	};
 };

@@ -39,11 +39,7 @@ void PlayerAttackCollision::onCollide(Actor & other)
 
 void PlayerAttackCollision::receiveMessage(EventMessage message, void * param)
 {
-	if (message == EventMessage::GETPLAYERPOS)
-	{
-		position_ = *(Vector3*)param;
-	}
-	if (message == EventMessage::DEAD_PLAYER)
+	if (message == EventMessage::HIT_ENEMY)
 	{
 		die();
 	}

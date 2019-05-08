@@ -25,7 +25,7 @@ void GameTitleScene::update(float deltaTime)
 
 	if (GameDataManager::getInstance().GetTitleCheck() == true)
 	{
-		next_ = SceneType::SCENE_SHOOTING_PLAY;
+		next_ = SceneType::SCENE_MODESELECT;
 		isEnd_ = true;
 	}
 }
@@ -36,6 +36,7 @@ void GameTitleScene::draw() const
 	//Sprite::GetInstance().DrawSetCenter(SPRITE_ID::TITLECHUI, Vector2((float)WINDOW_WIDTH / 2, WINDOW_HEIGHT/2));
 	//Sprite::GetInstance().Draw(SPRITE_ID::TITLEJIKYO, Vector2(1500, 950));
 
+	Graphics3D::clear_color(0, 0, 0);
 	world_.draw();
 }
 

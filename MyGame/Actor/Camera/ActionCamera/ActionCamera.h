@@ -20,6 +20,8 @@ public:
 
 	void PlayerInput(float deltaTime);
 
+	virtual void receiveMessage(EventMessage message, void * param) override;
+
 private:
 	Actor* player_;
 	//
@@ -39,4 +41,6 @@ private:
 	float m_YawSpeed;
 
 	int PlayerHeight{ 15 };
+
+	bool mTargetCamera;
 };

@@ -16,7 +16,6 @@ PauseSystem::PauseSystem(IWorld * world):
 	bgmval = GameDataManager::getInstance().GetBGMVAL()*10;
 	seval = GameDataManager::getInstance().GetSEVAL()*10;
 	aimval = GameDataManager::getInstance().GetAIMSPD();
-
 }
 
 void PauseSystem::initialize()
@@ -38,17 +37,17 @@ void PauseSystem::draw() const
 		case 0:
 			Sprite::GetInstance().DrawSetCenter(SPRITE_ID::PAUSESYSTEM_FREAMS, Vector2(1350, WINDOW_HEIGHT -650.0f));
 			Sprite::GetInstance().DrawSetCenter(SPRITE_ID::PAUSESYSTEM_FREAM, Vector2(1350, WINDOW_HEIGHT - 500.0f));
-			Sprite::GetInstance().DrawSetCenter(SPRITE_ID::PAUSESYSTEM_FREAM, Vector2(1350, WINDOW_HEIGHT - 350.0f));
+			if(modenum == 0) Sprite::GetInstance().DrawSetCenter(SPRITE_ID::PAUSESYSTEM_FREAM, Vector2(1350, WINDOW_HEIGHT - 350.0f));
 			break;
 		case 1:
 			Sprite::GetInstance().DrawSetCenter(SPRITE_ID::PAUSESYSTEM_FREAM, Vector2(1350, WINDOW_HEIGHT - 650.0f));
 			Sprite::GetInstance().DrawSetCenter(SPRITE_ID::PAUSESYSTEM_FREAMS, Vector2(1350, WINDOW_HEIGHT - 500.0f));
-			Sprite::GetInstance().DrawSetCenter(SPRITE_ID::PAUSESYSTEM_FREAM, Vector2(1350, WINDOW_HEIGHT - 350.0f));
+			if (modenum == 0) Sprite::GetInstance().DrawSetCenter(SPRITE_ID::PAUSESYSTEM_FREAM, Vector2(1350, WINDOW_HEIGHT - 350.0f));
 			break;
 		case 2:
 			Sprite::GetInstance().DrawSetCenter(SPRITE_ID::PAUSESYSTEM_FREAM, Vector2(1350, WINDOW_HEIGHT - 650.0f));
 			Sprite::GetInstance().DrawSetCenter(SPRITE_ID::PAUSESYSTEM_FREAM, Vector2(1350, WINDOW_HEIGHT - 500.0f));
-			Sprite::GetInstance().DrawSetCenter(SPRITE_ID::PAUSESYSTEM_FREAMS, Vector2(1350, WINDOW_HEIGHT - 350.0f));
+			if (modenum == 0) Sprite::GetInstance().DrawSetCenter(SPRITE_ID::PAUSESYSTEM_FREAMS, Vector2(1350, WINDOW_HEIGHT - 350.0f));
 
 			break;
 	default:
@@ -57,7 +56,7 @@ void PauseSystem::draw() const
 
 	Sprite::GetInstance().DrawSetCenter(SPRITE_ID::PAUSESYSTEM_CURSOR, Vector2(802.f + bgmval * 100.f, WINDOW_HEIGHT - 650.0f));
 	Sprite::GetInstance().DrawSetCenter(SPRITE_ID::PAUSESYSTEM_CURSOR, Vector2(802.f + seval * 100.f, WINDOW_HEIGHT - 500.0f));
-	Sprite::GetInstance().DrawSetCenter(SPRITE_ID::PAUSESYSTEM_CURSOR, Vector2(802.f + aimval * 100.f, WINDOW_HEIGHT - 350.0f));
+	if (modenum == 0) Sprite::GetInstance().DrawSetCenter(SPRITE_ID::PAUSESYSTEM_CURSOR, Vector2(802.f + aimval * 100.f, WINDOW_HEIGHT - 350.0f));
 
 	//DrawFormatString(1000, 700, GetColor(255, 0, 0), "%i", GameDataManager::getInstance().GetBGMVAL());
 	//DrawFormatString(1000, 600, GetColor(255, 0, 0), "%i", GameDataManager::getInstance().GetSEVAL());
@@ -123,4 +122,13 @@ void PauseSystem::PlayerInput()
 	{
 		die();
 	}
+}
+
+void PauseSystem::setPlayMode(int num)
+{
+	modenum = num;
+	//if (modenum == 1)
+	//{
+	//	menuSize_ = menuSize_ - 1;
+	//}
 }

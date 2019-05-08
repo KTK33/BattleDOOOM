@@ -174,9 +174,6 @@
     <ClCompile Include="Scene\GameLoadingScene\LoadingScene.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Scene\GameResultScene\GameResultScene.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Actor\Camera\ShootingCamera\ShootingCamera.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -264,9 +261,6 @@
     <ClCompile Include="Actor\ActionPlayerMode\RedSamurai\RedSamurai.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Scene\GameLoadingScene\ActionModeLoadingScene.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Actor\ActionPlayerMode\ActionPlayer\ActionPlayerMotionNum.h">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -274,6 +268,24 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Actor\EnemyAttackCollison\EnemyAttackCollison.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\ActionPlayerMode\ActionGameManager\ActionGameManager.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\ActionPlayerMode\RedSamurai\Arrow\ArrowAttack.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\ActionPlayerMode\UI\ActionPlayerUI.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\ActionPlayerMode\UI\RedSamuraiUI.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\GameSelectScene\GameSelectScene.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\ActionPlayerMode\UI\ActionModePause\ActionModePause.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -506,9 +518,6 @@
     <ClInclude Include="Scene\GameLoadingScene\LoadingScene.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Scene\GameResultScene\GameResultScene.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Actor\Camera\ShootingCamera\ShootingCamera.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -596,9 +605,6 @@
     <ClInclude Include="Actor\ActionPlayerMode\RedSamurai\RedSamurai.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Scene\GameLoadingScene\ActionModeLoadingScene.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Scene\GameLoadingScene\LoadingSceneInc.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -615,6 +621,24 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Actor\EnemyAttackCollison\EnemyAttackCollison.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ActionPlayerMode\ActionGameManager\ActionGameManager.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ActionPlayerMode\RedSamurai\Arrow\ArrowAttack.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ActionPlayerMode\UI\ActionPlayerUI.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ActionPlayerMode\UI\RedSamuraiUI.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\GameSelectScene\GameSelectScene.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ActionPlayerMode\UI\ActionModePause\ActionModePause.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

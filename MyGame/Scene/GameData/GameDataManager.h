@@ -52,7 +52,7 @@ private:
 
 	int BGMVAL{ 5 };
 	int SE_VAL{ 7 };
-	int AIM_SPD;
+	int AIM_SPD{ 5 };
 
 	int SceneNumber{ 2 };
 };

@@ -42,8 +42,15 @@ enum class EventMessage
 	BOSSHP,
 	ATTCKPARAM,
 	DAMAGEPARAM,
+	//以下アクションモード専用
 	ACTION_CAMERA_FORWARD,
 	ACTION_CAMERA_RIGHT,
+	DEAD_PLAYER,
+	RIGHT_WEAPON,
+	LEFT_WEAPON,
+	TARGET_CAMERA,
+	SAMURAI_HP
+	
 };
 //アクタークラス
 class Actor :public std::enable_shared_from_this<Actor> {

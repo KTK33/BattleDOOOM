@@ -4,6 +4,6 @@
 #include "GameTitleScene/GameTitleScene.h"
 #include "ShootingPlayScene/ShootingPlayScene.h"
 #include "ActionPlayScene/ActionPlayScene.h"
-#include "GameResultScene/GameResultScene.h"
+#include "GameSelectScene/GameSelectScene.h"
 #include "GameOverScene/GameOverScene.h"
 #include "SceneType.h"

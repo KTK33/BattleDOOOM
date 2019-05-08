@@ -20,8 +20,6 @@ ActionPlayer::ActionPlayer(int model, int weapon, IWorld * world, const Vector3 
 	state_timer_{ 0.0f },
 	mRightweaponPos{ 15 },
 	mLeftweaponPos{ 38 },
-	invinciblyCheck{ false },
-	invinciblyTime{ 100 },
 	DeadCheck{ false },
 	m_ActionCameraForward{ 0 },
 	m_ActionCameraRight{ 0 },
@@ -44,21 +42,15 @@ void ActionPlayer::initialize()
 
 void ActionPlayer::update(float deltaTime)
 {
-	if (world_->GetPauseCheck() == false
-		&& GameDataManager::getInstance().GetDeadBossEnemy() == false) {
-		if (!DeadCheck)
-		{
-			mesh_.update(deltaTime);
-			mesh_.transform(Getpose());
-			Motion(deltaTime);
-			if (state_ == ActionPlayerState::ActionPlayerIdel)
-			{
-				Idle();
-			}
-			mesh_.change_motion(motion_);
-			Delay();
-		}
-	}
+	collision();
+
+	if ((world_->GetPauseCheck() == true && GameDataManager::getInstance().GetDeadBossEnemy() == true) || DeadCheck) return;
+
+	mesh_.update(deltaTime);
+	mesh_.transform(Getpose());
+	Motion(deltaTime);
+	Idle();
+	mesh_.change_motion(motion_);
 
 	world_->send_message(EventMessage::PLAYER_HP, (void*)&hp_);
 
@@ -73,24 +65,21 @@ void ActionPlayer::update(float deltaTime)
 		velocity_ = 0.0f;
 	}
 
-	collision();
 	if (Floorcollide) gravity = 0.0f;
 	else gravity = 9.8f*0.1f;
 
-	if (invinciblyCheck) {
-		ActorTransparence();
-	}
-	else {
-		TransparenceInit();
-	}
+	//if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM3))
+	//{
+	//	mRightweaponPos += 1;
+	//}
+	//if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM4))
+	//{
+	//	mRightweaponPos -= 1;
+	//}
 
-	if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM3))
+	if (hp_ <= 0)
 	{
-		mRightweaponPos += 1;
-	}
-	if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM4))
-	{
-		mRightweaponPos -= 1;
+		GameDataManager::getInstance().SetPlayerDead(true);
 	}
 }
 
@@ -99,13 +88,16 @@ void ActionPlayer::draw() const
 	mesh_.draw();
 	draw_weapon();
 
-	DrawFormatString(500, 450, GetColor(255, 255, 255), "%f", state_timer_);
-	DrawFormatString(500, 500, GetColor(255, 255, 255), "%f", mesh_.motion_end_time());
-	DrawFormatString(500, 400, GetColor(255, 255, 255), "%i", motion_);
+	//if(mAttackcheck)
+	//DrawFormatString(600, 600, GetColor(0, 0, 255), "B");
 
+	//SetFontSize(32);
+	//DrawFormatString(200, 450, GetColor(0, 0, 255), "%f", position_.x);
+	//DrawFormatString(200, 550, GetColor(0, 0, 255), "%f", position_.y);
+	//DrawFormatString(200, 650, GetColor(0, 0, 255), "%f", position_.z);
+	//DrawFormatString(200, 700, GetColor(0, 0, 255), "%i", mAttackCount);
+	//SetFontSize(16);
 
-	if(mAttackcheck)
-	DrawFormatString(600, 600, GetColor(255, 255, 255), "B");
 }
 
 void ActionPlayer::onCollide(Actor & other)
@@ -116,14 +108,10 @@ void ActionPlayer::onCollide(Actor & other)
 
 void ActionPlayer::receiveMessage(EventMessage message, void * param)
 {
-	if (!invinciblyCheck)
+	if (message == EventMessage::HIT_ENEMY_BULLET)
 	{
-		if (message == EventMessage::HIT_ENEMY_BULLET)
-		{
-			hp_ = hp_ - *(int*)param;
-			change_state(ActionPlayerState::ActionPlayerDamage, ActionPlayerMotion::Motion::MotionPlayerIdel);
-			invinciblyCheck = true;
-		}
+		hp_ = hp_ - *(int*)param;
+		change_state(ActionPlayerState::ActionPlayerDamage, ActionPlayerMotion::Motion::MotionPlayerIdel);
 	}
 
 	if (message == EventMessage::PLAYER_HP)
@@ -133,7 +121,7 @@ void ActionPlayer::receiveMessage(EventMessage message, void * param)
 
 	if (message == EventMessage::HIT_ENEMY)
 	{
-		Hit(*(Vector3*)param);
+		//Hit(*(Vector3*)param);
 	}
 
 	if (message == EventMessage::ACTION_CAMERA_FORWARD)
@@ -164,7 +152,7 @@ void ActionPlayer::collision()
 	if (floor(result)) {
 		if (state_ != ActionPlayerState::State::ActionPlayerJump){
 			Floorcollide = true;
-			position_ = result + rotation_.Up()*(body_->length()*0.5f + body_->radius()*0.5f);
+			position_ = result + rotation_.Up()*(body_->length()*0.7f + body_->radius()*0.7f);
 		}
 	}
 	else {
@@ -185,14 +173,23 @@ void ActionPlayer::Idle()
 {
 	Move(GamePad::GetInstance().Stick());
 
-	if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM2))
+	//攻撃
+	if (state_ != ActionPlayerState::ActionPlayerAttack)
 	{
+		mAttackCount = 0;
+		mAttackcheck = false;
 		Attack();
+	}
+
+	//回避
+	if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM1)) {
+		change_state(ActionPlayerState::ActionPlayerAvoidance, ActionPlayerMotion::Motion::MotionPlayerAvoidance);
 	}
 }
 
 void ActionPlayer::Move(Vector2 input)
 {
+	if (state_ == ActionPlayerState::ActionPlayerAttack || state_ == ActionPlayerState::ActionPlayerAvoidanceAttack) return;
 	//スティックを倒していないときはアイドル
 	if (input.x == 0.0f && input.y == 0.0f){
 		change_state(ActionPlayerState::ActionPlayerIdel, ActionPlayerMotion::Motion::MotionPlayerIdel);
@@ -210,21 +207,18 @@ void ActionPlayer::Movement(float spped, Vector2 input)
 	float side_speed{ 0 };
 	float yaw_speed{ 0.0f };
 
-	side_speed = -input.x * spped;
+	side_speed = input.x * spped;
 	forward_speed = input.y * spped;
 
 	//カメラの前方方向を前方向とする
-	velocity_ += m_ActionCameraForward * forward_speed;
-	velocity_ += -m_ActionCameraRight * side_speed;
-
-	//回避コマンド
-	if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM1)){
-		change_state(ActionPlayerState::ActionPlayerAvoidance, ActionPlayerMotion::Motion::MotionPlayerAvoidance);
-	}
+	Vector3 ForwardVec = m_ActionCameraForward * forward_speed;
+	velocity_ += ForwardVec;
+	Vector3 SideVec = m_ActionCameraRight * side_speed;
+	velocity_ += SideVec;
 
 	//回避加速度
-	static const int mAvoidanceSpeed = 15.0f;
-	
+	static const int mAvoidanceSpeed = 5.0f;
+
 	//ダッシュ加速
 	float DashSpped = 0.0f;
 
@@ -246,80 +240,96 @@ void ActionPlayer::Movement(float spped, Vector2 input)
 		}
 	}
 
-	position_ += velocity_ * (1.0f + DashSpped);
-	
 	//進んでいる方向に向く
 	Vector3 angle = m_ActionCameraForward * input.y + m_ActionCameraRight * input.x;
 	angle.y = 0.0f;
 	Matrix to_Target_rotate = Matrix::CreateLookAt(position_, position_ + angle.Normalize(), Vector3::Up);
-	rotation_ = Matrix::Lerp(rotation_, Matrix::Invert(to_Target_rotate) * Matrix::CreateRotationY(180),0.1f);
-}
+	rotation_ = Matrix::Lerp(rotation_, Matrix::Invert(to_Target_rotate) * Matrix::CreateRotationY(180), 0.1f);
 
-void ActionPlayer::Avoidance()
-{
-	state_timer_ += 1.0f;
-	if (state_timer_ >= mesh_.motion_end_time())
-	{
-		change_state(ActionPlayerState::ActionPlayerIdel, ActionPlayerMotion::Motion::MotionPlayerIdel);
-	}
+	position_ += velocity_ * (1.0f + DashSpped);
 }
 
 void ActionPlayer::Attack()
 {
-	mAttackCount += 1;
-	switch (mAttackCount){
-	case 1:
-		change_state(ActionPlayerState::ActionPlayerAttack, ActionPlayerMotion::Motion::MotionPlayerAttack1);break;
-	case 2:
-		change_state(ActionPlayerState::ActionPlayerAttack, ActionPlayerMotion::Motion::MotionPlayerAttack2);break;
-	case 3:
-		change_state(ActionPlayerState::ActionPlayerAttack, ActionPlayerMotion::Motion::MotionPlayerAttack3);break;
-	default:break;
+	if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM2))
+	{
+		if (state_ == ActionPlayerState::ActionPlayerAvoidance) {
+			change_state(ActionPlayerState::ActionPlayerAvoidanceAttack, ActionPlayerMotion::MotionPlayerAvoidanceAttack);
+			return;
+		}
+		mAttackcheck = false;
+		mAttackCount += 1;
+		switch (mAttackCount) {
+		case 1:
+			change_state(ActionPlayerState::ActionPlayerAttack, ActionPlayerMotion::MotionPlayerAttack1); break;
+		case 2:
+			change_state(ActionPlayerState::ActionPlayerAttack, ActionPlayerMotion::MotionPlayerAttack2); break;
+		case 3:
+			change_state(ActionPlayerState::ActionPlayerAttack, ActionPlayerMotion::MotionPlayerAttack3); break;
+		default:break;
+		}
 	}
 }
 
 void ActionPlayer::AttackSystem()
 {
-	//攻撃キャンセル
-	if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM1)){
-	change_state(ActionPlayerState::ActionPlayerAvoidance, ActionPlayerMotion::Motion::MotionPlayerAvoidance);
+	switch (mAttackCount) {
+	case 1:
+		if (state_timer_ == 38.0f) AttackCollision(20, 1, Vector3(0.0f, 13.0f, 0.0f), 2.5f, 3.5f); break;
+	case 2:
+		if (state_timer_ == 5.0f) AttackCollision(20, 2, Vector3(0.0f, 13.0f, 0.0f), 2.5f, 3.5f); break;
+	case 3:
+		if (state_timer_ == 5.0f) AttackCollision(20, 3, Vector3(0.0f, 13.0f, 0.0f), 2.5f, 3.5f); break;
+	default:
+		break;
 	}
 
-	if (state_timer_ > mesh_.motion_end_time() - 20)
+	if (state_timer_ > mesh_.motion_end_time() - 10)
 	{
 		mAttackcheck = true;
-		if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM2))
-		{
-			mAttackcheck = false;
-			Attack();
-		}
+		Attack();
 	}
+}
+
+void ActionPlayer::AttackAvoidanceSystem()
+{
+	if (state_timer_ == 25.0f)AttackCollision(20, 1, Vector3(0.0f, 13.0f, 0.0f), 1.5f, 2.5f);
+	if (state_timer_ == 40.0f)AttackCollision(20, 2, Vector3(0.0f, 13.0f, 0.0f), 1.5f, 2.5f);
+}
+
+void ActionPlayer::AttackCollision(int deadTime, int attackParam, Vector3 spot, float len, float rad)
+{
+	auto AttackPunch = std::make_shared<PlayerAttackCollision>(world_, Vector3{ position_ + Getpose().Forward() * 10 },
+		std::make_shared<BoundingCapsule>(spot, Matrix::Identity, len, rad));
+	world_->add_actor(ActorGroup::PlayerBullet, AttackPunch);
+	AttackPunch->SetParam(false, deadTime, attackParam);
 }
 
 void ActionPlayer::Motion(float deltaTime)
 {
-	state_timer_ += deltaTime/2;
-
+	state_timer_ += 0.5f;
 	if (state_ == ActionPlayerState::ActionPlayerAttack){
 		AttackSystem();
+	}
+	else if (state_ == ActionPlayerState::ActionPlayerAvoidanceAttack) {
+		AttackAvoidanceSystem();
 	}
 
 	if (state_timer_ > mesh_.motion_end_time()-5)
 	{
 		switch (state_){
-		case ActionPlayerState::State::ActionPlayerAttack:
-			change_state(ActionPlayerState::ActionPlayerIdel, ActionPlayerMotion::Motion::MotionPlayerIdel);break;
-		case ActionPlayerState::State::ActionPlayerAvoidance:
-			change_state(ActionPlayerState::ActionPlayerIdel, ActionPlayerMotion::Motion::MotionPlayerIdel);break;
-		case ActionPlayerState::State::ActionPlayerDamage:
-			change_state(ActionPlayerState::ActionPlayerIdel, ActionPlayerMotion::Motion::MotionPlayerIdel);break;
-		case ActionPlayerState::State::ActionPlayerDead:
+		case ActionPlayerState::ActionPlayerAttack:
+			change_state(ActionPlayerState::ActionPlayerIdel, ActionPlayerMotion::MotionPlayerIdel);break;
+		case ActionPlayerState::ActionPlayerAvoidanceAttack:
+			change_state(ActionPlayerState::ActionPlayerIdel, ActionPlayerMotion::MotionPlayerIdel); break;
+		case ActionPlayerState::ActionPlayerAvoidance:
+			change_state(ActionPlayerState::ActionPlayerIdel, ActionPlayerMotion::MotionPlayerIdel);break;
+		case ActionPlayerState::ActionPlayerDamage:
+			change_state(ActionPlayerState::ActionPlayerIdel, ActionPlayerMotion::MotionPlayerIdel);break;
+		case ActionPlayerState::ActionPlayerDead:
 			DeadCheck = true;break;
 		default: break;
 		};
-
-		mAttackCount = 0;
-		mAttackcheck = false;
 	}
 }
 
@@ -334,26 +344,6 @@ void ActionPlayer::draw_weapon() const
 	StaticMesh::bind(weapon_);
 	StaticMesh::transform(mesh_.bone_matrix(mLeftweaponPos));
 	StaticMesh::draw();
-}
-
-void ActionPlayer::Delay()
-{
-	if (invinciblyCheck) {
-		if (hp_ > 0)
-		{
-			invinciblyTime--;
-			if (invinciblyTime <= 0)
-			{
-				invinciblyCheck = false;
-				invinciblyTime = 100;
-			}
-		}
-		else {
-			motion_ = ActionPlayerMotion::Motion::MotionPlayerIdel;
-			state_ = ActionPlayerState::ActionPlayerDead;
-			GameDataManager::getInstance().SetPlayerDead(true);
-		}
-	}
 }
 
 void ActionPlayer::Hit(Vector3 & dir)

@@ -13,5 +13,6 @@ public:
 		ActionPlayerDead,
 		ActionPlayerAvoidance,
 		ActionPlayerAttack,
+		ActionPlayerAvoidanceAttack,
 	};
 };

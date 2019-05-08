@@ -32,14 +32,13 @@ private:
 	void Idle();
 	void Move(Vector2 input);
 	void Movement(float spped, Vector2 input);
-	void Avoidance();
 	void Attack();
 	void AttackSystem();
+	void AttackAvoidanceSystem();
+	void AttackCollision(int deadTime,int attackParam,Vector3 spot,float len,float rad);
 	void Motion(float deltaTime);
 	//•Ší‚Ì•`‰æ
 	void draw_weapon() const;
-	//ƒfƒBƒŒƒCŒn
-	void Delay();
 
 	void Hit(Vector3& dir);
 private:
@@ -63,10 +62,6 @@ private:
 	float state_timer_;
 	//d—Í
 	const float Gravity{ -0.04f };
-
-	//–³“GŠÔ
-	int invinciblyTime;
-	bool invinciblyCheck;
 
 	//•Ší•`‰æˆÊ’u
 	int mRightweaponPos;

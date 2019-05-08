@@ -39,4 +39,8 @@ void EnemyAttackCollison::onCollide(Actor & other)
 
 void EnemyAttackCollison::receiveMessage(EventMessage message, void * param)
 {
+	if (message == EventMessage::HIT_PLAYER)
+	{
+		die();
+	}
 }

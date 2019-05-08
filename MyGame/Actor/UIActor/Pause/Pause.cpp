@@ -173,7 +173,9 @@ void PauseUI::SystemInput()
 {
 	if (!areladySystemOpen)
 	{
-		world_->add_actor(ActorGroup::ItemBoxUI, new_actor<PauseSystem>(world_));
+		auto ps = std::make_shared<PauseSystem>(world_);
+		world_->add_actor(ActorGroup::ItemBoxUI, ps);
+		ps->setPlayMode(0);
 		areladySystemOpen = true;
 	}
 }

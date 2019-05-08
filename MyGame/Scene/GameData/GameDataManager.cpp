@@ -7,8 +7,6 @@ void GameDataManager::initialize()
 	DeadBossEnemyCheck = false;
 	DeadPlayerCheck = false;
 	SightCheck = false;
-
-	AIM_SPD = 5;
 	SceneNumber = 0;
 }
 

@@ -17,8 +17,12 @@ public:
 
 	void PlayerInput();
 
+	void setPlayMode(int num);//0はシューティング、１はアクション
+
 private:
 	float bgmval;
 	float seval;
 	int aimval;
+
+	int modenum{ 0 };
 };

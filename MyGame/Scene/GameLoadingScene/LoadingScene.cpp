@@ -3,7 +3,7 @@
 
 LoadingScene::LoadingScene() {
 
-	next_ = SceneType::SCENE_SHOOTING_PLAY;
+	next_ = SceneType::SCENE_TITLE;
 }
 
 void LoadingScene::start() {
@@ -73,11 +73,15 @@ void LoadingScene::LoadModel()
 	SkeletalMesh::load(51, "asset/MODEL/RedSamurai/RedSamurai.mv1");
 	StaticMesh::load(10, "asset/Weapon/ActionPlayer/dagger.mv1");
 	StaticMesh::load(11, "asset/Weapon/Samurai/katana.mv1");
+	StaticMesh::load(12, "asset/Weapon/Arrow/Bow.mv1");
+	StaticMesh::load(13, "asset/Weapon/Arrow/Quiver.mv1");
+	SkeletalMesh::load(52, "asset/Weapon/Arrow/Arrow.mv1");
 
 }
 void LoadingScene::LoadAny()
 {
 	CollisionMesh::load(0, "asset/stage/stage/Textures/stage.mv1");
+	CollisionMesh::load(1, "asset/stage/ActionModeStage/arena.mv1");
 	//スカイボックスモデルの読み込み
 	Skybox::load(0, "asset/skybox/skydome.mv1");
 	//ビルボードの読み込み
@@ -118,6 +122,17 @@ void LoadingScene::LoadSprite()
 	sprite.Load("asset/UI/TitleScene/TitleBackWhite.png", SPRITE_ID::TITLEBACKWHITE);
 	sprite.Load("asset/UI/TitleScene/Choui.png", SPRITE_ID::TITLECHUI);
 	sprite.Load("asset/UI/TitleScene/Jikyo.png", SPRITE_ID::TITLEJIKYO);
+
+	//セレクト画面のUI
+	sprite.Load("asset/UI/TitleScene/SelectModeBack.png", SPRITE_ID::SELECTBACK);
+	sprite.Load("asset/UI/TitleScene/SelectShooting.png", SPRITE_ID::SELECT_SHOOTING);
+	sprite.Load("asset/UI/TitleScene/SelectShooting_dec.png", SPRITE_ID::SELECT_SHOOTING_DEC);
+	sprite.Load("asset/UI/TitleScene/SelectShootingex.png", SPRITE_ID::SELECT_SHOOTING_EX);
+	sprite.Load("asset/UI/TitleScene/SelectAction.png", SPRITE_ID::SELECT_ACTION);
+	sprite.Load("asset/UI/TitleScene/SelectAction_dec.png", SPRITE_ID::SELECT_ACTION_DEC);
+	sprite.Load("asset/UI/TitleScene/SelectActionex.png", SPRITE_ID::SELECT_ACTION_EX);
+	sprite.Load("asset/UI/TitleScene/SelectTitle.png", SPRITE_ID::SELECT_NAME);
+
 
 
 	//ゲーム画面のUI
@@ -175,6 +190,14 @@ void LoadingScene::LoadSprite()
 	sprite.Load("asset/UI/Effect/BulletHit.png", SPRITE_ID::EFFECT_BULLETHIT);
 
 
+	//アクションモードのUI
+
+	sprite.Load("asset/UI/ActionModePause/PauseBack.png", SPRITE_ID::ACTIONPAUSE_BACK);
+	sprite.Load("asset/UI/ActionModePause/Operation.png", SPRITE_ID::ACTIONPAUSE_OPERATION);
+	sprite.Load("asset/UI/ActionModePause/OperationUI.png", SPRITE_ID::ACTIONPAUSE_OPERATION_UI);
+	sprite.Load("asset/UI/ActionModePause/TitleBackUI.png", SPRITE_ID::ACTIONPAUSE_TITLEBACK);
+	sprite.Load("asset/UI/ActionModePause/cursor.png", SPRITE_ID::ACTIONPAUSE_CURSOR);
+
 }
 
 void LoadingScene::DeleteRes()
@@ -186,7 +209,6 @@ void LoadingScene::DeleteRes()
 	StaticMesh::erase(0);
 	CollisionMesh::finalize();
 	Skybox::finalize();
-
 }
 
 

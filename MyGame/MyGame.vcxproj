@@ -149,9 +149,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Actor\ActionPlayerMode\ActionGameManager\ActionGameManager.cpp" />
     <ClCompile Include="Actor\ActionPlayerMode\ActionPlayer\ActionPlayerMotionNum.h" />
     <ClCompile Include="Actor\ActionPlayerMode\ActionPlayer\ActionPlayer.cpp" />
+    <ClCompile Include="Actor\ActionPlayerMode\RedSamurai\Arrow\ArrowAttack.cpp" />
     <ClCompile Include="Actor\ActionPlayerMode\RedSamurai\RedSamurai.cpp" />
+    <ClCompile Include="Actor\ActionPlayerMode\UI\ActionModePause\ActionModePause.cpp" />
+    <ClCompile Include="Actor\ActionPlayerMode\UI\ActionPlayerUI.cpp" />
+    <ClCompile Include="Actor\ActionPlayerMode\UI\RedSamuraiUI.cpp" />
     <ClCompile Include="Actor\Camera\ActionCamera\ActionCamera.cpp" />
     <ClCompile Include="Actor\Camera\ShootingCamera\ShootingCamera.cpp" />
     <ClCompile Include="Actor\Camera\TitleSceneCamera\TitleCamera.cpp" />
@@ -198,10 +203,9 @@
     <ClCompile Include="Input\Keyboard\Keyboard.cpp" />
     <ClCompile Include="Scene\ActionPlayScene\ActionPlayScene.cpp" />
     <ClCompile Include="Scene\GameData\GameDataManager.cpp" />
-    <ClCompile Include="Scene\GameLoadingScene\ActionModeLoadingScene.cpp" />
     <ClCompile Include="Scene\GameOverScene\GameOverScene.cpp" />
     <ClCompile Include="Scene\ShootingPlayScene\ShootingPlayScene.cpp" />
-    <ClCompile Include="Scene\GameResultScene\GameResultScene.cpp" />
+    <ClCompile Include="Scene\GameSelectScene\GameSelectScene.cpp" />
     <ClCompile Include="Scene\GameTitleScene\GameTitleScene.cpp" />
     <ClCompile Include="Scene\GameLoadingScene\LoadingScene.cpp" />
     <ClCompile Include="Scene\SceneManager.cpp" />
@@ -238,9 +242,14 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Actor\ActionPlayerMode\ActionGameManager\ActionGameManager.h" />
+    <ClInclude Include="Actor\ActionPlayerMode\RedSamurai\Arrow\ArrowAttack.h" />
     <ClInclude Include="Actor\ActionPlayerMode\RedSamurai\RedSamurai.h" />
     <ClInclude Include="Actor\ActionPlayerMode\RedSamurai\RedSamuraiMotionNum.h" />
     <ClInclude Include="Actor\ActionPlayerMode\RedSamurai\RedSamuraiState.h" />
+    <ClInclude Include="Actor\ActionPlayerMode\UI\ActionModePause\ActionModePause.h" />
+    <ClInclude Include="Actor\ActionPlayerMode\UI\ActionPlayerUI.h" />
+    <ClInclude Include="Actor\ActionPlayerMode\UI\RedSamuraiUI.h" />
     <ClInclude Include="Actor\Camera\ActionCamera\ActionCamera.h" />
     <ClInclude Include="Actor\Camera\ShootingCamera\ShootingCamera.h" />
     <ClInclude Include="Actor\Camera\TitleSceneCamera\TitleCamera.h" />
@@ -303,11 +312,10 @@
     <ClInclude Include="Math\MathH.h" />
     <ClInclude Include="Scene\ActionPlayScene\ActionPlayScene.h" />
     <ClInclude Include="Scene\GameData\GameDataManager.h" />
-    <ClInclude Include="Scene\GameLoadingScene\ActionModeLoadingScene.h" />
     <ClInclude Include="Scene\GameLoadingScene\LoadingSceneInc.h" />
     <ClInclude Include="Scene\GameOverScene\GameOverScene.h" />
     <ClInclude Include="Scene\ShootingPlayScene\ShootingPlayScene.h" />
-    <ClInclude Include="Scene\GameResultScene\GameResultScene.h" />
+    <ClInclude Include="Scene\GameSelectScene\GameSelectScene.h" />
     <ClInclude Include="Scene\GameTitleScene\GameTitleScene.h" />
     <ClInclude Include="Scene\GameLoadingScene\LoadingScene.h" />
     <ClInclude Include="Scene\Menu.h" />
