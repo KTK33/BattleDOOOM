@@ -59,14 +59,11 @@ void LoadingScene::LoadModel()
 	SkeletalMesh::load(11, "asset/MODEL/DummyEnemy/Zombei_1/zombie.mv1");
 	SkeletalMesh::load(12, "asset/MODEL/DummyEnemy/Zombei_2/zombie.mv1");
 	SkeletalMesh::load(13, "asset/MODEL/DummyEnemy/Zombei_3/zombie.mv1");
-	SkeletalMesh::load(4, "asset/ghoul2.mv1");
-	SkeletalMesh::load(2, "asset/BaseBall.mv1");
 	SkeletalMesh::load(3, "asset/MODEL/BossMonster/Monster.mv1");
 	SkeletalMesh::load(5, "asset/Weapon/Bullet1.mv1");
 	SkeletalMesh::load(6, "asset/MODEL/Item/HPRecover/firstaid.mv1");
 	SkeletalMesh::load(7, "asset/MODEL/Item/Bullet/BulletItemEX.mv1");
 	SkeletalMesh::load(8, "asset/MODEL/BossMonster/Fire/Meteor.mv1");
-	StaticMesh::load(0, "asset/w_magun01.mv1");
 	StaticMesh::load(1, "asset/Weapon/Italian/Italian machine guns.mv1");
 
 	SkeletalMesh::load(50, "asset/MODEL/ActionPlayer/ActionPlayer.mv1");
