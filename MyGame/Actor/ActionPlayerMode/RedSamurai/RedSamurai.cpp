@@ -82,15 +82,6 @@ if (state_ != RedSamuraiState::RedSamuraiAttack) {
 	mAttacktype = 0;
 }
 
-if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM3))
-{
-	mSwordPos += 1;
-}
-if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM4))
-{
-	mSwordPos -= 1;
-}
-
 }
 
 void RedSamurai::draw() const

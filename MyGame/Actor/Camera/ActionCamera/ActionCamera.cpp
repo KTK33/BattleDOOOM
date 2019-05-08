@@ -47,9 +47,32 @@ void ActionCamera::move(const Vector3 & rest_position, float stiffness, float fr
 
 void ActionCamera::PlayerInput(float deltaTime)
 {
-	//カメラの操作
-	m_PitchSpeed = GamePad::GetInstance().RightStick().y;
-	m_YawSpeed = GamePad::GetInstance().RightStick().x;
+	if (Keyboard::GetInstance().AnyStateDown())
+	{
+		float X = 0, Y = 0;
+		if (Keyboard::GetInstance().KeyStateDown(KEYCODE::LEFT)) {
+			X = -1.0f;
+		}
+		else if (Keyboard::GetInstance().KeyStateDown(KEYCODE::RIGHT)) {
+			X = 1.0f;
+		}
+		else if (Keyboard::GetInstance().KeyStateDown(KEYCODE::UP)) {
+			Y = 1.0f;
+
+		}
+		else if (Keyboard::GetInstance().KeyStateDown(KEYCODE::DOWN)) {
+			Y = -1.0f;
+		}
+		//カメラの操作
+		m_PitchSpeed = Y;
+		m_YawSpeed = X;
+	}
+	else
+	{
+		//カメラの操作
+		m_PitchSpeed = GamePad::GetInstance().RightStick().y;
+		m_YawSpeed = GamePad::GetInstance().RightStick().x;
+	}
 
 	//ワールド上方を軸とするヨーのクォータニオンを作成
 	Quaternion yaw(Vector3::UnitY, m_YawSpeed * deltaTime);

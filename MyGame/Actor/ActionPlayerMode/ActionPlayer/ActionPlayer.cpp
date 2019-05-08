@@ -68,15 +68,6 @@ void ActionPlayer::update(float deltaTime)
 	if (Floorcollide) gravity = 0.0f;
 	else gravity = 9.8f*0.1f;
 
-	//if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM3))
-	//{
-	//	mRightweaponPos += 1;
-	//}
-	//if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM4))
-	//{
-	//	mRightweaponPos -= 1;
-	//}
-
 	if (hp_ <= 0)
 	{
 		GameDataManager::getInstance().SetPlayerDead(true);
@@ -171,8 +162,29 @@ void ActionPlayer::change_state(ActionPlayerState::State state, int motion)
 
 void ActionPlayer::Idle()
 {
-	Move(GamePad::GetInstance().Stick());
+	//キーボードを操作しているか
+	if (Keyboard::GetInstance().AnyStateDown())
+	{
+		float X = 0, Y = 0;
+		if (Keyboard::GetInstance().KeyStateDown(KEYCODE::A)){
+			X = -1.0f;
+		}
+		else if (Keyboard::GetInstance().KeyStateDown(KEYCODE::D)){
+			X = 1.0f;
+		}
+		else if (Keyboard::GetInstance().KeyStateDown(KEYCODE::W)) {
+			Y = 1.0f;
 
+		}
+		else if (Keyboard::GetInstance().KeyStateDown(KEYCODE::S)) {
+			Y = -1.0f;
+		}
+		Move(Vector2(X,Y));
+	}
+	else
+	{
+		Move(GamePad::GetInstance().Stick());
+	}
 	//攻撃
 	if (state_ != ActionPlayerState::ActionPlayerAttack)
 	{
@@ -182,7 +194,7 @@ void ActionPlayer::Idle()
 	}
 
 	//回避
-	if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM1)) {
+	if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM1) || Keyboard::GetInstance().KeyStateDown(KEYCODE::LSHIFT)) {
 		change_state(ActionPlayerState::ActionPlayerAvoidance, ActionPlayerMotion::Motion::MotionPlayerAvoidance);
 	}
 }
@@ -251,7 +263,7 @@ void ActionPlayer::Movement(float spped, Vector2 input)
 
 void ActionPlayer::Attack()
 {
-	if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM2))
+	if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM2) || Keyboard::GetInstance().KeyTriggerDown(KEYCODE::SPACE))
 	{
 		if (state_ == ActionPlayerState::ActionPlayerAvoidance) {
 			change_state(ActionPlayerState::ActionPlayerAvoidanceAttack, ActionPlayerMotion::MotionPlayerAvoidanceAttack);
