@@ -162,21 +162,21 @@ void ActionPlayer::change_state(ActionPlayerState::State state, int motion)
 
 void ActionPlayer::Idle()
 {
-	//キーボードを操作しているか
-	if (Keyboard::GetInstance().AnyStateDown())
+	//ジョイパッドが刺さっているか
+	if (GetJoypadNum() == 0)
 	{
 		float X = 0, Y = 0;
 		if (Keyboard::GetInstance().KeyStateDown(KEYCODE::A)){
 			X = -1.0f;
 		}
-		else if (Keyboard::GetInstance().KeyStateDown(KEYCODE::D)){
+		if (Keyboard::GetInstance().KeyStateDown(KEYCODE::D)){
 			X = 1.0f;
 		}
-		else if (Keyboard::GetInstance().KeyStateDown(KEYCODE::W)) {
+		if (Keyboard::GetInstance().KeyStateDown(KEYCODE::W)) {
 			Y = 1.0f;
 
 		}
-		else if (Keyboard::GetInstance().KeyStateDown(KEYCODE::S)) {
+		if (Keyboard::GetInstance().KeyStateDown(KEYCODE::S)) {
 			Y = -1.0f;
 		}
 		Move(Vector2(X,Y));

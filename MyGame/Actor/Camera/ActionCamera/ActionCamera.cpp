@@ -47,20 +47,20 @@ void ActionCamera::move(const Vector3 & rest_position, float stiffness, float fr
 
 void ActionCamera::PlayerInput(float deltaTime)
 {
-	if (Keyboard::GetInstance().AnyStateDown())
+	if (GetJoypadNum() == 0)
 	{
 		float X = 0, Y = 0;
 		if (Keyboard::GetInstance().KeyStateDown(KEYCODE::LEFT)) {
 			X = -1.0f;
 		}
-		else if (Keyboard::GetInstance().KeyStateDown(KEYCODE::RIGHT)) {
+		if (Keyboard::GetInstance().KeyStateDown(KEYCODE::RIGHT)) {
 			X = 1.0f;
 		}
-		else if (Keyboard::GetInstance().KeyStateDown(KEYCODE::UP)) {
+		if (Keyboard::GetInstance().KeyStateDown(KEYCODE::UP)) {
 			Y = 1.0f;
 
 		}
-		else if (Keyboard::GetInstance().KeyStateDown(KEYCODE::DOWN)) {
+		if (Keyboard::GetInstance().KeyStateDown(KEYCODE::DOWN)) {
 			Y = -1.0f;
 		}
 		//ÉJÉÅÉâÇÃëÄçÏ
