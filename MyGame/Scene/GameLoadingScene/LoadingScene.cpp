@@ -11,6 +11,7 @@ void LoadingScene::start() {
 	CollisionMesh::initialize();
 	Skybox::initialize();
 	Billboard::initialize();
+	Sound::GetInstance().Initialize();
 	//非同期開始
 	SetUseASyncLoadFlag(TRUE);
 	//各種リソースのロードを行う
@@ -33,6 +34,7 @@ void LoadingScene::update(float deltaTime) {
 
 void LoadingScene::draw() const {
 
+	Graphics3D::clear_color(0, 0, 0);
 	int id[2] = {};
 	id[0] = LoadGraph("asset/UI/LoadScene/LoadGauge.png");
 	id[1] = LoadGraph("asset/UI/LoadScene/LoadFream.png");

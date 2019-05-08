@@ -70,11 +70,11 @@ void ActionModePause::draw() const
 
 		switch (cursorPos_) {
 		case 1:
-			Sprite::GetInstance().DrawSetCenter(SPRITE_ID::ACTIONPAUSE_CURSOR, Vector2(1050, WINDOW_HEIGHT - 480));
+			Sprite::GetInstance().DrawSetCenter(SPRITE_ID::ACTIONPAUSE_CURSOR, Vector2(600, WINDOW_HEIGHT - 550));
 			if (PauseDecision) Sprite::GetInstance().Draw(SPRITE_ID::ACTIONPAUSE_OPERATION, Vector2(0, 0));
 			break;
 		case 0:
-			Sprite::GetInstance().DrawSetCenter(SPRITE_ID::ACTIONPAUSE_CURSOR, Vector2(1050, WINDOW_HEIGHT - 270));
+			Sprite::GetInstance().DrawSetCenter(SPRITE_ID::ACTIONPAUSE_CURSOR, Vector2(600, WINDOW_HEIGHT - 340));
 			if (PauseDecision) world_->SetBackTitleCheck(true);
 			break;
 		default:break;

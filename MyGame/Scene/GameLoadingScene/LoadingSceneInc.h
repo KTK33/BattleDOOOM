@@ -9,3 +9,4 @@
 #include "../Mesh/StaticMesh.h"
 #include "../Texture/SpriteID.h"
 #include "../Sound/Sound.h"
+#include "../Graphics/Graphics3D.h"

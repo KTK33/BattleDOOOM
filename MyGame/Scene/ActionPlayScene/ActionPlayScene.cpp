@@ -7,6 +7,10 @@
 #include "../Actor/Camera/ActionCamera/ActionCamera.h"
 #include "../Actor/ActionPlayerMode/ActionGameManager/ActionGameManager.h"
 #include "../Actor/ActionPlayerMode/UI/ActionModePause/ActionModePause.h"
+#include "../Scene/GameData/GameDataManager.h"
+#include "../Input/GamePad/GamePad.h"
+#include "../Input/Keyboard/Keyboard.h"
+#include "../Texture/Sprite.h"
 
 ActionPlayScene::ActionPlayScene()
 {
@@ -15,6 +19,7 @@ ActionPlayScene::ActionPlayScene()
 void ActionPlayScene::start()
 {
 	world_.initialize();
+	GameDataManager::getInstance().initialize();
 
 	auto P_ui = new_actor<ActionPlayerUI>(&world_);
 	world_.add_actor(ActorGroup::UI, P_ui);
@@ -41,8 +46,21 @@ void ActionPlayScene::update(float deltaTime)
 {
 	world_.update(deltaTime);
 
+	if (GameDataManager::getInstance().GetPlayerDead() == true)
+	{
+		next_ = SceneType::SCENE_LOADING;
+		isEnd_ = true;
+	}
+
+	if (GameDataManager::getInstance().GetDeadBossEnemy() == true) {
+
+		next_ = SceneType::SCENE_LOADING;
+		isEnd_ = true;
+	}
+
+
 	if (world_.GetBackTitleCheck() == true) {
-		next_ = SceneType::SCENE_TITLE;
+		next_ = SceneType::SCENE_LOADING;
 		isEnd_ = true;
 	}
 }
@@ -63,4 +81,9 @@ void ActionPlayScene::draw() const
 
 void ActionPlayScene::end()
 {
+	Graphics3D::finalize();
+	CollisionMesh::finalize();
+	Skybox::finalize();
+	Sound::GetInstance().Initialize();
+	Sprite::GetInstance().Initialize();
 }

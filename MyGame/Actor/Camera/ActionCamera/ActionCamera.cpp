@@ -74,6 +74,7 @@ void ActionCamera::PlayerInput(float deltaTime)
 		m_YawSpeed = GamePad::GetInstance().RightStick().x;
 	}
 
+	if (world_->GetPauseCheck() == true) return;
 	//ワールド上方を軸とするヨーのクォータニオンを作成
 	Quaternion yaw(Vector3::UnitY, m_YawSpeed * deltaTime);
 	//カメラのオフセットと上方ベクトルをヨーで変換

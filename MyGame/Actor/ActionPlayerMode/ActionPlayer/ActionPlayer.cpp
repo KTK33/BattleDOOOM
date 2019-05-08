@@ -71,6 +71,7 @@ void ActionPlayer::update(float deltaTime)
 	if (hp_ <= 0)
 	{
 		GameDataManager::getInstance().SetPlayerDead(true);
+		DeadCheck = true;
 	}
 }
 
@@ -163,8 +164,7 @@ void ActionPlayer::change_state(ActionPlayerState::State state, int motion)
 void ActionPlayer::Idle()
 {
 	//ジョイパッドが刺さっているか
-	if (GetJoypadNum() == 0)
-	{
+	if (GetJoypadNum() == 0){
 		float X = 0, Y = 0;
 		if (Keyboard::GetInstance().KeyStateDown(KEYCODE::A)){
 			X = -1.0f;
@@ -174,15 +174,13 @@ void ActionPlayer::Idle()
 		}
 		if (Keyboard::GetInstance().KeyStateDown(KEYCODE::W)) {
 			Y = 1.0f;
-
 		}
 		if (Keyboard::GetInstance().KeyStateDown(KEYCODE::S)) {
 			Y = -1.0f;
 		}
 		Move(Vector2(X,Y));
 	}
-	else
-	{
+	else{
 		Move(GamePad::GetInstance().Stick());
 	}
 	//攻撃

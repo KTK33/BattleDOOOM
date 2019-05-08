@@ -8,6 +8,9 @@
 #include "../Graphics/Graphics2D.h"
 #include "../Sound/Sound.h"
 #include "../Graphics/Graphics3D.h"
+#include "../Mesh/CollisionMesh.h"
+#include "../Texture/Sprite.h"
+#include "../Skybox/Skybox.h"
 #include "FpsSetting.h"
 #include "Time.h"
 
@@ -76,16 +79,12 @@ int Game::run() {
     }
     // 終了
     end();
-    // パッドの終了処理
-    //GamePad::finalize();
-    // マウスの終了処理
-    Mouse::finalize();
-    // サウンドの終了処理
-	//Sound::GetInstance().
-    // ３Ｄグラフィックの後始末 
-    //Graphics3D::finalize();
-    // 2Dグラフィックの終了処理
-    Graphics2D::finalize();
+	Graphics3D::finalize();
+	CollisionMesh::finalize();
+	Skybox::finalize();
+	Sound::GetInstance().Initialize();
+	Sprite::GetInstance().Initialize();
+
     // ＤＸライブラリの後始末
     DxLib_End();
     // 正常終了

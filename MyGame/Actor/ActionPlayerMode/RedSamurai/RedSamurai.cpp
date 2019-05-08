@@ -72,15 +72,15 @@ void RedSamurai::update(float deltaTime)
 	if (Floorcollide) gravity = 0.0f;
 	else gravity = 9.8f*0.1f;
 
-if (hp_ <= 0)
-{
-	change_state(RedSamuraiState::RedSamuraiDead, RedSamuraiMotionNum::MotionRedSamuraiDead);
-	GameDataManager::getInstance().SetDeadBossEnemy(true);
-}
+	if (hp_ <= 0)
+	{
+		change_state(RedSamuraiState::RedSamuraiDead, RedSamuraiMotionNum::MotionRedSamuraiDead);
+		GameDataManager::getInstance().SetDeadBossEnemy(true);
+	}
 
-if (state_ != RedSamuraiState::RedSamuraiAttack) {
-	mAttacktype = 0;
-}
+	if (state_ != RedSamuraiState::RedSamuraiAttack) {
+		mAttacktype = 0;
+	}
 
 }
 
@@ -185,17 +185,17 @@ void RedSamurai::AttackSystem()
 
 void RedSamurai::AttackBehavior()
 {
-	//if (GetPlayerDistance() >= 50.0f)//プレイヤーとの距離が50以上なら
+	if (GetPlayerDistance() >= 50.0f)//プレイヤーとの距離が50以上なら
 	{
 		change_state(RedSamuraiState::RedSamuraiAttack, RedSamuraiMotionNum::MotionRedSamuraiArrowAttack);
 		world_->add_actor(ActorGroup::EnemyBullet, std::make_shared<ArrowAttack>(52,world_, Vector3{ position_.x,position_.y + 13.0f,position_.z } +rotation_.Forward() * 4 + rotation_.Right() * 3));
 		mArrowPos = 38;
 	}
-	//else
-	//{
-	//	change_state(RedSamuraiState::RedSamuraiAttack, RedSamuraiMotionNum::MotionRedSamuraiAttack1);
-	//	mAttacktype = 1;
-	//}
+	else
+	{
+		change_state(RedSamuraiState::RedSamuraiAttack, RedSamuraiMotionNum::MotionRedSamuraiAttack1);
+		mAttacktype = 1;
+	}
 }
 
 void RedSamurai::AttackCollision(int deadTime, int attackParam, Vector3 spot, float len, float rad)
