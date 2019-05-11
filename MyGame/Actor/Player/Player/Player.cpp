@@ -139,7 +139,8 @@ void Player::draw() const
 
 	if (GameDataManager::getInstance().GetSightCheck() == true)
 	{
-		Sprite::GetInstance().DrawSetCenter(SPRITE_ID::SIGHT, Vector2(ConvWorldPosToScreenPos(AimPos).x, ConvWorldPosToScreenPos(AimPos).y));
+		const Vector3 sightpos = AimPos + rotation_.Forward() * 4 + rotation_.Right() * 3;
+		Sprite::GetInstance().DrawSetCenter(SPRITE_ID::SIGHT, Vector2(ConvWorldPosToScreenPos(sightpos).x, ConvWorldPosToScreenPos(sightpos).y));
 	}
 
 	if (SetRemainGun == 0)

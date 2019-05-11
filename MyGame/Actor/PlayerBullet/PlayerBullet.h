@@ -22,6 +22,9 @@ public:
 
 	virtual void receiveMessage(EventMessage message, void * param) override;
 
+	//•Ç‚Æ°‚Ì”»’è
+	void collision();
+
 protected:
 	//^‚Á’¼‚®”­Ë‚³‚ê‚é’e
 	void distance();

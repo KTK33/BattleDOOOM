@@ -27,10 +27,14 @@ void PlayerBullet::initialize()
 
 void PlayerBullet::update(float deltaTime)
 {
+	//‹…‚ÌˆÚ“®ˆ—
 	distance();
 
-	deadTime--;
-	if (deadTime <= 0) die();
+	//•Ç°‚Æ‚Ì“–‚½‚è”»’è
+	collision();
+
+	//deadTime--;
+	//if (deadTime <= 0) die();
 }
 
 void PlayerBullet::onCollide(Actor & other)
@@ -43,6 +47,21 @@ void PlayerBullet::receiveMessage(EventMessage message, void * param)
 {
 	if (message == EventMessage::HIT_ENEMY)
 	{
+		die();
+	}
+}
+
+void PlayerBullet::collision()
+{
+	//‚Ô‚Â‚©‚Á‚½‚©
+	Vector3 result;
+	//•Ç‚Æ‚Ô‚Â‚¯‚Ä‚©‚ç
+	if (field(result)) {
+		die();
+	}
+
+	//°‚Æ‚ÌÚ’n”»’è
+	if (floor(result)) {
 		die();
 	}
 }

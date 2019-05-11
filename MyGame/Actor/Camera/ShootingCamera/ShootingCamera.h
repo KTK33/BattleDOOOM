@@ -45,18 +45,19 @@ public:
 
 
 private:
-	Actor* mplayer_;
-	//
-	Vector3 mtarget_{ 0.0f,0.0f,0.0f };
+	//プレイヤーの情報検索用
+	Actor* mGetplayer_;
 
-	Vector2 mFarPoint{ 30.f,20.f };
-
-	float mangle{ 0 };
-
-	Vector2 mAimPosMove;
-
+	//プレイヤーへ情報伝達用
 	std::weak_ptr<Actor> mplayer{};
 
-	Vector3 mDeadCamera{ 20,20,20 };
-	bool malreadyGO;
+	//カメラのターゲット
+	Vector3 mtarget_{ 0.0f,0.0f,0.0f };
+
+	//エイムの位置
+	Vector2 mAimPosMove;
+
+	//
+	Vector3 mFinishCamera;
+	bool malreadyCreate;
 };

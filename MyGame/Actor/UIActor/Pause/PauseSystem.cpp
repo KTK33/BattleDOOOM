@@ -119,7 +119,8 @@ void PauseSystem::PlayerInput()
 	{
 		moveCursor(1);
 	}
-	if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM1) || Keyboard::GetInstance().KeyTriggerDown(KEYCODE::LCTRL))
+	if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM1) || Keyboard::GetInstance().KeyTriggerDown(KEYCODE::LCTRL) ||
+		GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM8) || Keyboard::GetInstance().KeyTriggerDown(KEYCODE::T))
 	{
 		die();
 	}

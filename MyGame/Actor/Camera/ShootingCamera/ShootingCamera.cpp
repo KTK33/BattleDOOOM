@@ -15,15 +15,16 @@ ShootingCamera::ShootingCamera(IWorld * world, std::weak_ptr<Actor> m_Player) :
 	Actor(world, "Camera", Vector3::Zero),
 	mAimPosMove{ 0,0 },
 	mplayer{m_Player},
-	mplayer_{nullptr},
-	malreadyGO{false}
+	mGetplayer_{nullptr},
+	mFinishCamera{20.0f,20.0f,20.0f},
+	malreadyCreate{false}
 {}
 
 void ShootingCamera::update(float deltaTime)
 {
 	//プレイヤーの検索
-	mplayer_ = world_->find_actor(ActorGroup::Player, "Player").get();
-	if (mplayer_ == nullptr) return;
+	mGetplayer_ = world_->find_actor(ActorGroup::Player, "Player").get();
+	if (mGetplayer_ == nullptr) return;
 
 	//プレイヤーが死ぬか、ボスが死んだら終了時処理へ
 	if (GameDataManager::getInstance().GetPlayerDead() == true || 
@@ -61,13 +62,12 @@ void ShootingCamera::move(const Vector3 & rest_position, float stiffness, float 
 void ShootingCamera::CameraSet(float deltaTime)
 {
 	//カメラのターゲットをプレイヤーの前方向に設定
-	mtarget_ = position_ + mplayer_->Getrotation().Forward() * 50;
+	mtarget_ = position_ + mGetplayer_->Getrotation().Forward() * 50;
 
-	//カメラのポジションの設定
-	position_ = Vector3(
-		mplayer_->Getposition().x + 10 * mplayer_->Getrotation().Backward().x + 5 * mplayer_->Getrotation().Right().x,
-		mplayer_->Getposition().y + 18,
-		mplayer_->Getposition().z + 10 * mplayer_->Getrotation().Backward().z + 5 * mplayer_->Getrotation().Right().z);
+	//ターゲットに入力情報を加算
+	mtarget_.x += mGetplayer_->Getrotation().Right().x * mAimPosMove.x;
+	mtarget_.y += mAimPosMove.y;
+	mtarget_.z += mGetplayer_->Getrotation().Right().z * mAimPosMove.x;
 
 	//ポーズ中ではなく、アイテムボックスを開いていないとき
 	if (world_->GetPauseCheck() == false && GameDataManager::getInstance().GetItemBoxOpen() == false)
@@ -75,11 +75,6 @@ void ShootingCamera::CameraSet(float deltaTime)
 		//エイム中の操作
 		Aim_Input();
 	}
-
-	//ターゲットに入力情報を加算
-	mtarget_.x += mplayer_->Getrotation().Right().x * mAimPosMove.x;
-	mtarget_.y += mAimPosMove.y;
-	mtarget_.z += mplayer_->Getrotation().Right().z * mAimPosMove.x;
 
 	if (GameDataManager::getInstance().GetSightCheck() == true){
 		//エイム中
@@ -129,12 +124,12 @@ void ShootingCamera::Out_Aim()
 {
 	//カメラのポジションの設定
 	position_ = Vector3(
-		mplayer_->Getposition().x + 10 * mplayer_->Getrotation().Backward().x + 5 * mplayer_->Getrotation().Right().x,
-		mplayer_->Getposition().y + 18,
-		mplayer_->Getposition().z + 10 * mplayer_->Getrotation().Backward().z + 5 * mplayer_->Getrotation().Right().z);
+		mGetplayer_->Getposition().x + 10 * mGetplayer_->Getrotation().Backward().x + 5 * mGetplayer_->Getrotation().Right().x,
+		mGetplayer_->Getposition().y + 18,
+		mGetplayer_->Getposition().z + 10 * mGetplayer_->Getrotation().Backward().z + 5 * mGetplayer_->Getrotation().Right().z);
 
 	//ターゲットの場所を徐々に更新
-	mtarget_ = Vector3::Lerp(mtarget_, position_ + mplayer_->Getrotation().Forward(), 0.1f);
+	mtarget_ = Vector3::Lerp(mtarget_, position_ + mGetplayer_->Getrotation().Forward(), 0.1f);
 
 	//カメラの移動範囲の制限
 	mAimPosMove = Vector2::Clamp(mAimPosMove, Vector2(0, -30), Vector2(0, 30));
@@ -144,12 +139,12 @@ void ShootingCamera::In_Aim()
 {
 	//カメラのポジションの設定
 	position_ = Vector3(
-		mplayer_->Getposition().x + 4 * mplayer_->Getrotation().Backward().x + 2.5f * mplayer_->Getrotation().Right().x,
-		mplayer_->Getposition().y + 16,
-		mplayer_->Getposition().z + 4 * mplayer_->Getrotation().Backward().z + 2.5f * mplayer_->Getrotation().Right().z);
+		mGetplayer_->Getposition().x + 4 * mGetplayer_->Getrotation().Backward().x + 2.5f * mGetplayer_->Getrotation().Right().x,
+		mGetplayer_->Getposition().y + 16,
+		mGetplayer_->Getposition().z + 4 * mGetplayer_->Getrotation().Backward().z + 2.5f * mGetplayer_->Getrotation().Right().z);
 
 	//ターゲットの場所を徐々に更新
-	mtarget_ = Vector3::Lerp(mtarget_, position_ + mplayer_->Getrotation().Forward() * 1, 0.1f);
+	mtarget_ = Vector3::Lerp(mtarget_, position_ + mGetplayer_->Getrotation().Forward() * 1, 0.1f);
 
 	//プレイヤーにターゲットのポジションを渡す
 	mplayer.lock()->receiveMessage(EventMessage::SIGHT_POSITION, reinterpret_cast<void*>(&mtarget_));
@@ -199,42 +194,42 @@ void ShootingCamera::PlayerGameFinish()
 
 	//カメラのポジションの設定
 	position_ = Vector3(
-		mplayer_->Getposition().x + mDeadCamera.x * mplayer_->Getrotation().Forward().x + 1 * mplayer_->Getrotation().Right().x,
-		mplayer_->Getposition().y + mDeadCamera.y,
-		mplayer_->Getposition().z + mDeadCamera.z * mplayer_->Getrotation().Forward().z + 1 * mplayer_->Getrotation().Right().z);
+		mGetplayer_->Getposition().x + mFinishCamera.x * mGetplayer_->Getrotation().Forward().x + 1 * mGetplayer_->Getrotation().Right().x,
+		mGetplayer_->Getposition().y + mFinishCamera.y,
+		mGetplayer_->Getposition().z + mFinishCamera.z * mGetplayer_->Getrotation().Forward().z + 1 * mGetplayer_->Getrotation().Right().z);
 
 	//カメラのターゲットの設定
-	mtarget_ = mplayer_->Getposition() + 10 * mplayer_->Getrotation().Forward();
+	mtarget_ = mGetplayer_->Getposition() + 10 * mGetplayer_->Getrotation().Forward();
 }
 
 void ShootingCamera::GameOver()
 {
 	//カメラが徐々に引いていくようにする
-	mDeadCamera += Vector3::One * 0.25f;
+	mFinishCamera += Vector3::One * 0.25f;
 
 	//カメラの引く範囲の制限
-	mDeadCamera = Vector3::Clamp(mDeadCamera, Vector3::Zero, Vector3(100, 100, 100));
+	mFinishCamera = Vector3::Clamp(mFinishCamera, Vector3::Zero, Vector3(100, 100, 100));
 
 	//一度だけゲームオーバーアクターの生成
-	if (!malreadyGO)
+	if (!malreadyCreate)
 	{
 		world_->add_actor(ActorGroup::GameFinishUI, new_actor<GameOverUI>(world_));
-		malreadyGO = true;
+		malreadyCreate = true;
 	}
 }
 
 void ShootingCamera::GameClear()
 {
 	//カメラが徐々に引いていくようにする
-	mDeadCamera += Vector3::One * 0.25f;
+	mFinishCamera += Vector3::One * 0.25f;
 
 	//カメラの引く範囲の制限
-	mDeadCamera = Vector3::Clamp(mDeadCamera, Vector3::Zero, Vector3(100, 100, 100));
+	mFinishCamera = Vector3::Clamp(mFinishCamera, Vector3::Zero, Vector3(100, 100, 100));
 
 	//一度だけゲームクリアアクターの生成
-	if (!malreadyGO)
+	if (!malreadyCreate)
 	{
 		world_->add_actor(ActorGroup::GameFinishUI, new_actor<GameClearUI>(world_));
-		malreadyGO = true;
+		malreadyCreate = true;
 	}
 }
