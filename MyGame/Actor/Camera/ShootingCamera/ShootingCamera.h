@@ -10,7 +10,8 @@ public:
 	virtual void update(float deltaTime) override;
 
 	virtual void draw() const override;
-	//
+
+	//ばね
 	void move(
 		const Vector3& rest_position, //ばねの静止位置
 		float stiffness,                //ばね定数(ばねの強さ)
@@ -18,23 +19,44 @@ public:
 		float mass                      //質量
 	);
 
-	void PlayerInput(float deltaTime);
+	//カメラの設定
+	void CameraSet(float deltaTime);
 
+	//プレイヤーの入力情報
+	void Aim_Input();
+
+	//エイム外
+	void Out_Aim();
+
+	//エイム中
+	void In_Aim();
+
+	//エイム中のカメラ向き
+	void In_Aim_Rotation();
+
+	//ゲーム終了時設定
 	void PlayerGameFinish();
 
+	//ゲームオーバー
+	void GameOver();
+
+	//ゲームクリア
+	void GameClear();
+
+
 private:
-	Actor* player_;
+	Actor* mplayer_;
 	//
-	Vector3 target_{ 0.0f,0.0f,0.0f };
+	Vector3 mtarget_{ 0.0f,0.0f,0.0f };
 
-	Vector2 m_FarPoint{ 30.f,20.f };
+	Vector2 mFarPoint{ 30.f,20.f };
 
-	float angle{ 0 };
+	float mangle{ 0 };
 
-	Vector2 AimPosMove;
+	Vector2 mAimPosMove;
 
-	std::weak_ptr<Actor> m_player{};
+	std::weak_ptr<Actor> mplayer{};
 
-	Vector3 DeadCamera{ 20,20,20 };
-	bool alreadyGO;
+	Vector3 mDeadCamera{ 20,20,20 };
+	bool malreadyGO;
 };
