@@ -5,14 +5,11 @@ class BossEnemyUI : public Actor
 {
 public:
 	BossEnemyUI(IWorld* world);
-
-	virtual void initialize() override;
-
-	virtual void update(float deltaTime) override;
+	virtual ~BossEnemyUI()override {}
 
 	virtual void receiveMessage(EventMessage message, void * param) override;
 
-	virtual void draw() const;
+	virtual void draw() const override;
 
 private:
 	int InitbossHP{ 10 };

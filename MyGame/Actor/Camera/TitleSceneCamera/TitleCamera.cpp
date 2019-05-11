@@ -4,6 +4,7 @@
 TitleCamera::TitleCamera(IWorld * world, std::weak_ptr<Actor> m_Player):
 	Actor(world,"TitleCamera",Vector3::Zero),
 	m_player{m_Player},
+	bullet{nullptr},
 	cameraBack{4}
 {
 	target_ = Vector3(m_player.lock()->Getposition().x, 

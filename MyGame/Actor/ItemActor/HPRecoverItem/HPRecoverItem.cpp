@@ -6,10 +6,6 @@ HPRecoverItem::HPRecoverItem(int model,IWorld * world, const Vector3 & position,
 {
 }
 
-void HPRecoverItem::initialize()
-{
-}
-
 void HPRecoverItem::update(float deltaTime)
 {
 	mesh_.update(deltaTime);
@@ -24,7 +20,7 @@ void HPRecoverItem::draw() const
 
 void HPRecoverItem::onCollide(Actor & other)
 {
-	Vector3 hitdir(other.Getposition() - position_);
+	const Vector3 hitdir(other.Getposition() - position_);
 	int hppoint = 3;
 	other.receiveMessage(EventMessage::GET_HPRECOVER, (void*)&hppoint);
 }

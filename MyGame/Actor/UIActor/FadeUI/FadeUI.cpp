@@ -19,15 +19,11 @@ FadeUI::FadeUI(IWorld * world, int FadeCheck,int SceneNum):
 	}
 }
 
-void FadeUI::initialize()
-{
-}
-
 void FadeUI::update(float deltaTime)
 {
 	if (m_FadeCheck == 0)
 	{
-		FadeAlpha = min(FadeAlpha + 2.55f, 255);
+		FadeAlpha = static_cast<int>(min(FadeAlpha + 2.55f, 255));
 		if (FadeAlpha == 255)
 		{
 			if (m_SceneNum == 1)
@@ -40,7 +36,7 @@ void FadeUI::update(float deltaTime)
 	}
 	else
 	{
-		FadeAlpha = max(FadeAlpha - 2.55f, 0);
+		FadeAlpha = static_cast<int>(max(FadeAlpha - 2.55f, 0));
 		if (FadeAlpha == 0)
 		{
 			if (m_SceneNum == 2)

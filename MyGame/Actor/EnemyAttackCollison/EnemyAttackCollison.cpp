@@ -33,7 +33,7 @@ void EnemyAttackCollison::draw() const
 
 void EnemyAttackCollison::onCollide(Actor & other)
 {
-	Vector3 hitdir(other.Getposition() - position_);
+	const Vector3 hitdir(other.Getposition() - position_);
 	other.receiveMessage(EventMessage::HIT_ENEMY_BULLET, (void*)&mattackparam);
 }
 

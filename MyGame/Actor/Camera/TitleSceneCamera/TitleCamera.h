@@ -6,8 +6,9 @@ class TitleCamera : public Actor
 {
 public:
 	TitleCamera(IWorld* world, std::weak_ptr<Actor> m_Player);
-
-	void update(float deltaTime);
+	virtual ~TitleCamera() override{}
+		 
+	virtual void update(float deltaTime) override;
 
 	virtual void draw() const override;
 	//

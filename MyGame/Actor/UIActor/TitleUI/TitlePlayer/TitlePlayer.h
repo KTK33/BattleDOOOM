@@ -10,12 +10,11 @@
 class TitlePlayer : public Actor,public ActorSystem  {
 public:
 	TitlePlayer(int model, int weapon, IWorld* world, const Vector3& position);
+	virtual ~TitlePlayer() override{}
 
-	void initialize() override;
+	virtual void update(float deltaTime) override;
 
-	void update(float deltaTime);
-
-	void draw() const;
+	virtual void draw() const override;
 
 	//•Ší‚Ì•`‰æ
 	void draw_weapon() const;

@@ -9,6 +9,11 @@
 PauseUI::PauseUI(IWorld * world):
 	Actor(world,"PauseUI",Vector3::Zero)
 {
+	initialize();
+}
+
+void PauseUI::initialize()
+{
 	menuSize_ = 4;
 	cursorPos_ = 3;
 
@@ -20,11 +25,6 @@ PauseUI::PauseUI(IWorld * world):
 	PauseDecision = false;
 
 	areladySystemOpen = false;
-
-}
-
-void PauseUI::initialize()
-{
 }
 
 void PauseUI::update(float deltaTime)

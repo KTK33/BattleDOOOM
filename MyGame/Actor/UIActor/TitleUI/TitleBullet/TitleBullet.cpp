@@ -11,10 +11,6 @@ TitleBullet::TitleBullet(int model, IWorld * world, const Vector3 & position,Vec
 {
 }
 
-void TitleBullet::initialize()
-{
-}
-
 void TitleBullet::update(float deltaTime)
 {
 	mesh_.update(deltaTime);

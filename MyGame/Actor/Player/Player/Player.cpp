@@ -63,9 +63,9 @@ void Player::update(float deltaTime)
 		}
 	}
 
-	world_->send_message(EventMessage::PLAYER_HP, (void*)&hp_);
-	world_->send_message(EventMessage::PLAYER_REMAINGUN, (void*)&SetRemainGun);
-	world_->send_message(EventMessage::PLAYER_HAVEGUN, (void*)&HaveGun);
+	world_->send_message(EventMessage::PLAYER_HP, reinterpret_cast<void*>(&hp_));
+	world_->send_message(EventMessage::PLAYER_REMAINGUN, reinterpret_cast<void*>(&SetRemainGun));
+	world_->send_message(EventMessage::PLAYER_HAVEGUN, reinterpret_cast<void*>(&HaveGun));
 
 	hp_ = MathHelper::Clamp(hp_, 0, 10);
 
@@ -122,7 +122,7 @@ void Player::update(float deltaTime)
 			AttackUpTime = 600;
 			AttackUpCheck = false;	
 			int DamageParam = 1;
-			world_->send_message(EventMessage::DAMAGEPARAM, (void*)&DamageParam);
+			world_->send_message(EventMessage::DAMAGEPARAM, reinterpret_cast<void*>(&DamageParam));
 		}
 	}
 	else{
@@ -150,7 +150,7 @@ void Player::draw() const
 
 void Player::onCollide(Actor & other)
 {
-	Vector3 hitdir(other.Getposition() - position_);
+	const Vector3 hitdir(other.Getposition() - position_);
 	other.receiveMessage(EventMessage::HIT_PLAYER, (void*)&hitdir);
 }
 
@@ -160,7 +160,7 @@ void Player::receiveMessage(EventMessage message, void * param)
 	{
 		if (message == EventMessage::HIT_ENEMY_BULLET)
 		{
-			hp_ = hp_ - *(int*)param;
+			hp_ = hp_ - *static_cast<int*>(param);
 			change_state(PlayerState::PlayerDamage, PlayerMotion::Motion::MotionPlayerDamage);
 			invinciblyCheck = true;
 		}
@@ -168,13 +168,13 @@ void Player::receiveMessage(EventMessage message, void * param)
 
 	if (message == EventMessage::GET_BULLET)
 	{
-		HaveGun += *(int*)param;
+		HaveGun += *static_cast<int*>(param);
 		m_ui.lock()->receiveMessage(EventMessage::GET_BULLET, nullptr);
 	}
 
 	if (message == EventMessage::PLAYER_HP)
 	{
-		*(int*)param = hp_;
+		*static_cast<int*>(param) = hp_;
 	}
 	if (message == EventMessage::GET_HPRECOVER)
 	{
@@ -184,37 +184,37 @@ void Player::receiveMessage(EventMessage message, void * param)
 	}
 	if (message == EventMessage::PLAYER_REMAINGUN)
 	{
-		*(int*)param = SetRemainGun;
+		*static_cast<int*>(param) = SetRemainGun;
 	}
 	if (message == EventMessage::PLAYER_HAVEGUN)
 	{
-		*(int*)param = HaveGun;
+		*static_cast<int*>(param) = HaveGun;
 	}
 
 	if (message == EventMessage::HIT_ENEMY)
 	{
-		Hit(*(Vector3*)param);
+		Hit(*static_cast<Vector3*>(param));
 	}
 
 	if (message == EventMessage::SIGHT_POSITION)
 	{
-		AimPos = *(Vector3*)param;
+		AimPos = *static_cast<Vector3*>(param);
 	}
 	if (message == EventMessage::SIGHT_ROTATION)
 	{
 		float rote = *(float*)param;
-		rotation_ *= Matrix::CreateFromAxisAngle(rotation_.Up(), *(float*)param);
+		rotation_ *= Matrix::CreateFromAxisAngle(rotation_.Up(), *static_cast<float*>(param));
 		rotation_.NormalizeRotationMatrix();
 	}
 	if (message == EventMessage::HP_RECOVER)
 	{
-		hp_ += *(int*)param;
+		hp_ += *static_cast<int*>(param);
 		RecoverItemCount = RecoverItemCount - 1;
 	}
 	if (message == EventMessage::ATTACK_UP)
 	{
-		AttackUpCheck = *(bool*)param;
-		m_ui.lock()->receiveMessage(EventMessage::ATTACK_UP, (bool*)param);
+		AttackUpCheck = *static_cast<bool*>(param);
+		m_ui.lock()->receiveMessage(EventMessage::ATTACK_UP, reinterpret_cast<bool*>(param));
 		AttackItemCount = AttackItemCount - 1;
 	}
 }
@@ -466,7 +466,6 @@ void Player::GunMove(float X, float Y)
 	velocity_ = Vector3::Zero;
 	float forward_speed{ 0.0f };
 	float side_speed{ 0 };
-	float yaw_speed{ 0.0f };
 
 	if (Keyboard::GetInstance().KeyStateDown(KEYCODE::A))
 	{
@@ -486,15 +485,6 @@ void Player::GunMove(float X, float Y)
 
 	side_speed = -X * 0.25f;
 	forward_speed = Y * 0.25f;
-
-	//yaw_speed = GamePad::GetInstance().RightStick().x;
-
-	//rotation_ *= Matrix::CreateFromAxisAngle(rotation_.Up(), yaw_speed * 1.0f);
-	//rotation_.NormalizeRotationMatrix();
-
-	//yaw_speed = GamePad::GetInstance().RightStick().x * (GameDataManager::getInstance().GetAIMSPD() * 0.2f);
-	//rotation_ *= Matrix::CreateFromAxisAngle(rotation_.Up(), yaw_speed * 1.0f);
-	//rotation_.NormalizeRotationMatrix();
 
 	velocity_ += rotation_.Forward() * forward_speed;
 	velocity_ += rotation_.Left() * side_speed;
@@ -535,7 +525,6 @@ void Player::Move(float X, float Y)
 	velocity_ = Vector3::Zero;
 	float forward_speed{ 0.0f };
 	float side_speed{ 0 };
-	float yaw_speed{ 0.0f };
 
 	if (Keyboard::GetInstance().KeyStateDown(KEYCODE::A))
 	{
@@ -622,7 +611,6 @@ void Player::Jump()
 	velocity_ = Vector3::Zero;
 	float forward_speed{ 0.0f };
 	float side_speed{ 0 };
-	float yaw_speed{ 0.0f };
 	side_speed = -GamePad::GetInstance().Stick().x * 0.25f;
 	forward_speed = GamePad::GetInstance().Stick().y * 0.25f;
 
@@ -704,7 +692,7 @@ void Player::Delay()
 
 void Player::Hit(Vector3 & dir)
 {
-	Vector3 dir_ = Vector3::Normalize(dir);
+	const Vector3 dir_ = Vector3::Normalize(dir);
 	//アクターからプレイヤーの方向に移動
 	//velocity_ = Vector3::Up * 7.0f + Vector3{ dir_.x,0.f,dir_.z } *2.0f;
 	//velocity_.x = Vector3::Up.x * 7.0f + dir_.x*2.0f;

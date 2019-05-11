@@ -14,18 +14,22 @@ RedSamurai::RedSamurai(int model, int sward, int arrow, int quiver, IWorld * wor
 	Actor(world, "RedSamurai", position, body),
 	Initbody{ body },
 	m_ui{ ui },
+	player_{nullptr},
 	mesh_{ model,sward },
 	sword_{ sward },
 	arrow_{ arrow },
 	quiver_{ quiver },
 	state_{ RedSamuraiState::RedSamuraiIdel },
 	before_state_{ RedSamuraiState::NONE },
+    motion_{RedSamuraiMotionNum::MotionRedSamuraiIdel},
+	before_motion_{motion_},
 	state_timer_{ 0.0f },
 	mSwordPos{ 38 },
 	mArrowPos{ 76 },
 	mQuiverPos{ 82 },
 	DeadCheck{ false },
-	mAttackTime{ 180 },
+	mAttackTime{ 180.0f },
+	mAttackTimeInit{mAttackTime},
 	mAttacktype{ 0 }
 {
 	rotation_ = rotation;
@@ -38,8 +42,6 @@ void RedSamurai::initialize()
 	hp_ = PlayerHP;
 
 	velocity_ = Vector3::Zero;
-
-	mAttackTimeInit = mAttackTime;
 
 	change_state(RedSamuraiState::RedSamuraiIdel, RedSamuraiMotionNum::MotionRedSamuraiIdel);
 }
@@ -59,7 +61,7 @@ void RedSamurai::update(float deltaTime)
 	if(state_ != RedSamuraiState::RedSamuraiAttack) rotation_ *= PlayerLook();
 	if(state_ == RedSamuraiState::RedSamuraiIdel) AttackTimeCheck(deltaTime);
 
-	m_ui.lock()->receiveMessage(EventMessage::SAMURAI_HP, (void*)&hp_);
+	m_ui.lock()->receiveMessage(EventMessage::SAMURAI_HP, reinterpret_cast<void*>(&hp_));
 
 	//velocity_ = Vector3::Zero;
 	velocity_ += Vector3::Up * -gravity;
@@ -100,7 +102,7 @@ void RedSamurai::draw() const
 void RedSamurai::onCollide(Actor & other)
 {
 	Vector3 hitdir(other.Getposition() - position_);
-	other.receiveMessage(EventMessage::HIT_ENEMY, (void*)&hitdir);
+	other.receiveMessage(EventMessage::HIT_ENEMY, (int*)&hitdir);
 }
 
 void RedSamurai::receiveMessage(EventMessage message, void * param)
@@ -112,7 +114,7 @@ void RedSamurai::receiveMessage(EventMessage message, void * param)
 
 	if (message == EventMessage::HIT_PLAYER_PUNCH)
 	{
-		hp_ = hp_ - *(int*)param;
+		hp_ = hp_ - *static_cast<int*>(param);
 	}
 
 }
@@ -216,7 +218,7 @@ Matrix RedSamurai::PlayerLook()
 
 float RedSamurai::GetPlayerDistance()
 {
-	float playerdistance = Vector3::Distance(position_, player_->Getposition());
+	const float playerdistance = Vector3::Distance(position_, player_->Getposition());
 	return playerdistance;
 }
 
@@ -224,7 +226,7 @@ void RedSamurai::Movement(float deltaTime)
 {
 	if (GetPlayerDistance() <= 10.0f) return;
 	motion_ = RedSamuraiMotionNum::MotionRedSamuraiForWard;
-	Vector3 playervec = Vector3(player_->Getposition().x - position_.x, player_->Getposition().y - position_.y, player_->Getposition().z - position_.z).Normalize();
+	const Vector3 playervec = Vector3(player_->Getposition().x - position_.x, player_->Getposition().y - position_.y, player_->Getposition().z - position_.z).Normalize();
 	position_ += playervec * WalkSpeed;
 }
 
@@ -266,9 +268,9 @@ void RedSamurai::draw_weapon() const
 	StaticMesh::draw();
 }
 
-void RedSamurai::Hit(Vector3 & dir)
+void RedSamurai::Hit(const Vector3 & dir)
 {
-	Vector3 dir_ = Vector3::Normalize(dir);
+	const Vector3 dir_ = Vector3::Normalize(dir);
 	//アクターからプレイヤーの方向に移動
 	velocity_ = Vector3::Up * 7.0f + Vector3{ dir_.x,0.f,dir_.z } *2.0f;
 	velocity_.x = Vector3::Up.x * 7.0f + dir_.x*2.0f;

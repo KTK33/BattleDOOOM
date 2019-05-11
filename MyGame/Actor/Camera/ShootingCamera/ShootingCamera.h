@@ -7,7 +7,7 @@ class ShootingCamera : public Actor
 public:
 	ShootingCamera(IWorld* world, std::weak_ptr<Actor> m_Player);
 
-	void update(float deltaTime);
+	virtual void update(float deltaTime) override;
 
 	virtual void draw() const override;
 	//

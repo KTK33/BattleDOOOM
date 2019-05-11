@@ -63,11 +63,11 @@ public:
 	virtual ~Actor(){}
 	//子を初期化
 	void rootInitialize();
-	//子を更新
-	void rootUpdate(float deltaTime);
-	//子を描画
-	void rootDraw() const;
-	void rootShadowDraw()const;
+	////子を更新
+	//void rootUpdate(float deltaTime);
+	////子を描画
+	//void rootDraw() const;
+	//void rootShadowDraw()const;
 
 	//初期化
 	virtual void initialize();

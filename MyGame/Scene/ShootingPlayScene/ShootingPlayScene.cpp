@@ -26,12 +26,9 @@
 #include<DxLib.h>
 
 //コンストラクタ
-ShootingPlayScene::ShootingPlayScene() :world_{}
-{
-
-}
-
-
+ShootingPlayScene::ShootingPlayScene() :world_{},
+BossArleady{false}
+{}
 
 //開始
 void ShootingPlayScene::start() {
@@ -40,7 +37,6 @@ void ShootingPlayScene::start() {
 	Sound::GetInstance().PlayBGM(BGM_ID::PLAYE_BGM, DX_PLAYTYPE_LOOP);
 	//Sound::GetInstance().SetBGMVolume(BGM_ID::PLAYE_BGM, 1.0f);
 	menuSize_ = 4;
-	BossArleady = false;
 
 	world_.add_actor(ActorGroup::Fade, new_actor<FadeUI>(&world_, 1, 2));
 

@@ -4,6 +4,7 @@
 class TitleAnyUI : public Actor {
 public:
 	TitleAnyUI(IWorld* world);
+	virtual ~TitleAnyUI() override{}
 
 	virtual void initialize() override;
 
@@ -11,7 +12,7 @@ public:
 
 	virtual void receiveMessage(EventMessage message, void * param) override;
 
-	virtual void draw() const;
+	virtual void draw() const override;
 
 private:
 	Vector2 NameSize;

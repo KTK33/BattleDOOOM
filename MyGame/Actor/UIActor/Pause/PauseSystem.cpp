@@ -8,18 +8,19 @@
 PauseSystem::PauseSystem(IWorld * world):
 	Actor(world,"PauseSytem",Vector3::Zero)
 {
+	initialize();
+}
+
+void PauseSystem::initialize()
+{
 	menuSize_ = 3;
 	menuSize_2 = 9;
 	cursorPos_ = 0;
 	cursorPos_2 = 5;
 
-	bgmval = GameDataManager::getInstance().GetBGMVAL()*10;
-	seval = GameDataManager::getInstance().GetSEVAL()*10;
+	bgmval = GameDataManager::getInstance().GetBGMVAL() * 10;
+	seval = GameDataManager::getInstance().GetSEVAL() * 10;
 	aimval = GameDataManager::getInstance().GetAIMSPD();
-}
-
-void PauseSystem::initialize()
-{
 }
 
 void PauseSystem::update(float deltaTime)
@@ -81,7 +82,7 @@ void PauseSystem::PlayerInput()
 		{
 			if (bgmval > 1) bgmval = bgmval - 1;
 		}
-		GameDataManager::getInstance().SetBGMVAL(bgmval);
+		GameDataManager::getInstance().SetBGMVAL(static_cast<int>(bgmval));
 		break;
 	case 1:
 		if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::RIGHT) || Keyboard::GetInstance().KeyTriggerDown(KEYCODE::RIGHT))
@@ -92,7 +93,7 @@ void PauseSystem::PlayerInput()
 		{
 			if (seval > 1) seval = seval - 1;
 		}
-		GameDataManager::getInstance().SetSEVAL(seval);
+		GameDataManager::getInstance().SetSEVAL(static_cast<int>(seval));
 		break;
 	case 2:
 		if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::RIGHT) || Keyboard::GetInstance().KeyTriggerDown(KEYCODE::RIGHT))
@@ -103,7 +104,7 @@ void PauseSystem::PlayerInput()
 		{
 			if(aimval > 1) aimval = aimval - 1;
 		}
-		GameDataManager::getInstance().SetAIMSPD(aimval);
+		GameDataManager::getInstance().SetAIMSPD(static_cast<int>(aimval));
 		break;
 	default:
 		break;

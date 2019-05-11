@@ -13,14 +13,15 @@
 class RedSamurai : public Actor, public ActorSystem {
 public:
 	RedSamurai(int model, int sward, int arrow, int quiver, IWorld* world, const Vector3& position, Matrix & rotation, std::weak_ptr<Actor> ui, const IBodyPtr& body = std::make_shared<BoundingCapsule>(Vector3{ 0.0f,9.0f,0.0f }, Matrix::Identity, 10.0f, 4.0f));
+	virtual ~RedSamurai() override {};
 
-	void initialize() override;
+	virtual void initialize() override;
 
-	void update(float deltaTime);
+	virtual void update(float deltaTime) override;
 
-	void draw() const;
+	virtual void draw() const override;
 
-	virtual void onCollide(Actor& other);
+	virtual void onCollide(Actor& other) override;
 
 	virtual void receiveMessage(EventMessage message, void * param) override;
 private:
@@ -41,7 +42,7 @@ private:
 	//ïêäÌÇÃï`âÊ
 	void draw_weapon() const;
 
-	void Hit(Vector3& dir);
+	void Hit(const Vector3& dir);
 private:
 	std::weak_ptr<Actor> m_ui{};
 	IBodyPtr Initbody;
@@ -75,8 +76,8 @@ private:
 
 	bool DeadCheck;
 
-	int mAttackTime;
-	int mAttackTimeInit;
+	float mAttackTime;
+	float mAttackTimeInit;
 
 	int mAttacktype;
 };

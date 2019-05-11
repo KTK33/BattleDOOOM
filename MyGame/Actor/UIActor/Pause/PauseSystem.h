@@ -6,14 +6,15 @@
 class PauseSystem : public Actor, public Menu {
 public:
 	PauseSystem(IWorld* world);
+	virtual ~PauseSystem()override{}
 
-	void initialize();
+	virtual void initialize() override;
 
-	void update(float deltaTime);
+	virtual void update(float deltaTime) override;
 
-	void draw() const;
+	virtual void draw() const override;
 
-	virtual void receiveMessage(EventMessage message, void* param);
+	virtual void receiveMessage(EventMessage message, void* param) override;
 
 	void PlayerInput();
 

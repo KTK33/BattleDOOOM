@@ -16,10 +16,6 @@ TitlePlayer::TitlePlayer(int model, int weapon, IWorld * world, const Vector3 & 
 	motion_ = PlayerMotion::Motion::MotionPlayerIdleAiming;
 }
 
-void TitlePlayer::initialize()
-{
-}
-
 void TitlePlayer::update(float deltaTime)
 {
 	mesh_.update(deltaTime);

@@ -7,12 +7,11 @@ class TitleBullet : public Actor
 {
 public:
 	TitleBullet(int model, IWorld* world, const Vector3& position,Vector3 move);
-
-	virtual void initialize() override;
+	virtual ~TitleBullet()override{}
 
 	virtual void update(float deltaTime) override;
 
-	virtual void draw() const;
+	virtual void draw() const override;
 
 private:
 	AnimatedMesh mesh_;

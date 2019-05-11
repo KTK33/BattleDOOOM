@@ -15,6 +15,7 @@ ShootingCamera::ShootingCamera(IWorld * world, std::weak_ptr<Actor> m_Player) :
 	Actor(world, "Camera", Vector3::Zero),
 	AimPosMove{ 0,0 },
 	m_player{m_Player},
+	player_{nullptr},
 	alreadyGO{false}
 {
 }
@@ -79,6 +80,14 @@ void ShootingCamera::PlayerInput(float deltaTime)
 		}
 		else
 		{
+			if (Keyboard::GetInstance().KeyStateDown(KEYCODE::UP))
+			{
+				AimPosMove.y += 1.0f * (GameDataManager::getInstance().GetAIMSPD() * 0.2f);
+			}
+			if (Keyboard::GetInstance().KeyStateDown(KEYCODE::DOWN))
+			{
+				AimPosMove.y -= 1.0f* (GameDataManager::getInstance().GetAIMSPD() * 0.2f);
+			}
 			AimPosMove += GamePad::GetInstance().RightStick() * (GameDataManager::getInstance().GetAIMSPD() * 0.25f);
 		}
 	}
@@ -96,7 +105,7 @@ void ShootingCamera::PlayerInput(float deltaTime)
 
 		target_ = Vector3::Lerp(target_, position_ + player_->Getrotation().Forward() * 1, 0.1f);
 
-		m_player.lock()->receiveMessage(EventMessage::SIGHT_POSITION, (void*)&target_);
+		m_player.lock()->receiveMessage(EventMessage::SIGHT_POSITION, reinterpret_cast<void*>(&target_));
 
 		float XX = 0;
 		if (Keyboard::GetInstance().KeyStateDown(KEYCODE::RIGHT)){
@@ -108,7 +117,7 @@ void ShootingCamera::PlayerInput(float deltaTime)
 		else{
 			XX = GamePad::GetInstance().RightStick().x * (GameDataManager::getInstance().GetAIMSPD() * 0.25f);
 		}
-		m_player.lock()->receiveMessage(EventMessage::SIGHT_ROTATION, (void*)&XX);
+		m_player.lock()->receiveMessage(EventMessage::SIGHT_ROTATION, reinterpret_cast<void*>(&XX));
 
 		AimPosMove = Vector2::Clamp(AimPosMove, Vector2(15, -20), Vector2(15, 15));
 

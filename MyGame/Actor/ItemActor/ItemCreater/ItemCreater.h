@@ -6,10 +6,11 @@
 class ItemCreater : public Actor {
 public:
 	ItemCreater(IWorld* world, const Vector3& position);
+	virtual ~ItemCreater() override{}
 
-	void initialize() override;
+	virtual void initialize() override;
 
-	void update(float deltaTime);
+	virtual void update(float deltaTime)override;
 
 	virtual void receiveMessage(EventMessage message, void * param) override;
 

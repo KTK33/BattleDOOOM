@@ -26,13 +26,13 @@ class BossEnemy : public Actor,public ActorSystem {
 public:
 	BossEnemy(int model, IWorld* world, const Vector3& position, const IBodyPtr& body = std::make_shared<BoundingCapsule>(Vector3{ 0.0f,9.0f,0.0f }, Matrix::Identity, 12.0f, 4.0f));
 
-	void initialize();
+	virtual void initialize() override;
 
-	void update(float deltaTime);
+	virtual void update(float deltaTime) override;
 
-	void draw() const;
+	virtual void draw() const override;
 
-	virtual void onCollide(Actor& other);
+	virtual void onCollide(Actor& other) override;
 
 	virtual void receiveMessage(EventMessage message, void* param);
 

@@ -8,8 +8,9 @@
 class ActionGameManager : public Actor {
 public:
 	ActionGameManager(IWorld* world, std::weak_ptr<Actor> player, std::weak_ptr<Actor> camera);
+	virtual ~ActionGameManager() override {}
 
-	void update(float deltaTime);
+	virtual void update(float deltaTime) override;
 
 private:
 	std::weak_ptr<Actor> mPlayer{};

@@ -116,7 +116,7 @@ void Sound::PlaySE(int id, int playtype)
 	if (IsPlaySE(id) && playtype == DX_PLAYTYPE_LOOP)
 		return;
 
-	ChangeVolumeSoundMem((int)((m_se_volume /** id*/) * 255), id);
+	ChangeVolumeSoundMem(static_cast<int>(((m_se_volume /** id*/)) * 255), id);
 	PlaySoundMem(id, playtype);
 }
 
@@ -161,7 +161,7 @@ int Sound::PlaySEDuplicate(const SE_ID& id, int playtype)
 	if (IsPlaySE(id) && playtype == DX_PLAYTYPE_LOOP)
 		return -1;
 
-	ChangeVolumeSoundMem((int)((m_se_volume * m_SE_Volumes[id]) * 255), m_SEs[id]);
+	ChangeVolumeSoundMem(static_cast<int>(((m_se_volume * m_SE_Volumes[id])) * 255), m_SEs[id]);
 	int dupHandle = DuplicateSoundMem(m_SEs[id]);
 	PlaySoundMem(dupHandle, playtype);
 
@@ -309,10 +309,10 @@ void Sound::Update()
 
 void Sound::SettingBGM(const BGM_ID& id)
 {
-	ChangeVolumeSoundMem((int)((m_bgm_volume * m_BGM_Volumes[id]) * 255), m_BGMs[id]);
+	ChangeVolumeSoundMem(static_cast<int>(((m_bgm_volume * m_BGM_Volumes[id])) * 255), m_BGMs[id]);
 }
 
 void Sound::SettingSE(const SE_ID& id)
 {
-	ChangeVolumeSoundMem((int)((m_se_volume * m_SE_Volumes[id]) * 255), m_SEs[id]);
+	ChangeVolumeSoundMem(static_cast<int>(((m_se_volume * m_SE_Volumes[id])) * 255), m_SEs[id]);
 }

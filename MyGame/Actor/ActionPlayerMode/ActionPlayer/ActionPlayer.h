@@ -13,14 +13,14 @@
 class ActionPlayer : public Actor, public ActorSystem {
 public:
 	ActionPlayer(int model, int weapon, IWorld* world, const Vector3& position, std::weak_ptr<Actor> ui, const IBodyPtr& body = std::make_shared<BoundingCapsule>(Vector3{ 0.0f,9.0f,0.0f }, Matrix::Identity, 10.0f, 4.0f));
+	virtual ~ActionPlayer() override {}
+	virtual void initialize() override;
 
-	void initialize() override;
+	virtual void update(float deltaTime) override;
 
-	void update(float deltaTime);
+	virtual void draw() const override;
 
-	void draw() const;
-
-	virtual void onCollide(Actor& other);
+	virtual void onCollide(Actor& other) override;
 
 	virtual void receiveMessage(EventMessage message, void * param) override;
 private:

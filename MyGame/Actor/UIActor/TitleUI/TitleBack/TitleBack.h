@@ -4,11 +4,11 @@
 class TitleBack : public Actor {
 public:
 	TitleBack(IWorld* world);
-	virtual void initialize() override;
+	virtual ~TitleBack()override{}
 
 	virtual void update(float deltaTime) override;
 
-	virtual void draw() const;
+	virtual void draw() const override;
 
 private:
 	int TitleBackAlpha;

@@ -10,10 +10,6 @@ Effect2D::Effect2D(IWorld * world, Vector3 & position, int size, SPRITE_ID id):
 	effectY = 0;
 }
 
-void Effect2D::initialize()
-{
-}
-
 void Effect2D::update(float deltaTime)
 {
 	effectTimer++;
@@ -36,7 +32,7 @@ void Effect2D::receiveMessage(EventMessage message, void * param)
 
 void Effect2D::draw() const
 {
-	Vector2 SpriteSize = Sprite::GetInstance().GetSize(EffectID);
+	const Vector2 SpriteSize = Sprite::GetInstance().GetSize(EffectID);
 
 	Sprite::GetInstance().DrawPartRota(EffectID, Vector2(ConvWorldPosToScreenPos(position_).x, ConvWorldPosToScreenPos(position_).y),
 		(int)SpriteSize.x / 8 * effectX,
@@ -44,6 +40,6 @@ void Effect2D::draw() const
 		(int)SpriteSize.x / 8,
 		(int)SpriteSize.y / 6,
 		Vector2(SpriteSize.x/8/2,SpriteSize.y/6/2),
-		Vector2(size_,size_)
+		Vector2(static_cast<float>(size_), static_cast<float>(size_))
 	);
 }

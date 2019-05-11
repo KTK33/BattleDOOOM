@@ -1,17 +1,17 @@
 #include "Actor.h"
 #include"../Collision/Base/HitInfo.h"
 
-Actor::Actor() :world_(nullptr), name_("Null"), position_(Vector3::Zero), body_(std::make_shared<DummyBody>()), children_()/*, group_(ActorGroup::ETCETERA_ACTOR)*/
+Actor::Actor() :world_(nullptr), name_("Null"), position_(Vector3::Zero), body_(std::make_shared<DummyBody>()), children_(),group_(ActorGroup::ETCETERA_ACTOR)
 {
 }
 
 Actor::Actor(IWorld * world, const std::string & name, const Vector3 & position, const IBodyPtr & body) :
-	world_(world), name_(name), position_(position), body_(body), children_()/*, group_(ActorGroup::ETCETERA_ACTOR)*/
+	world_(world), name_(name), position_(position), body_(body), children_(), group_(ActorGroup::ETCETERA_ACTOR)
 {
 }
 
 Actor::Actor(IWorld * world, const std::string & name, const Vector3 & position, const Matrix & rotation, const IBodyPtr & body) :
-	world_(world), name_(name), position_(position), rotation_(rotation), body_(body), children_()/*, group_(ActorGroup::ETCETERA_ACTOR)*/
+	world_(world), name_(name), position_(position), rotation_(rotation), body_(body), children_(), group_(ActorGroup::ETCETERA_ACTOR)
 {
 }
 
@@ -21,26 +21,26 @@ void Actor::rootInitialize()
 	eachChildren([&](Actor& actor) {actor.rootInitialize(); });
 }
 
-void Actor::rootUpdate(float deltaTime)
-{
-	//prevPosition_ = position_;
-	//prevRotation_ = rotation_;
-
-	//update(deltaTime);
-	//eachChildren([&](Actor& actor) {actor.rootUpdate(deltaTime); });
-}
-
-void Actor::rootDraw() const
-{
-	//if (isDraw_)draw();
-	//eachChildren([&](const Actor& actor) {actor.rootDraw(); });
-}
-
-void Actor::rootShadowDraw() const
-{
-	//if (isDraw_)shadowDraw();
-	//eachChildren([&](const Actor& actor) {actor.rootShadowDraw(); });
-}
+//void Actor::rootUpdate(float deltaTime)
+//{
+//	//prevPosition_ = position_;
+//	//prevRotation_ = rotation_;
+//
+//	//update(deltaTime);
+//	//eachChildren([&](Actor& actor) {actor.rootUpdate(deltaTime); });
+//}
+//
+//void Actor::rootDraw() const
+//{
+//	//if (isDraw_)draw();
+//	//eachChildren([&](const Actor& actor) {actor.rootDraw(); });
+//}
+//
+//void Actor::rootShadowDraw() const
+//{
+//	//if (isDraw_)shadowDraw();
+//	//eachChildren([&](const Actor& actor) {actor.rootShadowDraw(); });
+//}
 
 void Actor::initialize()
 {
@@ -97,8 +97,8 @@ bool Actor::field(Vector3 & result)
 	//return false;
 
 	Vector3 hitPos;
-	if (CollisionMesh::collide_line(prevPosition_ + rotation_.Up()*(body_->length()*0.5f), position_ + rotation_.Up()*(body_->radius() + body_->length()*0.5f), (Vector3*)&hitPos)){
-		Vector3 upVec = rotation_.Up()*(body_->radius() + body_->length()*0.5f);
+	if (CollisionMesh::collide_line(prevPosition_ + rotation_.Up()*(body_->length()*0.5f), position_ + rotation_.Up()*(body_->radius() + body_->length()*0.5f), reinterpret_cast<Vector3*>(&hitPos))){
+		const Vector3 upVec = rotation_.Up()*(body_->radius() + body_->length()*0.5f);
 		position_ = hitPos - upVec;
 	}
 	Vector3 hitcenter;
@@ -122,10 +122,10 @@ bool Actor::field(Vector3 & result)
 bool Actor::floor(Vector3 & result)
 {
 	Vector3 hitpos;
-	if (CollisionMesh::collide_line(position_, prevPosition_, (Vector3*)&hitpos)) {
+	if (CollisionMesh::collide_line(position_, prevPosition_, reinterpret_cast<Vector3*>(&hitpos))) {
 		position_ = hitpos + rotation_.Up()*(body_->radius() + body_->length()*0.5f);
 	}
-	if (CollisionMesh::collide_line(position_, position_ + rotation_.Down()*(body_->radius() + body_->length()*0.5f + 2.f), (Vector3*)&hitpos)) {
+	if (CollisionMesh::collide_line(position_, position_ + rotation_.Down()*(body_->radius() + body_->length()*0.5f + 2.f), reinterpret_cast<Vector3*>(&hitpos))) {
 		result = hitpos;
 		return true;
 	}

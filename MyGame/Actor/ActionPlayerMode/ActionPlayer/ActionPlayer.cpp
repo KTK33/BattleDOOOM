@@ -17,15 +17,22 @@ ActionPlayer::ActionPlayer(int model, int weapon, IWorld * world, const Vector3 
 	weapon_{ weapon },
 	state_{ ActionPlayerState::ActionPlayerIdel },
 	before_state_{ ActionPlayerState::NONE },
+	motion_{ ActionPlayerMotion::MotionPlayerIdel },
+	before_motion_{motion_},
 	state_timer_{ 0.0f },
 	mRightweaponPos{ 15 },
 	mLeftweaponPos{ 38 },
+	mAttackCount{0},
 	DeadCheck{ false },
 	m_ActionCameraForward{ 0 },
 	m_ActionCameraRight{ 0 },
 	mweaponalready{false}
 {
-	rotation_ = Matrix::Identity;
+	initialize();
+}
+
+void ActionPlayer::initialize()
+{
 	mesh_.transform(Getpose());
 	hp_ = PlayerHP;
 
@@ -34,10 +41,6 @@ ActionPlayer::ActionPlayer(int model, int weapon, IWorld * world, const Vector3 
 	velocity_ = Vector3::Zero;
 
 	mAttackCount = 0;
-}
-
-void ActionPlayer::initialize()
-{
 }
 
 void ActionPlayer::update(float deltaTime)
@@ -52,7 +55,7 @@ void ActionPlayer::update(float deltaTime)
 	Idle();
 	mesh_.change_motion(motion_);
 
-	world_->send_message(EventMessage::PLAYER_HP, (void*)&hp_);
+	world_->send_message(EventMessage::PLAYER_HP, reinterpret_cast<void*>(&hp_));
 
 	hp_ = MathHelper::Clamp(hp_, 0, 10);
 
@@ -95,20 +98,20 @@ void ActionPlayer::draw() const
 void ActionPlayer::onCollide(Actor & other)
 {
 	Vector3 hitdir(other.Getposition() - position_);
-	other.receiveMessage(EventMessage::HIT_PLAYER, (void*)&hitdir);
+	other.receiveMessage(EventMessage::HIT_PLAYER, reinterpret_cast<void*>(&hitdir));
 }
 
 void ActionPlayer::receiveMessage(EventMessage message, void * param)
 {
 	if (message == EventMessage::HIT_ENEMY_BULLET)
 	{
-		hp_ = hp_ - *(int*)param;
+		hp_ = hp_ - *static_cast<int*>(param);
 		change_state(ActionPlayerState::ActionPlayerDamage, ActionPlayerMotion::Motion::MotionPlayerIdel);
 	}
 
 	if (message == EventMessage::PLAYER_HP)
 	{
-		*(int*)param = hp_;
+		*static_cast<int*>(param) = hp_;
 	}
 
 	if (message == EventMessage::HIT_ENEMY)
@@ -118,11 +121,11 @@ void ActionPlayer::receiveMessage(EventMessage message, void * param)
 
 	if (message == EventMessage::ACTION_CAMERA_FORWARD)
 	{
-		m_ActionCameraForward = *(Vector3*)param;
+		m_ActionCameraForward = *static_cast<Vector3*>(param);
 	}
 	if (message == EventMessage::ACTION_CAMERA_RIGHT)
 	{
-		m_ActionCameraRight = *(Vector3*)param;
+		m_ActionCameraRight = *static_cast<Vector3*>(param);
 	}
 }
 
@@ -154,6 +157,7 @@ void ActionPlayer::collision()
 
 void ActionPlayer::change_state(ActionPlayerState::State state, int motion)
 {
+	
 	before_motion_ = motion_;
 	motion_ = motion;
 	before_state_ = state_;
@@ -192,7 +196,7 @@ void ActionPlayer::Idle()
 	}
 
 	//回避
-	if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM1) || Keyboard::GetInstance().KeyStateDown(KEYCODE::LSHIFT)) {
+	if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM1) || Keyboard::GetInstance().KeyTriggerDown(KEYCODE::LSHIFT)) {
 		change_state(ActionPlayerState::ActionPlayerAvoidance, ActionPlayerMotion::Motion::MotionPlayerAvoidance);
 	}
 }
@@ -213,21 +217,18 @@ void ActionPlayer::Movement(float spped, Vector2 input)
 {
 	//前後左右移動
 	velocity_ = Vector3::Zero;
-	float forward_speed{ 0.0f };
-	float side_speed{ 0 };
-	float yaw_speed{ 0.0f };
+	float forward_speed = 0.0f;
+	float side_speed = 0.0f ;
 
 	side_speed = input.x * spped;
 	forward_speed = input.y * spped;
 
 	//カメラの前方方向を前方向とする
-	Vector3 ForwardVec = m_ActionCameraForward * forward_speed;
-	velocity_ += ForwardVec;
-	Vector3 SideVec = m_ActionCameraRight * side_speed;
-	velocity_ += SideVec;
+	velocity_ += m_ActionCameraForward * forward_speed;
+	velocity_ += m_ActionCameraRight * side_speed;
 
 	//回避加速度
-	static const int mAvoidanceSpeed = 5.0f;
+	static const float mAvoidanceSpeed = 5.0f;
 
 	//ダッシュ加速
 	float DashSpped = 0.0f;
@@ -358,7 +359,7 @@ void ActionPlayer::draw_weapon() const
 
 void ActionPlayer::Hit(Vector3 & dir)
 {
-	Vector3 dir_ = Vector3::Normalize(dir);
+	const Vector3 dir_ = Vector3::Normalize(dir);
 	//アクターからプレイヤーの方向に移動
 	velocity_ = Vector3::Up * 7.0f + Vector3{ dir_.x,0.f,dir_.z } *2.0f;
 	velocity_.x = Vector3::Up.x * 7.0f + dir_.x*2.0f;

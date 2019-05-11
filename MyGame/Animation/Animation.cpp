@@ -42,7 +42,7 @@ const Animation::Matrices & Animation::local_matrices() const
 int Animation::bone_const() const
 {
 	SkeletalMesh::bind(model_);
-	return SkeletalMesh::end_time(motion_);
+	return static_cast<int>(SkeletalMesh::end_time(motion_));
 }
 
 float Animation::end_time() const

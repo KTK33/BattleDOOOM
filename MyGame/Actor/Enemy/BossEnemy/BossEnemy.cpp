@@ -10,6 +10,7 @@ BossEnemy::BossEnemy(int model, IWorld * world, const Vector3 & position, const 
 	mesh_(model),
 	state_{BossEnemyState::IDLE},
 	state_timer_{ 0.0f },
+	motion_{MotionBossIdel},
 	invinciblyCheck{ false },
 	invinciblyTime{ 60 },
 	Ikari{false},
@@ -71,7 +72,7 @@ void BossEnemy::update(float deltaTime)
 		FireCheck = true;
 	}
 
-	m_ui.lock()->receiveMessage(EventMessage::BOSSHP, (int*)&hp_);
+	m_ui.lock()->receiveMessage(EventMessage::BOSSHP, reinterpret_cast<int*>(&hp_));
 
 	if (invinciblyCheck) {
 		ActorTransparence();
@@ -90,7 +91,7 @@ void BossEnemy::draw() const
 	//HP
 	Sprite::GetInstance().Draw(SPRITE_ID::BOSSHP_UI, Vector2(0, WINDOW_HEIGHT -  Sprite::GetInstance().GetSize(SPRITE_ID::BOSSHP_UI).y));
 	Sprite::GetInstance().DrawPart(SPRITE_ID::BOSSHP_GAUGE, Vector2(492, WINDOW_HEIGHT - 70), 0, 0,
-		Sprite::GetInstance().GetSize(SPRITE_ID::BOSSHP_GAUGE).x / PlayerHP * hp_, Sprite::GetInstance().GetSize(SPRITE_ID::BOSSHP_GAUGE).y);
+		static_cast<int>(Sprite::GetInstance().GetSize(SPRITE_ID::BOSSHP_GAUGE).x / PlayerHP * hp_), static_cast<int>(Sprite::GetInstance().GetSize(SPRITE_ID::BOSSHP_GAUGE).y));
 
 }
 
@@ -104,7 +105,7 @@ void BossEnemy::receiveMessage(EventMessage message, void * param)
 {
 	if (message == EventMessage::DAMAGEPARAM)
 	{
-		DamageParam = *(int*)param;
+		DamageParam = *static_cast<int*>(param);
 	}
 	if (!invinciblyCheck){
 		if (message == EventMessage::HIT_BALL){
@@ -115,11 +116,11 @@ void BossEnemy::receiveMessage(EventMessage message, void * param)
 			}
 			invinciblyCheck = true;
 
-			world_->add_actor(ActorGroup::Effect, new_actor<Effect2D>(world_, *(Vector3*)param,1.0f, SPRITE_ID::EFFECT_BULLETHIT));
+			world_->add_actor(ActorGroup::Effect, new_actor<Effect2D>(world_, *static_cast<Vector3*>(param),1.0f, SPRITE_ID::EFFECT_BULLETHIT));
 			Sound::GetInstance().PlaySE_IsNotPlay(SE_ID::DAMAGEENEMY_SE);
 		}
 		if (message == EventMessage::HIT_PLAYER_PUNCH){
-			hp_ = hp_ - *(int*)param;
+			hp_ = hp_ - *static_cast<int*>(param);
 			if (state_ != BossEnemyState::FIRE_BEFO) {
 				change_state(BossEnemyState::DAMAGE, MotionBossDamage);
 			}
@@ -216,7 +217,7 @@ void BossEnemy::Punch()
 		auto Bullet = std::make_shared<EnemyAttackCollison>(world_, Vector3{ position_ + Getpose().Forward() * 6 },
 			std::make_shared<BoundingCapsule>(Vector3{ 0.0f,5.0f,0.0f }, Matrix::Identity, 10.0f, 5.0f));
 		world_->add_actor(ActorGroup::EnemyBullet, Bullet);
-		Bullet->SetParam(false,(int)mesh_.motion_end_time() / 2, 3);
+		Bullet->SetParam(false,static_cast<int>(mesh_.motion_end_time()) / 2, 3);
 	}
 	if (state_timer_ >= mesh_.motion_end_time())
 	{

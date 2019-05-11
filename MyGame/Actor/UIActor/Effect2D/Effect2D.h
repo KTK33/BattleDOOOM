@@ -6,14 +6,13 @@ class Effect2D : public Actor
 {
 public:
 	Effect2D(IWorld* world, Vector3 & position, int size, SPRITE_ID id);
-
-	virtual void initialize() override;
+	virtual ~Effect2D()override {}
 
 	virtual void update(float deltaTime) override;
 
 	virtual void receiveMessage(EventMessage message, void * param) override;
 
-	virtual void draw() const;
+	virtual void draw() const override;
 
 private:
 	int size_;

@@ -4,11 +4,11 @@
 class FadeUI : public Actor {
 public:
 	FadeUI(IWorld* world,int FadeCheck,int SceneNum);
-	virtual void initialize() override;
+	virtual ~FadeUI()override {}
 
 	virtual void update(float deltaTime) override;
 
-	virtual void draw() const;
+	virtual void draw() const override;
 
 private:
 	int FadeAlpha;

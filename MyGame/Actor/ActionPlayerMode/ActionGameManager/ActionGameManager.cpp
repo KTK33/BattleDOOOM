@@ -20,9 +20,10 @@ void ActionGameManager::update(float deltaTime)
 	{
 		if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM10) || Keyboard::GetInstance().KeyTriggerDown(KEYCODE::LCTRL))
 		{
+			if (world_->GetPauseCheck() == true) return;
 			mTargetCamera = !mTargetCamera;
 		}
-		mPlayer.lock()->receiveMessage(EventMessage::TARGET_CAMERA, (void*)&mTargetCamera);
-		mCamera.lock()->receiveMessage(EventMessage::TARGET_CAMERA, (void*)&mTargetCamera);
+		mPlayer.lock()->receiveMessage(EventMessage::TARGET_CAMERA, reinterpret_cast<void*>(&mTargetCamera));
+		mCamera.lock()->receiveMessage(EventMessage::TARGET_CAMERA, reinterpret_cast<void*>(&mTargetCamera));
 	}
 }

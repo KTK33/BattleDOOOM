@@ -6,17 +6,17 @@
 PlayerTextUI::PlayerTextUI(IWorld * world):
 	Actor(world,"PlayerText",Vector3::Zero)
 {
+	initialize();
+}
+
+void PlayerTextUI::initialize()
+{
 	GetBulletCheck = false;
 	BulletTextTimer = 0;
 	GetRecoverCheck = false;
 	RecoverTextTimer = 0;
 	AttackUpCheck = false;
 	AttackUpTime = 600;
-
-}
-
-void PlayerTextUI::initialize()
-{
 }
 
 void PlayerTextUI::update(float deltaTime)
@@ -70,7 +70,7 @@ void PlayerTextUI::receiveMessage(EventMessage message, void * param)
 
 	if (message == EventMessage::ATTACK_UP)
 	{
-		AttackUpCheck = *(bool*)param;
+		AttackUpCheck = *static_cast<bool*>(param);
 	}
 
 }

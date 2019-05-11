@@ -3,12 +3,7 @@
 BulletItem::BulletItem(int model, IWorld * world, const Vector3 & position, const IBodyPtr & body):
 	Actor(world, "BulletItem", position, body),
 	mesh_{ model }
-{
-}
-
-void BulletItem::initialize()
-{
-}
+{}
 
 void BulletItem::update(float deltaTime)
 {
@@ -24,7 +19,7 @@ void BulletItem::draw() const
 
 void BulletItem::onCollide(Actor & other)
 {
-	Vector3 hitdir(other.Getposition() - position_);
+	const Vector3 hitdir(other.Getposition() - position_);
 	int gunpoint = 5;
 	other.receiveMessage(EventMessage::GET_BULLET, (void*)&gunpoint);
 }

@@ -10,16 +10,17 @@ class PlayerBullet : public Actor
 {
 public:
 	PlayerBullet(IWorld* world, const Vector3& P_position,Vector3& A_position,int AttackParam,const IBodyPtr& body = std::make_shared<BoundingSphere>(Vector3{ 0.0f,0.0f,0.0f }, 1.5f));
+	virtual ~PlayerBullet() override{}
 
 	virtual void initialize() override;
 
 	virtual void update(float deltaTime) override;
 
-	virtual void onCollide(Actor& other);
+	virtual void onCollide(Actor& other) override;
+
+	virtual void draw() const override;
 
 	virtual void receiveMessage(EventMessage message, void * param) override;
-
-	virtual void draw() const;
 
 protected:
 	//ê^Ç¡íºÇÆî≠éÀÇ≥ÇÍÇÈíe

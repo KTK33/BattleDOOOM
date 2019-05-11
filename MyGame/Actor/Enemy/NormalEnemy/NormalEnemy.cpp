@@ -12,6 +12,7 @@ NormalEnemy::NormalEnemy(int model, IWorld * world, const Vector3 & position,con
 	mesh_{ model },
 	state_{ NormalEnemyState::IDLE },
 	state_timer_{ 0.0f },
+	motion_{MotionNormalEnemyIdel},
 	m_UI{m_ui},
 	invinciblyCheck{ false },
 	invinciblyTime{ 60 },
@@ -57,7 +58,7 @@ void NormalEnemy::update(float deltaTime)
 		Delay();
 	}
 	if (m_HS.expired()) return;
-	m_HS.lock()->receiveMessage(EventMessage::GETENEMYPOS, (void*)&(position_ + HSPos));
+	m_HS.lock()->receiveMessage(EventMessage::GETENEMYPOS, reinterpret_cast<void*>(&(position_ + HSPos)));
 
 	velocity_ += Vector3::Up * -gravity;
 	position_ += velocity_;
@@ -95,11 +96,11 @@ void NormalEnemy::receiveMessage(EventMessage message, void * param)
 {
 	if (message == EventMessage::HIT_PLAYER)
 	{
-		hit_player(*(Vector3*)param);
+		hit_player(*static_cast<Vector3*>(param));
 	}
 	if (message == EventMessage::DAMAGEPARAM)
 	{
-		DamageParam = *(int*)param;
+		DamageParam = *static_cast<int*>(param);
 	}
 	if (!invinciblyCheck)
 	{
@@ -109,7 +110,7 @@ void NormalEnemy::receiveMessage(EventMessage message, void * param)
 			change_state(NormalEnemyState::DAMAGE, MotionNormalEnemyDamage);
 			invinciblyCheck = true;
 
-			world_->add_actor(ActorGroup::Effect, new_actor<Effect2D>(world_, *(Vector3*)param ,/*Vector3::Distance(position_,player_->Getposition())*/1.0f,SPRITE_ID::EFFECT_BULLETHIT));
+			world_->add_actor(ActorGroup::Effect, new_actor<Effect2D>(world_, *static_cast<Vector3*>(param),1.0f, SPRITE_ID::EFFECT_BULLETHIT));
 			Sound::GetInstance().PlaySE_IsNotPlay(SE_ID::DAMAGEENEMY_SE);
 		}
 		if (message == EventMessage::HIT_BALL_HEAD)
@@ -117,13 +118,13 @@ void NormalEnemy::receiveMessage(EventMessage message, void * param)
 			hp_ = hp_ - 3;
 			change_state(NormalEnemyState::DAMAGE, MotionNormalEnemyDamage);
 			invinciblyCheck = true;
-			world_->add_actor(ActorGroup::Effect, new_actor<Effect2D>(world_, *(Vector3*)param,1.0f, SPRITE_ID::EFFECT_BULLETHIT));
+			world_->add_actor(ActorGroup::Effect, new_actor<Effect2D>(world_, *static_cast<Vector3*>(param),1.0f, SPRITE_ID::EFFECT_BULLETHIT));
 			Sound::GetInstance().PlaySE_IsNotPlay(SE_ID::DAMAGEENEMY_SE);
 		}
 
 		if (message == EventMessage::HIT_PLAYER_PUNCH)
 		{
-			hp_ = hp_ - *(int*)param;
+			hp_ = hp_ - *static_cast<int*>(param);
 			change_state(NormalEnemyState::DAMAGE, MotionNormalEnemyDamage);
 			invinciblyCheck = true;
 			Sound::GetInstance().PlaySE_IsNotPlay(SE_ID::ATTACK_SE);
@@ -227,7 +228,7 @@ void NormalEnemy::Punch()
 		auto Bullet = std::make_shared<EnemyAttackCollison>(world_, Vector3{ position_ + Getpose().Forward() * 6 },
 			std::make_shared<BoundingCapsule>(Vector3{ 0.0f,10.0f,0.0f }, Matrix::Identity, 3.0f, 3.0f));
 		world_->add_actor(ActorGroup::EnemyBullet, Bullet);
-		Bullet->SetParam(false, (int)mesh_.motion_end_time() / 2, 1);
+		Bullet->SetParam(false, static_cast<int>(mesh_.motion_end_time()) / 2, 1);
 	}
 	if (state_timer_ >= mesh_.motion_end_time())
 	{

@@ -6,12 +6,13 @@
 class PlayerItemBox : public Actor,public Menu {
 public:
 	PlayerItemBox(IWorld* world, int HPItem,int AttackItem, std::weak_ptr<Actor> player);
+	virtual ~PlayerItemBox()override{}
 
-	void initialize();
+	virtual void initialize()override ;
 
-	void update(float deltaTime);
+	virtual void update(float deltaTime)override;
 
-	void draw() const;
+	virtual void draw() const override;
 
 	virtual void receiveMessage(EventMessage message, void* param);
 

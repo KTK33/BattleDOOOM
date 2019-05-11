@@ -6,8 +6,9 @@ class ActionCamera : public Actor
 {
 public:
 	ActionCamera(IWorld* world, std::weak_ptr<Actor> m_Player);
+	virtual ~ActionCamera()override{}
 
-	void update(float deltaTime);
+	virtual void update(float deltaTime) override;
 
 	virtual void draw() const override;
 	//

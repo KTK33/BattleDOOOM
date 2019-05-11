@@ -7,19 +7,17 @@
 #include "../Sound/Sound.h"
 
 ActionModePause::ActionModePause(IWorld * world) :
-	Actor(world, "PauseUI", Vector3::Zero)
+	Actor(world, "PauseUI", Vector3::Zero),
+	areladySystemOpen{false},
+	PauseDecision{false}
 {
-	menuSize_ = 2;
-	cursorPos_ = 1;
-
-	PauseDecision = false;
-
-	areladySystemOpen = false;
-
+	initialize();
 }
 
 void ActionModePause::initialize()
 {
+	menuSize_ = 2;
+	cursorPos_ = 1;
 }
 
 void ActionModePause::update(float deltaTime)
@@ -42,7 +40,6 @@ void ActionModePause::update(float deltaTime)
 
 	if (world_->GetPauseCheck() == true) {
 		PlayerInput();
-		Pause();
 	}
 	else
 	{
@@ -56,8 +53,7 @@ void ActionModePause::update(float deltaTime)
 }
 
 void ActionModePause::receiveMessage(EventMessage message, void * param)
-{
-}
+{}
 
 void ActionModePause::draw() const
 {
@@ -115,9 +111,7 @@ void ActionModePause::PlayerInput()
 	}
 }
 
-void ActionModePause::Pause()
-{
-}
+
 void ActionModePause::SystemInput()
 {
 	//if (!areladySystemOpen)

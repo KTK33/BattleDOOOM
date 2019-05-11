@@ -10,8 +10,6 @@ void ActorManager::update(float delta_time){
 	for (const auto& actor : actors_) {
 		actor->update(delta_time);
 	}
-
-	root_->rootUpdate(delta_time);
 }
 
 //
@@ -19,7 +17,6 @@ void ActorManager::draw() const{
 	for (const auto& actor : actors_) {
 		actor->draw();
 	}
-	root_->rootDraw();
 }
 
 void ActorManager::shadowDraw() const

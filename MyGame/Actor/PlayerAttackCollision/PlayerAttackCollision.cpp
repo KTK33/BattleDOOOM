@@ -33,7 +33,7 @@ void PlayerAttackCollision::draw() const
 
 void PlayerAttackCollision::onCollide(Actor & other)
 {
-	Vector3 hitdir(other.Getposition() - position_);
+	const Vector3 hitdir(other.Getposition() - position_);
 	other.receiveMessage(EventMessage::HIT_PLAYER_PUNCH, (void*)&mattackparam);
 }
 

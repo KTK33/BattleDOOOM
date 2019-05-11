@@ -12,11 +12,9 @@ public:
 
 	virtual void receiveMessage(EventMessage message, void * param) override;
 
-	virtual void draw() const;
+	virtual void draw() const override;
 
 	void PlayerInput();
-
-	void Pause();
 
 	void SystemInput();
 

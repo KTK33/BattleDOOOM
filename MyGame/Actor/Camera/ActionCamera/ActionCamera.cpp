@@ -10,6 +10,7 @@
 ActionCamera::ActionCamera(IWorld * world, std::weak_ptr<Actor> m_Player) :
 	Actor(world, "ActionCamera", Vector3::Zero),
 	m_player{ m_Player },
+	player_{nullptr},
 	m_Offset(-30.0f, 0.0f, 0.0f),
 	m_Up(Vector3::UnitY),
 	m_PitchSpeed(0.0f),
@@ -76,7 +77,7 @@ void ActionCamera::PlayerInput(float deltaTime)
 
 	if (world_->GetPauseCheck() == true) return;
 	//ワールド上方を軸とするヨーのクォータニオンを作成
-	Quaternion yaw(Vector3::UnitY, m_YawSpeed * deltaTime);
+	const Quaternion yaw(Vector3::UnitY, m_YawSpeed * deltaTime);
 	//カメラのオフセットと上方ベクトルをヨーで変換
 	m_Offset = Quaternion::Transform(m_Offset, yaw);
 	m_Up = Quaternion::Transform(m_Up, yaw);
@@ -88,7 +89,7 @@ void ActionCamera::PlayerInput(float deltaTime)
 	right.Normalize();
 
 	//カメラ右方向を軸とするピッチのクォータニオンを作成
-	Quaternion pitch(right, m_PitchSpeed * deltaTime);
+	const Quaternion pitch(right, m_PitchSpeed * deltaTime);
 	//カメラのオフセットと上方ベクトルをピッチで変換
 	m_Offset = Quaternion::Transform(m_Offset, pitch);
 	m_Up = Quaternion::Transform(m_Up, pitch);
@@ -107,7 +108,7 @@ void ActionCamera::PlayerInput(float deltaTime)
 		target_ = enemy_->Getposition();
 		target_.y = target_.y + PlayerHeight;
 
-		Vector3 Target_Player_Vec = Vector3(enemy_->Getposition().x - position_.x, enemy_->Getposition().y - position_.y, enemy_->Getposition().z - position_.z).Normalize();
+		const Vector3 Target_Player_Vec = Vector3(enemy_->Getposition().x - position_.x, enemy_->Getposition().y - position_.y, enemy_->Getposition().z - position_.z).Normalize();
 		position_ = player_->Getposition() - Target_Player_Vec * 30;
 		position_.y = position_.y + PlayerHeight;
 
@@ -118,8 +119,8 @@ void ActionCamera::PlayerInput(float deltaTime)
 
 	}
 
-	m_player.lock()->receiveMessage(EventMessage::ACTION_CAMERA_FORWARD, (void*)&forward);
-	m_player.lock()->receiveMessage(EventMessage::ACTION_CAMERA_RIGHT, (void*)&right);
+	m_player.lock()->receiveMessage(EventMessage::ACTION_CAMERA_FORWARD, reinterpret_cast<void*>(&forward));
+	m_player.lock()->receiveMessage(EventMessage::ACTION_CAMERA_RIGHT, reinterpret_cast<void*>(&right));
 
 	TPSCamera::GetInstance().SetRange(0.5f, 1000.0f);
 	TPSCamera::GetInstance().Position.Set(position_);
@@ -132,6 +133,6 @@ void ActionCamera::receiveMessage(EventMessage message, void * param)
 {
 	if (message == EventMessage::TARGET_CAMERA)
 	{
-		mTargetCamera = *(bool*)param;
+		mTargetCamera =*static_cast<bool*>(param);
 	}
 }

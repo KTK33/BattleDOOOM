@@ -31,12 +31,10 @@ void ArrowAttack::update(float deltaTime)
 void ArrowAttack::onCollide(Actor & other)
 {
 	int DamageVal = 1;
-	other.receiveMessage(EventMessage::HIT_ENEMY_BULLET, (void*)&DamageVal);
+	other.receiveMessage(EventMessage::HIT_ENEMY_BULLET,  reinterpret_cast<void*>(&DamageVal));
 }
 
-void ArrowAttack::receiveMessage(EventMessage message, void * param)
-{
-}
+void ArrowAttack::receiveMessage(EventMessage message, void * param){}
 
 void ArrowAttack::draw() const
 {

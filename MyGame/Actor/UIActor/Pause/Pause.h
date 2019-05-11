@@ -5,6 +5,7 @@
 class PauseUI : public Actor ,public Menu{
 public:
 	PauseUI(IWorld* world);
+	virtual ~PauseUI()override{}
 
 	virtual void initialize() override;
 
@@ -12,7 +13,7 @@ public:
 
 	virtual void receiveMessage(EventMessage message, void * param) override;
 
-	virtual void draw() const;
+	virtual void draw() const override;
 
 	void PlayerInput();
 

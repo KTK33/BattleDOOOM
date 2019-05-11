@@ -11,7 +11,7 @@ public:
 
 	virtual void receiveMessage(EventMessage message, void * param) override;
 
-	virtual void draw() const;
+	virtual void draw() const override;
 
 private:
 	int m_playerHP;

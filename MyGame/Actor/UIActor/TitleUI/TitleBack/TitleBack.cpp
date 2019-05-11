@@ -7,10 +7,6 @@ TitleBack::TitleBack(IWorld * world):
 {
 }
 
-void TitleBack::initialize()
-{
-}
-
 void TitleBack::update(float deltaTime)
 {
 	TitleBackAlpha = min(TitleBackAlpha + 5, 255);

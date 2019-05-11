@@ -123,20 +123,20 @@ void TitleAnyUI::receiveMessage(EventMessage message, void * param)
 void TitleAnyUI::draw() const
 {
 	Vector2 NameSpriteSize = Sprite::GetInstance().GetSize(SPRITE_ID::TITLENAME);
-	Sprite::GetInstance().Draw(SPRITE_ID::TITLENAME, Vector2((float)WINDOW_WIDTH / 2, (float)WINDOW_HEIGHT - 900), NameSpriteSize/2,NameSize,NameAngle);
+	Sprite::GetInstance().Draw(SPRITE_ID::TITLENAME, Vector2(static_cast<float>(WINDOW_WIDTH) / 2, static_cast<float>(WINDOW_HEIGHT) - 900), NameSpriteSize/2,NameSize,NameAngle);
 
 	if (NameSize.x == 1)
 	{
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, NameBackAlpha);
-		Sprite::GetInstance().Draw(SPRITE_ID::TITLENAMEBACK, Vector2((float)WINDOW_WIDTH / 2, (float)WINDOW_HEIGHT - 900), NameSpriteSize / 2, NameBackSize);
+		Sprite::GetInstance().Draw(SPRITE_ID::TITLENAMEBACK, Vector2(static_cast<float>(WINDOW_WIDTH) / 2, static_cast<float>(WINDOW_HEIGHT) - 900), NameSpriteSize / 2, NameBackSize);
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	}
 
 	if (NameBackAlpha == 0 && PSCount < 3)
 	{
-		Vector2 PressStartSize = Sprite::GetInstance().GetSize(SPRITE_ID::TITLEPRESS_START);
+		const Vector2 PressStartSize = Sprite::GetInstance().GetSize(SPRITE_ID::TITLEPRESS_START);
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, PressStartAlpha);
-		Sprite::GetInstance().Draw(SPRITE_ID::TITLEPRESS_START, Vector2((float)WINDOW_WIDTH / 2, (float)WINDOW_HEIGHT - 200), PressStartSize / 2);
+		Sprite::GetInstance().Draw(SPRITE_ID::TITLEPRESS_START, Vector2(static_cast<float>(WINDOW_WIDTH) / 2, static_cast<float>(WINDOW_HEIGHT) - 200), PressStartSize / 2);
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	}
 
@@ -144,7 +144,7 @@ void TitleAnyUI::draw() const
 	{
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, TitleBackWhiteAlpha);
 		Sprite::GetInstance().Draw(SPRITE_ID::TITLEBACKWHITE, Vector2(0, 0));
-		Sprite::GetInstance().Draw(SPRITE_ID::TITLENAMEBACK, Vector2((float)WINDOW_WIDTH / 2, (float)WINDOW_HEIGHT - 900), NameSpriteSize / 2, NameBackSize2);
+		Sprite::GetInstance().Draw(SPRITE_ID::TITLENAMEBACK, Vector2(static_cast<float>(WINDOW_WIDTH) / 2, static_cast<float>(WINDOW_HEIGHT) - 900), NameSpriteSize / 2, NameBackSize2);
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	}
 }
