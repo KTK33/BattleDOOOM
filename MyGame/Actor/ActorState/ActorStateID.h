@@ -4,6 +4,26 @@ enum class ActorStateID
 {
 	NONE,
 
+	//シューティングプレイヤーのステイト
+	ShootingPlayerIdel,
+	ShootingPlayerGun,
+	ShootingPlayerForwardGun,
+	ShootingPlayerRightGun,
+	ShootingPlayerLeftGun,
+	ShootingPlayerBackGun,
+	ShootingPlayerReload,
+	ShootingPlayerIdleToAim,
+	ShootingPlayerAimToIdle,
+	ShootingPlayerDamage,
+	ShootingPlayerDamageGun,
+	ShootingPlayerDead,
+	ShootingPlayerGunPunch,
+	ShootingPlayerRun,
+	ShootingPlayerIdleAiming,
+	ShootingPlayerMove,
+	ShootingPlayerThohatu,
+	ShootingPlayerJump,
+
 	//アクションプレイヤーのステイト
 	ActionPlayerIdel,
 	ActionPlayerWalk,

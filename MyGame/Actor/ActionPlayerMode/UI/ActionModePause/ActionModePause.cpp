@@ -3,7 +3,7 @@
 #include "../Input/GamePad/GamePad.h"
 #include "../Input/Keyboard/Keyboard.h"
 #include "../Scene/GameData/GameDataManager.h"
-#include "../Actor/UIActor/Pause/PauseSystem.h"
+#include "../Actor/ShootingPlayerMode/UIActor/Pause/PauseSystem.h"
 #include "../Sound/Sound.h"
 
 ActionModePause::ActionModePause(IWorld * world) :

@@ -2,7 +2,7 @@
 #include "../Actor.h"
 #include "../Math/Matrix.h"
 #include "../Actor/EnemyAttackCollison/EnemyAttackCollison.h"
-#include "../Enemy/EnemyAttackFire/EnemyAttackFire.h"
+#include "../Actor/ShootingPlayerMode/ShootingEnemy/EnemyAttackFire/EnemyAttackFire.h"
 
 class ActorSystem
 {

@@ -2,7 +2,7 @@
 #include "../Graphics/Graphics3D.h"
 #include "../Texture/Sprite.h"
 #include "../Actor/Camera/TitleSceneCamera/TitleCamera.h"
-#include "../Actor/UIActor/TitleUI/TitlePlayer/TitlePlayer.h"
+#include "../Actor/CommonUIActor/TitleUI/TitlePlayer/TitlePlayer.h"
 #include "../GameData/GameDataManager.h"
 #include "../Sound/Sound.h"
 

@@ -8,8 +8,8 @@
 #include "../Actor/Camera/CameraSpring/CameraSpring.h"
 #include "../Scene/GameData/GameDataManager.h"
 #include "../Texture/Sprite.h"
-#include "../Actor/UIActor/PlaySceneUI/GameClearUIh.h"
-#include "../Actor/UIActor/PlaySceneUI/GameOverUI.h"
+#include "../Actor/ShootingPlayerMode/UIActor/PlaySceneUI/GameClearUIh.h"
+#include "../Actor/ShootingPlayerMode/UIActor/PlaySceneUI/GameOverUI.h"
 
 ShootingCamera::ShootingCamera(IWorld * world, std::weak_ptr<Actor> m_Player) :
 	Actor(world, "Camera", Vector3::Zero),
@@ -38,6 +38,13 @@ void ShootingCamera::update(float deltaTime)
 		//戦闘時のカメラの設定
 		CameraSet(deltaTime);
 	}
+
+	//カメラに値を設定
+	TPSCamera::GetInstance().SetRange(0.5f, 1000.0f);
+	TPSCamera::GetInstance().Position.Set(position_);
+	TPSCamera::GetInstance().Target.Set(mtarget_);
+	TPSCamera::GetInstance().Up.Set(Vector3::Up);
+	TPSCamera::GetInstance().Update();
 
 	//ばね
 	CameraSpring::move(position_, velocity_, position_,1.0f, 0.2f, 0.8f);
@@ -70,13 +77,6 @@ void ShootingCamera::CameraSet(float deltaTime)
 		//エイム外
 		Out_Aim();
 	}
-
-	//カメラに値を設定
-	TPSCamera::GetInstance().SetRange(0.5f, 1000.0f);
-	TPSCamera::GetInstance().Position.Set(position_);
-	TPSCamera::GetInstance().Target.Set(mtarget_);
-	TPSCamera::GetInstance().Up.Set(Vector3::Up);
-	TPSCamera::GetInstance().Update();
 }
 
 void ShootingCamera::Aim_Input()

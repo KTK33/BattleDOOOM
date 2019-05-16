@@ -1,8 +1,7 @@
 #include "ShootingPlayScene.h"
-#include "../Actor/PlayerBullet/PlayerBullet.h"
-#include "../Actor/Player/Player/Player.h"
-#include "../Actor/Enemy/NormalEnemy/NormalEnemy.h"
-#include "../Actor/Enemy/BossEnemy/BossEnemy.h"
+#include "../Actor/ShootingPlayerMode/ShootingPlayer/ShootingPlayerActor/ShootingPlayerActor.h"
+#include "../Actor/ShootingPlayerMode/ShootingEnemy/NormalEnemy/NormalEnemy.h"
+#include "../Actor/ShootingPlayerMode/ShootingEnemy/BossEnemy/BossEnemy.h"
 #include "../Actor/ShootingPlayerMode/ShootingCamera/ShootingCamera.h"
 #include "../Actor/ActorGroup.h"
 #include "../Fiield/Field.h"
@@ -16,11 +15,11 @@
 #include "../Input/Keyboard/Keyboard.h"
 #include "../Texture/Sprite.h"
 #include "../Game/Define.h"
-#include "../Actor/UIActor/AnyUI/AnyUI.h"
-#include "../Actor/UIActor/PlayerTextUI/PlayerTextUI.h"
-#include "../Actor/UIActor/Pause/Pause.h"
-#include "../Actor/UIActor/FadeUI/FadeUI.h"
-#include "../Actor/UIActor/PlaySceneUI/GameClearUIh.h"
+#include "../Actor/ShootingPlayerMode/UIActor/AnyUI/AnyUI.h"
+#include "../Actor/ShootingPlayerMode/UIActor/ShootingPlayerTextUI/ShootingPlayerTextUI.h"
+#include "../Actor/ShootingPlayerMode/UIActor/Pause/Pause.h"
+#include "../Actor/ShootingPlayerMode/UIActor/PlaySceneUI/GameClearUIh.h"
+#include "../Actor/CommonUIActor/FadeUI/FadeUI.h"
 #include "../Sound/Sound.h"
 
 #include<DxLib.h>
@@ -40,10 +39,10 @@ void ShootingPlayScene::start() {
 
 	world_.add_actor(ActorGroup::Fade, new_actor<FadeUI>(&world_, 1, 2));
 
-	auto P_Text = new_actor<PlayerTextUI>(&world_);
+	auto P_Text = new_actor<ShootingPlayerTextUI>(&world_);
 	world_.add_actor(ActorGroup::UI, P_Text);
 
-	auto P = new_actor<Player>(0, 1, &world_, Vector3{ 0.0f, -20.0f,0.0f }, P_Text);
+	auto P = new_actor<ShootingPlayerActor>(0, 1, &world_, Vector3{ 0.0f, -20.0f,0.0f }, P_Text);
 	world_.add_actor(ActorGroup::Player, P);
 
 	auto ANYUI = new_actor<AnyUI>(&world_,P);

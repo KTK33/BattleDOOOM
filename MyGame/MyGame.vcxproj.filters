@@ -147,15 +147,6 @@
     <ClCompile Include="Actor\Camera\TPSCmaera.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Actor\UIActor\PlaySceneUI\GameOverUI.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Actor\UIActor\PlaySceneUI\GameClearUIh.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Actor\Player\PlayerAdvent.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Scene\ActionPlayScene\ActionPlayScene.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -174,54 +165,6 @@
     <ClCompile Include="Actor\Camera\TitleSceneCamera\TitleCamera.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Actor\Enemy\BossEnemy\BossEnemy.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Actor\Enemy\EnemyAttackFire\EnemyAttackFire.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Actor\Enemy\EnemyHeadShot\EnemyHeadShot.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Actor\ItemActor\BulletItem\BulletItem.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Actor\ItemActor\HPRecoverItem\HPRecoverItem.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Actor\ItemActor\ItemCreater\ItemCreater.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Actor\Player\PlayerItemBox\PlayerItemBox.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Actor\Player\Player\Player.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Actor\PlayerBullet\PlayerBullet.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Actor\UIActor\BossEnemyUI\BossEnemyUI.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Actor\UIActor\Effect2D\Effect2D.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Actor\UIActor\FadeUI\FadeUI.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Actor\UIActor\Pause\Pause.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Actor\UIActor\Pause\PauseSystem.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Actor\UIActor\PlayerTextUI\PlayerTextUI.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Actor\UIActor\AnyUI\AnyUI.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Actor\ActorSystem\ActorSystem.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -232,21 +175,6 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Input\Mouse\Mouse.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Actor\Enemy\NormalEnemy\NormalEnemy.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Actor\UIActor\TitleUI\TitleAnyUI\TitleAnyUI.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Actor\UIActor\TitleUI\TitleBack\TitleBack.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Actor\UIActor\TitleUI\TitleBullet\TitleBullet.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Actor\UIActor\TitleUI\TitlePlayer\TitlePlayer.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Actor\ActionPlayerMode\ActionPlayer\ActionPlayerMotionNum.h">
@@ -325,6 +253,75 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Actor\ShootingPlayerMode\ShootingCamera\ShootingCamera.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\ShootingPlayerMode\UIActor\AnyUI\AnyUI.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\ShootingPlayerMode\UIActor\BossEnemyUI\BossEnemyUI.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\ShootingPlayerMode\UIActor\Pause\Pause.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\ShootingPlayerMode\UIActor\Pause\PauseSystem.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\ShootingPlayerMode\UIActor\PlaySceneUI\GameClearUIh.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\ShootingPlayerMode\UIActor\PlaySceneUI\GameOverUI.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\ShootingPlayerMode\ItemActor\BulletItem\BulletItem.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\ShootingPlayerMode\ItemActor\HPRecoverItem\HPRecoverItem.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\ShootingPlayerMode\ItemActor\ItemCreater\ItemCreater.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\ShootingPlayerMode\ShootingEnemy\BossEnemy\BossEnemy.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\ShootingPlayerMode\ShootingEnemy\EnemyAttackFire\EnemyAttackFire.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\ShootingPlayerMode\ShootingEnemy\EnemyHeadShot\EnemyHeadShot.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\ShootingPlayerMode\ShootingEnemy\NormalEnemy\NormalEnemy.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\ShootingPlayerMode\ShootingPlayer\ShootingPlayerActor\ShootingPlayerActor.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\ShootingPlayerMode\ShootingPlayerBullet\ShootingPlayerBullet.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\ShootingPlayerMode\ShootingPlayer\ShootingPlayerItemBox\ShootingPlayerItemBox.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\ShootingPlayerMode\UIActor\ShootingPlayerTextUI\ShootingPlayerTextUI.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\CommonUIActor\TitleUI\TitleAnyUI\TitleAnyUI.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\CommonUIActor\TitleUI\TitleBack\TitleBack.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\CommonUIActor\TitleUI\TitleBullet\TitleBullet.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\CommonUIActor\TitleUI\TitlePlayer\TitlePlayer.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\CommonUIActor\FadeUI\FadeUI.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\CommonUIActor\Effect2D\Effect2D.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -497,9 +494,6 @@
     <ClInclude Include="Actor\TestEnemy.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Actor\Player\PlayerState.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Game\Define.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -527,18 +521,6 @@
     <ClInclude Include="Actor\Camera\TPSCamera.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Actor\Player\PlayerMotionNum.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Actor\UIActor\PlaySceneUI\GameOverUI.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Actor\UIActor\PlaySceneUI\GameClearUIh.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Actor\Player\PlayerAdvent.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Scene\ActionPlayScene\ActionPlayScene.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -557,54 +539,6 @@
     <ClInclude Include="Actor\Camera\TitleSceneCamera\TitleCamera.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Actor\Enemy\BossEnemy\BossEnemy.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Actor\Enemy\EnemyAttackFire\EnemyAttackFire.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Actor\Enemy\EnemyHeadShot\EnemyHeadShot.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Actor\ItemActor\BulletItem\BulletItem.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Actor\ItemActor\HPRecoverItem\HPRecoverItem.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Actor\ItemActor\ItemCreater\ItemCreater.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Actor\Player\PlayerItemBox\PlayerItemBox.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Actor\Player\Player\Player.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Actor\PlayerBullet\PlayerBullet.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Actor\UIActor\BossEnemyUI\BossEnemyUI.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Actor\UIActor\Effect2D\Effect2D.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Actor\UIActor\FadeUI\FadeUI.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Actor\UIActor\Pause\Pause.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Actor\UIActor\Pause\PauseSystem.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Actor\UIActor\PlayerTextUI\PlayerTextUI.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Actor\UIActor\AnyUI\AnyUI.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Actor\ActorSystem\ActorSystem.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -615,21 +549,6 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Input\Mouse\Mouse.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Actor\Enemy\NormalEnemy\NormalEnemy.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Actor\UIActor\TitleUI\TitleAnyUI\TitleAnyUI.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Actor\UIActor\TitleUI\TitleBack\TitleBack.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Actor\UIActor\TitleUI\TitleBullet\TitleBullet.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Actor\UIActor\TitleUI\TitlePlayer\TitlePlayer.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Scene\GameLoadingScene\LoadingSceneInc.h">
@@ -720,6 +639,81 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Actor\ShootingPlayerMode\ShootingCamera\ShootingCamera.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ShootingPlayerMode\UIActor\AnyUI\AnyUI.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ShootingPlayerMode\UIActor\BossEnemyUI\BossEnemyUI.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ShootingPlayerMode\UIActor\Pause\Pause.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ShootingPlayerMode\UIActor\Pause\PauseSystem.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ShootingPlayerMode\UIActor\PlaySceneUI\GameClearUIh.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ShootingPlayerMode\UIActor\PlaySceneUI\GameOverUI.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ShootingPlayerMode\ItemActor\BulletItem\BulletItem.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ShootingPlayerMode\ItemActor\HPRecoverItem\HPRecoverItem.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ShootingPlayerMode\ItemActor\ItemCreater\ItemCreater.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ShootingPlayerMode\ShootingEnemy\BossEnemy\BossEnemy.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ShootingPlayerMode\ShootingEnemy\EnemyAttackFire\EnemyAttackFire.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ShootingPlayerMode\ShootingEnemy\EnemyHeadShot\EnemyHeadShot.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ShootingPlayerMode\ShootingEnemy\NormalEnemy\NormalEnemy.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ShootingPlayerMode\ShootingPlayer\PlayerState.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ShootingPlayerMode\ShootingPlayer\ShootingPlayerActor\ShootingPlayerActor.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ShootingPlayerMode\ShootingPlayer\ShootingPlayerMotionNum.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ShootingPlayerMode\ShootingPlayerBullet\ShootingPlayerBullet.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ShootingPlayerMode\ShootingPlayer\ShootingPlayerItemBox\ShootingPlayerItemBox.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ShootingPlayerMode\UIActor\ShootingPlayerTextUI\ShootingPlayerTextUI.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\CommonUIActor\TitleUI\TitleAnyUI\TitleAnyUI.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\CommonUIActor\TitleUI\TitleBack\TitleBack.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\CommonUIActor\TitleUI\TitleBullet\TitleBullet.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\CommonUIActor\TitleUI\TitlePlayer\TitlePlayer.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\CommonUIActor\FadeUI\FadeUI.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\CommonUIActor\Effect2D\Effect2D.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
