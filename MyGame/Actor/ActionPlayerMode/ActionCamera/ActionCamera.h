@@ -11,13 +11,6 @@ public:
 	virtual void update(float deltaTime) override;
 
 	virtual void draw() const override;
-	//
-	void move(
-		const Vector3& rest_position, //ばねの静止位置
-		float stiffness,                //ばね定数(ばねの強さ)
-		float friction,                 //摩擦力
-		float mass                      //質量
-	);
 
 	void PlayerInput(float deltaTime);
 
@@ -41,6 +34,7 @@ private:
 	//ヨーの角速度
 	float m_YawSpeed;
 
+	//プレイヤーの高さ
 	int PlayerHeight{ 15 };
 
 	bool mTargetCamera;

@@ -4,8 +4,8 @@
 #include "../Input/GamePad/GamePad.h"
 #include "../Input/KeyBoard/Keyboard.h"
 #include "../Math/Vector2.h"
-
-#include "../TPSCamera.h"
+#include "../Actor/Camera/TPSCamera.h"
+#include "../Actor/Camera/CameraSpring/CameraSpring.h"
 #include "../Scene/GameData/GameDataManager.h"
 #include "../Texture/Sprite.h"
 #include "../Actor/UIActor/PlaySceneUI/GameClearUIh.h"
@@ -40,24 +40,10 @@ void ShootingCamera::update(float deltaTime)
 	}
 
 	//ばね
-	move(position_, 1.0f, 0.2f, 0.8f);
+	CameraSpring::move(position_, velocity_, position_,1.0f, 0.2f, 0.8f);
 }
 
 void ShootingCamera::draw() const{}
-
-void ShootingCamera::move(const Vector3 & rest_position, float stiffness, float friction, float mass)
-{
-	//ばねの伸び具合を計算
-	const auto stretch = position_ - rest_position;
-	//ばねの力を計算
-	const auto force = -stiffness * stretch;
-	//加速度を追加
-	const auto acceleration = force / mass;
-	//移動速度を計算
-	velocity_ = friction * (velocity_ + acceleration);
-	//座標の更新
-	position_ += velocity_;
-}
 
 void ShootingCamera::CameraSet(float deltaTime)
 {

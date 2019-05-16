@@ -26,6 +26,8 @@ void ArrowAttack::update(float deltaTime)
 	mesh_.transform(Getpose());
 
 	position_ += plyaerVector * 0.03f;
+
+	collision();
 }
 
 void ArrowAttack::onCollide(Actor & other)
@@ -39,7 +41,6 @@ void ArrowAttack::receiveMessage(EventMessage message, void * param){}
 void ArrowAttack::draw() const
 {
 	mesh_.draw();
-	//body_->transform(Getpose())->draw();
 }
 
 void ArrowAttack::collision()

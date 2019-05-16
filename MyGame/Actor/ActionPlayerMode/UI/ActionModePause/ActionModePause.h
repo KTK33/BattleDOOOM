@@ -14,12 +14,13 @@ public:
 
 	virtual void draw() const override;
 
+	//“ü—Í
 	void PlayerInput();
 
 	void SystemInput();
 
 private:
-	bool PauseDecision;
+	bool PauseDecision; //ƒ|[ƒY‚ÌŒˆ’èó‘Ô
 
 	bool areladySystemOpen;
 };

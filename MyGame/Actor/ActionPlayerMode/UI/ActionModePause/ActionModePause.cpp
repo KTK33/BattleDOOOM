@@ -22,20 +22,23 @@ void ActionModePause::initialize()
 
 void ActionModePause::update(float deltaTime)
 {
-	if (GameDataManager::getInstance().GetPlayerDead() == false && GameDataManager::getInstance().GetDeadBossEnemy() == false)
+	//プレイヤーが死んでいるかボスが死んでいたら
+	if (GameDataManager::getInstance().GetPlayerDead() == false && GameDataManager::getInstance().GetDeadBossEnemy() == false) return;
+
+	if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM8) || 
+		Keyboard::GetInstance().KeyTriggerDown(KEYCODE::T))
 	{
-		if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM8) || Keyboard::GetInstance().KeyTriggerDown(KEYCODE::T)) {
-			Sound::GetInstance().PlaySE_IsNotPlay(SE_ID::PAUSEKETTEI_SE);
-			PauseDecision = false;
-			if (world_->GetPauseCheck() == true)
-			{
-				world_->SetPauseCheck(false);
-			}
-			else
-			{
-				world_->SetPauseCheck(true);
-			}
+		PauseDecision = false;
+
+		//ポーズ状態を切り替える
+		if (world_->GetPauseCheck() == true){
+			world_->SetPauseCheck(false);
 		}
+		else{
+			world_->SetPauseCheck(true);
+		}
+
+		Sound::GetInstance().PlaySE_IsNotPlay(SE_ID::PAUSEKETTEI_SE);
 	}
 
 	if (world_->GetPauseCheck() == true) {
@@ -64,6 +67,7 @@ void ActionModePause::draw() const
 		Sprite::GetInstance().Draw(SPRITE_ID::ACTIONPAUSE_OPERATION_UI, Vector2(1050, WINDOW_HEIGHT - 550), Vector2(Sprite::GetInstance().GetSize(SPRITE_ID::ACTIONPAUSE_OPERATION_UI).x / 2, Sprite::GetInstance().GetSize(SPRITE_ID::ACTIONPAUSE_OPERATION_UI).y / 2));
 		Sprite::GetInstance().Draw(SPRITE_ID::ACTIONPAUSE_TITLEBACK, Vector2(1050, WINDOW_HEIGHT - 340), Vector2(Sprite::GetInstance().GetSize(SPRITE_ID::ACTIONPAUSE_TITLEBACK).x / 2, Sprite::GetInstance().GetSize(SPRITE_ID::ACTIONPAUSE_TITLEBACK).y / 2));
 
+		//カーソルの場所、決定場所により表示内容の変更
 		switch (cursorPos_) {
 		case 1:
 			Sprite::GetInstance().DrawSetCenter(SPRITE_ID::ACTIONPAUSE_CURSOR, Vector2(600, WINDOW_HEIGHT - 550));
@@ -82,31 +86,36 @@ void ActionModePause::PlayerInput()
 {
 	if (PauseDecision)
 	{
-		if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM1) || Keyboard::GetInstance().KeyTriggerDown(KEYCODE::LCTRL))
+		//ポーズでのキャンセル
+		if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM1) || 
+			Keyboard::GetInstance().KeyTriggerDown(KEYCODE::LCTRL))
 		{
 			PauseDecision = false;
-			GameDataManager::getInstance().SetItemBoXOpen(false);
 		}
 	}
 	else
 	{
-		if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM1) || Keyboard::GetInstance().KeyTriggerDown(KEYCODE::LCTRL))
+		if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM1) || 
+			Keyboard::GetInstance().KeyTriggerDown(KEYCODE::LCTRL))
 		{
 			world_->SetPauseCheck(false);
 		}
 
-		if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::UP) || Keyboard::GetInstance().KeyTriggerDown(KEYCODE::UP))
+		if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::UP) || 
+			Keyboard::GetInstance().KeyTriggerDown(KEYCODE::UP))
 		{
 			moveCursor(1);
 		}
-		if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::DOWN) || Keyboard::GetInstance().KeyTriggerDown(KEYCODE::DOWN))
+		if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::DOWN) || 
+			Keyboard::GetInstance().KeyTriggerDown(KEYCODE::DOWN))
 		{
 			moveCursor(-1);
 		}
-		if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM2) || Keyboard::GetInstance().KeyTriggerDown(KEYCODE::SPACE))
+		if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM2) || 
+			Keyboard::GetInstance().KeyTriggerDown(KEYCODE::SPACE))
 		{
-			Sound::GetInstance().PlaySE_IsNotPlay(SE_ID::PAUSEKETTEI_SE);
 			PauseDecision = true;
+			Sound::GetInstance().PlaySE_IsNotPlay(SE_ID::PAUSEKETTEI_SE);
 		}
 	}
 }

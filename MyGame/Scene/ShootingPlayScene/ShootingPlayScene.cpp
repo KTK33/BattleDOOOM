@@ -3,7 +3,7 @@
 #include "../Actor/Player/Player/Player.h"
 #include "../Actor/Enemy/NormalEnemy/NormalEnemy.h"
 #include "../Actor/Enemy/BossEnemy/BossEnemy.h"
-#include "../Actor/Camera/ShootingCamera/ShootingCamera.h"
+#include "../Actor/ShootingPlayerMode/ShootingCamera/ShootingCamera.h"
 #include "../Actor/ActorGroup.h"
 #include "../Fiield/Field.h"
 #include "../Skybox/Skybox.h"
@@ -59,7 +59,6 @@ void ShootingPlayScene::start() {
 
 	auto dummy3 = new_actor<NormalEnemy>(13, &world_, Vector3{ -10.0f , -20.0f, -80.0f }, Matrix::CreateRotationY(Random::rand(0.0f, 360.0f)), ANYUI);
 	world_.add_actor(ActorGroup::Enemy, dummy3);
-
 
 	world_.add_actor(ActorGroup::System, new_actor<ShootingCamera>(&world_,P));
 

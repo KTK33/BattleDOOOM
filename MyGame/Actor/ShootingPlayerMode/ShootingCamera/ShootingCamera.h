@@ -11,14 +11,6 @@ public:
 
 	virtual void draw() const override;
 
-	//‚Î‚Ë
-	void move(
-		const Vector3& rest_position, //‚Î‚Ë‚ÌÃ~ˆÊ’u
-		float stiffness,                //‚Î‚Ë’è”(‚Î‚Ë‚Ì‹­‚³)
-		float friction,                 //–€C—Í
-		float mass                      //¿—Ê
-	);
-
 	//ƒJƒƒ‰‚Ìİ’è
 	void CameraSet(float deltaTime);
 

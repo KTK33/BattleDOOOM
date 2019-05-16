@@ -18,6 +18,7 @@ void RedSamuraiUI::update(float deltaTime)
 
 void RedSamuraiUI::receiveMessage(EventMessage message, void * param)
 {
+	//Ô˜‚ÌHP‚ğó‚¯æ‚é
 	if (message == EventMessage::SAMURAI_HP)
 	{
 		m_samuraiHP = *static_cast<int*>(param);

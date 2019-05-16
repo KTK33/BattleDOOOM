@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -151,15 +151,28 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Actor\ActionPlayerMode\ActionGameManager\ActionGameManager.cpp" />
+    <ClCompile Include="Actor\ActionPlayerMode\ActionPlayer\ActionPlayerActor.cpp" />
     <ClCompile Include="Actor\ActionPlayerMode\ActionPlayer\ActionPlayerMotionNum.h" />
-    <ClCompile Include="Actor\ActionPlayerMode\ActionPlayer\ActionPlayer.cpp" />
+    <ClCompile Include="Actor\ActionPlayerMode\ActionPlayer\State\ActionPlayerAttack.cpp" />
+    <ClCompile Include="Actor\ActionPlayerMode\ActionPlayer\State\ActionPlayerAvoidance.cpp" />
+    <ClCompile Include="Actor\ActionPlayerMode\ActionPlayer\State\ActionPlayerAvoidanceAttack.cpp" />
+    <ClCompile Include="Actor\ActionPlayerMode\ActionPlayer\State\ActionPlayerDead.cpp" />
+    <ClCompile Include="Actor\ActionPlayerMode\ActionPlayer\State\ActionPlayerIdle.cpp" />
     <ClCompile Include="Actor\ActionPlayerMode\RedSamurai\Arrow\ArrowAttack.cpp" />
-    <ClCompile Include="Actor\ActionPlayerMode\RedSamurai\RedSamurai.cpp" />
+    <ClCompile Include="Actor\ActionPlayerMode\RedSamurai\RedSamuraiActor.cpp" />
+    <ClCompile Include="Actor\ActionPlayerMode\RedSamurai\State\RedSamuraiAttack.cpp" />
+    <ClCompile Include="Actor\ActionPlayerMode\RedSamurai\State\RedSamuraiDead.cpp" />
+    <ClCompile Include="Actor\ActionPlayerMode\RedSamurai\State\RedSamuraiIdle.cpp" />
+    <ClCompile Include="Actor\ActionPlayerMode\RedSamurai\State\RedSamuraiWalk.cpp" />
     <ClCompile Include="Actor\ActionPlayerMode\UI\ActionModePause\ActionModePause.cpp" />
     <ClCompile Include="Actor\ActionPlayerMode\UI\ActionPlayerUI.cpp" />
     <ClCompile Include="Actor\ActionPlayerMode\UI\RedSamuraiUI.cpp" />
-    <ClCompile Include="Actor\Camera\ActionCamera\ActionCamera.cpp" />
-    <ClCompile Include="Actor\Camera\ShootingCamera\ShootingCamera.cpp" />
+    <ClCompile Include="Actor\ActorParameters.cpp" />
+    <ClCompile Include="Actor\ActorState\ActorStateBase.cpp" />
+    <ClCompile Include="Actor\ActorState\ActorStateManager.cpp" />
+    <ClCompile Include="Actor\ActionPlayerMode\ActionCamera\ActionCamera.cpp" />
+    <ClCompile Include="Actor\Camera\CameraSpring\CameraSpring.cpp" />
+    <ClCompile Include="Actor\ShootingPlayerMode\ShootingCamera\ShootingCamera.cpp" />
     <ClCompile Include="Actor\Camera\TitleSceneCamera\TitleCamera.cpp" />
     <ClCompile Include="Actor\Camera\TPSCmaera.cpp" />
     <ClCompile Include="Actor\Enemy\BossEnemy\BossEnemy.cpp" />
@@ -244,15 +257,31 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor\ActionPlayerMode\ActionGameManager\ActionGameManager.h" />
+    <ClInclude Include="Actor\ActionPlayerMode\ActionPlayer\ActionPlayerActor.h" />
+    <ClInclude Include="Actor\ActionPlayerMode\ActionPlayer\State\ActionPlayerAttack.h" />
+    <ClInclude Include="Actor\ActionPlayerMode\ActionPlayer\State\ActionPlayerAvoidance.h" />
+    <ClInclude Include="Actor\ActionPlayerMode\ActionPlayer\State\ActionPlayerAvoidanceAttack.h" />
+    <ClInclude Include="Actor\ActionPlayerMode\ActionPlayer\State\ActionPlayerDead.h" />
+    <ClInclude Include="Actor\ActionPlayerMode\ActionPlayer\State\ActionPlayerIdle.h" />
     <ClInclude Include="Actor\ActionPlayerMode\RedSamurai\Arrow\ArrowAttack.h" />
-    <ClInclude Include="Actor\ActionPlayerMode\RedSamurai\RedSamurai.h" />
+    <ClInclude Include="Actor\ActionPlayerMode\RedSamurai\RedSamuraiActor.h" />
     <ClInclude Include="Actor\ActionPlayerMode\RedSamurai\RedSamuraiMotionNum.h" />
-    <ClInclude Include="Actor\ActionPlayerMode\RedSamurai\RedSamuraiState.h" />
+    <ClInclude Include="Actor\ActionPlayerMode\RedSamurai\State\RedSamuraiAttack.h" />
+    <ClInclude Include="Actor\ActionPlayerMode\RedSamurai\State\RedSamuraiDead.h" />
+    <ClInclude Include="Actor\ActionPlayerMode\RedSamurai\State\RedSamuraiIdle.h" />
+    <ClInclude Include="Actor\ActionPlayerMode\RedSamurai\State\RedSamuraiWalk.h" />
     <ClInclude Include="Actor\ActionPlayerMode\UI\ActionModePause\ActionModePause.h" />
     <ClInclude Include="Actor\ActionPlayerMode\UI\ActionPlayerUI.h" />
     <ClInclude Include="Actor\ActionPlayerMode\UI\RedSamuraiUI.h" />
-    <ClInclude Include="Actor\Camera\ActionCamera\ActionCamera.h" />
-    <ClInclude Include="Actor\Camera\ShootingCamera\ShootingCamera.h" />
+    <ClInclude Include="Actor\ActorParameters.h" />
+    <ClInclude Include="Actor\ActorState\ActorParameters.h" />
+    <ClInclude Include="Actor\ActorState\ActorStateBase.h" />
+    <ClInclude Include="Actor\ActorState\ActorStateID.h" />
+    <ClInclude Include="Actor\ActorState\ActorStateManager.h" />
+    <ClInclude Include="Actor\ActorState\ActorStatePtr.h" />
+    <ClInclude Include="Actor\ActionPlayerMode\ActionCamera\ActionCamera.h" />
+    <ClInclude Include="Actor\Camera\CameraSpring\CameraSpring.h" />
+    <ClInclude Include="Actor\ShootingPlayerMode\ShootingCamera\ShootingCamera.h" />
     <ClInclude Include="Actor\Camera\TitleSceneCamera\TitleCamera.h" />
     <ClInclude Include="Actor\Camera\TPSCamera.h" />
     <ClInclude Include="Actor\Enemy\BossEnemy\BossEnemy.h" />
@@ -264,8 +293,6 @@
     <ClInclude Include="Actor\ItemActor\BulletItem\BulletItem.h" />
     <ClInclude Include="Actor\ItemActor\HPRecoverItem\HPRecoverItem.h" />
     <ClInclude Include="Actor\ItemActor\ItemCreater\ItemCreater.h" />
-    <ClInclude Include="Actor\ActionPlayerMode\ActionPlayer\ActionPlayerState.h" />
-    <ClInclude Include="Actor\ActionPlayerMode\ActionPlayer\ActionPlayer.h" />
     <ClInclude Include="Actor\PlayerBullet\PlayerBullet.h" />
     <ClInclude Include="Actor\Player\Player\Player.h" />
     <ClInclude Include="Actor\Player\PlayerAdvent.h" />
