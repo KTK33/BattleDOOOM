@@ -72,7 +72,6 @@ void ShootingPlayerTextUI::receiveMessage(EventMessage message, void * param)
 	{
 		AttackUpCheck = *static_cast<bool*>(param);
 	}
-
 }
 
 void ShootingPlayerTextUI::draw() const

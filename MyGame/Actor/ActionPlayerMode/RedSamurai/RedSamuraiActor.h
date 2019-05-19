@@ -14,9 +14,12 @@
 #include "../Actor/ActorParameters.h"
 #include "../Actor/ActorState/ActorStateManager.h"
 
+#include "../Actor/ActorCommon/CommonInc.h"
+#include "../Actor/ActionPlayerMode/UI/HPUI/RedSamuraiHP.h"
+
 class RedSamuraiActor : public Actor, public ActorSystem {
 public:
-	RedSamuraiActor(int model, int sward, int arrow, int quiver, IWorld* world, const Vector3& position, Matrix & rotation, std::weak_ptr<Actor> ui, const IBodyPtr& body = std::make_shared<BoundingCapsule>(Vector3{ 0.0f,9.0f,0.0f }, Matrix::Identity, 10.0f, 4.0f));
+	RedSamuraiActor(int model, int sward, int arrow, int quiver, IWorld* world, const Vector3& position, Matrix & rotation, const IBodyPtr& body = std::make_shared<BoundingCapsule>(Vector3{ 0.0f,9.0f,0.0f }, Matrix::Identity, 10.0f, 4.0f));
 	virtual ~RedSamuraiActor() override {};
 
 	virtual void initialize() override;
@@ -33,26 +36,33 @@ private:
 	void getPlayer();
 	//壁と床の判定
 	void collision();
-	//重力処理
-	void gravity_process();
 	//プレイヤー向き
 	Matrix PlayerLook();
-	//武器の描画
-	void draw_weapon() const;
 	//武器の移動
 	void weapon_transfer();
-	//接触
-	void Hit(const Vector3& dir);
 private:
-	std::weak_ptr<Actor> m_ui{};
-	IBodyPtr Initbody;
+	using StateMap = std::map<ActorStateID, ActorStateManager>;
+	StateMap redsamuraiState_;
+
+	ActorStateID mcurrentStateID;
+
+	ActorParameters parameters_;
+
 	Actor* player_;
 	//アニメーションメッシュ
 	AnimatedMesh mesh_;
+
+	RedSamuraiHP mHP;
+	ActorPush mAP;
+
+	DrawWeapon mDW;
+
+	Gravity mG;
+
 	//持ち物モデル
-	int sword_;
-	int arrow_;
-	int quiver_;
+	int msword_;
+	int marrow_;
+	int mquiver_;
 
 	//移動速度
 	const float WalkSpeed{ 0.25f };
@@ -60,11 +70,4 @@ private:
 	int mSwordPos;
 	int mArrowPos;
 	int mQuiverPos;
-
-	using StateMap = std::map<ActorStateID, ActorStateManager>;
-	StateMap redsamuraiState_;
-
-	ActorStateID mcurrentStateID;
-
-	ActorParameters parameters_;
 };

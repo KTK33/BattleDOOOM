@@ -7,6 +7,7 @@
 #include "../Actor/Camera/TPSCamera.h"
 #include "../Actor/Camera/CameraSpring/CameraSpring.h"
 #include "../Scene/GameData/GameDataManager.h"
+#include "../Actor/ShootingPlayerMode/ShootingPlayer/ShootingPlayerActor/ShootingPlayerParam/ShootingPlayerParam.h"
 #include "../Texture/Sprite.h"
 #include "../Actor/ShootingPlayerMode/UIActor/PlaySceneUI/GameClearUIh.h"
 #include "../Actor/ShootingPlayerMode/UIActor/PlaySceneUI/GameOverUI.h"
@@ -69,7 +70,8 @@ void ShootingCamera::CameraSet(float deltaTime)
 		Aim_Input();
 	}
 
-	if (GameDataManager::getInstance().GetSightCheck() == true){
+	//プレイヤーがエイム中か
+	if (ShootingPlayerParam::getInstance().Get_AimCheck()){
 		//エイム中
 		In_Aim();
 	}
@@ -115,7 +117,7 @@ void ShootingCamera::Out_Aim()
 		mGetplayer_->Getposition().z + 10 * mGetplayer_->Getrotation().Backward().z + 5 * mGetplayer_->Getrotation().Right().z);
 
 	//ターゲットの場所を徐々に更新
-	mtarget_ = Vector3::Lerp(mtarget_, position_ + mGetplayer_->Getrotation().Forward(), 0.1f);
+	mtarget_ = Vector3::Lerp(mtarget_, position_ + mGetplayer_->Getrotation().Forward(), 0.5f);
 
 	//カメラの移動範囲の制限
 	mAimPosMove = Vector2::Clamp(mAimPosMove, Vector2(0, -30), Vector2(0, 30));

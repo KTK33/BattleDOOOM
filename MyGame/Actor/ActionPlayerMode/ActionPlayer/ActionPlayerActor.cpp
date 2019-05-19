@@ -1,23 +1,12 @@
 #include "ActionPlayerActor.h"
-
-#include "State/ActionPlayerIdle.h"
-#include "State/ActionPlayerAttack.h"
-#include "State/ActionPlayerAvoidance.h"
-#include "State/ActionPlayerAvoidanceAttack.h"
-#include "State/ActionPlayerDead.h"
-#include "ActionPlayerMotionNum.h"
-
-#include "../Input/GamePad/GamePad.h"
-#include "../Input/Keyboard/Keyboard.h"
-
+#include "ActionStateInc.h"
+#include "../Input/InputInc.h"
 #include "../Scene/GameData/GameDataManager.h"
 
-ActionPlayerActor::ActionPlayerActor(int model, int weapon, IWorld * world, const Vector3 & position, std::weak_ptr<Actor> ui, const IBodyPtr & body):
+ActionPlayerActor::ActionPlayerActor(int model, int weapon, IWorld * world, const Vector3 & position,const IBodyPtr & body):
 	Actor(world, "Player", position, body),
-	Initbody{ body },
-	m_ui{ ui },
 	mesh_{ model,weapon },
-	weapon_{ weapon },
+	mweapon_{ weapon },
 	mRightweaponPos{ 15 },
 	mLeftweaponPos{ 38 },
 	m_ActionCameraForward{ Vector3::Zero },
@@ -59,6 +48,8 @@ void ActionPlayerActor::update(float deltaTime)
 		parameters_.Set_Statetimer(0.0f);
 	}
 
+	prevPosition_ = position_;
+
 	//壁床とのの当たり判定
 	collision();
 
@@ -76,12 +67,8 @@ void ActionPlayerActor::update(float deltaTime)
 	mesh_.transform(Getpose());
 	mesh_.change_motion(parameters_.Get_Motion());
 
-	//重力の処理
-	gravity_process();
-
-	//UIのアクターにHP情報を送る
-	int hp = parameters_.Get_HP();
-	m_ui.lock()->receiveMessage(EventMessage::PLAYER_HP, reinterpret_cast<void*>(&hp));
+	//重力
+	mG.gravity(position_, velocity_, Floorcollide);
 
 	//状態時間を加算
 	parameters_.Add_Statetime(0.5f);
@@ -97,7 +84,10 @@ void ActionPlayerActor::update(float deltaTime)
 void ActionPlayerActor::draw() const
 {
 	mesh_.draw();
-	draw_weapon();
+	mDW.draw(mweapon_, mRightweaponPos, mesh_);
+	mDW.draw(mweapon_, mLeftweaponPos, mesh_);
+
+	mHP.draw(parameters_.Get_HP());
 
 	SetFontSize(32);
 	DrawFormatString(200, 450, GetColor(0, 0, 255), "%f", position_.x);
@@ -131,7 +121,7 @@ void ActionPlayerActor::receiveMessage(EventMessage message, void * param)
 	//敵と接触したときに重ならないように押し出す
 	if (message == EventMessage::HIT_ENEMY)
 	{
-		Hit(*(Vector3*)param);
+		velocity_ = mAP.Hit(*static_cast<Vector3*>(param));
 	}
 
 	//カメラの前方向を取得
@@ -174,7 +164,7 @@ void ActionPlayerActor::collision()
 void ActionPlayerActor::gravity_process()
 {
 	//重力処理
-	velocity_ = Vector3::Zero;
+	//velocity_ = Vector3::Zero;
 	velocity_ += Vector3::Up * -gravity;
 	position_ += velocity_;
 
@@ -194,26 +184,10 @@ void ActionPlayerActor::input_information()
 		parameters_.Set_Motion(ActionPlayerMotion::MotionPlayerIdel);
 	}
 	//ジョイパッドが刺さっているか
-	float X = 0, Y = 0;
-	if (GetJoypadNum() == 0) {
-		if (Keyboard::GetInstance().KeyStateDown(KEYCODE::A)) {
-			X = -1.0f;
-		}
-		if (Keyboard::GetInstance().KeyStateDown(KEYCODE::D)) {
-			X = 1.0f;
-		}
-		if (Keyboard::GetInstance().KeyStateDown(KEYCODE::W)) {
-			Y = 1.0f;
-		}
-		if (Keyboard::GetInstance().KeyStateDown(KEYCODE::S)) {
-			Y = -1.0f;
-		}
-	}
-	else {
-		X = GamePad::GetInstance().Stick().x;
-		Y = GamePad::GetInstance().Stick().y;
-	}
+	float X = 0, Y = 0, yaw = 0;
 
+	//左右上下入力
+	mI.Input(X, Y, yaw);
 	//入力が両方０ならばアイドル状態
 	if (X == 0.0f && Y == 0.0f) return; 
 	movement(1.0f, Vector2(X, Y));
@@ -264,28 +238,4 @@ void ActionPlayerActor::movement(float speed, Vector2 input)
 	rotation_ = Matrix::Lerp(rotation_, Matrix::Invert(to_Target_rotate) * Matrix::CreateRotationY(180), 0.1f);
 
 	position_ += velocity_ * (1.0f + DashSpped);
-}
-
-void ActionPlayerActor::draw_weapon() const
-{
-	//右手に持っている武器
-	StaticMesh::bind(weapon_);
-	StaticMesh::transform(mesh_.bone_matrix(mRightweaponPos));
-	StaticMesh::draw();
-
-	//左手に持っている武器
-	StaticMesh::bind(weapon_);
-	StaticMesh::transform(mesh_.bone_matrix(mLeftweaponPos));
-	StaticMesh::draw();
-}
-
-void ActionPlayerActor::Hit(Vector3 & dir)
-{
-	const Vector3 dir_ = Vector3::Normalize(dir);
-	//アクターからプレイヤーの方向に移動
-	velocity_ = Vector3::Up * 7.0f + Vector3{ dir_.x,0.f,dir_.z } *2.0f;
-	velocity_.x = Vector3::Up.x * 7.0f + dir_.x*2.0f;
-	velocity_.z = Vector3::Up.z * 7.0f + dir_.z*2.0f;
-	velocity_.y = 0.0f;
-	//collide = true;
 }

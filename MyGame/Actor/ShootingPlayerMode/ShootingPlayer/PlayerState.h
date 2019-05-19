@@ -8,10 +8,6 @@ public:
 	{
 		PlayerIdel,
 		PlayerGun,
-		PlayerForwardGun,
-		PlayerRightGun,
-		PlayerLeftGun,
-		PlayerBackGun,
 		PlayerReload,
 		PlayerIdleToAim,
 		PlayerAimToIdle,
@@ -19,7 +15,6 @@ public:
 		PlayerDamageGun,
 		PlayerDead,
 		PlayerGunPunch,
-		PlayerRun,
 		PlayerIdleAiming,
 		PlayerMove,
 		PlayerThohatu,

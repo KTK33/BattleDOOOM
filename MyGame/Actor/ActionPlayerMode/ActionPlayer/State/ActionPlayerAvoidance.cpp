@@ -1,7 +1,6 @@
 #include "ActionPlayerAvoidance.h"
 #include "../Actor/ActionPlayerMode/ActionPlayer/ActionPlayerMotionNum.h"
-#include "../Input/GamePad/GamePad.h"
-#include "../Input/Keyboard/Keyboard.h"
+#include "../Input/InputInc.h"
 
 ActionPlayerAvoidance::ActionPlayerAvoidance(IWorld * world, ActorParameters & parameter)
 {

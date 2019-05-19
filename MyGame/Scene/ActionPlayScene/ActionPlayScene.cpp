@@ -1,7 +1,5 @@
 #include "ActionPlayScene.h"
 #include "../Graphics/Graphics3D.h"
-#include"../Actor/ActionPlayerMode/UI/ActionPlayerUI.h"
-#include "../Actor/ActionPlayerMode/UI/RedSamuraiUI.h"
 #include "../Actor/ActionPlayerMode/ActionCamera/ActionCamera.h"
 #include "../Actor/ActionPlayerMode/ActionGameManager/ActionGameManager.h"
 #include "../Actor/ActionPlayerMode/UI/ActionModePause/ActionModePause.h"
@@ -22,16 +20,11 @@ void ActionPlayScene::start()
 	world_.initialize();
 	GameDataManager::getInstance().initialize();
 
-	auto P_ui = new_actor<ActionPlayerUI>(&world_);
-	world_.add_actor(ActorGroup::UI, P_ui);
 
-	auto P = new_actor<ActionPlayerActor>(50, 10, &world_, Vector3{ -150.0f, 30.0f,-15.0f }, P_ui);
+	auto P = new_actor<ActionPlayerActor>(50, 10, &world_, Vector3{ -150.0f, 30.0f,-15.0f });
 	world_.add_actor(ActorGroup::Player, P);
 
-	auto S_ui = new_actor<RedSamuraiUI>(&world_);
-	world_.add_actor(ActorGroup::UI, S_ui);
-
-	auto Samurai = new_actor<RedSamuraiActor>(51, 11, 12, 13, &world_, Vector3{ 0.0f, 30.0f,0.0f }, Matrix::CreateRotationY(90), S_ui);
+	auto Samurai = new_actor<RedSamuraiActor>(51, 11, 12, 13, &world_, Vector3{ 0.0f, 30.0f,0.0f }, Matrix::CreateRotationY(90));
 	world_.add_actor(ActorGroup::Enemy, Samurai);
 
 	auto camera = new_actor<ActionCamera>(&world_, P);
@@ -40,10 +33,6 @@ void ActionPlayScene::start()
 	world_.add_actor(ActorGroup::System, new_actor<ActionGameManager>(&world_, P,camera));
 
 	world_.add_actor(ActorGroup::PauseUI, new_actor<ActionModePause>(&world_));
-
-	auto SamuraiII = new_actor<RedSamuraiActor>(51, 11, 12, 13, &world_, Vector3{ 0.0f, 30.0f,0.0f }, Matrix::CreateRotationY(90), S_ui);
-	world_.add_actor(ActorGroup::Enemy, SamuraiII);
-
 }
 
 void ActionPlayScene::update(float deltaTime)

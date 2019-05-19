@@ -13,15 +13,13 @@
 #include "State/RedSamuraiAttack.h"
 #include "State/RedSamuraiDead.h"
 
-RedSamuraiActor::RedSamuraiActor(int model, int sward, int arrow, int quiver, IWorld * world, const Vector3 & position, Matrix & rotation, std::weak_ptr<Actor> ui, const IBodyPtr & body):
+RedSamuraiActor::RedSamuraiActor(int model, int sward, int arrow, int quiver, IWorld * world, const Vector3 & position, Matrix & rotation,const IBodyPtr & body):
 Actor(world, "RedSamurai", position, body),
-	Initbody{ body },
-	m_ui{ ui },
 	player_{ nullptr },
 	mesh_{ model,sward },
-	sword_{ sward },
-	arrow_{ arrow },
-	quiver_{ quiver },
+	msword_{ sward },
+	marrow_{ arrow },
+	mquiver_{ quiver },
 	mSwordPos{ 38 },
 	mArrowPos{ 76 },
 	mQuiverPos{ 82 }
@@ -80,18 +78,14 @@ void RedSamuraiActor::update(float deltaTime)
 	//ポジションの更新
 	position_ = parameters_.Get_Position();
 
-	//重力の処理
-	gravity_process();
+	//重力
+	mG.gravity(position_, velocity_, Floorcollide);
 
 	//プレイヤーの取得
 	getPlayer();
 
 	//攻撃状態以外の時にプレイヤーの方向に向く
 	if(mcurrentStateID != ActorStateID::RedSamuraiAttack) rotation_ *= PlayerLook();
-
-	//UIのアクターにHP情報を送る
-	int hp = parameters_.Get_HP();
-	m_ui.lock()->receiveMessage(EventMessage::SAMURAI_HP, reinterpret_cast<void*>(&hp));
 
 	//状態時間を加算
 	parameters_.Add_Statetime(0.5f);
@@ -103,7 +97,11 @@ void RedSamuraiActor::update(float deltaTime)
 void RedSamuraiActor::draw() const
 {
 	mesh_.draw();
-	draw_weapon();
+	mHP.draw(parameters_.Get_HP());
+	mDW.draw(msword_, mSwordPos, mesh_);
+	mDW.draw(marrow_, mArrowPos, mesh_);
+	mDW.draw(mquiver_, mQuiverPos, mesh_);
+
 
 	SetFontSize(32);
 	DrawFormatString(1400, 450, GetColor(255, 0, 0), "%f", position_.x);
@@ -132,7 +130,7 @@ void RedSamuraiActor::receiveMessage(EventMessage message, void * param)
 	//プレイヤーと接触したときに重ならないように押し出す
 	if (message == EventMessage::HIT_PLAYER)
 	{
-		Hit(*(Vector3*)param);
+		velocity_ = mAP.Hit(*static_cast<Vector3*>(param));
 	}
 }
 
@@ -167,21 +165,6 @@ void RedSamuraiActor::collision()
 	}
 }
 
-void RedSamuraiActor::gravity_process()
-{
-	//重力処理
-	velocity_ = Vector3::Zero;
-	velocity_ += Vector3::Up * -gravity;
-	position_ += velocity_;
-
-	velocity_ *= 0.8f;
-	if (velocity_.Length() < 0.01f) {
-		velocity_ = 0.0f;
-	}
-	if (Floorcollide) gravity = 0.0f;
-	else gravity = 9.8f*0.1f;
-}
-
 Matrix RedSamuraiActor::PlayerLook()
 {
 	//ターゲット方向に少しずつ向きを変える Clampで無理やり角度(-TurnAngle～TurnAngle)内に
@@ -189,35 +172,9 @@ Matrix RedSamuraiActor::PlayerLook()
 	return  Matrix::CreateRotationY(angle);
 }
 
-void RedSamuraiActor::draw_weapon() const
-{
-	StaticMesh::bind(sword_);
-	StaticMesh::transform(mesh_.bone_matrix(mSwordPos));
-	StaticMesh::draw();
-
-	StaticMesh::bind(arrow_);
-	StaticMesh::transform(mesh_.bone_matrix(mArrowPos));
-	StaticMesh::draw();
-
-	StaticMesh::bind(quiver_);
-	StaticMesh::transform(mesh_.bone_matrix(mQuiverPos));
-	StaticMesh::draw();
-}
-
 void RedSamuraiActor::weapon_transfer()
 {
 	mArrowPos = 76;
 	if (world_->find_actor(ActorGroup::EnemyBullet, "ArrowAttack") == NULL)return;
 	mArrowPos = 38;
-}
-
-void RedSamuraiActor::Hit(const Vector3 & dir)
-{
-	const Vector3 dir_ = Vector3::Normalize(dir);
-	//アクターからプレイヤーの方向に移動
-	velocity_ = Vector3::Up * 7.0f + Vector3{ dir_.x,0.f,dir_.z } *2.0f;
-	velocity_.x = Vector3::Up.x * 7.0f + dir_.x*2.0f;
-	velocity_.z = Vector3::Up.z * 7.0f + dir_.z*2.0f;
-	velocity_.y = 0.0f;
-	//collide = true;
 }

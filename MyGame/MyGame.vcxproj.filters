@@ -18,91 +18,31 @@
     <ClCompile Include="main.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Actor\ActorGroupManager.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Actor\ActorManager.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Fiield\Field.cpp">
+    <ClCompile Include="Actor\ShootingPlayerMode\ShootingPlayer\ShootingPlayerActor\ShootingPlayerActor.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="World\World.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Animation\AnimationMesh.cpp">
+    <ClCompile Include="Scene\ActionPlayScene\ActionPlayScene.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Animation\Animation.cpp">
+    <ClCompile Include="Scene\GameData\GameDataManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Animation\AnimatedSprite.cpp">
+    <ClCompile Include="Scene\GameLoadingScene\LoadingScene.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Sound\Sound.cpp">
+    <ClCompile Include="Scene\GameOverScene\GameOverScene.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Sound\SoundEffect.cpp">
+    <ClCompile Include="Scene\GameSelectScene\GameSelectScene.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Game\Game.cpp">
+    <ClCompile Include="Scene\GameTitleScene\GameTitleScene.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Texture\TextureAsset.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Texture\Sprite.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Billboard\Billboard.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Math\Vector3.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Math\Vector2.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Math\Random.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Math\Quaternion.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Math\Matrix.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Math\MathHelper.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Math\Color.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Mesh\StaticMesh.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Mesh\SkeletalMesh.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Graphics\Graphics2D.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Graphics\Graphics3D.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Skybox\Skybox.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Collision\BoundingSphere.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Collision\CollisionTriangle.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Model\ModelAsset.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Mesh\CollisionMesh.cpp">
+    <ClCompile Include="Scene\ShootingPlayScene\ShootingPlayScene.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Scene\SceneManager.cpp">
@@ -111,61 +51,52 @@
     <ClCompile Include="Scene\SceneTemplate.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Conv\DXConverter.cpp">
+    <ClCompile Include="Skybox\Skybox.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Collision\Collision.cpp">
+    <ClCompile Include="Sound\Sound.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Collision\BoundingBox.cpp">
+    <ClCompile Include="Sound\SoundEffect.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Collision\BoundingCapsule.cpp">
+    <ClCompile Include="Texture\Sprite.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Collision\BoundingSegment.cpp">
+    <ClCompile Include="Texture\TextureAsset.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Collision\Ray.cpp">
+    <ClCompile Include="Model\ModelAsset.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Collision\OrientedBoundingBox.cpp">
+    <ClCompile Include="Mesh\CollisionMesh.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Game\Time.cpp">
+    <ClCompile Include="Mesh\SkeletalMesh.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Fiield\WorldContentManager\WorldContentManager.cpp">
+    <ClCompile Include="Mesh\StaticMesh.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Scene\GameData\GameDataManager.cpp">
+    <ClCompile Include="Math\Color.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Actor\Actor.cpp">
+    <ClCompile Include="Math\MathHelper.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Actor\Camera\TPSCmaera.cpp">
+    <ClCompile Include="Math\Matrix.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Scene\ActionPlayScene\ActionPlayScene.cpp">
+    <ClCompile Include="Math\Quaternion.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Scene\ShootingPlayScene\ShootingPlayScene.cpp">
+    <ClCompile Include="Math\Random.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Scene\GameOverScene\GameOverScene.cpp">
+    <ClCompile Include="Math\Vector2.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Scene\GameTitleScene\GameTitleScene.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene\GameLoadingScene\LoadingScene.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Actor\Camera\TitleSceneCamera\TitleCamera.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Actor\ActorSystem\ActorSystem.cpp">
+    <ClCompile Include="Math\Vector3.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Input\GamePad\GamePad.cpp">
@@ -177,28 +108,103 @@
     <ClCompile Include="Input\Mouse\Mouse.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Actor\ActionPlayerMode\ActionPlayer\ActionPlayerMotionNum.h">
+    <ClCompile Include="Graphics\Graphics2D.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Actor\PlayerAttackCollision\PlayerAttackCollision.cpp">
+    <ClCompile Include="Graphics\Graphics3D.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Actor\EnemyAttackCollison\EnemyAttackCollison.cpp">
+    <ClCompile Include="Game\Game.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Time.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Fiield\WorldContentManager\WorldContentManager.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Fiield\Field.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Conv\DXConverter.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Collision\BoundingBox.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Collision\BoundingCapsule.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Collision\BoundingSegment.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Collision\BoundingSphere.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Collision\Collision.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Collision\CollisionTriangle.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Collision\OrientedBoundingBox.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Collision\Ray.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Billboard\Billboard.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation\AnimatedSprite.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation\Animation.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation\AnimationMesh.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\ActionPlayerMode\ActionCamera\ActionCamera.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Actor\ActionPlayerMode\ActionGameManager\ActionGameManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="Actor\ActionPlayerMode\ActionPlayer\State\ActionPlayerAttack.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\ActionPlayerMode\ActionPlayer\State\ActionPlayerAvoidance.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\ActionPlayerMode\ActionPlayer\State\ActionPlayerAvoidanceAttack.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\ActionPlayerMode\ActionPlayer\State\ActionPlayerDead.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\ActionPlayerMode\ActionPlayer\State\ActionPlayerIdle.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\ActionPlayerMode\ActionPlayer\ActionPlayerActor.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
     <ClCompile Include="Actor\ActionPlayerMode\RedSamurai\Arrow\ArrowAttack.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Actor\ActionPlayerMode\UI\ActionPlayerUI.cpp">
+    <ClCompile Include="Actor\ActionPlayerMode\RedSamurai\State\RedSamuraiAttack.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Actor\ActionPlayerMode\UI\RedSamuraiUI.cpp">
+    <ClCompile Include="Actor\ActionPlayerMode\RedSamurai\State\RedSamuraiDead.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Scene\GameSelectScene\GameSelectScene.cpp">
+    <ClCompile Include="Actor\ActionPlayerMode\RedSamurai\State\RedSamuraiIdle.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\ActionPlayerMode\RedSamurai\State\RedSamuraiWalk.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\ActionPlayerMode\RedSamurai\RedSamuraiActor.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Actor\ActionPlayerMode\UI\ActionModePause\ActionModePause.cpp">
@@ -210,49 +216,70 @@
     <ClCompile Include="Actor\ActorState\ActorStateManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Actor\ActorParameters.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Actor\ActionPlayerMode\RedSamurai\RedSamuraiActor.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Actor\ActionPlayerMode\RedSamurai\State\RedSamuraiIdle.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Actor\ActionPlayerMode\RedSamurai\State\RedSamuraiWalk.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Actor\ActionPlayerMode\RedSamurai\State\RedSamuraiAttack.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Actor\ActionPlayerMode\RedSamurai\State\RedSamuraiDead.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Actor\ActionPlayerMode\ActionPlayer\State\ActionPlayerIdle.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Actor\ActionPlayerMode\ActionPlayer\State\ActionPlayerDead.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Actor\ActionPlayerMode\ActionPlayer\State\ActionPlayerAvoidanceAttack.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Actor\ActionPlayerMode\ActionPlayer\State\ActionPlayerAvoidance.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Actor\ActionPlayerMode\ActionPlayer\State\ActionPlayerAttack.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Actor\ActionPlayerMode\ActionPlayer\ActionPlayerActor.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Actor\ActionPlayerMode\ActionCamera\ActionCamera.cpp">
+    <ClCompile Include="Actor\ActorSystem\ActorSystem.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Actor\Camera\CameraSpring\CameraSpring.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="Actor\Camera\TitleSceneCamera\TitleCamera.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\Camera\TPSCmaera.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\CommonUIActor\Effect2D\Effect2D.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\CommonUIActor\FadeUI\FadeUI.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\CommonUIActor\TitleUI\TitleAnyUI\TitleAnyUI.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\CommonUIActor\TitleUI\TitleBack\TitleBack.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\CommonUIActor\TitleUI\TitleBullet\TitleBullet.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\CommonUIActor\TitleUI\TitlePlayer\TitlePlayer.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\EnemyAttackCollison\EnemyAttackCollison.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\PlayerAttackCollision\PlayerAttackCollision.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\ShootingPlayerMode\ItemActor\BulletItem\BulletItem.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\ShootingPlayerMode\ItemActor\HPRecoverItem\HPRecoverItem.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\ShootingPlayerMode\ItemActor\ItemCreater\ItemCreater.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
     <ClCompile Include="Actor\ShootingPlayerMode\ShootingCamera\ShootingCamera.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\ShootingPlayerMode\ShootingEnemy\BossEnemy\BossEnemy.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\ShootingPlayerMode\ShootingEnemy\EnemyAttackFire\EnemyAttackFire.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\ShootingPlayerMode\ShootingEnemy\EnemyHeadShot\EnemyHeadShot.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\ShootingPlayerMode\ShootingEnemy\NormalEnemy\NormalEnemy.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\ShootingPlayerMode\ShootingPlayer\ShootingPlayerItemBox\ShootingPlayerItemBox.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\ShootingPlayerMode\ShootingPlayerBullet\ShootingPlayerBullet.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Actor\ShootingPlayerMode\UIActor\AnyUI\AnyUI.cpp">
@@ -273,78 +300,90 @@
     <ClCompile Include="Actor\ShootingPlayerMode\UIActor\PlaySceneUI\GameOverUI.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Actor\ShootingPlayerMode\ItemActor\BulletItem\BulletItem.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Actor\ShootingPlayerMode\ItemActor\HPRecoverItem\HPRecoverItem.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Actor\ShootingPlayerMode\ItemActor\ItemCreater\ItemCreater.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Actor\ShootingPlayerMode\ShootingEnemy\BossEnemy\BossEnemy.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Actor\ShootingPlayerMode\ShootingEnemy\EnemyAttackFire\EnemyAttackFire.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Actor\ShootingPlayerMode\ShootingEnemy\EnemyHeadShot\EnemyHeadShot.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Actor\ShootingPlayerMode\ShootingEnemy\NormalEnemy\NormalEnemy.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Actor\ShootingPlayerMode\ShootingPlayer\ShootingPlayerActor\ShootingPlayerActor.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Actor\ShootingPlayerMode\ShootingPlayerBullet\ShootingPlayerBullet.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Actor\ShootingPlayerMode\ShootingPlayer\ShootingPlayerItemBox\ShootingPlayerItemBox.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Actor\ShootingPlayerMode\UIActor\ShootingPlayerTextUI\ShootingPlayerTextUI.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Actor\CommonUIActor\TitleUI\TitleAnyUI\TitleAnyUI.cpp">
+    <ClCompile Include="Actor\Actor.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Actor\CommonUIActor\TitleUI\TitleBack\TitleBack.cpp">
+    <ClCompile Include="Actor\ActorGroupManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Actor\CommonUIActor\TitleUI\TitleBullet\TitleBullet.cpp">
+    <ClCompile Include="Actor\ActorManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Actor\CommonUIActor\TitleUI\TitlePlayer\TitlePlayer.cpp">
+    <ClCompile Include="Actor\ActorParameters.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Actor\CommonUIActor\FadeUI\FadeUI.cpp">
+    <ClCompile Include="Actor\ShootingPlayerMode\ShootingPlayer\ShootingPlayerActor\ShootingPlayerParam\ShootingPlayerParam.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Actor\CommonUIActor\Effect2D\Effect2D.cpp">
+    <ClCompile Include="Actor\ShootingPlayerMode\UIActor\ParamUI\ParamUI.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\ActorCommon\ActorPush\AcotrPush.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\ActorCommon\DrawWeapon\DrawWeapon.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\ActorCommon\Gravity\Gravity.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\ShootingPlayerMode\ShootingPlayer\ShootingPlayerActor\State\Aim_Idle\ShootingPlayerAim_Idle.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\ShootingPlayerMode\ShootingPlayer\ShootingPlayerActor\State\Damage\ShootingPlayerDamage.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\ShootingPlayerMode\ShootingPlayer\ShootingPlayerActor\State\Dead\ShootingPlayerDead.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\ShootingPlayerMode\ShootingPlayer\ShootingPlayerActor\State\Gun\ShootingPlayerGun.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\ShootingPlayerMode\ShootingPlayer\ShootingPlayerActor\State\GunPunch\ShootingPlayerGunPunch.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\ShootingPlayerMode\ShootingPlayer\ShootingPlayerActor\State\Idle\ShootingPlayerIdle.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\ShootingPlayerMode\ShootingPlayer\ShootingPlayerActor\State\Idle_Aim\ShootingPlayerIdle_Aim.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\ShootingPlayerMode\ShootingPlayer\ShootingPlayerActor\State\IdleAiming\ShootingPlayerIdleAiming.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\ShootingPlayerMode\ShootingPlayer\ShootingPlayerActor\State\Jump\ShootingPlayerJump.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\ShootingPlayerMode\ShootingPlayer\ShootingPlayerActor\State\Provocation\ShootingPlayerProvocation.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\ShootingPlayerMode\ShootingPlayer\ShootingPlayerActor\State\Reload\ShootingPlayerReload.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\ShootingPlayerMode\ShootingPlayer\ShootingPlayerActor\PlayerMove\PlayerMove.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\ActionPlayerMode\UI\HPUI\ActonPlayerHP.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\ActionPlayerMode\UI\HPUI\RedSamuraiHP.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\ActorCommon\InputEWSN\InputEWSN.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Actor\ActorPtr.h">
+    <ClInclude Include="Actor\TestEnemy.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Actor\Actor.h">
+    <ClInclude Include="Actor\ActorState\ActorParameters.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Actor\ActorGroup.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Actor\ActorGroupManager.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Actor\ActorManager.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Fiield\FieldPtr.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Fiield\Field.h">
+    <ClInclude Include="Actor\ShootingPlayerMode\ShootingPlayer\ShootingPlayerActor\ShootingPlayerActor.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="World\IWorld.h">
@@ -353,82 +392,34 @@
     <ClInclude Include="World\World.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Animation\AnimationMesh.h">
+    <ClInclude Include="Scene\ActionPlayScene\ActionPlayScene.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Animation\Animation.h">
+    <ClInclude Include="Scene\GameData\GameDataManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Animation\AnimatedSprite.h">
+    <ClInclude Include="Scene\GameLoadingScene\LoadingScene.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Sound\Sound.h">
+    <ClInclude Include="Scene\GameLoadingScene\LoadingSceneInc.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Sound\SoundEffect.h">
+    <ClInclude Include="Scene\GameOverScene\GameOverScene.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Game\Game.h">
+    <ClInclude Include="Scene\GameSelectScene\GameSelectScene.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Texture\TextureAsset.h">
+    <ClInclude Include="Scene\GameTitleScene\GameTitleScene.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Texture\Sprite.h">
+    <ClInclude Include="Scene\ShootingPlayScene\ShootingPlayScene.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Billboard\Billboard.h">
+    <ClInclude Include="Scene\Menu.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Math\Vector3.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Math\Vector2.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Math\Random.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Math\Quaternion.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Math\Matrix.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Math\MathHelper.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Math\Color.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Math\MathH.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Mesh\StaticMesh.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Mesh\SkeletalMesh.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Graphics\Graphics2D.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Graphics\Graphics3D.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Skybox\Skybox.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Collision\BoundingSphere.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Collision\CollisionTriangle.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Model\ModelAsset.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Mesh\CollisionMesh.h">
+    <ClInclude Include="Scene\Scene.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Scene\SceneManager.h">
@@ -443,7 +434,103 @@
     <ClInclude Include="Scene\SceneType.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Scene\Scene.h">
+    <ClInclude Include="Skybox\Skybox.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Sound\Sound.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Sound\SoundEffect.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Sound\SoundID.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture\Sprite.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture\SpriteID.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture\TextureAsset.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Model\ModelAsset.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh\CollisionMesh.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh\SkeletalMesh.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh\StaticMesh.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\Color.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\MathH.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\MathHelper.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\Matrix.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\Quaternion.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\Random.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\Vector2.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\Vector3.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Input\GamePad\GamePad.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Input\Keyboard\Keyboard.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Input\Mouse\Mouse.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Graphics2D.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Graphics3D.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Define.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\FpsSetting.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Game.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Time.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Fiield\WorldContentManager\WorldContentManager.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Fiield\Field.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Fiield\FieldPtr.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Conv\ByteConverter.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Conv\DXConverter.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Collision\Base\Body.h">
@@ -464,15 +551,6 @@
     <ClInclude Include="Collision\Base\ShapeType.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Conv\ByteConverter.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Conv\DXConverter.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Collision\Collision.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Collision\BoundingBox.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -482,7 +560,16 @@
     <ClInclude Include="Collision\BoundingSegment.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="Collision\BoundingSphere.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Collision\Collision.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
     <ClInclude Include="Collision\CollisionModel.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Collision\CollisionTriangle.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Collision\OrientedBoundingBox.h">
@@ -491,130 +578,22 @@
     <ClInclude Include="Collision\Ray.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Actor\TestEnemy.h">
+    <ClInclude Include="Billboard\Billboard.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Game\Define.h">
+    <ClInclude Include="Animation\AnimatedSprite.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Game\FpsSetting.h">
+    <ClInclude Include="Animation\Animation.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Game\Time.h">
+    <ClInclude Include="Animation\AnimationMesh.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Fiield\WorldContentManager\WorldContentManager.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene\GameData\GameDataManager.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Sound\SoundID.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Texture\SpriteID.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene\Menu.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Actor\Camera\TPSCamera.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene\ActionPlayScene\ActionPlayScene.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene\ShootingPlayScene\ShootingPlayScene.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene\GameOverScene\GameOverScene.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene\GameTitleScene\GameTitleScene.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene\GameLoadingScene\LoadingScene.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Actor\Camera\TitleSceneCamera\TitleCamera.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Actor\ActorSystem\ActorSystem.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Input\GamePad\GamePad.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Input\Keyboard\Keyboard.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Input\Mouse\Mouse.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene\GameLoadingScene\LoadingSceneInc.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Actor\ActionPlayerMode\RedSamurai\RedSamuraiMotionNum.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Actor\PlayerAttackCollision\PlayerAttackCollision.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Actor\EnemyAttackCollison\EnemyAttackCollison.h">
+    <ClInclude Include="Actor\ActionPlayerMode\ActionCamera\ActionCamera.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Actor\ActionPlayerMode\ActionGameManager\ActionGameManager.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Actor\ActionPlayerMode\RedSamurai\Arrow\ArrowAttack.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Actor\ActionPlayerMode\UI\ActionPlayerUI.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Actor\ActionPlayerMode\UI\RedSamuraiUI.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene\GameSelectScene\GameSelectScene.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Actor\ActionPlayerMode\UI\ActionModePause\ActionModePause.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Actor\ActorState\ActorParameters.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Actor\ActorState\ActorStateBase.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Actor\ActorState\ActorStatePtr.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Actor\ActorState\ActorStateID.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Actor\ActorState\ActorStateManager.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Actor\ActorParameters.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Actor\ActionPlayerMode\RedSamurai\RedSamuraiActor.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Actor\ActionPlayerMode\RedSamurai\State\RedSamuraiIdle.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Actor\ActionPlayerMode\RedSamurai\State\RedSamuraiWalk.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Actor\ActionPlayerMode\RedSamurai\State\RedSamuraiAttack.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Actor\ActionPlayerMode\RedSamurai\State\RedSamuraiDead.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Actor\ActionPlayerMode\ActionPlayer\State\ActionPlayerIdle.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Actor\ActionPlayerMode\ActionPlayer\State\ActionPlayerAttack.h">
@@ -629,16 +608,121 @@
     <ClInclude Include="Actor\ActionPlayerMode\ActionPlayer\State\ActionPlayerDead.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="Actor\ActionPlayerMode\ActionPlayer\State\ActionPlayerIdle.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
     <ClInclude Include="Actor\ActionPlayerMode\ActionPlayer\ActionPlayerActor.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Actor\ActionPlayerMode\ActionCamera\ActionCamera.h">
+    <ClInclude Include="Actor\ActionPlayerMode\ActionPlayer\ActionPlayerMotionNum.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ActionPlayerMode\RedSamurai\Arrow\ArrowAttack.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ActionPlayerMode\RedSamurai\State\RedSamuraiAttack.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ActionPlayerMode\RedSamurai\State\RedSamuraiDead.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ActionPlayerMode\RedSamurai\State\RedSamuraiIdle.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ActionPlayerMode\RedSamurai\State\RedSamuraiWalk.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ActionPlayerMode\RedSamurai\RedSamuraiActor.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ActionPlayerMode\RedSamurai\RedSamuraiMotionNum.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ActionPlayerMode\UI\ActionModePause\ActionModePause.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ActorState\ActorStateBase.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ActorState\ActorStateID.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ActorState\ActorStateManager.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ActorState\ActorStatePtr.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ActorSystem\ActorSystem.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Actor\Camera\CameraSpring\CameraSpring.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="Actor\Camera\TitleSceneCamera\TitleCamera.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\Camera\TPSCamera.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\CommonUIActor\Effect2D\Effect2D.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\CommonUIActor\FadeUI\FadeUI.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\CommonUIActor\TitleUI\TitleAnyUI\TitleAnyUI.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\CommonUIActor\TitleUI\TitleBack\TitleBack.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\CommonUIActor\TitleUI\TitleBullet\TitleBullet.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\CommonUIActor\TitleUI\TitlePlayer\TitlePlayer.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\EnemyAttackCollison\EnemyAttackCollison.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\PlayerAttackCollision\PlayerAttackCollision.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ShootingPlayerMode\ItemActor\BulletItem\BulletItem.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ShootingPlayerMode\ItemActor\HPRecoverItem\HPRecoverItem.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ShootingPlayerMode\ItemActor\ItemCreater\ItemCreater.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
     <ClInclude Include="Actor\ShootingPlayerMode\ShootingCamera\ShootingCamera.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ShootingPlayerMode\ShootingEnemy\BossEnemy\BossEnemy.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ShootingPlayerMode\ShootingEnemy\EnemyAttackFire\EnemyAttackFire.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ShootingPlayerMode\ShootingEnemy\EnemyHeadShot\EnemyHeadShot.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ShootingPlayerMode\ShootingEnemy\NormalEnemy\NormalEnemy.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ShootingPlayerMode\ShootingPlayer\ShootingPlayerItemBox\ShootingPlayerItemBox.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ShootingPlayerMode\ShootingPlayer\PlayerState.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ShootingPlayerMode\ShootingPlayer\ShootingPlayerMotionNum.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ShootingPlayerMode\ShootingPlayerBullet\ShootingPlayerBullet.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Actor\ShootingPlayerMode\UIActor\AnyUI\AnyUI.h">
@@ -659,61 +743,103 @@
     <ClInclude Include="Actor\ShootingPlayerMode\UIActor\PlaySceneUI\GameOverUI.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Actor\ShootingPlayerMode\ItemActor\BulletItem\BulletItem.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Actor\ShootingPlayerMode\ItemActor\HPRecoverItem\HPRecoverItem.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Actor\ShootingPlayerMode\ItemActor\ItemCreater\ItemCreater.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Actor\ShootingPlayerMode\ShootingEnemy\BossEnemy\BossEnemy.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Actor\ShootingPlayerMode\ShootingEnemy\EnemyAttackFire\EnemyAttackFire.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Actor\ShootingPlayerMode\ShootingEnemy\EnemyHeadShot\EnemyHeadShot.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Actor\ShootingPlayerMode\ShootingEnemy\NormalEnemy\NormalEnemy.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Actor\ShootingPlayerMode\ShootingPlayer\PlayerState.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Actor\ShootingPlayerMode\ShootingPlayer\ShootingPlayerActor\ShootingPlayerActor.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Actor\ShootingPlayerMode\ShootingPlayer\ShootingPlayerMotionNum.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Actor\ShootingPlayerMode\ShootingPlayerBullet\ShootingPlayerBullet.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Actor\ShootingPlayerMode\ShootingPlayer\ShootingPlayerItemBox\ShootingPlayerItemBox.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Actor\ShootingPlayerMode\UIActor\ShootingPlayerTextUI\ShootingPlayerTextUI.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Actor\CommonUIActor\TitleUI\TitleAnyUI\TitleAnyUI.h">
+    <ClInclude Include="Actor\Actor.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Actor\CommonUIActor\TitleUI\TitleBack\TitleBack.h">
+    <ClInclude Include="Actor\ActorGroup.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Actor\CommonUIActor\TitleUI\TitleBullet\TitleBullet.h">
+    <ClInclude Include="Actor\ActorGroupManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Actor\CommonUIActor\TitleUI\TitlePlayer\TitlePlayer.h">
+    <ClInclude Include="Actor\ActorManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Actor\CommonUIActor\FadeUI\FadeUI.h">
+    <ClInclude Include="Actor\ActorParameters.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Actor\CommonUIActor\Effect2D\Effect2D.h">
+    <ClInclude Include="Actor\ActorPtr.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Input\InputInc.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ShootingPlayerMode\ShootingPlayer\ShootingPlayerActor\ShootingActorStateInc.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ActionPlayerMode\ActionPlayer\ActionStateInc.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ShootingPlayerMode\ShootingPlayer\ShootingPlayerActor\ShootingPlayerParameters\ShootingPlayerParameters.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ShootingPlayerMode\ShootingPlayer\ShootingPlayerActor\ShootingPlayerParam\ShootingPlayerParam.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ShootingPlayerMode\UIActor\ParamUI\ParamUI.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ShootingPlayerMode\ShootingPlayer\ShootingPlayerActor\State\stateInc.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ActorCommon\ActorPush\AcotrPush.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ActorCommon\CommonInc.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ActorCommon\DrawWeapon\DrawWeapon.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ActorCommon\Gravity\Gravity.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ShootingPlayerMode\ShootingPlayer\ShootingPlayerActor\State\Aim_Idle\ShootingPlayerAim_Idle.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ShootingPlayerMode\ShootingPlayer\ShootingPlayerActor\State\Damage\ShootingPlayerDamage.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ShootingPlayerMode\ShootingPlayer\ShootingPlayerActor\State\Dead\ShootingPlayerDead.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ShootingPlayerMode\ShootingPlayer\ShootingPlayerActor\State\Gun\ShootingPlayerGun.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ShootingPlayerMode\ShootingPlayer\ShootingPlayerActor\State\GunPunch\ShootingPlayerGunPunch.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ShootingPlayerMode\ShootingPlayer\ShootingPlayerActor\State\Idle\ShootingPlayerIdle.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ShootingPlayerMode\ShootingPlayer\ShootingPlayerActor\State\Idle_Aim\ShootingPlayerIdle_Aim.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ShootingPlayerMode\ShootingPlayer\ShootingPlayerActor\State\IdleAiming\ShootingPlayerIdleAiming.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ShootingPlayerMode\ShootingPlayer\ShootingPlayerActor\State\Jump\ShootingPlayerJump.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ShootingPlayerMode\ShootingPlayer\ShootingPlayerActor\State\Provocation\ShootingPlayerProvocation.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ShootingPlayerMode\ShootingPlayer\ShootingPlayerActor\State\Reload\ShootingPlayerReload.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ShootingPlayerMode\ShootingPlayer\ShootingPlayerActor\PlayerMove\PlayerMove.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ActionPlayerMode\UI\HPUI\ActonPlayerHP.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ActionPlayerMode\UI\HPUI\RedSamuraiHP.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ActorCommon\InputEWSN\InputEWSN.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

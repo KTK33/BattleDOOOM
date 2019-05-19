@@ -3,8 +3,7 @@
 #include "../Actor/Actor.h"
 #include "../Actor/ActionPlayerMode/ActionPlayer/ActionPlayerMotionNum.h"
 #include "../Actor/PlayerAttackCollision/PlayerAttackCollision.h"
-#include "../Input/GamePad/GamePad.h"
-#include "../Input/Keyboard/Keyboard.h"
+#include "../Input/InputInc.h"
 
 ActionPlayerAttack::ActionPlayerAttack(IWorld * world, ActorParameters & parameter)
 {

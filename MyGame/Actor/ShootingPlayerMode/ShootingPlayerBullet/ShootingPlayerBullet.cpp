@@ -5,13 +5,10 @@
 
 ShootingPlayerBullet::ShootingPlayerBullet(IWorld * world, const Vector3 & P_position, Vector3 & A_position, int AttackParam, const IBodyPtr & body):
 	Actor(world, "Ball", P_position, body),
-	enemy_{ nullptr },
-	deadTime{ 20 },
 	m_GoPos{ A_position },
 	Hit{false}
 {
 	player_ = world_->find_actor(ActorGroup::Player, "Player").get();
-	enemy_ = world_->find_actor(ActorGroup::System, "Camera").get();
 
 	m_InitFar = Vector3(m_GoPos.x - position_.x, m_GoPos.y - position_.y, m_GoPos.z - position_.z);
 
@@ -27,14 +24,9 @@ void ShootingPlayerBullet::initialize()
 
 void ShootingPlayerBullet::update(float deltaTime)
 {
-	//‹…‚ÌˆÚ“®ˆ—
-	distance();
-
-	//•Ç°‚Æ‚Ì“–‚½‚è”»’è
+	//’e‚ÌˆÚ“®ˆ—
+	position_ += m_InitFar * 0.3f;
 	collision();
-
-	//deadTime--;
-	//if (deadTime <= 0) die();
 }
 
 void ShootingPlayerBullet::onCollide(Actor & other)
@@ -70,17 +62,4 @@ void ShootingPlayerBullet::draw() const
 {
 	mesh_.draw();
 	body_->transform(Getpose())->draw();
-
-}
-void ShootingPlayerBullet::distance()
-{
-	position_ += m_InitFar * 0.3f;
-}
-
-float ShootingPlayerBullet::target_angle() const
-{
-	const auto to_target = enemy_->Getpose().Translation() - position_;
-	const auto angle = Vector3::Angle(rotation_.Forward(), to_target);
-	const auto forward_cross_target = Vector3::Cross(rotation_.Forward(), to_target);
-	return (forward_cross_target.y >= 0.0f) ? angle : -angle;
 }

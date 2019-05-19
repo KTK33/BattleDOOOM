@@ -6,15 +6,23 @@
 #include "../Mesh/StaticMesh.h"
 #include "../Animation/Animation.h"
 #include "../Animation/AnimationMesh.h"
-#include "../PlayerState.h"
 #include "../World/World.h"
 #include "../Actor/ActorSystem/ActorSystem.h"
 
-class ShootingPlayerActor : public Actor,public ActorSystem{
-public:
-	ShootingPlayerActor(int model,int weapon,IWorld* world, const Vector3& position, std::weak_ptr<Actor> ui,const IBodyPtr& body = std::make_shared<BoundingCapsule>(Vector3{0.0f,9.0f,0.0f},Matrix::Identity,10.0f,4.0f));
-	virtual ~ShootingPlayerActor() override{}
+#include <map>
+#include "../Actor/ActorState/ActorStateID.h"
+#include "../Actor/ActorParameters.h"
+#include "../Actor/ActorState/ActorStateManager.h"
 
+#include "../Actor/ShootingPlayerMode/UIActor/ParamUI/ParamUI.h"
+
+#include "../Actor/ActorCommon/CommonInc.h"
+#include "../Actor/ShootingPlayerMode/ShootingPlayer/ShootingPlayerActor/PlayerMove/PlayerMove.h"
+
+class ShootingPlayerActor : public Actor, public ActorSystem {
+public:
+	ShootingPlayerActor(int model, int weapon, IWorld* world, const Vector3& position, std::weak_ptr<Actor> ui, const IBodyPtr& body = std::make_shared<BoundingCapsule>(Vector3{ 0.0f,9.0f,0.0f }, Matrix::Identity, 10.0f, 4.0f));
+	virtual ~ShootingPlayerActor() override {}
 	virtual void initialize() override;
 
 	virtual void update(float deltaTime) override;
@@ -25,82 +33,52 @@ public:
 
 	virtual void receiveMessage(EventMessage message, void * param) override;
 private:
+	//パラメータをUIに送る
+	void ParamSet();
 	//壁と床の判定
 	void collision();
-
-	//状態の更新
-	void update_state(float deltaTime);
-	//状態の変更
-	void change_state(PlayerState::State state, int motion);
-	void PlayerInput();
-	void Idle();
-	void IdletoAim();
-	void AimtoIdle();
-	void IdleAiming();
-	void Reload();
-	void GunPunch();
-	void GunMove(float X,float Y);
-	void Move(float X, float Y);
-	void Gun();
-	void PlayerGunFire();
-	void JumpChacker(PlayerState::State state);
-	void Jump();
-	void Damage();
-	void Dead();
-	void Tyohatu();
-	//武器の描画
-	void draw_weapon() const;
-	//ディレイ系
-	void Delay();
-
-	void Hit(Vector3& dir);
+	//入力情報
+	void input_information();
+	//移動処理
+	void movement(float speed, Vector2 input);
+	//エイム移動処理
+	void gun_movement(float speed, Vector2 input);
+	//無敵時間
+	void invincibly(bool check);
 private:
+	using StateMap = std::map<ActorStateID, ActorStateManager>;
+	StateMap shootingplayerState_;
+
+	ActorStateID mcurrentStateID;
+
+	ActorParameters parameters_;
+
 	std::weak_ptr<Actor> m_ui{};
-	IBodyPtr Initbody;
-	//World world__;
 	//アニメーションメッシュ
 	AnimatedMesh mesh_;
-	//モーション番号
-	int motion_;
-	int before_motion_;
 	//持ち物モデル
-	int weapon_;
-	//移動速度
-	const float WalkSpeed{ 0.25f };
+	int mweapon_;
 
-	//状態,
-	PlayerState::State state_;
-	PlayerState::State before_state_;
-	//状態タイマ
-	float state_timer_;
-	//重力
-	const float Gravity{ -0.04f };
+	ParamUI mParamUI;
 
-	//残弾数(セットされている)
-	int SetRemainGun;
-	//現在持っている弾数
-	int HaveGun;
-	//ディレイタイム
-	int DelayGunTime;
+	ActorPush mAP;
 
-	int invinciblyTime;
-	bool invinciblyCheck;
+	DrawWeapon mDW;
 
-	int weaponPos;
+	Gravity mG;
 
-	Vector3 AimPos;
-	Vector3 InitAimPos;
+	PlayerMove mMV;
 
-	int RecoverItemCount;
-	int AttackItemCount;
+	InputEWSN mI;
 
-	int alreadyItem;
+	int mweaponPos;
 
-	bool DeadCheck;
+	Vector3 mInitAimPos;
 
-	bool GunPossible;
+	int mRecoverItemCount;
+	int mAttackItemCount;
 
-	int AttackParam;
-	bool AttackUpCheck;
-	int AttackUpTime;
+	int mAttackParam;
+	bool mAttackUpCheck;
+	int mAttackUpTime;
 };

@@ -22,6 +22,7 @@ ActionCamera::ActionCamera(IWorld * world, std::weak_ptr<Actor> m_Player) :
 
 void ActionCamera::update(float deltaTime)
 {
+	prevPosition_ = position_;
 	//ƒvƒŒƒCƒ„[‚ÌŒŸõ
 	player_ = world_->find_actor(ActorGroup::Player, "Player").get();
 	if (player_ == nullptr) return;
@@ -29,7 +30,7 @@ void ActionCamera::update(float deltaTime)
 	PlayerInput(deltaTime);
 
 	//‚Î‚Ë
-	CameraSpring::move(position_, velocity_, position_, 1.0f, 0.2f, 0.8f);
+	CameraSpring::move(position_, velocity_, prevPosition_, 1.0f, 0.2f, 0.8f);
 }
 
 void ActionCamera::draw() const {

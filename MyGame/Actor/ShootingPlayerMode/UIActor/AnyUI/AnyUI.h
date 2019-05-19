@@ -15,10 +15,5 @@ public:
 
 private:
 	std::weak_ptr<Actor> m_p{};
-	int m_playerHP;
-
-	int m_playerHavegun;
-	int m_playerGunRemain;
-
 	int EnemyCount{ 3 };
 };

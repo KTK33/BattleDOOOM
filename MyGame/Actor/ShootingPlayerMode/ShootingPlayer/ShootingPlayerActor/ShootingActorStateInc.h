@@ -1,0 +1,12 @@
+#pragma once
+#include "State/Aim_Idle/ShootingPlayerAim_Idle.h"
+#include "State/Damage/ShootingPlayerDamage.h"
+#include "State/Dead/ShootingPlayerDead.h"
+#include "State/Gun/ShootingPlayerGun.h"
+#include "State/GunPunch/ShootingPlayerGunPunch.h"
+#include "State/Idle/ShootingPlayerIdle.h"
+#include "State/Idle_Aim/ShootingPlayerIdle_Aim.h"
+#include "State/IdleAiming/ShootingPlayerIdleAiming.h"
+#include "State/Jump/ShootingPlayerJump.h"
+#include "State/Provocation/ShootingPlayerProvocation.h"
+#include "State/Reload/ShootingPlayerReload.h"

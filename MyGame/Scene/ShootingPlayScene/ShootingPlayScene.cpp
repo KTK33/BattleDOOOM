@@ -42,7 +42,7 @@ void ShootingPlayScene::start() {
 	auto P_Text = new_actor<ShootingPlayerTextUI>(&world_);
 	world_.add_actor(ActorGroup::UI, P_Text);
 
-	auto P = new_actor<ShootingPlayerActor>(0, 1, &world_, Vector3{ 0.0f, -20.0f,0.0f }, P_Text);
+	auto P = new_actor<ShootingPlayerActor>(0, 1, &world_, Vector3{ 0.0f, 30.0f,0.0f }, P_Text);
 	world_.add_actor(ActorGroup::Player, P);
 
 	auto ANYUI = new_actor<AnyUI>(&world_,P);
@@ -50,13 +50,13 @@ void ShootingPlayScene::start() {
 
 	world_.add_actor(ActorGroup::PauseUI, new_actor<PauseUI>(&world_));
 
-	auto dummy1 = new_actor<NormalEnemy>(11, &world_, Vector3{ -160.0f, -20.0f,  20.0f }, Matrix::CreateRotationY(Random::rand(0.0f,360.0f)), ANYUI);
+	auto dummy1 = new_actor<NormalEnemy>(11, &world_, Vector3{ 20.0f, 15.0f,  -150.0f }, Matrix::CreateRotationY(Random::rand(0.0f,360.0f)), ANYUI);
 	world_.add_actor(ActorGroup::Enemy,dummy1);
 
-	auto dummy2 = new_actor<NormalEnemy>(12, &world_, Vector3{ -125.0f, -20.0f, -118.0f}, Matrix::CreateRotationY(Random::rand(0.0f, 360.0f)), ANYUI);
+	auto dummy2 = new_actor<NormalEnemy>(12, &world_, Vector3{ 130.0f, 15.0f, -4.0f}, Matrix::CreateRotationY(Random::rand(0.0f, 360.0f)), ANYUI);
 	world_.add_actor(ActorGroup::Enemy, dummy2);
 
-	auto dummy3 = new_actor<NormalEnemy>(13, &world_, Vector3{ -10.0f , -20.0f, -80.0f }, Matrix::CreateRotationY(Random::rand(0.0f, 360.0f)), ANYUI);
+	auto dummy3 = new_actor<NormalEnemy>(13, &world_, Vector3{ -110.0f , 10.0f, 90.0f }, Matrix::CreateRotationY(Random::rand(0.0f, 360.0f)), ANYUI);
 	world_.add_actor(ActorGroup::Enemy, dummy3);
 
 	world_.add_actor(ActorGroup::System, new_actor<ShootingCamera>(&world_,P));
@@ -101,24 +101,15 @@ void ShootingPlayScene::update(float deltaTime)
 
 void ShootingPlayScene::draw() const {
 
-		//Graphics3D::clear();
-		//Graphics3D::clear_color(1.0f, 0.5f, 0.5f);
+		Graphics3D::clear();
 		//スカイボックスの描画
 		Skybox::bind(0);
 		Skybox::draw();
 		//ステージの描画
-		CollisionMesh::bind(0);
+		CollisionMesh::bind(1);
 		CollisionMesh::draw();
-
-		
-		
-		world_.draw();
 	
-		//ビルボードの描画
-		Graphics3D::blend_mode(BlendMode::Add);
-		//Billboard::bind(0);
-		//Billboard::draw({ 0.0f,30.0f,0.0f }, 10.0f); /*10.0は大きさ*/
-		Graphics3D::blend_mode(BlendMode::None);
+		world_.draw();
 }
 void ShootingPlayScene::end()
 {

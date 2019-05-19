@@ -1,6 +1,5 @@
 #include "ActionPlayerIdle.h"
-#include "../Input/GamePad/GamePad.h"
-#include "../Input/Keyboard/Keyboard.h"
+#include "../Input/InputInc.h"
 
 ActionPlayerIdle::ActionPlayerIdle(IWorld * world, ActorParameters & parameter)
 {

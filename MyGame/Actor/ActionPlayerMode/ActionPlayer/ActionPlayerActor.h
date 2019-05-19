@@ -14,9 +14,13 @@
 #include "../Actor/ActorParameters.h"
 #include "../Actor/ActorState/ActorStateManager.h"
 
+#include "../Actor/ActorCommon/CommonInc.h"
+#include "../Actor/ActionPlayerMode/UI/HPUI/ActonPlayerHP.h"
+
+
 class ActionPlayerActor : public Actor, public ActorSystem {
 public:
-	ActionPlayerActor(int model, int weapon, IWorld* world, const Vector3& position, std::weak_ptr<Actor> ui, const IBodyPtr& body = std::make_shared<BoundingCapsule>(Vector3{ 0.0f,9.0f,0.0f }, Matrix::Identity, 10.0f, 4.0f));
+	ActionPlayerActor(int model, int weapon, IWorld* world, const Vector3& position, const IBodyPtr& body = std::make_shared<BoundingCapsule>(Vector3{ 0.0f,9.0f,0.0f }, Matrix::Identity, 10.0f, 4.0f));
 	virtual ~ActionPlayerActor() override {}
 	virtual void initialize() override;
 
@@ -36,19 +40,27 @@ private:
 	void input_information();
 	//移動処理
 	void movement(float speed, Vector2 input);
-	//武器の描画
-	void draw_weapon() const;
-
-	void Hit(Vector3& dir);
 private:
-	std::weak_ptr<Actor> m_ui{};
-	IBodyPtr Initbody;
+	using StateMap = std::map<ActorStateID, ActorStateManager>;
+	StateMap actionplayerState_;
+
+	ActorStateID mcurrentStateID;
+
+	ActorParameters parameters_;
+
 	//アニメーションメッシュ
 	AnimatedMesh mesh_;
 	//持ち物モデル
-	int weapon_;
-	//移動速度
-	const float WalkSpeed{ 0.25f };
+	int mweapon_;
+
+	ActionPlayerHP mHP;
+	ActorPush mAP;
+
+	DrawWeapon mDW;
+
+	Gravity mG;
+
+	InputEWSN mI;
 
 	//武器描画位置
 	int mRightweaponPos;
@@ -56,11 +68,4 @@ private:
 
 	Vector3 m_ActionCameraForward;
 	Vector3 m_ActionCameraRight;
-
-	using StateMap = std::map<ActorStateID, ActorStateManager>;
-	StateMap actionplayerState_;
-
-	ActorStateID mcurrentStateID;
-
-	ActorParameters parameters_;
 };
