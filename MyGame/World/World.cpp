@@ -14,6 +14,7 @@ void World::initialize()
 	actors_.add(ActorGroup::Player);
 	actors_.add(ActorGroup::PlayerBullet);
 	actors_.add(ActorGroup::Enemy);
+	actors_.add(ActorGroup::BossEnemy);
 	actors_.add(ActorGroup::EnemyBullet);
 	actors_.add(ActorGroup::Ball);
 	actors_.add(ActorGroup::Item);
@@ -35,9 +36,11 @@ void World::update(float delta_time)
 	//field_->update(delta_time);
 	actors_.update(delta_time);
 	actors_.collide(ActorGroup::Player, ActorGroup::Enemy);
+	actors_.collide(ActorGroup::Player, ActorGroup::BossEnemy);
 	actors_.collide(ActorGroup::Player, ActorGroup::EnemyBullet);
 	actors_.collide(ActorGroup::Player, ActorGroup::Item);
 	actors_.collide(ActorGroup::PlayerBullet, ActorGroup::Enemy);
+	actors_.collide(ActorGroup::PlayerBullet, ActorGroup::BossEnemy);
 	actors_.collide(ActorGroup::PlayerBullet, ActorGroup::EnemyHead);
 	actors_.collide(ActorGroup::Player, ActorGroup::Ball);
 	actors_.remove();

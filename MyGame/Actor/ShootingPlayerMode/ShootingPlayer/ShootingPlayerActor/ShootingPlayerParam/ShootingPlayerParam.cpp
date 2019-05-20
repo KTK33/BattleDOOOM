@@ -8,7 +8,6 @@ void ShootingPlayerParam::initialize()
 	mAttackParam = 1;
 	mAimPos = Vector3::Zero;
 	mAimCheck = false;
-	mInvCheck = false;
 }
 
 int ShootingPlayerParam::Get_RemainGun()
@@ -64,14 +63,4 @@ bool ShootingPlayerParam::Get_AimCheck()
 void ShootingPlayerParam::Set_AimCheck(bool check)
 {
 	mAimCheck = check;
-}
-
-bool ShootingPlayerParam::Get_invincibly()
-{
-	return mInvCheck;
-}
-
-void ShootingPlayerParam::Set_Invicibly(bool check)
-{
-	mInvCheck = check;
 }

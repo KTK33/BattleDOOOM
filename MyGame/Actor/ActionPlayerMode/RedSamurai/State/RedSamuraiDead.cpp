@@ -13,7 +13,6 @@ void RedSamuraiDead::Stateinitialize()
 	mNextStateID = ActorStateID::RedSamuraiDead;
 
 	parameters_->Set_Motion(RedSamuraiMotionNum::MotionRedSamuraiDead);
-	parameters_->Set_Statetimer(0.0f);
 }
 
 void RedSamuraiDead::StateUpdate(Vector3 & lposition, Matrix & lrotation, AnimatedMesh & lmesh)

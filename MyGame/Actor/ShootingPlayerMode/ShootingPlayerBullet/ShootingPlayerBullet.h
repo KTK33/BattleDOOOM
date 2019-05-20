@@ -23,6 +23,7 @@ public:
 
 	//•Ç‚Æ°‚Ì”»’è
 	void collision();
+	float EffectSize();
 private:
 	Actor* player_;
 

@@ -201,9 +201,6 @@
     <ClCompile Include="Actor\ActionPlayerMode\RedSamurai\State\RedSamuraiIdle.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Actor\ActionPlayerMode\RedSamurai\State\RedSamuraiWalk.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Actor\ActionPlayerMode\RedSamurai\RedSamuraiActor.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -271,9 +268,6 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Actor\ShootingPlayerMode\ShootingEnemy\EnemyHeadShot\EnemyHeadShot.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Actor\ShootingPlayerMode\ShootingEnemy\NormalEnemy\NormalEnemy.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Actor\ShootingPlayerMode\ShootingPlayer\ShootingPlayerItemBox\ShootingPlayerItemBox.cpp">
@@ -373,6 +367,30 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Actor\ActorCommon\InputEWSN\InputEWSN.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\ShootingPlayerMode\ShootingEnemy\NormalEnemy\State\NomalEnemyDamage\NormalEnemyDamage.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\ShootingPlayerMode\ShootingEnemy\NormalEnemy\State\NomalEnemyPunch\NormalEnemyPunch.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\ShootingPlayerMode\ShootingEnemy\NormalEnemy\State\NoramlEnemyRoar\NormalEnemyRoar.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\ShootingPlayerMode\ShootingEnemy\NormalEnemy\State\NormalEnemyDead\NormalEnemyDead.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\ShootingPlayerMode\ShootingEnemy\NormalEnemy\State\NormalEnemyIdle\NormalEnemyIdle.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\ShootingPlayerMode\ShootingEnemy\NormalEnemy\NormalEnemyActor.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\EnemyCommon\EnemyMove\EnemyMove.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\EnemyCommon\PlayerLook\PlayerLook.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -629,9 +647,6 @@
     <ClInclude Include="Actor\ActionPlayerMode\RedSamurai\State\RedSamuraiIdle.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Actor\ActionPlayerMode\RedSamurai\State\RedSamuraiWalk.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Actor\ActionPlayerMode\RedSamurai\RedSamuraiActor.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -708,9 +723,6 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Actor\ShootingPlayerMode\ShootingEnemy\EnemyHeadShot\EnemyHeadShot.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Actor\ShootingPlayerMode\ShootingEnemy\NormalEnemy\NormalEnemy.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Actor\ShootingPlayerMode\ShootingPlayer\ShootingPlayerItemBox\ShootingPlayerItemBox.h">
@@ -840,6 +852,42 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Actor\ActorCommon\InputEWSN\InputEWSN.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ShootingPlayerMode\ShootingEnemy\NormalEnemy\State\NormalEnemyIdle\NormalEnemyIdle.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ShootingPlayerMode\ShootingEnemy\NormalEnemy\State\NormalEnemyDead\NormalEnemyDead.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ShootingPlayerMode\ShootingEnemy\NormalEnemy\State\NoramlEnemyRoar\NormalEnemyRoar.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ShootingPlayerMode\ShootingEnemy\NormalEnemy\State\NomalEnemyPunch\NormalEnemyPunch.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ShootingPlayerMode\ShootingEnemy\NormalEnemy\State\NomalEnemyDamage\NormalEnemyDamage.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ShootingPlayerMode\ShootingEnemy\NormalEnemy\NormalEnemyStateInc.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ShootingPlayerMode\ShootingEnemy\NormalEnemy\NormalEnemyMotionNum.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ShootingPlayerMode\ShootingEnemy\NormalEnemy\NormalEnemyActor.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\EnemyCommon\EnemyMove\EnemyMove.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\EnemyCommon\PlayerLook\PlayerLook.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\EnemyCommon\commonInc.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\EnemyCommon\EnemyParameter.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

@@ -9,6 +9,7 @@ void EnemyHeadShot::receiveMessage(EventMessage message, void * param)
 {
 	if (message == EventMessage::HIT_BALL)
 	{
+		if (m_Enemy.expired())return;
 		m_Enemy.lock()->receiveMessage(EventMessage::HIT_BALL_HEAD,reinterpret_cast<void*>(&position_));
 	}
 

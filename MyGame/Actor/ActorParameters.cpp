@@ -133,3 +133,23 @@ void ActorParameters::Red_HP(int rhp)
 {
 	mhp -= rhp;
 }
+
+bool ActorParameters::Get_invincibly()
+{
+	return mInvCheck;
+}
+
+void ActorParameters::Set_Invicibly(bool check)
+{
+	mInvCheck = check;
+}
+
+bool ActorParameters::Get_Attack()
+{
+	return mAttack;
+}
+
+void ActorParameters::Set_Attack(bool at)
+{
+	mAttack = at;
+}

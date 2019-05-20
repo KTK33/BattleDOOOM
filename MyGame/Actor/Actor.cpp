@@ -21,27 +21,6 @@ void Actor::rootInitialize()
 	eachChildren([&](Actor& actor) {actor.rootInitialize(); });
 }
 
-//void Actor::rootUpdate(float deltaTime)
-//{
-//	//prevPosition_ = position_;
-//	//prevRotation_ = rotation_;
-//
-//	//update(deltaTime);
-//	//eachChildren([&](Actor& actor) {actor.rootUpdate(deltaTime); });
-//}
-//
-//void Actor::rootDraw() const
-//{
-//	//if (isDraw_)draw();
-//	//eachChildren([&](const Actor& actor) {actor.rootDraw(); });
-//}
-//
-//void Actor::rootShadowDraw() const
-//{
-//	//if (isDraw_)shadowDraw();
-//	//eachChildren([&](const Actor& actor) {actor.rootShadowDraw(); });
-//}
-
 void Actor::initialize()
 {
 	dead_ = false;
@@ -168,7 +147,6 @@ Vector3 Actor::Getvelocity() const{
 }
 
 Matrix Actor::Getpose() const{
-	//return rotation().Translation(position_);
 	return Matrix(rotation_).Translation(position_);
 }
 

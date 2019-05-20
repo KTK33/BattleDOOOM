@@ -13,19 +13,14 @@ void RedSamuraiIdle::Stateinitialize()
 {
 	mNextStateFlag = false;
 	mNextStateID = ActorStateID::RedSamuraiIdel;
-	parameters_->Set_Motion(RedSamuraiMotionNum::MotionRedSamuraiIdel);
+	parameters_->Set_Motion(RedSamuraiMotionNum::MotionRedSamuraiForWard);
 }
 
 void RedSamuraiIdle::StateUpdate(Vector3 & lposition, Matrix & lrotation, AnimatedMesh & lmesh)
 {
-	//ƒvƒŒƒCƒ„[‚ÌŒŸõ
-	auto player_ = world_->find_actor(ActorGroup::Player, "Player").get();
-	if (player_ == nullptr) return;
-
-	//ˆê’è‹——£“à‚É—ˆ‚½‚çˆÚ“®ó‘Ô‚Ö
-	if (Vector3::Distance(player_->Getposition(), lposition) <= 250.0f)
+	if (parameters_->Get_Attack() == true)
 	{
-		mNextStateID = ActorStateID::RedSamuraiWalk;
+		mNextStateID = ActorStateID::RedSamuraiAttack;
 		mNextStateFlag = true;
 		return;
 	}

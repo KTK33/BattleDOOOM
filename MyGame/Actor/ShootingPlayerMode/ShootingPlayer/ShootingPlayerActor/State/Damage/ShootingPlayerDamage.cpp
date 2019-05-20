@@ -13,7 +13,7 @@ void ShootingPlayerDamage::Stateinitialize()
 	mNextStateID = ActorStateID::ActionPlayerDamage;
 	parameters_->Set_Motion(ShootingPlayerMotionNum::MotionPlayerDamage);
 
-	ShootingPlayerParam::getInstance().Set_Invicibly(true);
+	parameters_->Set_Invicibly(true);
 }
 
 void ShootingPlayerDamage::StateUpdate(Vector3 & lposition, Matrix & lrotation, AnimatedMesh & lmesh)
@@ -21,7 +21,7 @@ void ShootingPlayerDamage::StateUpdate(Vector3 & lposition, Matrix & lrotation, 
 	//ƒ‚[ƒVƒ‡ƒ“‚ÌŽžŠÔ‚ªI‚í‚Á‚½‚çˆÚ“®ó‘Ô‚Ö
 	if (parameters_->Get_Statetimer() > lmesh.motion_end_time() - 5)
 	{
-		ShootingPlayerParam::getInstance().Set_Invicibly(false);
+		parameters_->Set_Invicibly(false);
 		mNextStateID = parameters_->Get_PrevStateID();
 		mNextStateFlag = true;
 		return;

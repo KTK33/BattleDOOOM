@@ -106,7 +106,7 @@ void ShootingPlayerActor::update(float deltaTime)
 	input_information();
 
 	//敵の攻撃を食らったら点滅させる
-	invincibly(ShootingPlayerParam::getInstance().Get_invincibly());
+	invincibly(parameters_.Get_invincibly());
 
 	//十字キー右を押したらアイテムボックスを生成
 	if (GetJoypadPOVState(DX_INPUT_PAD1, 0) == 9000 || 
@@ -139,6 +139,15 @@ void ShootingPlayerActor::draw() const
 	mesh_.draw();
 	mDW.draw(mweapon_, mweaponPos, mesh_);
 	mParamUI.draw();
+
+	SetFontSize(32);
+	DrawFormatString(200, 450, GetColor(0, 0, 255), "%f", position_.x);
+	DrawFormatString(200, 550, GetColor(0, 0, 255), "%f", position_.y);
+	DrawFormatString(200, 650, GetColor(0, 0, 255), "%f", position_.z);
+
+	DrawFormatString(200, 750, GetColor(255, 255, 255), "%i", parameters_.Get_StateID());
+	SetFontSize(16);
+
 }
 
 void ShootingPlayerActor::onCollide(Actor & other)
@@ -150,12 +159,12 @@ void ShootingPlayerActor::onCollide(Actor & other)
 void ShootingPlayerActor::receiveMessage(EventMessage message, void * param)
 {
 	//無敵でないときに敵の弾に当たったら
-	if (ShootingPlayerParam::getInstance().Get_invincibly() == false)
+	if (parameters_.Get_invincibly() == false)
 	{
 		if (message == EventMessage::HIT_ENEMY_BULLET)
 		{
 			parameters_.Red_HP(*static_cast<int*>(param));
-			ShootingPlayerParam::getInstance().Set_Invicibly(true);
+			parameters_.Set_Invicibly(true);
 		}
 	}
 

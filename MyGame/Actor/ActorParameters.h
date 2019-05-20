@@ -77,6 +77,14 @@ public:
 	//HPの減算
 	void Red_HP(int rhp);
 
+	//無敵時間か取得
+	bool Get_invincibly();
+	//無敵時間かをセット
+	void Set_Invicibly(bool check);
+
+	//攻撃するかのチェック
+	bool Get_Attack();
+	void Set_Attack(bool at);
 
 private:
 	std::string mname{};
@@ -100,4 +108,8 @@ private:
 	float mstatetimer{ 0.0f };
 
 	int mhp{ 0 };
+
+	bool mInvCheck{ false };
+
+	bool mAttack{ false };
 };

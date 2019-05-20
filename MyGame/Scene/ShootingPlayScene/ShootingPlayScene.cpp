@@ -1,6 +1,6 @@
 #include "ShootingPlayScene.h"
 #include "../Actor/ShootingPlayerMode/ShootingPlayer/ShootingPlayerActor/ShootingPlayerActor.h"
-#include "../Actor/ShootingPlayerMode/ShootingEnemy/NormalEnemy/NormalEnemy.h"
+#include "../Actor/ShootingPlayerMode/ShootingEnemy/NormalEnemy/NormalEnemyActor.h"
 #include "../Actor/ShootingPlayerMode/ShootingEnemy/BossEnemy/BossEnemy.h"
 #include "../Actor/ShootingPlayerMode/ShootingCamera/ShootingCamera.h"
 #include "../Actor/ActorGroup.h"
@@ -45,19 +45,20 @@ void ShootingPlayScene::start() {
 	auto P = new_actor<ShootingPlayerActor>(0, 1, &world_, Vector3{ 0.0f, 30.0f,0.0f }, P_Text);
 	world_.add_actor(ActorGroup::Player, P);
 
-	auto ANYUI = new_actor<AnyUI>(&world_,P);
+	auto ANYUI = new_actor<AnyUI>(&world_);
 	world_.add_actor(ActorGroup::UI, ANYUI);
 
 	world_.add_actor(ActorGroup::PauseUI, new_actor<PauseUI>(&world_));
 
-	auto dummy1 = new_actor<NormalEnemy>(11, &world_, Vector3{ 20.0f, 15.0f,  -150.0f }, Matrix::CreateRotationY(Random::rand(0.0f,360.0f)), ANYUI);
-	world_.add_actor(ActorGroup::Enemy,dummy1);
+	auto dummy1 = new_actor<NormalEnemyActor>(11, &world_, Vector3{ 20.0f, 30.0f,  -150.0f }, Matrix::CreateRotationY(Random::rand(0.0f, 360.0f)));
+	world_.add_actor(ActorGroup::Enemy, dummy1);
 
-	auto dummy2 = new_actor<NormalEnemy>(12, &world_, Vector3{ 130.0f, 15.0f, -4.0f}, Matrix::CreateRotationY(Random::rand(0.0f, 360.0f)), ANYUI);
+	auto dummy2 = new_actor<NormalEnemyActor>(12, &world_, Vector3{ 130.0f, 30.0f, -4.0f }, Matrix::CreateRotationY(Random::rand(0.0f, 360.0f)));
 	world_.add_actor(ActorGroup::Enemy, dummy2);
 
-	auto dummy3 = new_actor<NormalEnemy>(13, &world_, Vector3{ -110.0f , 10.0f, 90.0f }, Matrix::CreateRotationY(Random::rand(0.0f, 360.0f)), ANYUI);
+	auto dummy3 = new_actor<NormalEnemyActor>(13, &world_, Vector3{ -110.0f , 30.0f, 90.0f }, Matrix::CreateRotationY(Random::rand(0.0f, 360.0f)));
 	world_.add_actor(ActorGroup::Enemy, dummy3);
+
 
 	world_.add_actor(ActorGroup::System, new_actor<ShootingCamera>(&world_,P));
 
@@ -69,7 +70,7 @@ void ShootingPlayScene::update(float deltaTime)
 
 	if (world_.find_actor(ActorGroup::Enemy, "NormalEnemy") == NULL && BossArleady == false)
 	{
-		world_.add_actor(ActorGroup::Enemy, new_actor<BossEnemy>(3, &world_, Vector3{ 20.0f, -35.0f,20.0f }));
+		world_.add_actor(ActorGroup::BossEnemy, new_actor<BossEnemy>(3, &world_, Vector3{ 20.0f, -35.0f,20.0f }));
 		BossArleady = true;
 	}
 

@@ -34,9 +34,6 @@ public:
 	bool Get_AimCheck();
 	void Set_AimCheck(bool check);
 
-	bool Get_invincibly();
-	void Set_Invicibly(bool check);
-
 private:
 
 	int mRemainGun;
@@ -44,5 +41,4 @@ private:
 	int mAttackParam;
 	Vector3 mAimPos;
 	bool mAimCheck;
-	bool mInvCheck;
 };

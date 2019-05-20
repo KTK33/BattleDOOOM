@@ -163,7 +163,6 @@
     <ClCompile Include="Actor\ActionPlayerMode\RedSamurai\State\RedSamuraiAttack.cpp" />
     <ClCompile Include="Actor\ActionPlayerMode\RedSamurai\State\RedSamuraiDead.cpp" />
     <ClCompile Include="Actor\ActionPlayerMode\RedSamurai\State\RedSamuraiIdle.cpp" />
-    <ClCompile Include="Actor\ActionPlayerMode\RedSamurai\State\RedSamuraiWalk.cpp" />
     <ClCompile Include="Actor\ActionPlayerMode\UI\ActionModePause\ActionModePause.cpp" />
     <ClCompile Include="Actor\ActionPlayerMode\UI\HPUI\ActonPlayerHP.cpp" />
     <ClCompile Include="Actor\ActionPlayerMode\UI\HPUI\RedSamuraiHP.cpp" />
@@ -188,6 +187,7 @@
     <ClCompile Include="Actor\CommonUIActor\TitleUI\TitleBullet\TitleBullet.cpp" />
     <ClCompile Include="Actor\CommonUIActor\TitleUI\TitlePlayer\TitlePlayer.cpp" />
     <ClCompile Include="Actor\EnemyAttackCollison\EnemyAttackCollison.cpp" />
+    <ClCompile Include="Actor\EnemyCommon\PlayerLook\PlayerLook.cpp" />
     <ClCompile Include="Actor\PlayerAttackCollision\PlayerAttackCollision.cpp" />
     <ClCompile Include="Actor\ShootingPlayerMode\ItemActor\BulletItem\BulletItem.cpp" />
     <ClCompile Include="Actor\ShootingPlayerMode\ItemActor\HPRecoverItem\HPRecoverItem.cpp" />
@@ -196,7 +196,13 @@
     <ClCompile Include="Actor\ShootingPlayerMode\ShootingEnemy\BossEnemy\BossEnemy.cpp" />
     <ClCompile Include="Actor\ShootingPlayerMode\ShootingEnemy\EnemyAttackFire\EnemyAttackFire.cpp" />
     <ClCompile Include="Actor\ShootingPlayerMode\ShootingEnemy\EnemyHeadShot\EnemyHeadShot.cpp" />
-    <ClCompile Include="Actor\ShootingPlayerMode\ShootingEnemy\NormalEnemy\NormalEnemy.cpp" />
+    <ClCompile Include="Actor\EnemyCommon\EnemyMove\EnemyMove.cpp" />
+    <ClCompile Include="Actor\ShootingPlayerMode\ShootingEnemy\NormalEnemy\NormalEnemyActor.cpp" />
+    <ClCompile Include="Actor\ShootingPlayerMode\ShootingEnemy\NormalEnemy\State\NomalEnemyDamage\NormalEnemyDamage.cpp" />
+    <ClCompile Include="Actor\ShootingPlayerMode\ShootingEnemy\NormalEnemy\State\NomalEnemyPunch\NormalEnemyPunch.cpp" />
+    <ClCompile Include="Actor\ShootingPlayerMode\ShootingEnemy\NormalEnemy\State\NoramlEnemyRoar\NormalEnemyRoar.cpp" />
+    <ClCompile Include="Actor\ShootingPlayerMode\ShootingEnemy\NormalEnemy\State\NormalEnemyDead\NormalEnemyDead.cpp" />
+    <ClCompile Include="Actor\ShootingPlayerMode\ShootingEnemy\NormalEnemy\State\NormalEnemyIdle\NormalEnemyIdle.cpp" />
     <ClCompile Include="Actor\ShootingPlayerMode\ShootingPlayerBullet\ShootingPlayerBullet.cpp" />
     <ClCompile Include="Actor\ShootingPlayerMode\ShootingPlayer\ShootingPlayerActor\PlayerMove\PlayerMove.cpp" />
     <ClCompile Include="Actor\ShootingPlayerMode\ShootingPlayer\ShootingPlayerActor\ShootingPlayerActor.cpp" />
@@ -288,7 +294,6 @@
     <ClInclude Include="Actor\ActionPlayerMode\RedSamurai\State\RedSamuraiAttack.h" />
     <ClInclude Include="Actor\ActionPlayerMode\RedSamurai\State\RedSamuraiDead.h" />
     <ClInclude Include="Actor\ActionPlayerMode\RedSamurai\State\RedSamuraiIdle.h" />
-    <ClInclude Include="Actor\ActionPlayerMode\RedSamurai\State\RedSamuraiWalk.h" />
     <ClInclude Include="Actor\ActionPlayerMode\UI\ActionModePause\ActionModePause.h" />
     <ClInclude Include="Actor\ActionPlayerMode\UI\HPUI\ActonPlayerHP.h" />
     <ClInclude Include="Actor\ActionPlayerMode\UI\HPUI\RedSamuraiHP.h" />
@@ -319,6 +324,9 @@
     <ClInclude Include="Actor\CommonUIActor\TitleUI\TitleBullet\TitleBullet.h" />
     <ClInclude Include="Actor\CommonUIActor\TitleUI\TitlePlayer\TitlePlayer.h" />
     <ClInclude Include="Actor\EnemyAttackCollison\EnemyAttackCollison.h" />
+    <ClInclude Include="Actor\EnemyCommon\commonInc.h" />
+    <ClInclude Include="Actor\EnemyCommon\EnemyParameter.h" />
+    <ClInclude Include="Actor\EnemyCommon\PlayerLook\PlayerLook.h" />
     <ClInclude Include="Actor\PlayerAttackCollision\PlayerAttackCollision.h" />
     <ClInclude Include="Actor\ShootingPlayerMode\ItemActor\BulletItem\BulletItem.h" />
     <ClInclude Include="Actor\ShootingPlayerMode\ItemActor\HPRecoverItem\HPRecoverItem.h" />
@@ -327,7 +335,15 @@
     <ClInclude Include="Actor\ShootingPlayerMode\ShootingEnemy\BossEnemy\BossEnemy.h" />
     <ClInclude Include="Actor\ShootingPlayerMode\ShootingEnemy\EnemyAttackFire\EnemyAttackFire.h" />
     <ClInclude Include="Actor\ShootingPlayerMode\ShootingEnemy\EnemyHeadShot\EnemyHeadShot.h" />
-    <ClInclude Include="Actor\ShootingPlayerMode\ShootingEnemy\NormalEnemy\NormalEnemy.h" />
+    <ClInclude Include="Actor\EnemyCommon\EnemyMove\EnemyMove.h" />
+    <ClInclude Include="Actor\ShootingPlayerMode\ShootingEnemy\NormalEnemy\NormalEnemyActor.h" />
+    <ClInclude Include="Actor\ShootingPlayerMode\ShootingEnemy\NormalEnemy\NormalEnemyMotionNum.h" />
+    <ClInclude Include="Actor\ShootingPlayerMode\ShootingEnemy\NormalEnemy\State\NomalEnemyDamage\NormalEnemyDamage.h" />
+    <ClInclude Include="Actor\ShootingPlayerMode\ShootingEnemy\NormalEnemy\State\NomalEnemyPunch\NormalEnemyPunch.h" />
+    <ClInclude Include="Actor\ShootingPlayerMode\ShootingEnemy\NormalEnemy\State\NoramlEnemyRoar\NormalEnemyRoar.h" />
+    <ClInclude Include="Actor\ShootingPlayerMode\ShootingEnemy\NormalEnemy\State\NormalEnemyDead\NormalEnemyDead.h" />
+    <ClInclude Include="Actor\ShootingPlayerMode\ShootingEnemy\NormalEnemy\State\NormalEnemyIdle\NormalEnemyIdle.h" />
+    <ClInclude Include="Actor\ShootingPlayerMode\ShootingEnemy\NormalEnemy\NormalEnemyStateInc.h" />
     <ClInclude Include="Actor\ShootingPlayerMode\ShootingPlayerBullet\ShootingPlayerBullet.h" />
     <ClInclude Include="Actor\ShootingPlayerMode\ShootingPlayer\PlayerState.h" />
     <ClInclude Include="Actor\ShootingPlayerMode\ShootingPlayer\ShootingPlayerActor\PlayerMove\PlayerMove.h" />

@@ -9,7 +9,6 @@
 #include "../Actor/EnemyAttackCollison/EnemyAttackCollison.h"
 
 #include "State/RedSamuraiIdle.h"
-#include "State/RedSamuraiWalk.h"
 #include "State/RedSamuraiAttack.h"
 #include "State/RedSamuraiDead.h"
 
@@ -22,13 +21,14 @@ Actor(world, "RedSamurai", position, body),
 	mquiver_{ quiver },
 	mSwordPos{ 38 },
 	mArrowPos{ 76 },
-	mQuiverPos{ 82 }
+	mQuiverPos{ 82 },
+	mAttackCheck{ false },
+	mAttackTime{ false }
 {
 	rotation_ = rotation;
 
 	mcurrentStateID = ActorStateID::RedSamuraiIdel;
 	redsamuraiState_[ActorStateID::RedSamuraiIdel].add(add_state<RedSamuraiIdle>(world, parameters_));
-	redsamuraiState_[ActorStateID::RedSamuraiWalk].add(add_state<RedSamuraiWaik>(world, parameters_));
 	redsamuraiState_[ActorStateID::RedSamuraiAttack].add(add_state<RedSamuraiAttack>(world, parameters_));
 	redsamuraiState_[ActorStateID::RedSamuraiDead].add(add_state<RedSamuraiDead>(world, parameters_));
 	redsamuraiState_[mcurrentStateID].initialize();
@@ -41,7 +41,6 @@ void RedSamuraiActor::initialize()
 	mesh_.transform(Getpose());
 	velocity_ = Vector3::Zero;
 
-	parameters_.Set_Position(position_);
 	parameters_.Set_HP(PlayerHP);
 }
 
@@ -56,6 +55,7 @@ void RedSamuraiActor::update(float deltaTime)
 		redsamuraiState_[mcurrentStateID].NextState(mcurrentStateID);
 		redsamuraiState_[mcurrentStateID].initialize();
 		parameters_.Set_StateID(mcurrentStateID);
+		parameters_.Set_Statetimer(0.0f);
 	}
 
 	//壁床とのの当たり判定
@@ -75,23 +75,23 @@ void RedSamuraiActor::update(float deltaTime)
 	mesh_.transform(Getpose());
 	mesh_.change_motion(parameters_.Get_Motion());
 
-	//ポジションの更新
-	position_ = parameters_.Get_Position();
-
 	//重力
 	mG.gravity(position_, velocity_, Floorcollide);
 
 	//プレイヤーの取得
 	getPlayer();
 
-	//攻撃状態以外の時にプレイヤーの方向に向く
-	if(mcurrentStateID != ActorStateID::RedSamuraiAttack) rotation_ *= PlayerLook();
-
 	//状態時間を加算
 	parameters_.Add_Statetime(0.5f);
 
 	//武器の位置
 	weapon_transfer();
+
+	//アイドル中の処理
+	if (mcurrentStateID == ActorStateID::RedSamuraiIdel){
+		mEV.Move(position_, player_->Getposition(), 0.5f,mAttackCheck,15.0f);
+		Attacking();
+	}
 }
 
 void RedSamuraiActor::draw() const
@@ -165,11 +165,17 @@ void RedSamuraiActor::collision()
 	}
 }
 
-Matrix RedSamuraiActor::PlayerLook()
+void RedSamuraiActor::Attacking()
 {
-	//ターゲット方向に少しずつ向きを変える Clampで無理やり角度(-TurnAngle～TurnAngle)内に
-	const auto angle = MathHelper::Clamp(PlayerDirection(player_, position_, rotation_), -2.5f, 2.5f);
-	return  Matrix::CreateRotationY(angle);
+	mAttackTime++;
+	float PlayerAngle = mPL.Look(player_, position_, rotation_);
+	if (MathHelper::Abs(PlayerAngle) < 0.2f && (mAttackCheck || mAttackTime > 60))
+	{
+		parameters_.Set_Attack(true);
+		mAttackTime = 0;
+		return;
+	}
+	rotation_ *= Matrix::CreateRotationY(PlayerAngle);
 }
 
 void RedSamuraiActor::weapon_transfer()

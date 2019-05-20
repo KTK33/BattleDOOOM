@@ -22,7 +22,7 @@ void ShootingPlayerIdleAiming::StateUpdate(Vector3 & lposition, Matrix & lrotati
 	Input();
 
 	//ダメージを受けたらダメージ状態へ
-	if (ShootingPlayerParam::getInstance().Get_invincibly())
+	if (parameters_->Get_invincibly())
 	{
 		mNextStateID = ActorStateID::ShootingPlayerDamage;
 		mNextStateFlag = true;

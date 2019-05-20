@@ -3,7 +3,7 @@
 
 class AnyUI : public Actor {
 public:
-	AnyUI(IWorld* world, std::weak_ptr<Actor> p);
+	AnyUI(IWorld* world);
 
 	virtual void initialize() override;
 
@@ -14,6 +14,5 @@ public:
 	virtual void draw() const;
 
 private:
-	std::weak_ptr<Actor> m_p{};
-	int EnemyCount{ 3 };
+	int mEnemyCount;
 };

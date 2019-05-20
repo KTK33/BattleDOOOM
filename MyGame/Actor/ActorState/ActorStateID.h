@@ -17,6 +17,14 @@ enum class ActorStateID
 	ShootingPlayerThohatu,
 	ShootingPlayerJump,
 
+	//シューティングモードのノーマルエネミーのステイト
+	NormalEnemyIdle,
+	NormalEnemyPunch,
+	NormalEnemyRoar,
+	NormalEnemyDamage,
+	NormalEnemyDead,
+
+
 	//アクションプレイヤーのステイト
 	ActionPlayerIdel,
 	ActionPlayerWalk,
@@ -30,11 +38,6 @@ enum class ActorStateID
 
 	//赤侍のステイト
 	RedSamuraiIdel,
-	RedSamuraiWalk,
-	RedSamuraiForWard,
-	RedSamuraiBackWard,
-	RedSamuraiRight,
-	RedSamuraiLeft,
 	RedSamuraiAttack,
 	RedSamuraiAttackArrow,
 	RedSamuraiDead,

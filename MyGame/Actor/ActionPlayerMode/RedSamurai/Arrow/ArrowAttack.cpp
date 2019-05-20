@@ -13,9 +13,10 @@ ArrowAttack::ArrowAttack(int model, IWorld * world, const Vector3 & position, co
 	plyaerVector = Vector3(playerpos.x - position_.x, playerpos.y - position_.y, playerpos.z - position_.z);
 
 	Vector3 pos = position_;
-	pos.y = pos.y + 15.0f;
+	pos.y = pos.y + 15.0f;//プレイヤーの身長分を足す
 
-	rotation_ = Matrix::Invert(Matrix::CreateLookAt(pos, pos + playerpos * Matrix::CreateRotationY(180), Vector3::Up));
+	//プレイヤ―の向きに矢を向かせる
+	rotation_ = Matrix::Invert(Matrix::CreateLookAt(pos, pos + plyaerVector, Vector3::Up) * Matrix::CreateRotationY(180));
 }
 
 
@@ -25,7 +26,7 @@ void ArrowAttack::update(float deltaTime)
 	//行列の設定
 	mesh_.transform(Getpose());
 
-	position_ += plyaerVector * 0.03f;
+	position_ += plyaerVector.Normalize() * 0.05f;
 
 	collision();
 }

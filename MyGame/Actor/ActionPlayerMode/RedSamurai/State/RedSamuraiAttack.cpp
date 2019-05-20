@@ -40,7 +40,8 @@ void RedSamuraiAttack::StateUpdate(Vector3 & lposition, Matrix & lrotation, Anim
 	//モーションの時間が終わったら移動状態へ
 	if (parameters_->Get_Statetimer() > lmesh.motion_end_time() - 5)
 	{
-		mNextStateID = ActorStateID::RedSamuraiWalk;
+		parameters_->Set_Attack(false);
+		mNextStateID = ActorStateID::RedSamuraiIdel;
 		mNextStateFlag = true;
 		return;
 	}
@@ -64,7 +65,7 @@ void RedSamuraiAttack::AttackBehavior(Vector3 lposition, Matrix lrotation)
 	const float PlayerDis = Vector3::Distance(lposition, player_->Getposition());
 
 	//距離が30以上なら遠距離攻撃、それ以外は近距離攻撃
-	if (PlayerDis >= 30.0f)
+	if (PlayerDis >= 15.0f)
 	{
 		world_->add_actor(ActorGroup::EnemyBullet, std::make_shared<ArrowAttack>(52, world_, Vector3{ lposition.x,lposition.y + 13.0f,lposition.z } +lrotation.Forward() * 4 + lrotation.Right() * 3));
 		parameters_->Set_Motion(RedSamuraiMotionNum::MotionRedSamuraiArrowAttack);
