@@ -24,6 +24,15 @@ enum class ActorStateID
 	NormalEnemyDamage,
 	NormalEnemyDead,
 
+	//シューティングモードのボスエネミーのステイト
+	BossEnemyIdle,
+	BossEnemyPunch,
+	BossEnemyFireBefo,
+	BossEnemyFire,
+	BossEnemyDamage,
+	BossEnemyDead,
+
+
 
 	//アクションプレイヤーのステイト
 	ActionPlayerIdel,

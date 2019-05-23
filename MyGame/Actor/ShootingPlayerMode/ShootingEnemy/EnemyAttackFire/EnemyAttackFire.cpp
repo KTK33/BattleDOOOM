@@ -3,18 +3,21 @@
 EnemyAttackFire::EnemyAttackFire(int model, IWorld * world, const Vector3 & position, const IBodyPtr & body):
 	Actor(world,"EnemyAttackFire",position,body),
 	mesh_{model},
-	EnemyForward{Vector3::Zero},
-	plyaerVector{Vector3::Zero}
+	mEnemyForward{Vector3::Zero},
+	mPlyaerVector{Vector3::Zero}
+{
+	initialize();
+}
+
+void EnemyAttackFire::initialize()
 {
 	mesh_.transform(Getpose());
 
 	player_ = world_->find_actor(ActorGroup::Player, "Player").get();
 
-	plyaerVector = Vector3(player_->Getposition().x - position_.x, player_->Getposition().y - position_.y, player_->Getposition().z - position_.z);
-}
+	//プレイヤーまでのベクトル取得
+	mPlyaerVector = Vector3(player_->Getposition().x - position_.x, player_->Getposition().y - position_.y, player_->Getposition().z - position_.z);
 
-void EnemyAttackFire::initialize()
-{
 }
 
 void EnemyAttackFire::update(float deltaTime)
@@ -23,10 +26,7 @@ void EnemyAttackFire::update(float deltaTime)
 	//行列の設定
 	mesh_.transform(Getpose());
 
-	position_ += plyaerVector * 0.01f;
-
-	DeadTimer++;
-	if (DeadTimer >= 120) die();
+	position_ +=mPlyaerVector * 0.01f;
 }
 
 void EnemyAttackFire::onCollide(Actor & other)
@@ -50,5 +50,20 @@ void EnemyAttackFire::draw() const
 
 void EnemyAttackFire::GetEnemyForward(Vector3 forward)
 {
-	EnemyForward = forward;
+	mEnemyForward = forward;
+}
+
+void EnemyAttackFire::collision()
+{
+	//ぶつかったか
+	Vector3 result;
+	//壁とぶつけてから
+	if (field(result)) {
+		die();
+	}
+
+	//床との接地判定
+	if (floor(result)) {
+		die();
+	}
 }

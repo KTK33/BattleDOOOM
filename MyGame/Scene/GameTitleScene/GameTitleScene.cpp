@@ -35,12 +35,11 @@ void GameTitleScene::update(float deltaTime)
 
 void GameTitleScene::draw() const
 {
-
-	//Sprite::GetInstance().DrawSetCenter(SPRITE_ID::TITLECHUI, Vector2((float)WINDOW_WIDTH / 2, WINDOW_HEIGHT/2));
-	//Sprite::GetInstance().Draw(SPRITE_ID::TITLEJIKYO, Vector2(1500, 950));
-
 	Graphics3D::clear_color(0, 0, 0);
 	world_.draw();
+
+	Sprite::GetInstance().Draw(SPRITE_ID::TITLECHUI, Vector2(1500, 550));
+	Sprite::GetInstance().Draw(SPRITE_ID::TITLEJIKYO, Vector2(1500, 950));
 }
 
 void GameTitleScene::end()

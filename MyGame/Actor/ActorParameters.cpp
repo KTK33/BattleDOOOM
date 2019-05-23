@@ -153,3 +153,13 @@ void ActorParameters::Set_Attack(bool at)
 {
 	mAttack = at;
 }
+
+int ActorParameters::GetAttackType()
+{
+	return mAtype;
+}
+
+void ActorParameters::Set_AttackType(int type)
+{
+	mAtype = type;
+}

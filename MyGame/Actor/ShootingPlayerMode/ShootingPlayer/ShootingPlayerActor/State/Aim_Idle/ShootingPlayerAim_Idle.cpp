@@ -47,6 +47,18 @@ void ShootingPlayerAim_Idle::StateUpdate(Vector3 & lposition, Matrix & lrotation
 
 void ShootingPlayerAim_Idle::Input()
 {
+		//ÉäÉçÅ[Éh
+	if (ShootingPlayerParam::getInstance().Get_RemainGun() < 7)
+	{
+		if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM3) ||
+			Keyboard::GetInstance().KeyTriggerDown(KEYCODE::R))
+		{
+			mNextStateID = ActorStateID::ShootingPlayerReload;
+			mNextStateFlag = true;
+			return;
+		}
+	}
+
 	if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM5) || 
 		Keyboard::GetInstance().KeyTriggerDown(KEYCODE::LSHIFT))
 	{

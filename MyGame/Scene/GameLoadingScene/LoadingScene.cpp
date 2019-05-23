@@ -3,7 +3,7 @@
 
 LoadingScene::LoadingScene() {
 
-	next_ = SceneType::SCENE_SHOOTING_PLAY;
+	next_ = SceneType::SCENE_TITLE;
 }
 
 void LoadingScene::start() {
@@ -150,10 +150,11 @@ void LoadingScene::LoadSprite()
 	sprite.Load("asset/UI/PlayScene/MissionNumber.png", SPRITE_ID::MISSION_NUMBER);
 	sprite.Load("asset/UI/PlayScene/MissionBossDefeat.png", SPRITE_ID::MISSION_BOSS_DEFEAT);
 
-	sprite.Load("asset/UI/PlayScene/Enemy/BossHP_.png", SPRITE_ID::BOSSHP_UI);
-	sprite.Load("asset/UI/PlayScene/Enemy/BossHP_gauge.png", SPRITE_ID::BOSSHP_GAUGE);
 	sprite.Load("asset/UI/PlayScene/Enemy/EnemyCountATO.png", SPRITE_ID::ENEMY_COUNT_ATO);
 	sprite.Load("asset/UI/PlayScene/Sight.png", SPRITE_ID::SIGHT);
+
+	Billboard::load((int)SPRITE_ID::BOSSHP_UI, "asset/UI/PlayScene/Enemy/BossHP_.png");
+	Billboard::load((int)SPRITE_ID::BOSSHP_GAUGE, "asset/UI/PlayScene/Enemy/BossHP_gauge.png");
 
 	sprite.Load("asset/UI/PlayScene/ItemBox.png", SPRITE_ID::ITEMBOX);
 

@@ -86,6 +86,10 @@ public:
 	bool Get_Attack();
 	void Set_Attack(bool at);
 
+	//UŒ‚‚Ìí—Ş
+	int GetAttackType();
+	void Set_AttackType(int type);
+
 private:
 	std::string mname{};
 
@@ -112,4 +116,6 @@ private:
 	bool mInvCheck{ false };
 
 	bool mAttack{ false };
+
+	int mAtype{ 0 };
 };

@@ -112,12 +112,6 @@ void ActionPlayerActor::receiveMessage(EventMessage message, void * param)
 		parameters_.Red_HP(*static_cast<int*>(param));
 	}
 
-	//HPをUIアクターに送信するため
-	if (message == EventMessage::PLAYER_HP)
-	{
-		*static_cast<int*>(param) = parameters_.Get_HP();
-	}
-
 	//敵と接触したときに重ならないように押し出す
 	if (message == EventMessage::HIT_ENEMY)
 	{

@@ -261,9 +261,6 @@
     <ClCompile Include="Actor\ShootingPlayerMode\ShootingCamera\ShootingCamera.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Actor\ShootingPlayerMode\ShootingEnemy\BossEnemy\BossEnemy.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Actor\ShootingPlayerMode\ShootingEnemy\EnemyAttackFire\EnemyAttackFire.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -277,9 +274,6 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Actor\ShootingPlayerMode\UIActor\AnyUI\AnyUI.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Actor\ShootingPlayerMode\UIActor\BossEnemyUI\BossEnemyUI.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Actor\ShootingPlayerMode\UIActor\Pause\Pause.cpp">
@@ -391,6 +385,30 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Actor\EnemyCommon\PlayerLook\PlayerLook.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\ShootingPlayerMode\ShootingEnemy\BossEnemy\State\BossEnemyPunch\BossEnemyPunch.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\ShootingPlayerMode\ShootingEnemy\BossEnemy\State\BossEnemyIdle\BossEnemyIdle.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\ShootingPlayerMode\ShootingEnemy\BossEnemy\State\BossEnemyFireBefo\BossEnemyFireBefo.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\ShootingPlayerMode\ShootingEnemy\BossEnemy\State\BossEnemyFire\BossEnemyFire.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\ShootingPlayerMode\ShootingEnemy\BossEnemy\State\BossEnemyDead\BossEnemyDead.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\ShootingPlayerMode\ShootingEnemy\BossEnemy\State\BossEnemyDamage\BossEnemyDamage.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\ShootingPlayerMode\ShootingEnemy\BossEnemy\BossEnemyActor.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\ShootingPlayerMode\ShootingEnemy\BossEnemy\HPUI\BossHPUI.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -716,9 +734,6 @@
     <ClInclude Include="Actor\ShootingPlayerMode\ShootingCamera\ShootingCamera.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Actor\ShootingPlayerMode\ShootingEnemy\BossEnemy\BossEnemy.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Actor\ShootingPlayerMode\ShootingEnemy\EnemyAttackFire\EnemyAttackFire.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -738,9 +753,6 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Actor\ShootingPlayerMode\UIActor\AnyUI\AnyUI.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Actor\ShootingPlayerMode\UIActor\BossEnemyUI\BossEnemyUI.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Actor\ShootingPlayerMode\UIActor\Pause\Pause.h">
@@ -888,6 +900,36 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Actor\EnemyCommon\EnemyParameter.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ShootingPlayerMode\ShootingEnemy\BossEnemy\BossEnemyMotionNum.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ShootingPlayerMode\ShootingEnemy\BossEnemy\BossEnemyStateInc.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ShootingPlayerMode\ShootingEnemy\BossEnemy\State\BossEnemyIdle\BossEnemyIdle.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ShootingPlayerMode\ShootingEnemy\BossEnemy\State\BossEnemyPunch\BossEnemyPunch.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ShootingPlayerMode\ShootingEnemy\BossEnemy\State\BossEnemyFireBefo\BossEnemyFireBefo.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ShootingPlayerMode\ShootingEnemy\BossEnemy\State\BossEnemyFire\BossEnemyFire.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ShootingPlayerMode\ShootingEnemy\BossEnemy\State\BossEnemyDead\BossEnemyDead.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ShootingPlayerMode\ShootingEnemy\BossEnemy\State\BossEnemyDamage\BossEnemyDamage.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ShootingPlayerMode\ShootingEnemy\BossEnemy\BossEnemyActor.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ShootingPlayerMode\ShootingEnemy\BossEnemy\HPUI\BossHPUI.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

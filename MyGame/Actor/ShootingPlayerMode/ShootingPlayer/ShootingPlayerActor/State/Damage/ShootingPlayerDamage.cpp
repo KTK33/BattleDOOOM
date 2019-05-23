@@ -22,7 +22,7 @@ void ShootingPlayerDamage::StateUpdate(Vector3 & lposition, Matrix & lrotation, 
 	if (parameters_->Get_Statetimer() > lmesh.motion_end_time() - 5)
 	{
 		parameters_->Set_Invicibly(false);
-		mNextStateID = parameters_->Get_PrevStateID();
+		mNextStateID = ActorStateID::ShootingPlayerIdle;
 		mNextStateFlag = true;
 		return;
 	}

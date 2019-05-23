@@ -1,7 +1,7 @@
 #include "ShootingPlayScene.h"
 #include "../Actor/ShootingPlayerMode/ShootingPlayer/ShootingPlayerActor/ShootingPlayerActor.h"
 #include "../Actor/ShootingPlayerMode/ShootingEnemy/NormalEnemy/NormalEnemyActor.h"
-#include "../Actor/ShootingPlayerMode/ShootingEnemy/BossEnemy/BossEnemy.h"
+#include "../Actor/ShootingPlayerMode/ShootingEnemy/BossEnemy/BossEnemyActor.h"
 #include "../Actor/ShootingPlayerMode/ShootingCamera/ShootingCamera.h"
 #include "../Actor/ActorGroup.h"
 #include "../Fiield/Field.h"
@@ -70,7 +70,7 @@ void ShootingPlayScene::update(float deltaTime)
 
 	if (world_.find_actor(ActorGroup::Enemy, "NormalEnemy") == NULL && BossArleady == false)
 	{
-		world_.add_actor(ActorGroup::BossEnemy, new_actor<BossEnemy>(3, &world_, Vector3{ 20.0f, -35.0f,20.0f }));
+		world_.add_actor(ActorGroup::BossEnemy, new_actor<BossEnemyActor>(3, &world_, Vector3{ 200.0f, 30.0f,20.0f }));
 		BossArleady = true;
 	}
 
@@ -98,7 +98,6 @@ void ShootingPlayScene::update(float deltaTime)
 		isEnd_ = true;
 	}
 }
-
 
 void ShootingPlayScene::draw() const {
 

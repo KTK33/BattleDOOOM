@@ -22,12 +22,14 @@ public:
 	void GetEnemyForward(Vector3 forward);
 
 private:
+	//ï«Ç∆è∞ÇÃîªíË
+	void collision();
+
+private:
 	AnimatedMesh mesh_;
 	Actor* player_;
 
-	Vector3 EnemyForward;
+	Vector3 mEnemyForward;
 
-	int DeadTimer{ 0 };
-
-	Vector3 plyaerVector;
+	Vector3 mPlyaerVector;
 };

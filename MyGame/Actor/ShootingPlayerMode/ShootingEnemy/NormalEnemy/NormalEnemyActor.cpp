@@ -103,10 +103,6 @@ void NormalEnemyActor::draw() const
 {
 	mesh_.draw();
 	body_->transform(Getpose())->draw();
-
-	if(mAttackCheck)
-	DrawFormatString(500, 500, GetColor(255, 255, 255), "hit");
-
 }
 
 void NormalEnemyActor::onCollide(Actor & other)

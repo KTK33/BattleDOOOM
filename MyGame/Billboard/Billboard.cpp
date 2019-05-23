@@ -36,3 +36,8 @@ void Billboard::bind(int id) {
 void Billboard::draw(const Vector3 & position, float size, float cx, float cy, float angle) {
     DrawBillboard3D(position, cx, cy, size, angle, image_, TRUE);
 }
+
+void Billboard::Mobidraw(const Vector3 & position, Vector2 pos1, Vector2 pos2, Vector2 pos3, Vector2 pos4)
+{
+	DrawModiBillboard3D(position, pos1.x, pos1.y, pos2.x, pos2.y, pos3.x, pos3.y, pos4.x, pos4.y, image_, TRUE);
+}
