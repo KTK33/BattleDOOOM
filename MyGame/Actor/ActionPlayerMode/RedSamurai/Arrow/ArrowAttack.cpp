@@ -26,7 +26,7 @@ void ArrowAttack::update(float deltaTime)
 	//çsóÒÇÃê›íË
 	mesh_.transform(Getpose());
 
-	position_ += plyaerVector.Normalize() * 0.05f;
+	position_ += plyaerVector.Normalize() * 3.0f;
 
 	collision();
 }

@@ -1,13 +1,15 @@
 #include "SceneManager.h"
 #include"Scenes.h"
 
-//ローディングシーンから開始
-SceneManager::SceneManager() :currentScene_(SceneType::SCENE_LOADING) {
+//タイトルローディングシーンから開始
+SceneManager::SceneManager() :currentScene_(SceneType::SCENE_TITLE_LOAD) {
 	//利用するシーンを作成し、シーンリストに追加する
-	scenes_[SceneType::SCENE_LOADING] = std::make_shared<LoadingScene>();
+	scenes_[SceneType::SCENE_TITLE_LOAD] = std::make_shared<TitleLoad>();
 	scenes_[SceneType::SCENE_TITLE] = std::make_shared<GameTitleScene>();
 	scenes_[SceneType::SCENE_MODESELECT] = std::make_shared<GameSelectScene>();
+	scenes_[SceneType::SCENE_SHOOTING_LOAD] = std::make_shared<ShootingLoad>();
 	scenes_[SceneType::SCENE_SHOOTING_PLAY] = std::make_shared<ShootingPlayScene>();
+	scenes_[SceneType::SCENE_ACTION_LOAD] = std::make_shared<ActionLoad>();
 	scenes_[SceneType::SCENE_ACTION_PLAY] = std::make_shared<ActionPlayScene>();
 	scenes_[SceneType::SCENE_GAMEOVER] = std::make_shared<GameOrverScene>();
 }

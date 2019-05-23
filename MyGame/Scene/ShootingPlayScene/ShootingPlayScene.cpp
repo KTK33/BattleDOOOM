@@ -79,7 +79,7 @@ void ShootingPlayScene::update(float deltaTime)
 	{
 		if (GamePad::GetInstance().ButtonTriggerUp(PADBUTTON::NUM2) || Keyboard::GetInstance().KeyTriggerDown(KEYCODE::SPACE))
 		{
-			next_ = SceneType::SCENE_LOADING;
+			next_ = SceneType::SCENE_TITLE_LOAD;
 			isEnd_ = true;
 		}
 	}
@@ -88,13 +88,13 @@ void ShootingPlayScene::update(float deltaTime)
 
 		if (GamePad::GetInstance().ButtonTriggerUp(PADBUTTON::NUM2) || Keyboard::GetInstance().KeyTriggerDown(KEYCODE::SPACE))
 		{
-			next_ = SceneType::SCENE_LOADING;
+			next_ = SceneType::SCENE_TITLE_LOAD;
 			isEnd_ = true;
 		}
 	}
 
 	if (world_.GetBackTitleCheck() == true) {
-		next_ = SceneType::SCENE_LOADING;
+		next_ = SceneType::SCENE_TITLE_LOAD;
 		isEnd_ = true;
 	}
 }
@@ -106,7 +106,7 @@ void ShootingPlayScene::draw() const {
 		Skybox::bind(0);
 		Skybox::draw();
 		//ステージの描画
-		CollisionMesh::bind(1);
+		CollisionMesh::bind(0);
 		CollisionMesh::draw();
 	
 		world_.draw();

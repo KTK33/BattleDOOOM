@@ -41,19 +41,19 @@ void ActionPlayScene::update(float deltaTime)
 
 	if (GameDataManager::getInstance().GetPlayerDead() == true)
 	{
-		next_ = SceneType::SCENE_LOADING;
+		next_ = SceneType::SCENE_TITLE_LOAD;
 		isEnd_ = true;
 	}
 
 	if (GameDataManager::getInstance().GetDeadBossEnemy() == true) {
 
-		next_ = SceneType::SCENE_LOADING;
+		next_ = SceneType::SCENE_TITLE_LOAD;
 		isEnd_ = true;
 	}
 
 
 	if (world_.GetBackTitleCheck() == true) {
-		next_ = SceneType::SCENE_LOADING;
+		next_ = SceneType::SCENE_TITLE_LOAD;
 		isEnd_ = true;
 	}
 }
@@ -66,7 +66,7 @@ void ActionPlayScene::draw() const
 	Skybox::bind(0);
 	Skybox::draw();
 	//ステージの描画
-	CollisionMesh::bind(1);
+	CollisionMesh::bind(0);
 	CollisionMesh::draw();
 
 	world_.draw();

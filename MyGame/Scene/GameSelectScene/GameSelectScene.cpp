@@ -33,10 +33,10 @@ void GameSelectScene::update(float deltaTime)
 		switch (cursorPos_)
 		{
 		case 0:
-			next_ = SceneType::SCENE_SHOOTING_PLAY;
+			next_ = SceneType::SCENE_SHOOTING_LOAD;
 			break;
 		case 1:
-			next_ = SceneType::SCENE_ACTION_PLAY;
+			next_ = SceneType::SCENE_ACTION_LOAD;
 			break;
 		default:
 			break;

@@ -11,8 +11,9 @@ void ActionPlayerDead::Stateinitialize()
 {
 	mNextStateFlag = false;
 	mNextStateID = ActorStateID::ActionPlayerDead;
-	parameters_->Set_Motion(ActionPlayerMotion::MotionPlayerIdel);
+	parameters_->Set_Motion(ActionPlayerMotion::MotionPlayerDead);
 }
+
 
 void ActionPlayerDead::StateUpdate(Vector3 & lposition, Matrix & lrotation, AnimatedMesh & lmesh)
 {

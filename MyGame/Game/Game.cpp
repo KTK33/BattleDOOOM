@@ -128,7 +128,3 @@ bool Game::is_running() const {
 bool Game::is_runningPad() const{
 	return GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM7) == 0;
 }
-
-
-
-// end of file

@@ -34,6 +34,8 @@ public:
 
 	/// “Ç‚İ‚ñ‚¾‰æ‘œ‚ğ‚·‚×‚Äíœ‚·‚é
 	void DeleteAll();
+	///‘I‚ñ‚¾‰æ‘œ‚ğíœ‚·‚é
+	void DeleteNum(const SPRITE_ID& id);
 	void DrawSetCenter(const SPRITE_ID& id, const Vector2& position);
 	/// ’Êí‰æ‘œ‚Ì•`‰æ
 	void Draw(const SPRITE_ID& id, const Vector2& position, const Vector2& origin = Vector2::Zero, const Vector2& scale = Vector2::One, float angle = 0.0f);

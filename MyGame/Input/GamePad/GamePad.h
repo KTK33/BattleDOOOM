@@ -6,35 +6,7 @@
 #include <VECTOR>
 #include <array>
 
-//接続しているパッドの番号(引数padのところに使用)
-namespace PADNUM
-{
-	const UINT PAD1 = DX_INPUT_PAD1;
-	const UINT PAD2 = DX_INPUT_PAD2;
-	const UINT PAD3 = DX_INPUT_PAD3;
-	const UINT PAD4 = DX_INPUT_PAD4;
-}
-
-//パッドのボタン(引数buttonのところに使用)
-namespace PADBUTTON
-{
-	const UINT RIGHT = PAD_INPUT_RIGHT;
-	const UINT LEFT = PAD_INPUT_LEFT;
-	const UINT UP = PAD_INPUT_UP;
-	const UINT DOWN = PAD_INPUT_DOWN;
-	const UINT NUM1 = PAD_INPUT_1;
-	const UINT NUM2 = PAD_INPUT_2;
-	const UINT NUM3 = PAD_INPUT_3;
-	const UINT NUM4 = PAD_INPUT_4;
-	const UINT NUM5 = PAD_INPUT_5;
-	const UINT NUM6 = PAD_INPUT_6;
-	const UINT NUM7 = PAD_INPUT_7;
-	const UINT NUM8 = PAD_INPUT_8;
-	const UINT NUM9 = PAD_INPUT_9;
-	const UINT NUM10 = PAD_INPUT_10;
-	const UINT NUM11 = PAD_INPUT_11;
-	const UINT NUM12 = PAD_INPUT_12;
-}
+#include "../InputType.h"
 
 class GamePad
 {

@@ -83,6 +83,11 @@ void Sprite::DeleteAll()
 
 }
 
+void Sprite::DeleteNum(const SPRITE_ID & id)
+{
+	DeleteGraph((int)id);
+}
+
 void Sprite::DrawSetCenter(const SPRITE_ID & id, const Vector2 & position)
 {
 	Draw(id, position, GetSize(id)*0.5f);

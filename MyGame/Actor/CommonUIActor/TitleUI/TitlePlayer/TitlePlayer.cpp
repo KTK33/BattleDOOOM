@@ -26,7 +26,6 @@ void TitlePlayer::update(float deltaTime)
 
 	if (Timer == 30)
 	{
-		//motion_ = PlayerMotion::Motion::motion;
 		world_->add_actor(ActorGroup::Ball, new_actor<TitleBullet>(5, world_, Vector3{ position_.x,position_.y + 14.0f,position_.z} +rotation_.Forward() * 4.5f + rotation_.Right() *1.4f,rotation_.Forward()));
 	}
 }

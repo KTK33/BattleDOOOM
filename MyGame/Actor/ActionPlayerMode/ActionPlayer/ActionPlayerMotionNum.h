@@ -14,5 +14,6 @@ public:
 		MotionPlayerRun,
 		MotionPlayerAvoidance,
 		MotionPlayerAvoidanceAttack,
+		MotionPlayerDead,
 	};
 };

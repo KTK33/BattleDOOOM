@@ -3,7 +3,6 @@
 #include"../World/World.h"
 #include "../Scene/Menu.h"
 
-//リソース読み込み専用シーン
 class GameSelectScene :public Scene ,public Menu{
 public:
 

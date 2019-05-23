@@ -16,5 +16,7 @@ void TitleBack::draw() const
 {
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, TitleBackAlpha);
 	Sprite::GetInstance().Draw(SPRITE_ID::TITLEBACK, Vector2(0, 0));
+	Sprite::GetInstance().Draw(SPRITE_ID::TITLECHUI, Vector2(1500, 550));
+	Sprite::GetInstance().Draw(SPRITE_ID::TITLEJIKYO, Vector2(1500, 950));
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 }
