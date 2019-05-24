@@ -9,7 +9,6 @@
 #include <memory>
 #include <list>
 
-#include "../Fiield/Field.h"
 #include "../Math/MathH.h"
 #include "../Game/Define.h"
 #include "ActorGroup.h"
@@ -63,11 +62,6 @@ public:
 	virtual ~Actor(){}
 	//子を初期化
 	void rootInitialize();
-	////子を更新
-	//void rootUpdate(float deltaTime);
-	////子を描画
-	//void rootDraw() const;
-	//void rootShadowDraw()const;
 
 	//初期化
 	virtual void initialize();
@@ -142,8 +136,8 @@ public:
 	void setDraw(bool isDraw);
 
 	//コピー禁止
-	//Actor(const Actor& other) = delete;
-	//Actor& operator=(const Actor& other) = delete;
+	Actor(const Actor& other) = delete;
+	Actor& operator=(const Actor& other) = delete;
 
 protected:
 	//キャラクター識別番号

@@ -1,5 +1,4 @@
 #include "World.h"
-#include "../Fiield/Field.h"
 #include "../Actor/ActorGroup.h"
 #include "../Actor/Actor.h"
 World::World()
@@ -24,16 +23,12 @@ void World::initialize()
 	actors_.add(ActorGroup::PauseUI);
 	actors_.add(ActorGroup::ItemBoxUI);
 
-	worldManager_.initialize();
-	worldManager_.setupWorld(this);
-
 	PauseCheck = false;
 	BackTitleCheck = false;
 }
 
 void World::update(float delta_time)
 {
-	//field_->update(delta_time);
 	actors_.update(delta_time);
 	actors_.collide(ActorGroup::Player, ActorGroup::Enemy);
 	actors_.collide(ActorGroup::Player, ActorGroup::BossEnemy);
@@ -47,15 +42,12 @@ void World::update(float delta_time)
 	//camera_->update(delta_time);
 	//light_->update(delta_time);
 	//gsUpdateEffect(delta_time);
-
-	//field_->update(delta_time);
 }
 
 void World::draw() const
 {
 	//camera_->draw();
 	//light_->draw();
-	//field_->draw();
 	actors_.draw();
 }
 
@@ -75,11 +67,6 @@ void World::add_event_message_listener(EventMessageListener listener)
 	listener_ = listener;
 }
 
-void World::add_field(const FieldPtr & field)
-{
-	field_ = field;
-}
-
 void World::add_camera(const ActorPtr & camera)
 {
 	camera_ = camera;
@@ -93,7 +80,6 @@ void World::add_light(const ActorPtr & light)
 void World::clear()
 {
 	actors_.clear();
-	field_ = nullptr;
 	light_ = nullptr;
 	camera_ = nullptr;
 	listener_ = [](EventMessage, void*) {};
@@ -122,15 +108,6 @@ void World::each_actor(ActorGroup group, std::function<void(const ActorPtr&)> fn
 void World::send_message(EventMessage message, void * param)
 {
 	handle_message(message, param);
-}
-
-Field & World::field()
-{
-	return *field_;
-}
-std::shared_ptr<Field> World::getFieldOnly()
-{
-	return worldManager_.getField();
 }
 
 void World::SetPauseCheck(bool pc)

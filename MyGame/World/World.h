@@ -4,8 +4,6 @@
 #include "IWorld.h"
 #include "../Actor/ActorGroupManager.h"
 #include "../Actor/ActorPtr.h"
-#include "../Fiield/FieldPtr.h"
-#include "../Fiield/WorldContentManager/WorldContentManager.h"
 #include <functional>
 
 enum class EventMessage;
@@ -28,8 +26,6 @@ public:
 	void handle_message(EventMessage message, void* param);
 	//メッセージリスナー登録
 	void add_event_message_listener(EventMessageListener listener);
-	//フィールドの追加
-	void add_field(const FieldPtr& field);
 	//カメラの追加
 	void add_camera(const ActorPtr& camera);
 	//ライトの追加
@@ -47,10 +43,6 @@ public:
 	virtual void each_actor(ActorGroup group, std::function<void(const ActorPtr&)>fn)const override;
 	//メッセージ送信
 	virtual void send_message(EventMessage message, void* param = nullptr)override;
-	//
-	virtual Field& field() override;
-	virtual std::shared_ptr<Field> getFieldOnly() override;
-
 
 	//
 	World(const World& other) = delete;
@@ -70,9 +62,6 @@ private:
 	//
 	ActorPtr             camera_;
 	//
-	FieldPtr             field_;
-
-	WorldContentManager worldManager_{};
 
 	EventMessageListener listener_{ [](EventMessage,void*) {} };
 

@@ -1,5 +1,6 @@
 #include "ActionPlayScene.h"
 #include "../Graphics/Graphics3D.h"
+#include "../Skybox/Skybox.h"
 #include "../Actor/ActionPlayerMode/ActionCamera/ActionCamera.h"
 #include "../Actor/ActionPlayerMode/ActionGameManager/ActionGameManager.h"
 #include "../Actor/ActionPlayerMode/UI/ActionModePause/ActionModePause.h"

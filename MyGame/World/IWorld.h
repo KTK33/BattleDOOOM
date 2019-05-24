@@ -7,7 +7,6 @@
 
 enum class ActorGroup;
 enum class EventMessage;
-class Field;
 
 // ワールド抽象インターフェース
 class IWorld {
@@ -24,10 +23,6 @@ public:
 	virtual void each_actor(ActorGroup group, std::function<void(const ActorPtr&)> fn) const = 0;
 	// メッセージを送信
 	virtual void send_message(EventMessage message, void* param = nullptr) = 0;
-	// フィールドを取得
-	virtual Field& field() = 0;
-	virtual std::shared_ptr<Field> getFieldOnly() = 0;
-
 
 	virtual void SetPauseCheck(bool pc) =0;
 	virtual bool GetPauseCheck() =0;

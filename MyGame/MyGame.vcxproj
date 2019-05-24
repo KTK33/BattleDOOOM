@@ -246,8 +246,6 @@
     <ClCompile Include="Collision\OrientedBoundingBox.cpp" />
     <ClCompile Include="Collision\Ray.cpp" />
     <ClCompile Include="Conv\DXConverter.cpp" />
-    <ClCompile Include="Fiield\Field.cpp" />
-    <ClCompile Include="Fiield\WorldContentManager\WorldContentManager.cpp" />
     <ClCompile Include="Game\Game.cpp" />
     <ClCompile Include="Game\Time.cpp" />
     <ClCompile Include="Graphics\Graphics2D.cpp" />
@@ -429,9 +427,6 @@
     <ClInclude Include="Collision\Ray.h" />
     <ClInclude Include="Conv\ByteConverter.h" />
     <ClInclude Include="Conv\DXConverter.h" />
-    <ClInclude Include="Fiield\Field.h" />
-    <ClInclude Include="Fiield\FieldPtr.h" />
-    <ClInclude Include="Fiield\WorldContentManager\WorldContentManager.h" />
     <ClInclude Include="Game\Define.h" />
     <ClInclude Include="Game\FpsSetting.h" />
     <ClInclude Include="Game\Game.h" />
