@@ -1,6 +1,5 @@
 #include "ActionPlayerActor.h"
 #include "ActionStateInc.h"
-#include "../Input/InputInc.h"
 #include "../Scene/GameData/GameDataManager.h"
 
 ActionPlayerActor::ActionPlayerActor(int model, int weapon, IWorld * world, const Vector3 & position,const IBodyPtr & body):
@@ -177,14 +176,15 @@ void ActionPlayerActor::input_information()
 	{
 		parameters_.Set_Motion(ActionPlayerMotion::MotionPlayerIdel);
 	}
-	//ジョイパッドが刺さっているか
-	float X = 0, Y = 0, yaw = 0;
+
+	Vector2 input;
+	float yaw;
 
 	//左右上下入力
-	mI.Input(X, Y, yaw);
+	mI.Input(input,yaw);
 	//入力が両方０ならばアイドル状態
-	if (X == 0.0f && Y == 0.0f) return; 
-	movement(1.0f, Vector2(X, Y));
+	if (input.x == 0.0f && input.y == 0.0f) return; 
+	movement(1.0f, input);
 }
 
 void ActionPlayerActor::movement(float speed, Vector2 input)
@@ -211,6 +211,7 @@ void ActionPlayerActor::movement(float speed, Vector2 input)
 	//回避状態なら
 	if (parameters_.Get_StateID() == ActorStateID::ActionPlayerAvoidance)
 	{
+		velocity_.y = 0.0f;
 		velocity_ += velocity_ * mAvoidanceSpeed;
 	}
 	else

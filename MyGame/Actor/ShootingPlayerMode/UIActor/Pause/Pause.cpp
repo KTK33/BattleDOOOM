@@ -1,7 +1,6 @@
 #include "Pause.h"
 #include "../Texture/Sprite.h"
-#include "../Input/GamePad/GamePad.h"
-#include "../Input/Keyboard/Keyboard.h"
+#include "../Input/InputInfoInc.h"
 #include "../Scene/GameData/GameDataManager.h"
 #include "PauseSystem.h"
 #include "../Sound/Sound.h"
@@ -31,7 +30,8 @@ void PauseUI::update(float deltaTime)
 {
 	if (GameDataManager::getInstance().GetPlayerDead() == false && GameDataManager::getInstance().GetDeadBossEnemy() == false)
 	{
-		if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM8) || Keyboard::GetInstance().KeyTriggerDown(KEYCODE::T)) {
+		if(ButtonStart::GetInstance().TriggerDown())
+		{
 			Sound::GetInstance().PlaySE_IsNotPlay(SE_ID::PAUSEKETTEI_SE);
 			PauseDecision = false;
 			if (world_->GetPauseCheck() == true)
@@ -75,8 +75,6 @@ void PauseUI::draw() const
 		Sprite::GetInstance().Draw(SPRITE_ID::PAUSESYSTEM, Vector2(1050, WINDOW_HEIGHT - 340), Vector2(Sprite::GetInstance().GetSize(SPRITE_ID::PAUSESYSTEM).x / 2, Sprite::GetInstance().GetSize(SPRITE_ID::PAUSESYSTEM).y / 2), Vector2(UISize[2], UISize[2]));
 		Sprite::GetInstance().Draw(SPRITE_ID::PAUSETITLE, Vector2(1050, WINDOW_HEIGHT - 180), Vector2(Sprite::GetInstance().GetSize(SPRITE_ID::PAUSETITLE).x / 2, Sprite::GetInstance().GetSize(SPRITE_ID::PAUSETITLE).y / 2), Vector2(UISize[3], UISize[3]));
 
-		//Sprite::GetInstance().DrawPart(SPRITE_ID::PAUSECIRCLE, Vector2(1000, (float)WINDOW_HEIGHT - (250 + cursorPos_ * 160)), anime * 150, 0, 150, 150);
-
 		switch (cursorPos_){
 		case 3:
 			Sprite::GetInstance().DrawSetCenter(SPRITE_ID::PAUSEITEM_DESCRIPTION, Vector2(1050, WINDOW_HEIGHT - 50.0f));
@@ -103,7 +101,8 @@ void PauseUI::PlayerInput()
 {
 	if (PauseDecision)
 	{
-		if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM1) || Keyboard::GetInstance().KeyTriggerDown(KEYCODE::LCTRL))
+		//画面２でのキャンセル(戻る)
+		if(ButtonA::GetInstance().TriggerDown())
 		{
 			PauseDecision = false;
 			GameDataManager::getInstance().SetItemBoXOpen(false);
@@ -111,32 +110,34 @@ void PauseUI::PlayerInput()
 	}
 	else
 	{
-		if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM1) || Keyboard::GetInstance().KeyTriggerDown(KEYCODE::LCTRL))
-		{
-			world_->SetPauseCheck(false);
-		}
-
-		if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::UP) || Keyboard::GetInstance().KeyTriggerDown(KEYCODE::UP))
-		{
-			moveCursor(1);
-		}
-		if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::DOWN) || Keyboard::GetInstance().KeyTriggerDown(KEYCODE::DOWN))
-		{
-			moveCursor(-1);
-		}
-		if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM2) || Keyboard::GetInstance().KeyTriggerDown(KEYCODE::SPACE))
+		//ポーズ中の決定(画面１)
+		if (ButtonB::GetInstance().TriggerDown())
 		{
 			Sound::GetInstance().PlaySE_IsNotPlay(SE_ID::PAUSEKETTEI_SE);
 			PauseDecision = true;
 		}
 
+		//ポーズを閉じる
+		if(ButtonA::GetInstance().TriggerDown())
+		{
+			world_->SetPauseCheck(false);
+		}
+
+		//カーソルの上下
+		if(ButtonUp::GetInstance().TriggerDown())
+		{
+			moveCursor(1);
+		}
+		if(ButtonDown::GetInstance().TriggerDown())
+		{
+			moveCursor(-1);
+		}
 	}
-
-
 }
 
 void PauseUI::Pause()
 {
+	//画面１での選んでるものの文字の大きさが大きくなる
 	switch (cursorPos_){
 	case 0:	
 		UISize[3] = 1.25f;

@@ -1,6 +1,6 @@
 #include "ActionPlayerAvoidance.h"
 #include "../Actor/ActionPlayerMode/ActionPlayer/ActionPlayerMotionNum.h"
-#include "../Input/InputInc.h"
+#include "../Input/InputInfoInc.h"
 
 ActionPlayerAvoidance::ActionPlayerAvoidance(IWorld * world, ActorParameters & parameter)
 {
@@ -39,16 +39,15 @@ void ActionPlayerAvoidance::StateUpdate(Vector3 & lposition, Matrix & lrotation,
 void ActionPlayerAvoidance::Input()
 {
 	//ステップ派生攻撃
-	if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM2) || 
-		Keyboard::GetInstance().KeyTriggerDown(KEYCODE::SPACE))
+	if(ButtonB::GetInstance().TriggerDown())
 	{
 		mNextStateID = ActorStateID::ActionPlayerAvoidanceAttack;
 		mNextStateFlag = true;
 		return;
 	}
 	//ステップ
-	if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM1) || 
-		Keyboard::GetInstance().KeyTriggerDown(KEYCODE::LSHIFT)) {
+	if(ButtonA::GetInstance().TriggerDown())
+	{
 		mNextStateID = ActorStateID::ActionPlayerAvoidance;
 		mNextStateFlag = true;
 		return;

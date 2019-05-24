@@ -6,11 +6,7 @@ public:
 	TitleAnyUI(IWorld* world);
 	virtual ~TitleAnyUI() override{}
 
-	virtual void initialize() override;
-
 	virtual void update(float deltaTime) override;
-
-	virtual void receiveMessage(EventMessage message, void * param) override;
 
 	virtual void draw() const override;
 

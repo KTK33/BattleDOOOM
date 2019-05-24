@@ -60,7 +60,7 @@ private:
 
 	Gravity mG;
 
-	InputEWSN mI;
+	MoveInput mI;
 
 	//•Ší•`‰æˆÊ’u
 	int mRightweaponPos;

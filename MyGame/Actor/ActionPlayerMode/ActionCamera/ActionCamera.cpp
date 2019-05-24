@@ -1,6 +1,5 @@
 #include "ActionCamera.h"
-#include "../Input/GamePad/GamePad.h"
-#include "../Input/Keyboard/Keyboard.h"
+#include "../Input/InputInfoInc.h"
 #include "../Math/Vector2.h"
 
 #include "../Actor/Camera/CameraSpring/CameraSpring.h"
@@ -38,33 +37,8 @@ void ActionCamera::draw() const {
 
 void ActionCamera::PlayerInput(float deltaTime)
 {
-	//ゲームパッドの接続があるかチェック
-	if (GetJoypadNum() == 0)//パッドが繋がれていない
-	{
-		float X = 0, Y = 0;
-		if (Keyboard::GetInstance().KeyStateDown(KEYCODE::LEFT)) {
-			X = -1.0f;
-		}
-		if (Keyboard::GetInstance().KeyStateDown(KEYCODE::RIGHT)) {
-			X = 1.0f;
-		}
-		if (Keyboard::GetInstance().KeyStateDown(KEYCODE::UP)) {
-			Y = 1.0f;
-
-		}
-		if (Keyboard::GetInstance().KeyStateDown(KEYCODE::DOWN)) {
-			Y = -1.0f;
-		}
-		//カメラの操作
-		m_PitchSpeed = Y;
-		m_YawSpeed = X;
-	}
-	else
-	{
-		//カメラの操作
-		m_PitchSpeed = GamePad::GetInstance().RightStick().y;
-		m_YawSpeed = GamePad::GetInstance().RightStick().x;
-	}
+	m_YawSpeed = RightStick::GetInstance().GetAngle().x;
+	m_PitchSpeed = RightStick::GetInstance().GetAngle().y;
 
 	if (world_->GetPauseCheck() == true) return;
 	//ワールド上方を軸とするヨーのクォータニオンを作成

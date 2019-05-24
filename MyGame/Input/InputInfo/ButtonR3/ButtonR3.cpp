@@ -2,7 +2,7 @@
 #include "../Input/InputInc.h"
 
 const int Pad = PADBUTTON::NUM10;
-const int key = KEYCODE::C;
+const int key = KEYCODE::X;
 
 bool ButtonR3::TriggerDown()
 {

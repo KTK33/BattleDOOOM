@@ -4,7 +4,7 @@
 #include "../Actor/Actor.h"
 #include "../Actor/ActionPlayerMode/ActionPlayer/ActionPlayerMotionNum.h"
 #include "../Actor/PlayerAttackCollision/PlayerAttackCollision.h"
-#include "../Input/InputInc.h"
+#include "../Input/InputInfoInc.h"
 
 ActionPlayerAvoidanceAttack::ActionPlayerAvoidanceAttack(IWorld * world, ActorParameters & parameter)
 {
@@ -64,7 +64,8 @@ void ActionPlayerAvoidanceAttack::AttackCollision(Vector3 lposition, Matrix lrot
 void ActionPlayerAvoidanceAttack::Input()
 {
 	//ステップ
-	if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM1) || Keyboard::GetInstance().KeyTriggerDown(KEYCODE::LSHIFT)) {
+	if(ButtonA::GetInstance().TriggerDown())
+	{
 		mNextStateID = ActorStateID::ActionPlayerAvoidance;
 		mNextStateFlag = true;
 		return;

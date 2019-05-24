@@ -4,7 +4,7 @@
 #include "../Actor/ShootingPlayerMode/ShootingPlayer/ShootingPlayerMotionNum.h"
 #include "ShootingPlayerParam/ShootingPlayerParam.h"
 
-#include "../Input/InputInc.h"
+#include "../Input/InputInfoInc.h"
 #include "../Scene/GameData/GameDataManager.h"
 #include "../Texture/Sprite.h"
 #include "../Sound/Sound.h"	
@@ -109,8 +109,7 @@ void ShootingPlayerActor::update(float deltaTime)
 	invincibly(parameters_.Get_invincibly());
 
 	//十字キー右を押したらアイテムボックスを生成
-	if (GetJoypadPOVState(DX_INPUT_PAD1, 0) == 9000 || 
-		Keyboard::GetInstance().KeyStateDown(KEYCODE::F))
+	if(DPad::GetInstance().GetRight())
 	{
 		if (world_->find_actor(ActorGroup::ItemBoxUI, "PlayerBox") == NULL)
 		{
@@ -275,25 +274,26 @@ void ShootingPlayerActor::input_information()
 
 
 	//ジョイパッドが刺さっているか
-	float X = 0, Y = 0, yaw_speed = 0.0f;
+	Vector2 input;
+	float yaw_speed = 0.0f;
 
 	//上下左右入力
-	mI.Input(X,Y, yaw_speed);
+	mI.Input(input, yaw_speed);
 
 	rotation_ *= Matrix::CreateFromAxisAngle(rotation_.Up(), yaw_speed * 1.0f);
 	rotation_.NormalizeRotationMatrix();
 
 	//入力が両方０ならばアイドル状態
-	if (X == 0.0f && Y == 0.0f) return;
+	if (input.x == 0.0f && input.y == 0.0f) return;
 
 	if (parameters_.Get_StateID() == ActorStateID::ShootingPlayerIdle)
 	{
-		movement(1.0f, Vector2(X, Y));
+		movement(1.0f, input);
 	}
 
 	if (parameters_.Get_StateID() == ActorStateID::ShootingPlayerIdleAiming)
 	{
-		gun_movement(0.5f, Vector2(X, Y));
+		gun_movement(0.5f, input);
 	}
 }
 

@@ -69,7 +69,7 @@ private:
 
 	PlayerMove mMV;
 
-	InputEWSN mI;
+	MoveInput mI;
 
 	int mweaponPos;
 

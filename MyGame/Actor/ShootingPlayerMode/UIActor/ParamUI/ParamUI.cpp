@@ -1,7 +1,7 @@
 #include "ParamUI.h"
 #include "../Texture/Sprite.h"
 #include "../Game/Define.h"
-#include "..\..\..\ActionPlayerMode\UI\HPUI\ActonPlayerHP.h"
+#include "../Actor/ActionPlayerMode/UI/HPUI/ActonPlayerHP.h"
 
 void ParamUI::initialize()
 {

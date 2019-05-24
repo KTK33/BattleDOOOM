@@ -1,6 +1,6 @@
 #include "ShootingPlayerIdle_Aim.h"
 #include "../Actor/ShootingPlayerMode/ShootingPlayer/ShootingPlayerActor/State/stateInc.h"
-#include "../Input/InputInc.h"
+#include "../Input/InputInfoInc.h"
 
 ShootingPlayerIdle_Aim::ShootingPlayerIdle_Aim(IWorld * world, ActorParameters & parameter)
 {
@@ -51,8 +51,7 @@ void ShootingPlayerIdle_Aim::Input()
 	//ÉäÉçÅ[Éh
 	if (ShootingPlayerParam::getInstance().Get_RemainGun() < 7)
 	{
-		if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM3) ||
-			Keyboard::GetInstance().KeyTriggerDown(KEYCODE::R))
+		if(ButtonX::GetInstance().TriggerDown())
 		{
 			mNextStateID = ActorStateID::ShootingPlayerReload;
 			mNextStateFlag = true;

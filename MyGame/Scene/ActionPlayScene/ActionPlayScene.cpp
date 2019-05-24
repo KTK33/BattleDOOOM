@@ -4,16 +4,12 @@
 #include "../Actor/ActionPlayerMode/ActionGameManager/ActionGameManager.h"
 #include "../Actor/ActionPlayerMode/UI/ActionModePause/ActionModePause.h"
 #include "../Scene/GameData/GameDataManager.h"
-#include "../Input/GamePad/GamePad.h"
-#include "../Input/Keyboard/Keyboard.h"
 #include "../Texture/Sprite.h"
 
 #include "../Actor/ActionPlayerMode/ActionPlayer/ActionPlayerActor.h"
 #include "../Actor/ActionPlayerMode/RedSamurai/RedSamuraiActor.h"
 
-ActionPlayScene::ActionPlayScene()
-{
-}
+ActionPlayScene::ActionPlayScene(){}
 
 void ActionPlayScene::start()
 {

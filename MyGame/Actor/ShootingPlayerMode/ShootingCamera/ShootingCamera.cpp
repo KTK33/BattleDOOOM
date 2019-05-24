@@ -1,8 +1,5 @@
 #include "ShootingCamera.h"
 #include "../Graphics/Graphics3D.h"
-
-#include "../Input/GamePad/GamePad.h"
-#include "../Input/KeyBoard/Keyboard.h"
 #include "../Math/Vector2.h"
 #include "../Actor/Camera/TPSCamera.h"
 #include "../Actor/Camera/CameraSpring/CameraSpring.h"
@@ -11,6 +8,8 @@
 #include "../Texture/Sprite.h"
 #include "../Actor/ShootingPlayerMode/UIActor/PlaySceneUI/GameClearUIh.h"
 #include "../Actor/ShootingPlayerMode/UIActor/PlaySceneUI/GameOverUI.h"
+
+#include "../Input/InputInfoInc.h"
 
 ShootingCamera::ShootingCamera(IWorld * world, std::weak_ptr<Actor> m_Player) :
 	Actor(world, "Camera", Vector3::Zero),
@@ -67,7 +66,7 @@ void ShootingCamera::CameraSet(float deltaTime)
 	if (world_->GetPauseCheck() == false && GameDataManager::getInstance().GetItemBoxOpen() == false)
 	{
 		//エイム中の操作
-		Aim_Input();
+		mAimPosMove += RightStick::GetInstance().GetAngle() * (GameDataManager::getInstance().GetAIMSPD() * 0.2f);
 	}
 
 	//プレイヤーがエイム中か
@@ -78,33 +77,6 @@ void ShootingCamera::CameraSet(float deltaTime)
 	else{
 		//エイム外
 		Out_Aim();
-	}
-}
-
-void ShootingCamera::Aim_Input()
-{
-	//ゲームパッドの入力数０ならキーボード操作
-	if (GetJoypadNum() == 0){
-		if (Keyboard::GetInstance().KeyStateDown(KEYCODE::UP))
-		{
-			mAimPosMove.y += 1.0f * (GameDataManager::getInstance().GetAIMSPD() * 0.2f);
-		}
-		if (Keyboard::GetInstance().KeyStateDown(KEYCODE::DOWN))
-		{
-			mAimPosMove.y -= 1.0f* (GameDataManager::getInstance().GetAIMSPD() * 0.2f);
-		}
-		if (Keyboard::GetInstance().KeyStateDown(KEYCODE::RIGHT))
-		{
-			mAimPosMove.x += 1.0f * (GameDataManager::getInstance().GetAIMSPD() * 0.2f);
-		}
-		if (Keyboard::GetInstance().KeyStateDown(KEYCODE::LEFT))
-		{
-			mAimPosMove.x -= 1.0f* (GameDataManager::getInstance().GetAIMSPD() * 0.2f);
-		}
-	}
-	else{
-		//ゲームパッドでの右スティックの操作
-		mAimPosMove += GamePad::GetInstance().RightStick() * (GameDataManager::getInstance().GetAIMSPD() * 0.2f);
 	}
 }
 
@@ -120,7 +92,7 @@ void ShootingCamera::Out_Aim()
 	mtarget_ = Vector3::Lerp(mtarget_, position_ + mGetplayer_->Getrotation().Forward(), 0.5f);
 
 	//カメラの移動範囲の制限
-	mAimPosMove = Vector2::Clamp(mAimPosMove, Vector2(0, -30), Vector2(0, 30));
+	mAimPosMove = Vector2::Clamp(mAimPosMove, Vector2(0, -20), Vector2(0, 20));
 }
 
 void ShootingCamera::In_Aim()
@@ -147,23 +119,8 @@ void ShootingCamera::In_Aim()
 void ShootingCamera::In_Aim_Rotation()
 {
 	float rote = 0.0f;
+	rote = RightStick::GetInstance().GetAngle().x * (GameDataManager::getInstance().GetAIMSPD() * 0.25f);
 
-	//ゲームパッドの入力数０ならキーボード操作
-	if (GetJoypadNum() == 0) {
-		if (Keyboard::GetInstance().KeyStateDown(KEYCODE::RIGHT)) 
-		{
-			rote = 1.0f* (GameDataManager::getInstance().GetAIMSPD() * 0.25f);
-		}
-		else if (Keyboard::GetInstance().KeyStateDown(KEYCODE::LEFT))
-		{
-			rote = -1.0f * (GameDataManager::getInstance().GetAIMSPD() * 0.25f);
-		}
-	}
-	else
-	{
-		//ゲームパッドの右スティックのX方向
-		rote = GamePad::GetInstance().RightStick().x * (GameDataManager::getInstance().GetAIMSPD() * 0.25f);
-	}
 	//プレイヤーに回転を渡す
 	mplayer.lock()->receiveMessage(EventMessage::SIGHT_ROTATION, reinterpret_cast<void*>(&rote));
 }

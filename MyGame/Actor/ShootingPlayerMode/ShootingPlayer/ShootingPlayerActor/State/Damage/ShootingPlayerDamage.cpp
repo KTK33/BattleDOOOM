@@ -35,7 +35,3 @@ void ShootingPlayerDamage::StateUpdate(Vector3 & lposition, Matrix & lrotation, 
 		return;
 	}
 }
-
-void ShootingPlayerDamage::Input()
-{
-}

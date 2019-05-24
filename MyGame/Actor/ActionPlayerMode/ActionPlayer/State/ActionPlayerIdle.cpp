@@ -1,5 +1,5 @@
 #include "ActionPlayerIdle.h"
-#include "../Input/InputInc.h"
+#include "../Input/InputInfoInc.h"
 
 ActionPlayerIdle::ActionPlayerIdle(IWorld * world, ActorParameters & parameter)
 {
@@ -30,16 +30,16 @@ void ActionPlayerIdle::StateUpdate(Vector3 & lposition, Matrix & lrotation, Anim
 void ActionPlayerIdle::Input()
 {
 	//攻撃
-	if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM2) || 
-		Keyboard::GetInstance().KeyTriggerDown(KEYCODE::SPACE)) {
+	if(ButtonB::GetInstance().TriggerDown())
+	{
 		mNextStateID = ActorStateID::ActionPlayerAttack;
 		mNextStateFlag = true;
 		return;
 	}
 
 	//ステップ
-	if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM1) || 
-		Keyboard::GetInstance().KeyTriggerDown(KEYCODE::LSHIFT)) {
+	if(ButtonA::GetInstance().TriggerDown())
+	{
 		mNextStateID = ActorStateID::ActionPlayerAvoidance;
 		mNextStateFlag = true;
 		return;

@@ -10,15 +10,16 @@ ShootingPlayerItemBox::ShootingPlayerItemBox(IWorld * world,int HPItem,int Attac
 	countAttackUPItem{AttackItem},
 	m_player{player}
 {
+	initialize();
+}
+
+void ShootingPlayerItemBox::initialize()
+{
 	menuSize_2 = 2;
 	alphaTimer = 255;
 	alphaCheck = false;
 
 	GameDataManager::getInstance().SetItemBoXOpen(true);
-}
-
-void ShootingPlayerItemBox::initialize()
-{
 }
 
 void ShootingPlayerItemBox::update(float deltaTime)

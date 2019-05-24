@@ -4,13 +4,7 @@
 AnyUI::AnyUI(IWorld * world) :
 	Actor(world, "AnyUI", Vector3::Zero),
 	mEnemyCount{0}
-{
-	initialize();
-}
-
-void AnyUI::initialize()
-{
-}
+{}
 
 void AnyUI::update(float deltaTime)
 {

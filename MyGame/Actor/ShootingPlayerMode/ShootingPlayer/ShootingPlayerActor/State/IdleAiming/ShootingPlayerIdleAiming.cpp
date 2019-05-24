@@ -1,5 +1,5 @@
 #include "ShootingPlayerIdleAiming.h"
-#include "../Input/InputInc.h"
+#include "../Input/InputInfoInc.h"
 #include "../Actor/ShootingPlayerMode/ShootingPlayer/ShootingPlayerActor/State/stateInc.h"
 
 ShootingPlayerIdleAiming::ShootingPlayerIdleAiming(IWorld * world, ActorParameters & parameter)
@@ -40,22 +40,29 @@ void ShootingPlayerIdleAiming::StateUpdate(Vector3 & lposition, Matrix & lrotati
 
 void ShootingPlayerIdleAiming::Input()
 {
-	//エイム中→アイドル状態前まで
-	if (GamePad::GetInstance().ButtonTriggerUp(PADBUTTON::NUM5) ||
-		Keyboard::GetInstance().KeyTriggerUp(KEYCODE::LSHIFT)) {
+	////エイム中→アイドル状態前まで
+	//if(ButtonLB::GetInstance().TriggerUp())
+	//{
 
-		ShootingPlayerParam::getInstance().Set_AimCheck(false);
-		mNextStateID = ActorStateID::ShootingPlayerAimToIdle;
-		mNextStateFlag = true;
-		return;
-	}
+	//	ShootingPlayerParam::getInstance().Set_AimCheck(false);
+	//	mNextStateID = ActorStateID::ShootingPlayerAimToIdle;
+	//	mNextStateFlag = true;
+	//	return;
+	//}
+
+	//if (ButtonLB::GetInstance().StateUp())
+	//{
+	//	ShootingPlayerParam::getInstance().Set_AimCheck(false);
+	//	mNextStateID = ActorStateID::ShootingPlayerAimToIdle;
+	//	mNextStateFlag = true;
+	//	return;
+	//}
 
 	//銃を撃つステイトへ
 	if(ShootingPlayerParam::getInstance().Get_RemainGun() > 0 &&
 		parameters_->Get_Motion() != ShootingPlayerMotionNum::MotionPlayerBackGun)
 	{
-		if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM6) || 
-			Keyboard::GetInstance().KeyTriggerDown(KEYCODE::SPACE))
+		if(ButtonRB::GetInstance().TriggerDown())
 		{
 			mNextStateID = ActorStateID::ShootingPlayerGun;
 			mNextStateFlag = true;
@@ -64,11 +71,18 @@ void ShootingPlayerIdleAiming::Input()
 	}
 
 	//リロード
-	if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM3) ||
-		Keyboard::GetInstance().KeyTriggerDown(KEYCODE::R))
+	if(ButtonX::GetInstance().TriggerDown())
 	{
 		mNextStateID = ActorStateID::ShootingPlayerReload;
 		mNextStateFlag = true;
 		return;
 	}
+
+	if (ButtonLB::GetInstance().StateDown()) return;
+
+	ShootingPlayerParam::getInstance().Set_AimCheck(false);
+	mNextStateID = ActorStateID::ShootingPlayerAimToIdle;
+	mNextStateFlag = true;
+	return;
+
 }

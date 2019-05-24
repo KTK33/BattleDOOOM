@@ -1,11 +1,11 @@
 #include "TitleCamera.h"
 #include "../TPSCamera.h"
+#include "../Actor/Camera/CameraSpring/CameraSpring.h"
 
 TitleCamera::TitleCamera(IWorld * world, std::weak_ptr<Actor> m_Player):
 	Actor(world,"TitleCamera",Vector3::Zero),
 	m_player{m_Player},
-	bullet{nullptr},
-	cameraBack{4}
+	bullet{nullptr}
 {
 	target_ = Vector3(m_player.lock()->Getposition().x, 
 		m_player.lock()->Getposition().y + 16, 
@@ -26,7 +26,8 @@ void TitleCamera::update(float deltaTime)
 	TPSCamera::GetInstance().Up.Set(Vector3::Up);
 	TPSCamera::GetInstance().Update();
 
-	move(position_, 1.0f, 0.2f, 0.8f);
+	//ばね
+	CameraSpring::move(position_, velocity_, position_, 1.0f, 0.2f, 0.8f);
 
 	if (world_->find_actor(ActorGroup::Ball, "TitleBullet") == NULL)
 	{
@@ -37,29 +38,4 @@ void TitleCamera::update(float deltaTime)
 		bullet = world_->find_actor(ActorGroup::Ball, "TitleBullet").get();
 		target_ = bullet->Getposition();
 	}
-
-	//CameraMove();
-}
-
-void TitleCamera::draw() const
-{
-}
-
-void TitleCamera::move(const Vector3 & rest_position, float stiffness, float friction, float mass)
-{
-	//ばねの伸び具合を計算
-	const auto stretch = position_ - rest_position;
-	//ばねの力を計算
-	const auto force = -stiffness * stretch;
-	//加速度を追加
-	const auto acceleration = force / mass;
-	//移動速度を計算
-	velocity_ = friction * (velocity_ + acceleration);
-	//座標の更新
-	position_ += velocity_;
-}
-
-void TitleCamera::CameraMove()
-{
-	cameraBack = min(cameraBack + 0.5f, 10);
 }

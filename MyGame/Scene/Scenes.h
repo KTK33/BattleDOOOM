@@ -7,5 +7,4 @@
 #include "ShootingPlayScene/ShootingPlayScene.h"
 #include "GameLoadingScene/ActionLoad/ActionLoad.h"
 #include "ActionPlayScene/ActionPlayScene.h"
-#include "GameOverScene/GameOverScene.h"
 #include "SceneType.h"

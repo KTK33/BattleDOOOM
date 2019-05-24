@@ -11,8 +11,6 @@ enum class SceneType {
 	SCENE_ACTION_LOAD,
 	SCENE_ACTION_PLAY,
 
-	SCENE_GAMEOVER,
-	SCENE_CLEAR,
 	SCENE_EXIT,//ダミーシーン
 	
 };

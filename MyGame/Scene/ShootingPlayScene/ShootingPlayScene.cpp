@@ -11,8 +11,7 @@
 #include "../Graphics/Graphics3D.h"
 #include "../Fiield/WorldContentManager/WorldContentManager.h"
 #include "../GameData/GameDataManager.h"
-#include "../Input/GamePad/GamePad.h"
-#include "../Input/Keyboard/Keyboard.h"
+#include "../Input/InputInfoInc.h"
 #include "../Texture/Sprite.h"
 #include "../Game/Define.h"
 #include "../Actor/ShootingPlayerMode/UIActor/AnyUI/AnyUI.h"
@@ -34,7 +33,6 @@ void ShootingPlayScene::start() {
 	world_.initialize();
 	GameDataManager::getInstance().initialize();
 	Sound::GetInstance().PlayBGM(BGM_ID::PLAYE_BGM, DX_PLAYTYPE_LOOP);
-	//Sound::GetInstance().SetBGMVolume(BGM_ID::PLAYE_BGM, 1.0f);
 	menuSize_ = 4;
 
 	world_.add_actor(ActorGroup::Fade, new_actor<FadeUI>(&world_, 1, 2));
@@ -75,41 +73,30 @@ void ShootingPlayScene::update(float deltaTime)
 	}
 
 
-	if (GameDataManager::getInstance().GetPlayerDead() == true)
+	if (GameDataManager::getInstance().GetPlayerDead()
+		|| GameDataManager::getInstance().GetDeadBossEnemy()
+		|| world_.GetBackTitleCheck() == true)
 	{
-		if (GamePad::GetInstance().ButtonTriggerUp(PADBUTTON::NUM2) || Keyboard::GetInstance().KeyTriggerDown(KEYCODE::SPACE))
+		if (ButtonB::GetInstance().TriggerDown())
 		{
 			next_ = SceneType::SCENE_TITLE_LOAD;
 			isEnd_ = true;
+			return;
 		}
-	}
-
-	if (GameDataManager::getInstance().GetDeadBossEnemy() == true) {
-
-		if (GamePad::GetInstance().ButtonTriggerUp(PADBUTTON::NUM2) || Keyboard::GetInstance().KeyTriggerDown(KEYCODE::SPACE))
-		{
-			next_ = SceneType::SCENE_TITLE_LOAD;
-			isEnd_ = true;
-		}
-	}
-
-	if (world_.GetBackTitleCheck() == true) {
-		next_ = SceneType::SCENE_TITLE_LOAD;
-		isEnd_ = true;
 	}
 }
 
-void ShootingPlayScene::draw() const {
-
-		Graphics3D::clear();
-		//スカイボックスの描画
-		Skybox::bind(0);
-		Skybox::draw();
-		//ステージの描画
-		CollisionMesh::bind(0);
-		CollisionMesh::draw();
+void ShootingPlayScene::draw() const 
+{
+	Graphics3D::clear();
+	//スカイボックスの描画
+	Skybox::bind(0);
+	Skybox::draw();
+	//ステージの描画
+	CollisionMesh::bind(0);
+	CollisionMesh::draw();
 	
-		world_.draw();
+	world_.draw();
 }
 void ShootingPlayScene::end()
 {
@@ -118,5 +105,4 @@ void ShootingPlayScene::end()
 	Skybox::finalize();
 	Sound::GetInstance().Initialize();
 	Sprite::GetInstance().Initialize();
-
 }

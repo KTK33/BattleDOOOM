@@ -1,7 +1,7 @@
 #include "ShootingPlayerReload.h"
 #include "../Actor/ShootingPlayerMode/ShootingPlayer/ShootingPlayerActor/State/stateInc.h"
 #include "../Game/Define.h"
-#include "../Input/InputInc.h"
+#include "../Input/InputInfoInc.h"
 
 ShootingPlayerReload::ShootingPlayerReload(IWorld * world, ActorParameters & parameter)
 {
@@ -19,16 +19,9 @@ void ShootingPlayerReload::Stateinitialize()
 
 void ShootingPlayerReload::StateUpdate(Vector3 & lposition, Matrix & lrotation, AnimatedMesh & lmesh)
 {
+	//入力情報
+	Input();
 
-	//エイム中→アイドル状態前まで
-	if (GamePad::GetInstance().ButtonTriggerUp(PADBUTTON::NUM5) ||
-		Keyboard::GetInstance().KeyTriggerUp(KEYCODE::LSHIFT)) {
-
-		ShootingPlayerParam::getInstance().Set_AimCheck(false);
-		mNextStateID = ActorStateID::ShootingPlayerAimToIdle;
-		mNextStateFlag = true;
-		return;
-	}
 	//モーションの時間が終わったら移動状態へ
 	if (parameters_->Get_Statetimer() > lmesh.motion_end_time() - 5)
 	{
@@ -52,6 +45,18 @@ void ShootingPlayerReload::StateUpdate(Vector3 & lposition, Matrix & lrotation, 
 	if (parameters_->Get_HP() <= 0)
 	{
 		mNextStateID = ActorStateID::ShootingPlayerDead;
+		mNextStateFlag = true;
+		return;
+	}
+}
+
+void ShootingPlayerReload::Input()
+{
+	//エイム中→アイドル状態前まで
+	if (LeftStick::GetInstance().KnockCheck())
+	{
+		ShootingPlayerParam::getInstance().Set_AimCheck(false);
+		mNextStateID = ActorStateID::ShootingPlayerAimToIdle;
 		mNextStateFlag = true;
 		return;
 	}
@@ -81,5 +86,4 @@ void ShootingPlayerReload::GunCount()
 
 	ShootingPlayerParam::getInstance().Set_HaveGun(HaveGun);
 	ShootingPlayerParam::getInstance().Set_RemainGun(SetRemainGun);
-
 }

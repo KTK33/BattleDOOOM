@@ -26,7 +26,3 @@ void ShootingPlayerDead::StateUpdate(Vector3 & lposition, Matrix & lrotation, An
 	}
 
 }
-
-void ShootingPlayerDead::Input()
-{
-}

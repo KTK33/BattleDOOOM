@@ -14,9 +14,6 @@ public:
 	//カメラの設定
 	void CameraSet(float deltaTime);
 
-	//プレイヤーの入力情報
-	void Aim_Input();
-
 	//エイム外
 	void Out_Aim();
 

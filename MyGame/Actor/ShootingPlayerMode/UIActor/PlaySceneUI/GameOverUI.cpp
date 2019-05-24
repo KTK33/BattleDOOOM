@@ -6,12 +6,13 @@ GameOverUI::GameOverUI(IWorld * world):
 	Actor(world,"GameOverBack",Vector3::Zero),
 	GameOverBackAlpha{0}
 {
-	Sound::GetInstance().StopBGM();
-	Sound::GetInstance().PlayBGM(BGM_ID::LOSE_BGM, DX_PLAYTYPE_LOOP);
+	initialize();
 }
 
 void GameOverUI::initialize()
 {
+	Sound::GetInstance().StopBGM();
+	Sound::GetInstance().PlayBGM(BGM_ID::LOSE_BGM, DX_PLAYTYPE_LOOP);
 }
 
 void GameOverUI::update(float deltaTime)

@@ -7,8 +7,8 @@
 class ActorSystem
 {
 public:
-	float PlayerDirection(Actor* player, Vector3& position, Matrix& matrix);
 
+	//“§–¾‰»
 	void TransparenceInit();
 	void ActorTransparence();
 

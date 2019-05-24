@@ -1,5 +1,5 @@
 #include "ShootingPlayerIdle.h"
-#include "../Input/InputInc.h"
+#include "../Input/InputInfoInc.h"
 #include "../Actor/ShootingPlayerMode/ShootingPlayer/ShootingPlayerActor/State/stateInc.h"
 
 ShootingPlayerIdle::ShootingPlayerIdle(IWorld * world, ActorParameters & parameter)
@@ -39,8 +39,7 @@ void ShootingPlayerIdle::StateUpdate(Vector3 & lposition, Matrix & lrotation, An
 void ShootingPlayerIdle::Input()
 {
 	//アイドル→エイム前状態まで
-	if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM5) ||
-		Keyboard::GetInstance().KeyTriggerDown(KEYCODE::LSHIFT))
+	if(ButtonLB::GetInstance().TriggerDown())
 	{
 		mNextStateID = ActorStateID::ShootingPlayerIdleToAim;
 		mNextStateFlag = true;
@@ -50,8 +49,7 @@ void ShootingPlayerIdle::Input()
 	//リロード
 	if (ShootingPlayerParam::getInstance().Get_RemainGun() < 7)
 	{
-		if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM3) ||
-			Keyboard::GetInstance().KeyTriggerDown(KEYCODE::R))
+		if(ButtonX::GetInstance().TriggerDown())
 		{
 			mNextStateID = ActorStateID::ShootingPlayerReload;
 			mNextStateFlag = true;
@@ -60,8 +58,7 @@ void ShootingPlayerIdle::Input()
 	}
 
 	//銃攻撃
-	if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM4) || 
-		Keyboard::GetInstance().KeyTriggerDown(KEYCODE::Q))
+	if(ButtonY::GetInstance().TriggerDown())
 	{
 		mNextStateID = ActorStateID::ShootingPlayerGunPunch;
 		mNextStateFlag = true;
@@ -69,8 +66,7 @@ void ShootingPlayerIdle::Input()
 	}
 
 	//ジャンプ
-	if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM1) ||
-		Keyboard::GetInstance().KeyTriggerDown(KEYCODE::LCTRL))
+	if(ButtonA::GetInstance().TriggerDown())
 	{
 		mNextStateID = ActorStateID::ShootingPlayerJump;
 		mNextStateFlag = true;
@@ -78,8 +74,7 @@ void ShootingPlayerIdle::Input()
 	}
 
 	//挑発
-	if (GetJoypadPOVState(DX_INPUT_PAD1, 0) == 18000 || 
-		Keyboard::GetInstance().KeyTriggerDown(KEYCODE::Y))
+	if(DPad::GetInstance().GetDown())
 	{
 		mNextStateID = ActorStateID::ShootingPlayerThohatu;
 		mNextStateFlag = true;

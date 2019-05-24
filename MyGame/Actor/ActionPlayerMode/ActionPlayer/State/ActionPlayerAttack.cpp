@@ -3,7 +3,7 @@
 #include "../Actor/Actor.h"
 #include "../Actor/ActionPlayerMode/ActionPlayer/ActionPlayerMotionNum.h"
 #include "../Actor/PlayerAttackCollision/PlayerAttackCollision.h"
-#include "../Input/InputInc.h"
+#include "../Input/InputInfoInc.h"
 
 ActionPlayerAttack::ActionPlayerAttack(IWorld * world, ActorParameters & parameter)
 {
@@ -54,8 +54,7 @@ void ActionPlayerAttack::StateUpdate(Vector3 & lposition, Matrix & lrotation, An
 
 void ActionPlayerAttack::Attack()
 {
-	if (GamePad::GetInstance().ButtonStateDown(PADBUTTON::NUM2) || 
-		Keyboard::GetInstance().KeyTriggerDown(KEYCODE::SPACE))
+	if(ButtonB::GetInstance().StateDown())
 	{
 		parameters_->Set_Statetimer(0.0f);
 		mAttackCount += 1;
@@ -97,7 +96,8 @@ void ActionPlayerAttack::AttackCollision(Vector3 lposition, Matrix lrotation, in
 void ActionPlayerAttack::Input()
 {
 	//ステップ
-	if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM1) || Keyboard::GetInstance().KeyTriggerDown(KEYCODE::LSHIFT)) {
+	if(ButtonA::GetInstance().TriggerDown())
+	{
 		mNextStateID = ActorStateID::ActionPlayerAvoidance;
 		mNextStateFlag = true;
 		return;

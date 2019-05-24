@@ -1,8 +1,7 @@
 #include "TitleAnyUI.h"
 #include "../Texture/Sprite.h"
 #include "../Scene/GameData/GameDataManager.h"
-#include "../Input/GamePad/GamePad.h"
-#include "../Input/Keyboard/Keyboard.h"
+#include "../Input/InputInfoInc.h"
 #include "../Actor/CommonUIActor/TitleUI/TitleBack/TitleBack.h"
 #include "../Actor/CommonUIActor/FadeUI/FadeUI.h"
 #include "../Sound/Sound.h"
@@ -22,18 +21,13 @@ TitleAnyUI::TitleAnyUI(IWorld * world) :
 	TitleBackWhiteAlpha{0},
 	TitleBackWhiteCheck{false},
 	alreadyFadeCheck{false},
-	NameBackSize2{0,0}
-{
-}
-
-void TitleAnyUI::initialize()
-{
-}
+	NameBackSize2{0,0}{}
 
 void TitleAnyUI::update(float deltaTime)
 {
-	NameSize.x = max(NameSize.x-0.1f, 1);
-	NameSize.y = max(NameSize.y-0.1f, 1);
+	//‚P‚Ì‘å‚«‚³‚Ü‚ÅŠg‘å‚·‚é
+	NameSize.x = max(NameSize.x - 0.1f, 1);
+	NameSize.y = max(NameSize.y - 0.1f, 1);
 
 	NameAngle = max(NameAngle - 0.075f, 0);
 
@@ -58,7 +52,7 @@ void TitleAnyUI::update(float deltaTime)
 			world_->add_actor(ActorGroup::UIBefore, new_actor<TitleBack>(world_));
 			alreadyTitleBack = true;
 		}
-		if (GamePad::GetInstance().AnyTriggerDown() || Keyboard::GetInstance().AnyTriggerDown())
+		if(ButtonAll::GetInstance().TriggerDown())
 		{
 			StartDecision = true;
 			Sound::GetInstance().PlaySE_IsNotPlay(SE_ID::TITLEKETTEI_SE);
@@ -114,10 +108,6 @@ void TitleAnyUI::update(float deltaTime)
 			}
 		}
 	}
-}
-
-void TitleAnyUI::receiveMessage(EventMessage message, void * param)
-{
 }
 
 void TitleAnyUI::draw() const

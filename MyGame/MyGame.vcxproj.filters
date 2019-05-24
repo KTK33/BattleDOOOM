@@ -30,9 +30,6 @@
     <ClCompile Include="Scene\GameData\GameDataManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Scene\GameOverScene\GameOverScene.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Scene\GameSelectScene\GameSelectScene.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -357,9 +354,6 @@
     <ClCompile Include="Actor\ActionPlayerMode\UI\HPUI\RedSamuraiHP.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Actor\ActorCommon\InputEWSN\InputEWSN.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Actor\ShootingPlayerMode\ShootingEnemy\NormalEnemy\State\NomalEnemyDamage\NormalEnemyDamage.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -453,6 +447,30 @@
     <ClCompile Include="Input\InputInfo\ButtonL3\ButtonL3.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="Input\InputInfo\ButtonDown\ButtonDown.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Input\InputInfo\ButtonLeft\ButtonLeft.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Input\InputInfo\ButtonRight\ButtonRight.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Input\InputInfo\ButtonUp\ButtonUp.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Input\InputInfo\LeftStick\LeftStick.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Input\InputInfo\RightStick\RightStick.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\ActorCommon\MoveInput\MoveInput.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Input\InputInfo\DPad\DPad.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor\TestEnemy.h">
@@ -477,9 +495,6 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Scene\GameLoadingScene\LoadingSceneInc.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene\GameOverScene\GameOverScene.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Scene\GameSelectScene\GameSelectScene.h">
@@ -902,9 +917,6 @@
     <ClInclude Include="Actor\ActionPlayerMode\UI\HPUI\RedSamuraiHP.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Actor\ActorCommon\InputEWSN\InputEWSN.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Actor\ShootingPlayerMode\ShootingEnemy\NormalEnemy\State\NormalEnemyIdle\NormalEnemyIdle.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -1017,6 +1029,33 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Input\InputInfo\ButtonL3\ButtonL3.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Input\InputInfoInc.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Input\InputInfo\ButtonDown\ButtonDown.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Input\InputInfo\ButtonLeft\ButtonLeft.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Input\InputInfo\ButtonRight\ButtonRight.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Input\InputInfo\ButtonUp\ButtonUp.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Input\InputInfo\LeftStick\LeftStick.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Input\InputInfo\RightStick\RightStick.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ActorCommon\MoveInput\MoveInput.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Input\InputInfo\DPad\DPad.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

@@ -3,7 +3,6 @@
 void Gravity::gravity(Vector3 & pos, Vector3 & vel, bool floor)
 {
 	//d—Íˆ—
-	//velocity_ = Vector3::Zero;
 	vel += Vector3::Up * -gravityVal;
 	pos += vel;
 
