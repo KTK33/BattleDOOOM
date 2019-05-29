@@ -151,7 +151,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Actor\ActionPlayerMode\ActionCamera\ActionCamera.cpp" />
-    <ClCompile Include="Actor\ActionPlayerMode\ActionGameManager\ActionGameManager.cpp" />
+    <ClCompile Include="Actor\ActionPlayerMode\ActionCamera\TargetCameraManager.cpp" />
     <ClCompile Include="Actor\ActionPlayerMode\ActionPlayer\ActionPlayerActor.cpp" />
     <ClCompile Include="Actor\ActionPlayerMode\ActionPlayer\State\ActionPlayerAttack.cpp" />
     <ClCompile Include="Actor\ActionPlayerMode\ActionPlayer\State\ActionPlayerAvoidance.cpp" />
@@ -166,6 +166,8 @@
     <ClCompile Include="Actor\ActionPlayerMode\UI\ActionModePause\ActionModePause.cpp" />
     <ClCompile Include="Actor\ActionPlayerMode\UI\HPUI\ActonPlayerHP.cpp" />
     <ClCompile Include="Actor\ActionPlayerMode\UI\HPUI\RedSamuraiHP.cpp" />
+    <ClCompile Include="Actor\ActionPlayerMode\UI\SceneUI\PlayerDeadUI.cpp" />
+    <ClCompile Include="Actor\ActionPlayerMode\UI\SceneUI\RedSamuraiDeadUI.cpp" />
     <ClCompile Include="Actor\Actor.cpp" />
     <ClCompile Include="Actor\ActorCommon\ActorPush\AcotrPush.cpp" />
     <ClCompile Include="Actor\ActorCommon\DrawWeapon\DrawWeapon.cpp" />
@@ -283,6 +285,7 @@
     <ClCompile Include="Mesh\SkeletalMesh.cpp" />
     <ClCompile Include="Mesh\StaticMesh.cpp" />
     <ClCompile Include="Model\ModelAsset.cpp" />
+    <ClCompile Include="Scene\ActionPlayScene\ActionModeManager\ActionModeManager.cpp" />
     <ClCompile Include="Scene\ActionPlayScene\ActionPlayScene.cpp" />
     <ClCompile Include="Scene\GameData\GameDataManager.cpp" />
     <ClCompile Include="Scene\GameLoadingScene\ActionLoad\ActionLoad.cpp" />
@@ -293,6 +296,7 @@
     <ClCompile Include="Scene\GameTitleScene\GameTitleScene.cpp" />
     <ClCompile Include="Scene\SceneManager.cpp" />
     <ClCompile Include="Scene\SceneTemplate.cpp" />
+    <ClCompile Include="Scene\ShootingPlayScene\ShootingModeManager\ShootingModeManager.cpp" />
     <ClCompile Include="Scene\ShootingPlayScene\ShootingPlayScene.cpp" />
     <ClCompile Include="Skybox\Skybox.cpp" />
     <ClCompile Include="Sound\Sound.cpp" />
@@ -303,7 +307,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor\ActionPlayerMode\ActionCamera\ActionCamera.h" />
-    <ClInclude Include="Actor\ActionPlayerMode\ActionGameManager\ActionGameManager.h" />
+    <ClInclude Include="Actor\ActionPlayerMode\ActionCamera\TargetCameraManager.h" />
     <ClInclude Include="Actor\ActionPlayerMode\ActionPlayer\ActionPlayerActor.h" />
     <ClInclude Include="Actor\ActionPlayerMode\ActionPlayer\ActionPlayerMotionNum.h" />
     <ClInclude Include="Actor\ActionPlayerMode\ActionPlayer\ActionStateInc.h" />
@@ -321,6 +325,8 @@
     <ClInclude Include="Actor\ActionPlayerMode\UI\ActionModePause\ActionModePause.h" />
     <ClInclude Include="Actor\ActionPlayerMode\UI\HPUI\ActonPlayerHP.h" />
     <ClInclude Include="Actor\ActionPlayerMode\UI\HPUI\RedSamuraiHP.h" />
+    <ClInclude Include="Actor\ActionPlayerMode\UI\SceneUI\PlayerDeadUI.h" />
+    <ClInclude Include="Actor\ActionPlayerMode\UI\SceneUI\RedSamuraiDeadUI.h" />
     <ClInclude Include="Actor\Actor.h" />
     <ClInclude Include="Actor\ActorCommon\ActorPush\AcotrPush.h" />
     <ClInclude Include="Actor\ActorCommon\CommonInc.h" />
@@ -349,7 +355,6 @@
     <ClInclude Include="Actor\CommonUIActor\TitleUI\TitlePlayer\TitlePlayer.h" />
     <ClInclude Include="Actor\EnemyAttackCollison\EnemyAttackCollison.h" />
     <ClInclude Include="Actor\EnemyCommon\commonInc.h" />
-    <ClInclude Include="Actor\EnemyCommon\EnemyParameter.h" />
     <ClInclude Include="Actor\EnemyCommon\PlayerLook\PlayerLook.h" />
     <ClInclude Include="Actor\PlayerAttackCollision\PlayerAttackCollision.h" />
     <ClInclude Include="Actor\ShootingPlayerMode\ItemActor\BulletItem\BulletItem.h" />
@@ -470,6 +475,7 @@
     <ClInclude Include="Mesh\StaticMesh.h" />
     <ClInclude Include="Model\ModelAsset.h" />
     <ClInclude Include="Scene\ActionPlayScene\ActionPlayScene.h" />
+    <ClInclude Include="Scene\ActionPlayScene\ActionModeManager\ActionModeManager.h" />
     <ClInclude Include="Scene\GameData\GameDataManager.h" />
     <ClInclude Include="Scene\GameLoadingScene\ActionLoad\ActionLoad.h" />
     <ClInclude Include="Scene\GameLoadingScene\DrawLoadScene\DrawLoadScene.h" />
@@ -480,10 +486,12 @@
     <ClInclude Include="Scene\GameTitleScene\GameTitleScene.h" />
     <ClInclude Include="Scene\Menu.h" />
     <ClInclude Include="Scene\Scene.h" />
+    <ClInclude Include="Scene\SceneInc.h" />
     <ClInclude Include="Scene\SceneManager.h" />
     <ClInclude Include="Scene\Scenes.h" />
     <ClInclude Include="Scene\SceneTemplate.h" />
     <ClInclude Include="Scene\SceneType.h" />
+    <ClInclude Include="Scene\ShootingPlayScene\ShootingModeManager\ShootingModeManager.h" />
     <ClInclude Include="Scene\ShootingPlayScene\ShootingPlayScene.h" />
     <ClInclude Include="Skybox\Skybox.h" />
     <ClInclude Include="Sound\Sound.h" />

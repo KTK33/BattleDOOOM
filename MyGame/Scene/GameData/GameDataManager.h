@@ -13,27 +13,30 @@ public:
 
 	void update();
 
+	//タイトルに戻る
 	void SetTitleCheck(bool Stc);
 	bool GetTitleCheck();
 
 	void SetPlayerStart(bool Sps);
 	bool GettPlayerStart();
 
+	//ボスが死んでいるか？
 	void SetDeadBossEnemy(bool db);
 	bool GetDeadBossEnemy();
+
+	//プレイヤーが死んでいるか？
 	void SetPlayerDead(bool pd);
 	bool GetPlayerDead();
 
-	void SetItemBoXOpen(bool IBX);
-	bool GetItemBoxOpen();
-
-	void SetSightCheck(bool SC);
-	bool GetSightCheck();
-
+	//BGMのボリューム
 	void SetBGMVAL(int BGM);
 	float GetBGMVAL();
+
+	//SEのボリューム
 	void SetSEVAL(int SE);
 	float GetSEVAL();
+
+	//エイムの速度
 	void SetAIMSPD(int AIM);
 	int GetAIMSPD();
 
@@ -43,16 +46,14 @@ public:
 
 private:
 
-	bool TitleCheck{ false };
-	bool StartCheck{ false };
-	bool DeadBossEnemyCheck{ false };
-	bool DeadPlayerCheck{ false };
-	bool ItemBoxOpne{ false };
-	bool SightCheck{ false };
+	bool mTitleCheck{ false };
+	bool mStartCheck{ false };
+	bool mDeadBossEnemyCheck{ false };
+	bool mDeadPlayerCheck{ false };
 
-	int BGMVAL{ 5 };
-	int SE_VAL{ 7 };
-	int AIM_SPD{ 5 };
+	int mBGMVAL{ 5 };
+	int mSE_VAL{ 7 };
+	int mAIM_SPD{ 5 };
 
-	int SceneNumber{ 2 };
+	int mSceneNumber{ 2 };
 };

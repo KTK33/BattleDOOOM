@@ -14,8 +14,36 @@ static int constexpr GRID_Y = 10;
 
 static constexpr int SEGMENT_VERTEX_COUNT = 2;
 
-static constexpr float FarSpeed = 2.0f;
+///シューティングモード
+
 //プレイヤーの最大ＨＰ
-static constexpr int PlayerHP = 10;
+static constexpr int ShootingPlayerHPVal = 10;
+
 //一度にセットできる弾数
 static constexpr int SetGunPoint = 7;
+
+//弾を拾ったときに取得できる弾数
+static const int GetBulletPoint = 5;
+
+//回復アイテムを拾ったときの回復量
+static const int GetHpPoint = 3;
+
+//敵の落とすアイテムの割合(0～100) 値が大きいほど弾が落ちやすい、0に近いほど回復アイテムが落ちやすい　100に近いほど弾が落ちやすい
+static const int GetItemRate = 70;
+
+//攻撃アップアイテムを使ったときの継続時間(秒)
+static const int AttackUpTime = 30;
+
+//ノーマル敵のHP
+static const int NormalHPVal = 3;
+
+//ボス敵のHP
+static const int BossHPVal = 10;
+
+///アクションモード
+
+//プレイヤーのHP
+static const int ActionPlayerHPVal = 10;
+
+//赤侍のHP
+static const int RedSamuraiHPVal = 5;

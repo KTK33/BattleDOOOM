@@ -2,14 +2,19 @@
 
 enum class BGM_ID
 {
+	//シューティングモード用
 	TITLE_BGM,
-	PLAYE_BGM,
+	PLAY_BGM,
 	WIN_BGM,
 	LOSE_BGM,
+
+	//アクションモード用
+	ACTION_PLAY_BGM,
 };
 
 enum class SE_ID
 {
+	//シューティングモード用
 	SHOOT_SE,
 	ATTACK_SE,
 	DAMAGEENEMY_SE,
@@ -21,4 +26,10 @@ enum class SE_ID
 	PAUSECURSOR_SE,
 	ITEMGET_SE,
 	TYOHATU_SE,
+
+	//アクションモード用
+	ARROW,
+	RED_SWARD,
+	ACTION_SWARD,
+	ACTION_STEP,
 };

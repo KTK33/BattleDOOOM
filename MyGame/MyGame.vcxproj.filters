@@ -156,9 +156,6 @@
     <ClCompile Include="Actor\ActionPlayerMode\ActionCamera\ActionCamera.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Actor\ActionPlayerMode\ActionGameManager\ActionGameManager.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Actor\ActionPlayerMode\ActionPlayer\State\ActionPlayerAttack.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -465,6 +462,21 @@
     <ClCompile Include="Input\InputInfo\DPad\DPad.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="Actor\ActionPlayerMode\UI\SceneUI\PlayerDeadUI.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\ActionPlayerMode\UI\SceneUI\RedSamuraiDeadUI.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\ActionPlayScene\ActionModeManager\ActionModeManager.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\ActionPlayerMode\ActionCamera\TargetCameraManager.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\ShootingPlayScene\ShootingModeManager\ShootingModeManager.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor\TestEnemy.h">
@@ -666,9 +678,6 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Actor\ActionPlayerMode\ActionCamera\ActionCamera.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Actor\ActionPlayerMode\ActionGameManager\ActionGameManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Actor\ActionPlayerMode\ActionPlayer\State\ActionPlayerAttack.h">
@@ -935,9 +944,6 @@
     <ClInclude Include="Actor\EnemyCommon\commonInc.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Actor\EnemyCommon\EnemyParameter.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Actor\ShootingPlayerMode\ShootingEnemy\BossEnemy\BossEnemyMotionNum.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -1041,6 +1047,24 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Input\InputInfo\DPad\DPad.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\SceneInc.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ActionPlayerMode\UI\SceneUI\PlayerDeadUI.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ActionPlayerMode\UI\SceneUI\RedSamuraiDeadUI.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\ActionPlayScene\ActionModeManager\ActionModeManager.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ActionPlayerMode\ActionCamera\TargetCameraManager.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\ShootingPlayScene\ShootingModeManager\ShootingModeManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

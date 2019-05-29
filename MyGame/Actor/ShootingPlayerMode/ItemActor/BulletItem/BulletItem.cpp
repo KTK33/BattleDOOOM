@@ -1,4 +1,5 @@
 #include "BulletItem.h"
+#include "../Game/Define.h"
 
 BulletItem::BulletItem(int model, IWorld * world, const Vector3 & position, const IBodyPtr & body):
 	Actor(world, "BulletItem", position, body),
@@ -14,14 +15,12 @@ void BulletItem::update(float deltaTime)
 void BulletItem::draw() const
 {
 	mesh_.draw();
-	//body_->transform(Getpose())->draw();
 }
 
 void BulletItem::onCollide(Actor & other)
 {
 	const Vector3 hitdir(other.Getposition() - position_);
-	int gunpoint = 5;
-	other.receiveMessage(EventMessage::GET_BULLET, (void*)&gunpoint);
+	other.receiveMessage(EventMessage::GET_BULLET, (void*)&GetBulletPoint);
 }
 
 void BulletItem::receiveMessage(EventMessage message, void * param)

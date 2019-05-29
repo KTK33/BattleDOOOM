@@ -4,6 +4,7 @@
 #include "../Actor/ActionPlayerMode/ActionPlayer/ActionPlayerMotionNum.h"
 #include "../Actor/PlayerAttackCollision/PlayerAttackCollision.h"
 #include "../Input/InputInfoInc.h"
+#include "../Sound/Sound.h"
 
 ActionPlayerAttack::ActionPlayerAttack(IWorld * world, ActorParameters & parameter)
 {
@@ -91,6 +92,8 @@ void ActionPlayerAttack::AttackCollision(Vector3 lposition, Matrix lrotation, in
 		std::make_shared<BoundingCapsule>(spot, Matrix::Identity, len, rad));
 	world_->add_actor(ActorGroup::PlayerBullet, AttackPunch);
 	AttackPunch->SetParam(false, deadTime, attackParam);
+
+	Sound::GetInstance().PlaySE(SE_ID::ACTION_SWARD);
 }
 
 void ActionPlayerAttack::Input()

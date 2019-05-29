@@ -2,12 +2,11 @@
 
 void GameDataManager::initialize()
 {
-	TitleCheck = false;
-	StartCheck = false;
-	DeadBossEnemyCheck = false;
-	DeadPlayerCheck = false;
-	SightCheck = false;
-	SceneNumber = 0;
+	mTitleCheck = false;
+	mStartCheck = false;
+	mDeadBossEnemyCheck = false;
+	mDeadPlayerCheck = false;
+	mSceneNumber = 0;
 }
 
 void GameDataManager::update()
@@ -16,100 +15,80 @@ void GameDataManager::update()
 
 void GameDataManager::SetTitleCheck(bool Stc)
 {
-	TitleCheck = Stc;
+	mTitleCheck = Stc;
 }
 
 bool GameDataManager::GetTitleCheck()
 {
-	return TitleCheck;
+	return mTitleCheck;
 }
 
 void GameDataManager::SetPlayerStart(bool Sps)
 {
-	StartCheck = Sps;
+	mStartCheck = Sps;
 }
 
 bool GameDataManager::GettPlayerStart()
 {
-	return StartCheck;
+	return mStartCheck;
 }
 
 void GameDataManager::SetDeadBossEnemy(bool db)
 {
-	DeadBossEnemyCheck = db;
+	mDeadBossEnemyCheck = db;
 }
 
 bool GameDataManager::GetDeadBossEnemy()
 {
-	return DeadBossEnemyCheck;
+	return mDeadBossEnemyCheck;
 }
 
 void GameDataManager::SetPlayerDead(bool pd)
 {
-	DeadPlayerCheck = pd;
+	mDeadPlayerCheck = pd;
 }
 
 bool GameDataManager::GetPlayerDead()
 {
-	return DeadPlayerCheck;
-}
-
-void GameDataManager::SetItemBoXOpen(bool IBX)
-{
-	ItemBoxOpne = IBX;
-}
-
-bool GameDataManager::GetItemBoxOpen()
-{
-	return ItemBoxOpne;
-}
-
-void GameDataManager::SetSightCheck(bool SC)
-{
-	SightCheck = SC;
-}
-
-bool GameDataManager::GetSightCheck()
-{
-	return SightCheck;
+	return mDeadPlayerCheck;
 }
 
 void GameDataManager::SetBGMVAL(int BGM)
 {
-	BGMVAL = BGM;
+	mBGMVAL = BGM;
 }
 
 float GameDataManager::GetBGMVAL()
 {
-	return BGMVAL*0.1f;
+	return mBGMVAL*0.1f;
 }
 
 void GameDataManager::SetSEVAL(int SE)
 {
-	SE_VAL = SE;
+	mSE_VAL = SE;
 }
 
 float GameDataManager::GetSEVAL()
 {
-	return SE_VAL*0.1f;
+	return mSE_VAL*0.1f;
 }
 
 void GameDataManager::SetAIMSPD(int AIM)
 {
-	AIM_SPD = AIM;
+	mAIM_SPD = AIM;
 }
 
 int GameDataManager::GetAIMSPD()
 {
-	return AIM_SPD;
+	return mAIM_SPD;
 }
 
 void GameDataManager::SetSceneNum(int scene)
 {
-	SceneNumber = scene;
+	mSceneNumber = scene;
 }
 
 int GameDataManager::GetSceneNum()
 {
-	return SceneNumber;
+	return mSceneNumber;
 }

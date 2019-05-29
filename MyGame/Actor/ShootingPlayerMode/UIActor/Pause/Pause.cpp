@@ -2,6 +2,7 @@
 #include "../Texture/Sprite.h"
 #include "../Input/InputInfoInc.h"
 #include "../Scene/GameData/GameDataManager.h"
+#include "../Actor/ShootingPlayerMode/ShootingPlayer/ShootingPlayerActor/ShootingPlayerParam/ShootingPlayerParam.h"
 #include "PauseSystem.h"
 #include "../Sound/Sound.h"
 
@@ -28,23 +29,23 @@ void PauseUI::initialize()
 
 void PauseUI::update(float deltaTime)
 {
-	if (GameDataManager::getInstance().GetPlayerDead() == false && GameDataManager::getInstance().GetDeadBossEnemy() == false)
+	if (GameDataManager::getInstance().GetPlayerDead() 
+		&& GameDataManager::getInstance().GetDeadBossEnemy()) return;
+	
+	if (ButtonStart::GetInstance().TriggerDown())
 	{
-		if(ButtonStart::GetInstance().TriggerDown())
+		Sound::GetInstance().PlaySE_IsNotPlay(SE_ID::PAUSEKETTEI_SE);
+		PauseDecision = false;
+		if (world_->GetPauseCheck() == true)
 		{
-			Sound::GetInstance().PlaySE_IsNotPlay(SE_ID::PAUSEKETTEI_SE);
-			PauseDecision = false;
-			if (world_->GetPauseCheck() == true)
-			{
-				world_->SetPauseCheck(false);
-			}
-			else
-			{
-				world_->SetPauseCheck(true);
-			}
+			world_->SetPauseCheck(false);
+		}
+		else
+		{
+			world_->SetPauseCheck(true);
 		}
 	}
-	
+
 	if (world_->GetPauseCheck() == true){
 		PlayerInput();
 		Pause();
@@ -105,7 +106,7 @@ void PauseUI::PlayerInput()
 		if(ButtonA::GetInstance().TriggerDown())
 		{
 			PauseDecision = false;
-			GameDataManager::getInstance().SetItemBoXOpen(false);
+			ShootingPlayerParam::getInstance().Set_ItemBoXOpen(false);
 		}
 	}
 	else

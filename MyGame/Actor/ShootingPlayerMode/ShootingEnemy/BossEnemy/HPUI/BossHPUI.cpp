@@ -1,7 +1,7 @@
 #include "BossHPUI.h"
 #include "../Game/Define.h"
 #include "../Texture/Sprite.h"
-#include "../Actor/EnemyCommon/EnemyParameter.h"
+#include "../Game/Define.h"
 #include "../Billboard/Billboard.h"
 
 void BossHP::draw(int hp, Vector3 pos) const

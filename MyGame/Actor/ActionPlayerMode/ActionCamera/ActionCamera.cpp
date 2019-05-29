@@ -16,8 +16,7 @@ ActionCamera::ActionCamera(IWorld * world, std::weak_ptr<Actor> m_Player) :
 	m_PitchSpeed(0.0f),
 	m_YawSpeed(0.0f),
 	mTargetCamera{ false }
-{
-}
+{}
 
 void ActionCamera::update(float deltaTime)
 {

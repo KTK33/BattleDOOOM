@@ -34,6 +34,10 @@ public:
 	bool Get_AimCheck();
 	void Set_AimCheck(bool check);
 
+	//アイテムボックス
+	void Set_ItemBoXOpen(bool ibx);
+	bool Get_ItemBoxOpen();
+
 private:
 
 	int mRemainGun;
@@ -41,4 +45,5 @@ private:
 	int mAttackParam;
 	Vector3 mAimPos;
 	bool mAimCheck;
+	bool mItemBox;
 };

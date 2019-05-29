@@ -1,7 +1,5 @@
 #pragma once
-#include"../Scene.h"
-#include"../World/World.h"
-#include "../Menu.h"
+#include "../SceneInc.h"
 
 //リソース読み込み専用シーン
 class ShootingPlayScene :public Scene,public Menu{

@@ -4,7 +4,7 @@
 #include "../Actor/ShootingPlayerMode/ItemActor/ItemCreater/ItemCreater.h"
 #include "BossEnemyMotionNum.h"
 #include "BossEnemyStateInc.h"
-#include "../Actor/EnemyCommon/EnemyParameter.h"
+#include "../Game/Define.h"
 #include "../Scene/GameData/GameDataManager.h"
 
 BossEnemyActor::BossEnemyActor(int model, IWorld * world, const Vector3 & position, const IBodyPtr & body) :
@@ -34,7 +34,7 @@ void BossEnemyActor::initialize()
 	mesh_.transform(Getpose());
 
 	parameters_.Set_Position(position_);
-	parameters_.Set_HP(BossEnemyHP);
+	parameters_.Set_HP(BossHPVal);
 	parameters_.Set_StateID(ActorStateID::BossEnemyIdle);
 	parameters_.Set_Motion(BossEnemyMotion::MotionBossIdel);
 }

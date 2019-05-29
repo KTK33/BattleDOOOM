@@ -1,6 +1,7 @@
 #include "ActionPlayerActor.h"
 #include "ActionStateInc.h"
 #include "../Scene/GameData/GameDataManager.h"
+#include "../Actor/ActionPlayerMode/UI/SceneUI/PlayerDeadUI.h"
 
 ActionPlayerActor::ActionPlayerActor(int model, int weapon, IWorld * world, const Vector3 & position,const IBodyPtr & body):
 	Actor(world, "Player", position, body),
@@ -9,7 +10,8 @@ ActionPlayerActor::ActionPlayerActor(int model, int weapon, IWorld * world, cons
 	mRightweaponPos{ 15 },
 	mLeftweaponPos{ 38 },
 	m_ActionCameraForward{ Vector3::Zero },
-	m_ActionCameraRight{ Vector3::Zero }
+	m_ActionCameraRight{ Vector3::Zero },
+	mDeadArelady{ false }
 {
 	mcurrentStateID = ActorStateID::ActionPlayerIdel;
 	actionplayerState_[ActorStateID::ActionPlayerIdel].add(add_state<ActionPlayerIdle>(world, parameters_));
@@ -28,13 +30,22 @@ void ActionPlayerActor::initialize()
 	velocity_ = Vector3::Zero;
 
 	parameters_.Set_Position(position_);
-	parameters_.Set_HP(PlayerHP);
+	parameters_.Set_HP(ActionPlayerHPVal);
 
 	parameters_.Set_StateID(mcurrentStateID);
 }
 
 void ActionPlayerActor::update(float deltaTime)
 {
+
+	prevPosition_ = position_;
+
+	//壁床とのの当たり判定
+	collision();
+
+	//ポーズ中は返す
+	if (world_->GetPauseCheck()) return;
+
 	//ステイトクラスの情報を更新する
 	actionplayerState_[mcurrentStateID].update(position_, rotation_, mesh_);
 
@@ -47,18 +58,14 @@ void ActionPlayerActor::update(float deltaTime)
 		parameters_.Set_Statetimer(0.0f);
 	}
 
-	prevPosition_ = position_;
-
-	//壁床とのの当たり判定
-	collision();
-
-	//ポーズ中は返す
-	if (world_->GetPauseCheck() == true) return;
-
 	//死亡状態
-	if (parameters_.Get_IsDead() == true)
+	if (parameters_.Get_IsDead())
 	{
-		GameDataManager::getInstance().SetPlayerDead(true);
+		//死亡時の描画アクター生成
+		if (!mDeadArelady) {
+			world_->add_actor(ActorGroup::UI, new_actor<PlayerDeadUI>(world_));
+			mDeadArelady = true;
+		}
 		return;
 	}
 
@@ -80,6 +87,7 @@ void ActionPlayerActor::update(float deltaTime)
 	}
 }
 
+#include "../Texture/Sprite.h"
 void ActionPlayerActor::draw() const
 {
 	mesh_.draw();
@@ -87,14 +95,6 @@ void ActionPlayerActor::draw() const
 	mDW.draw(mweapon_, mLeftweaponPos, mesh_);
 
 	mHP.draw(parameters_.Get_HP());
-
-	SetFontSize(32);
-	DrawFormatString(200, 450, GetColor(0, 0, 255), "%f", position_.x);
-	DrawFormatString(200, 550, GetColor(0, 0, 255), "%f", position_.y);
-	DrawFormatString(200, 650, GetColor(0, 0, 255), "%f", position_.z);
-
-	DrawFormatString(200, 750, GetColor(255, 255, 255), "%i", parameters_.Get_StateID());
-	SetFontSize(16);
 }
 
 void ActionPlayerActor::onCollide(Actor & other)

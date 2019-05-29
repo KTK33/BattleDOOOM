@@ -4,11 +4,10 @@
 #include "../Collision/BoundingCapsule.h"
 #include "../Animation/AnimationMesh.h"
 
-
-class ActionGameManager : public Actor {
+class TargetCameraManager : public Actor {
 public:
-	ActionGameManager(IWorld* world, std::weak_ptr<Actor> player, std::weak_ptr<Actor> camera);
-	virtual ~ActionGameManager() override {}
+	TargetCameraManager(IWorld* world, std::weak_ptr<Actor> player, std::weak_ptr<Actor> camera);
+	virtual ~TargetCameraManager() override {}
 
 	virtual void update(float deltaTime) override;
 

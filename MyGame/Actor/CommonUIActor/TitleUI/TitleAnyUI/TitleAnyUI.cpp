@@ -31,6 +31,7 @@ void TitleAnyUI::update(float deltaTime)
 
 	NameAngle = max(NameAngle - 0.075f, 0);
 
+	//タイトルネームが描画され終わりボタンを押すまで
 	if (NameSize.x == 1)
 	{
 		if (!StartDecision)
@@ -41,6 +42,7 @@ void TitleAnyUI::update(float deltaTime)
 		}
 	}
 
+	//タイトルネーム白描画終了
 	if (NameBackAlpha == 0)
 	{
 		if (!Sound::GetInstance().IsPlayBGM())
@@ -59,6 +61,7 @@ void TitleAnyUI::update(float deltaTime)
 		}
 	}
 
+	//何かボタンを押された後
 	if (StartDecision)
 	{
 		if (PSAlphaCheck)
@@ -84,6 +87,7 @@ void TitleAnyUI::update(float deltaTime)
 			}
 		}
 		
+		//タイトルネーム終了時
 		if (TitleBackWhiteCheck)
 		{
 			NameBackSize2.x = max(NameBackSize2.x + 0.05f, 2);

@@ -5,7 +5,7 @@
 #include "../Actor/ShootingPlayerMode/ShootingEnemy/EnemyHeadShot/EnemyHeadShot.h"
 #include "NormalEnemyMotionNum.h"
 #include "NormalEnemyStateInc.h"
-#include "../Actor/EnemyCommon/EnemyParameter.h"
+#include "../Game/Define.h"
 
 NormalEnemyActor::NormalEnemyActor(int model, IWorld * world, const Vector3 & position, const Matrix & rotation, const IBodyPtr & body):
 	Actor(world,"NormalEnemy",position,rotation, body),
@@ -32,7 +32,7 @@ void NormalEnemyActor::initialize()
 	mesh_.transform(Getpose());
 
 	parameters_.Set_Position(position_);
-	parameters_.Set_HP(NormalEnemyHP);
+	parameters_.Set_HP(NormalHPVal);
 	parameters_.Set_Motion(NormalEnemyMotionNum::MotionNormalEnemyIdel);
 
 	auto EH = new_actor<EnemyHeadShot>(world_, position_, weak_from_this());

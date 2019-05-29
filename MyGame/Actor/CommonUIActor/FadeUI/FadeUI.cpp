@@ -29,6 +29,10 @@ void FadeUI::update(float deltaTime)
 			{
 				GameDataManager::getInstance().SetTitleCheck(true);
 			}
+			if (m_SceneNum == 2)
+			{
+				world_->SetBackTitleCheck(true);
+			}
 			Sound::GetInstance().StopBGM();
 			Sound::GetInstance().StopSE();
 		}

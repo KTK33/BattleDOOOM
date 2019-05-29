@@ -1,4 +1,5 @@
 #include "HPRecoverItem.h"
+#include "../Game/Define.h"
 
 HPRecoverItem::HPRecoverItem(int model,IWorld * world, const Vector3 & position, const IBodyPtr & body):
 	Actor(world,"HPRecoverItem",position,body),
@@ -15,14 +16,12 @@ void HPRecoverItem::update(float deltaTime)
 void HPRecoverItem::draw() const
 {
 	mesh_.draw();
-	//body_->transform(Getpose())->draw();
 }
 
 void HPRecoverItem::onCollide(Actor & other)
 {
 	const Vector3 hitdir(other.Getposition() - position_);
-	int hppoint = 3;
-	other.receiveMessage(EventMessage::GET_HPRECOVER, (void*)&hppoint);
+	other.receiveMessage(EventMessage::GET_HPRECOVER, (void*)&GetHpPoint);
 }
 
 void HPRecoverItem::receiveMessage(EventMessage message, void * param)

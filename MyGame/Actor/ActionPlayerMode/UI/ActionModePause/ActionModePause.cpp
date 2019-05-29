@@ -1,7 +1,6 @@
 #include "ActionModePause.h"
 #include "../Texture/Sprite.h"
-#include "../Input/GamePad/GamePad.h"
-#include "../Input/Keyboard/Keyboard.h"
+#include "../Input/InputInfoInc.h"
 #include "../Scene/GameData/GameDataManager.h"
 #include "../Actor/ShootingPlayerMode/UIActor/Pause/PauseSystem.h"
 #include "../Sound/Sound.h"
@@ -23,10 +22,10 @@ void ActionModePause::initialize()
 void ActionModePause::update(float deltaTime)
 {
 	//プレイヤーが死んでいるかボスが死んでいたら
-	if (GameDataManager::getInstance().GetPlayerDead() == false && GameDataManager::getInstance().GetDeadBossEnemy() == false) return;
+	if (GameDataManager::getInstance().GetPlayerDead()
+		&& GameDataManager::getInstance().GetDeadBossEnemy()) return;
 
-	if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM8) || 
-		Keyboard::GetInstance().KeyTriggerDown(KEYCODE::T))
+	if(ButtonStart::GetInstance().TriggerDown())
 	{
 		PauseDecision = false;
 
@@ -86,36 +85,35 @@ void ActionModePause::PlayerInput()
 {
 	if (PauseDecision)
 	{
-		//ポーズでのキャンセル
-		if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM1) || 
-			Keyboard::GetInstance().KeyTriggerDown(KEYCODE::LCTRL))
+		//画面２でのキャンセル(戻る
+		if(ButtonA::GetInstance().TriggerDown())
 		{
 			PauseDecision = false;
 		}
 	}
 	else
 	{
-		if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM1) || 
-			Keyboard::GetInstance().KeyTriggerDown(KEYCODE::LCTRL))
+		//画面１での決定
+		if (ButtonB::GetInstance().TriggerDown())
+		{
+			PauseDecision = true;
+			Sound::GetInstance().PlaySE_IsNotPlay(SE_ID::PAUSEKETTEI_SE);
+		}
+
+		//画面１でのポーズ終了
+		if(ButtonA::GetInstance().TriggerDown())
 		{
 			world_->SetPauseCheck(false);
 		}
 
-		if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::UP) || 
-			Keyboard::GetInstance().KeyTriggerDown(KEYCODE::UP))
+		//カーソル上下
+		if(ButtonUp::GetInstance().TriggerDown())
 		{
 			moveCursor(1);
 		}
-		if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::DOWN) || 
-			Keyboard::GetInstance().KeyTriggerDown(KEYCODE::DOWN))
+		if(ButtonDown::GetInstance().TriggerDown())
 		{
 			moveCursor(-1);
-		}
-		if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM2) || 
-			Keyboard::GetInstance().KeyTriggerDown(KEYCODE::SPACE))
-		{
-			PauseDecision = true;
-			Sound::GetInstance().PlaySE_IsNotPlay(SE_ID::PAUSEKETTEI_SE);
 		}
 	}
 }

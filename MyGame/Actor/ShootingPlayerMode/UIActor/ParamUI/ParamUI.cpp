@@ -44,7 +44,7 @@ void ParamUI::draw() const
 	//HP
 	Sprite::GetInstance().Draw(SPRITE_ID::HP_UI, Vector2(0, 0));
 	Sprite::GetInstance().DrawPart(SPRITE_ID::HP_GAUGE, Vector2(169, 22), 0, 0,
-		static_cast<int>(Sprite::GetInstance().GetSize(SPRITE_ID::HP_GAUGE).x / PlayerHP * mHP), static_cast<int>(Sprite::GetInstance().GetSize(SPRITE_ID::HP_GAUGE).y));
+		static_cast<int>(Sprite::GetInstance().GetSize(SPRITE_ID::HP_GAUGE).x / ShootingPlayerHPVal * mHP), static_cast<int>(Sprite::GetInstance().GetSize(SPRITE_ID::HP_GAUGE).y));
 	Sprite::GetInstance().Draw(SPRITE_ID::TEXTFRAME, Vector2(static_cast<float>(WINDOW_WIDTH) - Sprite::GetInstance().GetSize(SPRITE_ID::TEXTFRAME).x, 0));
 
 	//íeêî

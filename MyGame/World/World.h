@@ -53,7 +53,6 @@ public:
 	virtual void SetBackTitleCheck(bool bt) override;
 	virtual bool GetBackTitleCheck() override;
 
-
 private:
 	//
 	ActorGroupManager    actors_;
@@ -65,8 +64,8 @@ private:
 
 	EventMessageListener listener_{ [](EventMessage,void*) {} };
 
-	bool PauseCheck{ false };
-	bool BackTitleCheck{ false };
+	bool mPauseCheck{ false };
+	bool mBackTitleCheck{ false };
 };
 
 #endif // !WORLD_H_

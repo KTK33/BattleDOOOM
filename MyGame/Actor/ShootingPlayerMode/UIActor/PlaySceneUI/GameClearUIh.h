@@ -14,4 +14,5 @@ public:
 
 private:
 	int GameClearBackAlpha;
+	int mAlready;
 };

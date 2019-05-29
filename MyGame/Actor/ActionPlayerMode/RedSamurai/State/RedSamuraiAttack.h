@@ -18,4 +18,5 @@ private:
 	bool mAttackAlready;
 
 	bool mAttckStart;
+	int mAttckType;
 };

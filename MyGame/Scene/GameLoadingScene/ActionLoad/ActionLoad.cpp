@@ -31,7 +31,7 @@ void ActionLoad::update(float deltaTime)
 void ActionLoad::draw() const
 {
 	//ÉçÅ[ÉhâÊñ ÇÃï`âÊ
-	mDL.draw(1, GetASyncLoadNum());
+	mDL.draw(2, GetASyncLoadNum());
 }
 
 void ActionLoad::end(){}
@@ -55,6 +55,13 @@ void ActionLoad::LoadModel()
 
 void ActionLoad::LoadSound()
 {
+	auto& sound = Sound::GetInstance();
+
+	sound.LoadBGM("asset/Sound/BGM/ActionGameBGM.mp3", BGM_ID::ACTION_PLAY_BGM);
+	sound.LoadSE("asset/Sound/SE/Arrow.mp3", SE_ID::ARROW);
+	sound.LoadSE("asset/Sound/SE/ActionPlayerSward.mp3", SE_ID::ACTION_SWARD);
+	sound.LoadSE("asset/Sound/SE/RedSamuraiSward.mp3", SE_ID::RED_SWARD);
+	sound.LoadSE("asset/Sound/SE/ActionStep.mp3", SE_ID::ACTION_STEP);
 }
 
 void ActionLoad::LoadSprite()
@@ -71,4 +78,7 @@ void ActionLoad::LoadSprite()
 	sprite.Load("asset/UI/ActionMode/APlayerHPGauge.png", SPRITE_ID::ACTION_PLAYER_HPGAUGE);
 	sprite.Load("asset/UI/ActionMode/RedSamuraiHPFrame.png", SPRITE_ID::REDSAMURAI_HPFRAME);
 	sprite.Load("asset/UI/ActionMode/RedSamuraiHPGauge.png", SPRITE_ID::REDSAMURAI_HPGAUGE);
+
+	sprite.Load("asset/UI/ActionMode/ActionPlayerDead.png", SPRITE_ID::ACTIONPLAYERDEAD);
+	sprite.Load("asset/UI/ActionMode/RedSamuraiDead.png", SPRITE_ID::REDSAMURAIDEAD);
 }

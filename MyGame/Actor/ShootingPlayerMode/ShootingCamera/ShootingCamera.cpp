@@ -63,7 +63,7 @@ void ShootingCamera::CameraSet(float deltaTime)
 	mtarget_.z += mGetplayer_->Getrotation().Right().z * mAimPosMove.x;
 
 	//ポーズ中ではなく、アイテムボックスを開いていないとき
-	if (world_->GetPauseCheck() == false && GameDataManager::getInstance().GetItemBoxOpen() == false)
+	if (world_->GetPauseCheck() == false && ShootingPlayerParam::getInstance().Get_ItemBoxOpen() == false)
 	{
 		//エイム中の操作
 		mAimPosMove += RightStick::GetInstance().GetAngle() * (GameDataManager::getInstance().GetAIMSPD() * 0.2f);

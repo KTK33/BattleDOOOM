@@ -1,15 +1,13 @@
 #include "ShootingPlayerActor.h"
-
+#include "../Game/Define.h"
 #include "ShootingActorStateInc.h"
 #include "../Actor/ShootingPlayerMode/ShootingPlayer/ShootingPlayerMotionNum.h"
 #include "ShootingPlayerParam/ShootingPlayerParam.h"
-
 #include "../Input/InputInfoInc.h"
 #include "../Scene/GameData/GameDataManager.h"
 #include "../Texture/Sprite.h"
 #include "../Sound/Sound.h"	
 #include "../Actor/ShootingPlayerMode/ShootingPlayer/ShootingPlayerItemBox/ShootingPlayerItemBox.h"
-
 
 ShootingPlayerActor::ShootingPlayerActor(int model, int weapon, IWorld * world, const Vector3 & position, std::weak_ptr<Actor> ui, const IBodyPtr & body):
 	Actor(world,"Player",position,body),
@@ -21,7 +19,7 @@ ShootingPlayerActor::ShootingPlayerActor(int model, int weapon, IWorld * world, 
 	mRecoverItemCount{ 1 },
 	mAttackItemCount{ 1 },
 	mAttackUpCheck{ false },
-	mAttackUpTime{ 600 }
+	mAttackUpTime{ AttackUpTime }
 {
 	mcurrentStateID = ActorStateID::ShootingPlayerIdle;
 	shootingplayerState_[ActorStateID::ShootingPlayerIdle].add(add_state<ShootingPlayerIdle>(world, parameters_));
@@ -47,7 +45,7 @@ void ShootingPlayerActor::initialize()
 	mesh_.transform(Getpose());
 
 	parameters_.Set_Position(position_);
-	parameters_.Set_HP(PlayerHP);
+	parameters_.Set_HP(ShootingPlayerHPVal);
 	parameters_.Set_StateID(mcurrentStateID);
 	parameters_.Set_PreveStateID(mcurrentStateID);
 	
@@ -60,6 +58,16 @@ void ShootingPlayerActor::initialize()
 
 void ShootingPlayerActor::update(float deltaTime)
 {
+
+	//前フレームのポジションとして保存する
+	prevPosition_ = position_;
+
+	//壁床とのの当たり判定
+	collision();
+
+	//ポーズ中は返す
+	if (world_->GetPauseCheck()) return;
+
 	//ステイトクラスの情報を更新する
 	shootingplayerState_[mcurrentStateID].update(position_, rotation_, mesh_);
 
@@ -72,15 +80,6 @@ void ShootingPlayerActor::update(float deltaTime)
 		parameters_.Set_StateID(mcurrentStateID);
 		parameters_.Set_Statetimer(0.0f);
 	}
-
-	//前フレームのポジションとして保存する
-	prevPosition_ = position_;
-
-	//壁床とのの当たり判定
-	collision();
-
-	//ポーズ中は返す
-	if (world_->GetPauseCheck() == true) return;
 
 	//死亡状態
 	if (parameters_.Get_IsDead() == true)
@@ -117,13 +116,13 @@ void ShootingPlayerActor::update(float deltaTime)
 		}
 	}
 
-	//攻撃アップアイテムを使用したら10秒間攻撃力が２倍になる
+	//攻撃アップアイテムを使用したら指定時間、攻撃力が２倍になる
 	if (mAttackUpCheck) {
 		mAttackParam = 2;
 		mAttackUpTime = max(mAttackUpTime - 1, 0);
 		if (mAttackUpTime == 0)
 		{
-			mAttackUpTime = 600; //10秒間
+			mAttackUpTime = AttackUpTime;
 			mAttackUpCheck = false;
 		}
 		world_->send_message(EventMessage::DAMAGEPARAM, reinterpret_cast<void*>(&mAttackParam));
@@ -138,15 +137,6 @@ void ShootingPlayerActor::draw() const
 	mesh_.draw();
 	mDW.draw(mweapon_, mweaponPos, mesh_);
 	mParamUI.draw();
-
-	SetFontSize(32);
-	DrawFormatString(200, 450, GetColor(0, 0, 255), "%f", position_.x);
-	DrawFormatString(200, 550, GetColor(0, 0, 255), "%f", position_.y);
-	DrawFormatString(200, 650, GetColor(0, 0, 255), "%f", position_.z);
-
-	DrawFormatString(200, 750, GetColor(255, 255, 255), "%i", parameters_.Get_StateID());
-	SetFontSize(16);
-
 }
 
 void ShootingPlayerActor::onCollide(Actor & other)
@@ -272,8 +262,6 @@ void ShootingPlayerActor::input_information()
 		parameters_.Set_Motion(ShootingPlayerMotionNum::MotionPlayerIdleAiming);
 	}
 
-
-	//ジョイパッドが刺さっているか
 	Vector2 input;
 	float yaw_speed = 0.0f;
 

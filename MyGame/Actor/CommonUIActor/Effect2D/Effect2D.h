@@ -10,8 +10,6 @@ public:
 
 	virtual void update(float deltaTime) override;
 
-	virtual void receiveMessage(EventMessage message, void * param) override;
-
 	virtual void draw() const override;
 
 private:

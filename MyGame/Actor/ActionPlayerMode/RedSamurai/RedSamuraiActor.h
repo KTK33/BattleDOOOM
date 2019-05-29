@@ -76,4 +76,6 @@ private:
 
 	bool mAttackCheck;
 	int mAttackTime;
+
+	bool mDeadArelady;
 };

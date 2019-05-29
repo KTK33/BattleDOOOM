@@ -5,8 +5,7 @@ EnemyAttackCollison::EnemyAttackCollison(IWorld * world, const Vector3 & positio
 	mdeadCheck{false},
 	mdeadTime{0},
 	mattackparam{0}
-{
-}
+{}
 
 void EnemyAttackCollison::SetParam(bool deadCheck, int deadTime, int attackParam)
 {

@@ -1,16 +1,17 @@
-#include "ActionGameManager.h"
+#include "TargetCameraManager.h"
 #include "../Input/GamePad/GamePad.h"
 #include "../Input/Keyboard/Keyboard.h"
+#include "../Input/InputInfoInc.h"
 
-ActionGameManager::ActionGameManager(IWorld * world, std::weak_ptr<Actor> player, std::weak_ptr<Actor> camera):
-	Actor(world, "RedSamurai", Vector3::Zero),
+TargetCameraManager::TargetCameraManager(IWorld * world, std::weak_ptr<Actor> player, std::weak_ptr<Actor> camera):
+	Actor(world, "TargetCameraManager", Vector3::Zero),
 	mPlayer{player},
 	mCamera{camera},
 	mTargetCamera{false}
 {
 }
 
-void ActionGameManager::update(float deltaTime)
+void TargetCameraManager::update(float deltaTime)
 {
 	//“G‚ÌŒŸõ
 	auto enemy_ = world_->find_actor(ActorGroup::Enemy, "RedSamurai").get();
@@ -19,7 +20,7 @@ void ActionGameManager::update(float deltaTime)
 	//ƒJƒƒ‰“à‚É“G‚ª‰f‚Á‚Ä‚¢‚é‚©‚Ç‚¤‚©
 	if (!CheckCameraViewClip_Dir(enemy_->Getposition()))
 	{
-		if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM10) || Keyboard::GetInstance().KeyTriggerDown(KEYCODE::LCTRL))
+		if(ButtonR3::GetInstance().TriggerDown())
 		{
 			if (world_->GetPauseCheck() == true) return;//ƒ|[ƒY‚Í–³Œø
 			mTargetCamera = !mTargetCamera;

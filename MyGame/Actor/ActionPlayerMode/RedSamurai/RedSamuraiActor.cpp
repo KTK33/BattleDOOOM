@@ -12,6 +12,8 @@
 #include "State/RedSamuraiAttack.h"
 #include "State/RedSamuraiDead.h"
 
+#include "../UI/SceneUI/RedSamuraiDeadUI.h"
+
 RedSamuraiActor::RedSamuraiActor(int model, int sward, int arrow, int quiver, IWorld * world, const Vector3 & position, Matrix & rotation,const IBodyPtr & body):
 Actor(world, "RedSamurai", position, body),
 	player_{ nullptr },
@@ -23,7 +25,8 @@ Actor(world, "RedSamurai", position, body),
 	mArrowPos{ 76 },
 	mQuiverPos{ 82 },
 	mAttackCheck{ false },
-	mAttackTime{ false }
+	mAttackTime{ false },
+	mDeadArelady{false}
 {
 	rotation_ = rotation;
 
@@ -41,7 +44,7 @@ void RedSamuraiActor::initialize()
 	mesh_.transform(Getpose());
 	velocity_ = Vector3::Zero;
 
-	parameters_.Set_HP(PlayerHP);
+	parameters_.Set_HP(RedSamuraiHPVal);
 }
 
 void RedSamuraiActor::update(float deltaTime)
@@ -64,10 +67,14 @@ void RedSamuraiActor::update(float deltaTime)
 	//ポーズ中は返す
 	if (world_->GetPauseCheck() == true) return;
 
-	//死んでいる状態
-	if (parameters_.Get_IsDead() == true)
+	//死亡状態
+	if (parameters_.Get_IsDead())
 	{
-		GameDataManager::getInstance().SetDeadBossEnemy(true);
+		//死亡時の描画アクター生成
+		if (!mDeadArelady) {
+			world_->add_actor(ActorGroup::UI, new_actor<RedSamuraiDeadUI>(world_));
+			mDeadArelady = true;
+		}
 		return;
 	}
 
@@ -101,16 +108,6 @@ void RedSamuraiActor::draw() const
 	mDW.draw(msword_, mSwordPos, mesh_);
 	mDW.draw(marrow_, mArrowPos, mesh_);
 	mDW.draw(mquiver_, mQuiverPos, mesh_);
-
-
-	SetFontSize(32);
-	DrawFormatString(1400, 450, GetColor(255, 0, 0), "%f", position_.x);
-	DrawFormatString(1400, 550, GetColor(255, 0, 0), "%f", position_.y);
-	DrawFormatString(1400, 650, GetColor(255, 0, 0), "%f", position_.z);
-	DrawFormatString(1400, 700, GetColor(255, 0, 0), "%i", mSwordPos);
-	DrawFormatString(1400, 750, GetColor(255, 0, 0), "%f", Vector3::Distance(position_, player_->Getposition()));
-	SetFontSize(16);
-
 }
 
 void RedSamuraiActor::onCollide(Actor & other)

@@ -8,6 +8,7 @@ void ShootingPlayerParam::initialize()
 	mAttackParam = 1;
 	mAimPos = Vector3::Zero;
 	mAimCheck = false;
+	mItemBox = false;
 }
 
 int ShootingPlayerParam::Get_RemainGun()
@@ -63,4 +64,14 @@ bool ShootingPlayerParam::Get_AimCheck()
 void ShootingPlayerParam::Set_AimCheck(bool check)
 {
 	mAimCheck = check;
+}
+
+void ShootingPlayerParam::Set_ItemBoXOpen(bool ibx)
+{
+	mItemBox = ibx;
+}
+
+bool ShootingPlayerParam::Get_ItemBoxOpen()
+{
+	return mItemBox;
 }

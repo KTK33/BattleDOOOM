@@ -1,6 +1,7 @@
 #include "ActionPlayerAvoidance.h"
 #include "../Actor/ActionPlayerMode/ActionPlayer/ActionPlayerMotionNum.h"
 #include "../Input/InputInfoInc.h"
+#include "../Sound/Sound.h"
 
 ActionPlayerAvoidance::ActionPlayerAvoidance(IWorld * world, ActorParameters & parameter)
 {
@@ -14,6 +15,8 @@ void ActionPlayerAvoidance::Stateinitialize()
 	mNextStateID = ActorStateID::ActionPlayerAvoidance;
 
 	parameters_->Set_Motion(ActionPlayerMotion::MotionPlayerAvoidance);
+
+	Sound::GetInstance().PlaySE(SE_ID::ACTION_STEP);
 }
 
 void ActionPlayerAvoidance::StateUpdate(Vector3 & lposition, Matrix & lrotation, AnimatedMesh & lmesh)

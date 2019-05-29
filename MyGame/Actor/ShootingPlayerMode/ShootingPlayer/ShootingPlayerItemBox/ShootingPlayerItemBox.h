@@ -14,8 +14,6 @@ public:
 
 	virtual void draw() const override;
 
-	virtual void receiveMessage(EventMessage message, void* param);
-
 	void PlayerInput();
 
 private:

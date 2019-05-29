@@ -1,8 +1,8 @@
 #include "ShootingPlayerItemBox.h"
+#include "../Game/Define.h"
 #include "../Texture/Sprite.h"
-#include "../Input/GamePad/GamePad.h"
-#include "../Input/Keyboard/Keyboard.h"
-#include "../Scene/GameData/GameDataManager.h"
+#include "../Input/InputInfoInc.h"
+#include "../Actor/ShootingPlayerMode/ShootingPlayer/ShootingPlayerActor/ShootingPlayerParam/ShootingPlayerParam.h"
 
 ShootingPlayerItemBox::ShootingPlayerItemBox(IWorld * world,int HPItem,int AttackItem, std::weak_ptr<Actor> player):
 	Actor(world,"PlayerBox",Vector3::Zero),
@@ -19,13 +19,14 @@ void ShootingPlayerItemBox::initialize()
 	alphaTimer = 255;
 	alphaCheck = false;
 
-	GameDataManager::getInstance().SetItemBoXOpen(true);
+	ShootingPlayerParam::getInstance().Set_ItemBoXOpen(true);
 }
 
 void ShootingPlayerItemBox::update(float deltaTime)
 {
 	PlayerInput();
 
+	//選択カーソルの点滅
 	if (alphaCheck)
 	{
 		alphaTimer = min(alphaTimer + 5, 255);
@@ -37,9 +38,10 @@ void ShootingPlayerItemBox::update(float deltaTime)
 		if (alphaTimer == 0) alphaCheck = true;
 	}
 
-	if(GetJoypadPOVState(DX_INPUT_PAD1, 0) == -1 && Keyboard::GetInstance().KeyStateUp(KEYCODE::F))
+	//十字キー右を離したら閉じる
+	if(!DPad::GetInstance().GetRight())
 	{
-		GameDataManager::getInstance().SetItemBoXOpen(false);
+		ShootingPlayerParam::getInstance().Set_ItemBoXOpen(false);
 		die();
 	}
 }
@@ -59,37 +61,32 @@ void ShootingPlayerItemBox::draw() const
 	Sprite::GetInstance().DrawPart(SPRITE_ID::NUMBER, Vector2(1830.f, 570.f), static_cast<int>(NumSize.x / 10.0f) * countAttackUPItem, 0, static_cast<int>(NumSize.x / 10.0f), static_cast<int>(NumSize.y));
 }
 
-
-void ShootingPlayerItemBox::receiveMessage(EventMessage message, void * param)
-{
-}
-
 void ShootingPlayerItemBox::PlayerInput()
 {
-	if (GamePad::GetInstance().RightStick().y < -0.5f || Keyboard::GetInstance().KeyTriggerDown(KEYCODE::DOWN))
+	//右スティックで選択する
+	if(RightStick::GetInstance().GetAngle().y < -0.5f)
 	{
 		moveCursor2(1);
 		alphaTimer = 255;
 		alphaCheck = false;
 	}
 
-	if (GamePad::GetInstance().RightStick().y > 0.5f || Keyboard::GetInstance().KeyTriggerDown(KEYCODE::UP))
+	if (RightStick::GetInstance().GetAngle().y > 0.5f)
 	{
 		moveCursor2(-1);
 		alphaTimer = 255;
 		alphaCheck = false;
 	}
 
-	if (GamePad::GetInstance().ButtonTriggerDown(PADBUTTON::NUM2) || Keyboard::GetInstance().KeyTriggerDown(KEYCODE::SPACE))
+	if(ButtonB::GetInstance().TriggerDown())
 	{
-		int HPVal = 3;
 		bool Attackup = true;
 		switch (cursorPos_2)
 		{
 		case 0:
 			if (countHPrecoverItem > 0)
 			{
-				m_player.lock()->receiveMessage(EventMessage::HP_RECOVER, reinterpret_cast<void*>(&HPVal));
+				m_player.lock()->receiveMessage(EventMessage::HP_RECOVER, (void*)&GetHpPoint);
 				countHPrecoverItem = countHPrecoverItem - 1;
 				Sound::GetInstance().PlaySE(SE_ID::ITEMUSE_SE);
 			}

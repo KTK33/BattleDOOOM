@@ -68,4 +68,6 @@ private:
 
 	Vector3 m_ActionCameraForward;
 	Vector3 m_ActionCameraRight;
+
+	bool mDeadArelady;
 };

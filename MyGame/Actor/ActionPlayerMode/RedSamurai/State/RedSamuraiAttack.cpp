@@ -4,6 +4,7 @@
 #include "../Actor/ActionPlayerMode/RedSamurai/RedSamuraiMotionNum.h"
 #include "../Actor/ActionPlayerMode/RedSamurai/Arrow/ArrowAttack.h"
 #include "../Actor/EnemyAttackCollison/EnemyAttackCollison.h"
+#include "../Sound/Sound.h"
 
 RedSamuraiAttack::RedSamuraiAttack(IWorld * world, ActorParameters & parameter)
 {
@@ -18,6 +19,7 @@ void RedSamuraiAttack::Stateinitialize()
 
 	mAttackAlready = false;
 	mAttckStart = false;
+	mAttckType = 0;
 }
 
 void RedSamuraiAttack::StateUpdate(Vector3 & lposition, Matrix & lrotation, AnimatedMesh & lmesh)
@@ -32,9 +34,16 @@ void RedSamuraiAttack::StateUpdate(Vector3 & lposition, Matrix & lrotation, Anim
 	//モーションの時間によって当たり判定を生成
 	if (mAttckStart)
 	{
-		if (parameters_->Get_Statetimer() == 20.0f)AttackCollision(lposition,lrotation,15, 1, Vector3(0.0f, 13.0f, 0.0f), 1.5f, 2.5f);
-		if (parameters_->Get_Statetimer() == 40.0f)AttackCollision(lposition, lrotation, 15, 2, Vector3(0.0f, 13.0f, 0.0f), 1.5f, 2.5f);
-		if (parameters_->Get_Statetimer() == 60.0f)AttackCollision(lposition, lrotation, 15, 2, Vector3(0.0f, 13.0f, 0.0f), 1.5f, 2.5f);
+		if (mAttckType < 7) {
+			parameters_->Set_Motion(RedSamuraiMotionNum::MotionRedSamuraiAttack1);
+			if (parameters_->Get_Statetimer() == 20.0f)AttackCollision(lposition, lrotation, 15, 1, Vector3(0.0f, 13.0f, 0.0f), 1.5f, 2.5f);
+			if (parameters_->Get_Statetimer() == 40.0f)AttackCollision(lposition, lrotation, 15, 2, Vector3(0.0f, 13.0f, 0.0f), 1.5f, 2.5f);
+			if (parameters_->Get_Statetimer() == 60.0f)AttackCollision(lposition, lrotation, 15, 2, Vector3(0.0f, 13.0f, 0.0f), 1.5f, 2.5f);
+		}
+		else {
+			parameters_->Set_Motion(RedSamuraiMotionNum::MotionRedSamuraiAttack2);
+			if (parameters_->Get_Statetimer() == 60.0f)AttackCollision(lposition, lrotation, 30, 5, Vector3(0.0f, 13.0f, 0.0f), 2.0f, 2.5f);
+		}
 	}
 
 	//モーションの時間が終わったら移動状態へ
@@ -74,7 +83,8 @@ void RedSamuraiAttack::AttackBehavior(Vector3 lposition, Matrix lrotation)
 	else
 	{
 		mAttckStart = true;
-		parameters_->Set_Motion(RedSamuraiMotionNum::MotionRedSamuraiAttack1);
+		//確率で攻撃変化
+		mAttckType = Random::rand(0, 10);
 		parameters_->Set_Statetimer(0.0f);
 	}
 }
@@ -86,5 +96,7 @@ void RedSamuraiAttack::AttackCollision(Vector3 lposition, Matrix lrotation, int 
 		std::make_shared<BoundingCapsule>(spot, Matrix::Identity, len, rad));
 	world_->add_actor(ActorGroup::EnemyBullet, AttackPunch);
 	AttackPunch->SetParam(false, deadTime, attackParam);
+
+	Sound::GetInstance().PlaySE(SE_ID::RED_SWARD);
 
 }

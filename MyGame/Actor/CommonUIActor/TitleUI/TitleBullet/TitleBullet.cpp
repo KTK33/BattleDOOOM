@@ -8,15 +8,15 @@ TitleBullet::TitleBullet(int model, IWorld * world, const Vector3 & position,Vec
 	mesh_{model},
 	MovePos{move},
 	Timer{0}
-{
-}
+{}
 
 void TitleBullet::update(float deltaTime)
 {
 	mesh_.update(deltaTime);
 	mesh_.transform(Getpose());
-	Timer++;
 
+
+	Timer++;
 	if (Timer <= 150)
 	{
 		position_ += MovePos / 10;

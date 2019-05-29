@@ -23,8 +23,8 @@ void World::initialize()
 	actors_.add(ActorGroup::PauseUI);
 	actors_.add(ActorGroup::ItemBoxUI);
 
-	PauseCheck = false;
-	BackTitleCheck = false;
+	mPauseCheck = false;
+	mBackTitleCheck = false;
 }
 
 void World::update(float delta_time)
@@ -112,20 +112,20 @@ void World::send_message(EventMessage message, void * param)
 
 void World::SetPauseCheck(bool pc)
 {
-	PauseCheck = pc;
+	mPauseCheck = pc;
 }
 
 bool World::GetPauseCheck()
 {
-	return PauseCheck;
+	return mPauseCheck;
 }
 
 void World::SetBackTitleCheck(bool bt)
 {
-	BackTitleCheck = bt;
+	mBackTitleCheck = bt;
 }
 
 bool World::GetBackTitleCheck()
 {
-	return BackTitleCheck;
+	return mBackTitleCheck;
 }

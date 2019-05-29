@@ -15,6 +15,8 @@ void ShootingPlayerDead::Stateinitialize()
 	parameters_->Set_Motion(ShootingPlayerMotionNum::MotionPlayerDead);
 
 	GameDataManager::getInstance().SetPlayerDead(true);
+
+	ShootingPlayerParam::getInstance().Set_AimCheck(false);
 }
 
 void ShootingPlayerDead::StateUpdate(Vector3 & lposition, Matrix & lrotation, AnimatedMesh & lmesh)

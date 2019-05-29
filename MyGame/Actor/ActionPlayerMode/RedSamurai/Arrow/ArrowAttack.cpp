@@ -1,4 +1,5 @@
 #include "ArrowAttack.h"
+#include "../Sound/Sound.h"
 
 ArrowAttack::ArrowAttack(int model, IWorld * world, const Vector3 & position, const IBodyPtr & body):
 	Actor(world,"ArrowAttack",position,body),
@@ -17,6 +18,8 @@ ArrowAttack::ArrowAttack(int model, IWorld * world, const Vector3 & position, co
 
 	//ƒvƒŒƒCƒ„\‚ÌŒü‚«‚É–î‚ğŒü‚©‚¹‚é
 	rotation_ = Matrix::Invert(Matrix::CreateLookAt(pos, pos + plyaerVector, Vector3::Up) * Matrix::CreateRotationY(180));
+
+	Sound::GetInstance().PlaySE(SE_ID::ARROW);
 }
 
 

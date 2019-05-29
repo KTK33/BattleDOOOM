@@ -14,6 +14,8 @@ void ShootingPlayerDamage::Stateinitialize()
 	parameters_->Set_Motion(ShootingPlayerMotionNum::MotionPlayerDamage);
 
 	parameters_->Set_Invicibly(true);
+
+	ShootingPlayerParam::getInstance().Set_AimCheck(false);
 }
 
 void ShootingPlayerDamage::StateUpdate(Vector3 & lposition, Matrix & lrotation, AnimatedMesh & lmesh)
