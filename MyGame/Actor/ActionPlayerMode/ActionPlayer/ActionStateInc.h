@@ -1,8 +1,8 @@
 #pragma once
 
-#include "State/ActionPlayerIdle.h"
-#include "State/ActionPlayerAttack.h"
-#include "State/ActionPlayerAvoidance.h"
-#include "State/ActionPlayerAvoidanceAttack.h"
-#include "State/ActionPlayerDead.h"
+#include "State/ActionPlayerIdle/ActionPlayerIdle.h"
+#include "State/ActionPlayerAttack/ActionPlayerAttack.h"
+#include "State/ActionPlayerAvoidance/ActionPlayerAvoidance.h"
+#include "State/ActionPlayerAvoidanceAttack/ActionPlayerAvoidanceAttack.h"
+#include "State/ActionPlayerDead/ActionPlayerDead.h"
 #include "ActionPlayerMotionNum.h"

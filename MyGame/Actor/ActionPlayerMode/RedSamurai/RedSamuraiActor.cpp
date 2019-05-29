@@ -8,10 +8,9 @@
 #include "Arrow/ArrowAttack.h"
 #include "../Actor/EnemyAttackCollison/EnemyAttackCollison.h"
 
-#include "State/RedSamuraiIdle.h"
-#include "State/RedSamuraiAttack.h"
-#include "State/RedSamuraiDead.h"
+#include "RedSamuraiStateInc.h"
 
+#include "RedSamuraiParam/RedSamuraiParam.h"
 #include "../UI/SceneUI/RedSamuraiDeadUI.h"
 
 RedSamuraiActor::RedSamuraiActor(int model, int sward, int arrow, int quiver, IWorld * world, const Vector3 & position, Matrix & rotation,const IBodyPtr & body):
@@ -34,6 +33,7 @@ Actor(world, "RedSamurai", position, body),
 	redsamuraiState_[ActorStateID::RedSamuraiIdel].add(add_state<RedSamuraiIdle>(world, parameters_));
 	redsamuraiState_[ActorStateID::RedSamuraiAttack].add(add_state<RedSamuraiAttack>(world, parameters_));
 	redsamuraiState_[ActorStateID::RedSamuraiDead].add(add_state<RedSamuraiDead>(world, parameters_));
+	redsamuraiState_[ActorStateID::RedSamuraiPlayerDead].add(add_state<RedSamuraiPlayerDead>(world, parameters_));
 	redsamuraiState_[mcurrentStateID].initialize();
 
 	initialize();
@@ -45,8 +45,11 @@ void RedSamuraiActor::initialize()
 	velocity_ = Vector3::Zero;
 
 	parameters_.Set_HP(RedSamuraiHPVal);
+	RedSamuraiParam::getInstance().SetSwardPosNum(38);
+	RedSamuraiParam::getInstance().initialize();
 }
 
+#include "../Input/Keyboard/Keyboard.h"
 void RedSamuraiActor::update(float deltaTime)
 {
 	//ステイトクラスの情報を更新する
@@ -64,8 +67,8 @@ void RedSamuraiActor::update(float deltaTime)
 	//壁床とのの当たり判定
 	collision();
 
-	//ポーズ中は返す
-	if (world_->GetPauseCheck() == true) return;
+	//ポーズ中と赤侍止め中は返す
+	if (world_->GetPauseCheck() || RedSamuraiParam::getInstance().GetRedSamuraiStop()) return;
 
 	//死亡状態
 	if (parameters_.Get_IsDead())
@@ -105,7 +108,7 @@ void RedSamuraiActor::draw() const
 {
 	mesh_.draw();
 	mHP.draw(parameters_.Get_HP());
-	mDW.draw(msword_, mSwordPos, mesh_);
+	mDW.draw(msword_, RedSamuraiParam::getInstance().GetSwardPosNum(), mesh_);
 	mDW.draw(marrow_, mArrowPos, mesh_);
 	mDW.draw(mquiver_, mQuiverPos, mesh_);
 }
@@ -128,6 +131,12 @@ void RedSamuraiActor::receiveMessage(EventMessage message, void * param)
 	if (message == EventMessage::HIT_PLAYER)
 	{
 		velocity_ = mAP.Hit(*static_cast<Vector3*>(param));
+	}
+
+	//プレイヤーのステイトを取得
+	if (message == EventMessage::ACTIONPLAYER_STATE)
+	{
+		RedSamuraiParam::getInstance().SetPlayerState(*static_cast<ActorStateID*>(param));
 	}
 }
 

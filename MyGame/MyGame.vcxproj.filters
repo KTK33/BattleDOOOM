@@ -156,34 +156,10 @@
     <ClCompile Include="Actor\ActionPlayerMode\ActionCamera\ActionCamera.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Actor\ActionPlayerMode\ActionPlayer\State\ActionPlayerAttack.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Actor\ActionPlayerMode\ActionPlayer\State\ActionPlayerAvoidance.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Actor\ActionPlayerMode\ActionPlayer\State\ActionPlayerAvoidanceAttack.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Actor\ActionPlayerMode\ActionPlayer\State\ActionPlayerDead.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Actor\ActionPlayerMode\ActionPlayer\State\ActionPlayerIdle.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Actor\ActionPlayerMode\ActionPlayer\ActionPlayerActor.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Actor\ActionPlayerMode\RedSamurai\Arrow\ArrowAttack.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Actor\ActionPlayerMode\RedSamurai\State\RedSamuraiAttack.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Actor\ActionPlayerMode\RedSamurai\State\RedSamuraiDead.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Actor\ActionPlayerMode\RedSamurai\State\RedSamuraiIdle.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Actor\ActionPlayerMode\RedSamurai\RedSamuraiActor.cpp">
@@ -477,6 +453,36 @@
     <ClCompile Include="Scene\ShootingPlayScene\ShootingModeManager\ShootingModeManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="Actor\ActionPlayerMode\RedSamurai\RedSamuraiParam\RedSamuraiParam.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\ActionPlayerMode\RedSamurai\State\RedSamuraiAttack\RedSamuraiAttack.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\ActionPlayerMode\RedSamurai\State\RedSamuraiDead\RedSamuraiDead.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\ActionPlayerMode\RedSamurai\State\RedSamuraiIdle\RedSamuraiIdle.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\ActionPlayerMode\ActionPlayer\State\ActionPlayerAttack\ActionPlayerAttack.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\ActionPlayerMode\ActionPlayer\State\ActionPlayerAvoidance\ActionPlayerAvoidance.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\ActionPlayerMode\ActionPlayer\State\ActionPlayerAvoidanceAttack\ActionPlayerAvoidanceAttack.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\ActionPlayerMode\ActionPlayer\State\ActionPlayerDead\ActionPlayerDead.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\ActionPlayerMode\ActionPlayer\State\ActionPlayerIdle\ActionPlayerIdle.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\ActionPlayerMode\RedSamurai\State\RedSamuraiPlayerDead\RedSamuraiPlayerDead.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor\TestEnemy.h">
@@ -680,21 +686,6 @@
     <ClInclude Include="Actor\ActionPlayerMode\ActionCamera\ActionCamera.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Actor\ActionPlayerMode\ActionPlayer\State\ActionPlayerAttack.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Actor\ActionPlayerMode\ActionPlayer\State\ActionPlayerAvoidance.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Actor\ActionPlayerMode\ActionPlayer\State\ActionPlayerAvoidanceAttack.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Actor\ActionPlayerMode\ActionPlayer\State\ActionPlayerDead.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Actor\ActionPlayerMode\ActionPlayer\State\ActionPlayerIdle.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Actor\ActionPlayerMode\ActionPlayer\ActionPlayerActor.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -702,15 +693,6 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Actor\ActionPlayerMode\RedSamurai\Arrow\ArrowAttack.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Actor\ActionPlayerMode\RedSamurai\State\RedSamuraiAttack.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Actor\ActionPlayerMode\RedSamurai\State\RedSamuraiDead.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Actor\ActionPlayerMode\RedSamurai\State\RedSamuraiIdle.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Actor\ActionPlayerMode\RedSamurai\RedSamuraiActor.h">
@@ -1065,6 +1047,39 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Scene\ShootingPlayScene\ShootingModeManager\ShootingModeManager.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ActionPlayerMode\RedSamurai\RedSamuraiParam\RedSamuraiParam.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ActionPlayerMode\RedSamurai\State\RedSamuraiAttack\RedSamuraiAttack.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ActionPlayerMode\RedSamurai\State\RedSamuraiDead\RedSamuraiDead.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ActionPlayerMode\RedSamurai\State\RedSamuraiIdle\RedSamuraiIdle.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ActionPlayerMode\RedSamurai\RedSamuraiStateInc.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ActionPlayerMode\ActionPlayer\State\ActionPlayerAttack\ActionPlayerAttack.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ActionPlayerMode\ActionPlayer\State\ActionPlayerAvoidance\ActionPlayerAvoidance.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ActionPlayerMode\ActionPlayer\State\ActionPlayerAvoidanceAttack\ActionPlayerAvoidanceAttack.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ActionPlayerMode\ActionPlayer\State\ActionPlayerDead\ActionPlayerDead.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ActionPlayerMode\ActionPlayer\State\ActionPlayerIdle\ActionPlayerIdle.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ActionPlayerMode\RedSamurai\State\RedSamuraiPlayerDead\RedSamuraiPlayerDead.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

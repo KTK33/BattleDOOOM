@@ -43,6 +43,8 @@ void ActionPlayerActor::update(float deltaTime)
 	//•Ç°‚Æ‚Ì‚Ì“–‚½‚è”»’è
 	collision();
 
+	world_->send_message(EventMessage::ACTIONPLAYER_STATE, (ActorStateID*)&mcurrentStateID);
+
 	//ƒ|[ƒY’†‚Í•Ô‚·
 	if (world_->GetPauseCheck()) return;
 

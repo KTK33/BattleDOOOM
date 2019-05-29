@@ -2,7 +2,7 @@
 #define STATIC_MESH_H_
 
 #include <string>
-#include "../Math/Matrix.h"
+#include "../Math/MathH.h"
 #include "../Model/ModelAsset.h"
 
 // スタティックメッシュクラス

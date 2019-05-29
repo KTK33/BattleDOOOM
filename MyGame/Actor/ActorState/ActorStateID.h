@@ -50,4 +50,5 @@ enum class ActorStateID
 	RedSamuraiAttack,
 	RedSamuraiAttackArrow,
 	RedSamuraiDead,
+	RedSamuraiPlayerDead,
 };

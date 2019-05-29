@@ -48,7 +48,8 @@ enum class EventMessage
 	RIGHT_WEAPON,
 	LEFT_WEAPON,
 	TARGET_CAMERA,
-	SAMURAI_HP
+	SAMURAI_HP,
+	ACTIONPLAYER_STATE,
 	
 };
 //アクタークラス

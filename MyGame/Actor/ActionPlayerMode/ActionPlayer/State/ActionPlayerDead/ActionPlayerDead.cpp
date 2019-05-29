@@ -1,5 +1,5 @@
 #include "ActionPlayerDead.h"
-#include "../ActionPlayerMotionNum.h"
+#include "../Actor/ActionPlayerMode/ActionPlayer/ActionPlayerMotionNum.h"
 
 ActionPlayerDead::ActionPlayerDead(IWorld * world, ActorParameters & parameter)
 {
