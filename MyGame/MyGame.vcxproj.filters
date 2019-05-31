@@ -483,6 +483,15 @@
     <ClCompile Include="Actor\ActionPlayerMode\RedSamurai\State\RedSamuraiPlayerDead\RedSamuraiPlayerDead.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="Actor\ActionPlayerMode\RedSamurai\State\RedSamuraiPlayerDeadAftor\RedSamuraiPlayerDeadAftor.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\ActionPlayerMode\RedSamurai\State\RedSamuraiFirstState\RedSamuraiFirstState.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\ActionPlayerMode\UI\Text\RedSamuraiText.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor\TestEnemy.h">
@@ -1080,6 +1089,15 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Actor\ActionPlayerMode\RedSamurai\State\RedSamuraiPlayerDead\RedSamuraiPlayerDead.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ActionPlayerMode\RedSamurai\State\RedSamuraiPlayerDeadAftor\RedSamuraiPlayerDeadAftor.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ActionPlayerMode\RedSamurai\State\RedSamuraiFirstState\RedSamuraiFirstState.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ActionPlayerMode\UI\Text\RedSamuraiText.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

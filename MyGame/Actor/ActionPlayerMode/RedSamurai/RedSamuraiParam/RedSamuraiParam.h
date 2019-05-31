@@ -17,6 +17,10 @@ public:
 	void SetSwardPosNum(int num);
 	int GetSwardPosNum();
 
+	//武器のモデル番号(刀)
+	void SetSwardModelNum(int num);
+	int GetSwardModelNum();
+
 	//アクションモードプレイヤーのステイト
 	void SetPlayerState(ActorStateID id);
 	ActorStateID GetPlayerState();
@@ -27,6 +31,7 @@ public:
 
 private:
 	int mswardnum{ 0 };
+	int mswardModelNum{ 0 };
 	ActorStateID mstate{ActorStateID::NONE};
 	bool mstop{ false };
 };

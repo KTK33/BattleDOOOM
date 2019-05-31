@@ -78,9 +78,10 @@ void ActionCamera::PlayerInput(float deltaTime)
 		//敵→プレイヤーのベクトルの取得
 		const Vector3 Target_Player_Vec = Vector3(enemy_->Getposition().x - position_.x, enemy_->Getposition().y - position_.y, enemy_->Getposition().z - position_.z).Normalize();
 
-		//プレイヤーの座標から上記のベクトルを引く(何倍かする)
-		position_ = player_->Getposition() - Target_Player_Vec * 30;
-		position_.y = position_.y + PlayerHeight;
+		//プレイヤーの座標から上記のベクトルを引くX,Z(何倍かする)
+		position_.x = player_->Getposition().x - Target_Player_Vec.x * 30;
+		position_.y = player_->Getposition().y + PlayerHeight;
+		position_.z = player_->Getposition().z - Target_Player_Vec.z * 30;
 
 		//右方向の取得
 		m_Up = Vector3::Up;

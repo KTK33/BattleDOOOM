@@ -38,6 +38,7 @@ void StaticMesh::bind(int id) {
 // •`‰æ
 void StaticMesh::draw() {
     MV1SetMatrix(model_, world_matrix_);
+	MV1SetRotationXYZ(model_, VGet(0.0f, 90.0f * DX_PI_F / 180.0f, 0.0f));
     MV1DrawModel(model_);
 }
 

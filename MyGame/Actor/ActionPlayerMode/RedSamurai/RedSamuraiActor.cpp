@@ -18,6 +18,7 @@ Actor(world, "RedSamurai", position, body),
 	player_{ nullptr },
 	mesh_{ model,sward },
 	msword_{ sward },
+	msword_2{ 14 },
 	marrow_{ arrow },
 	mquiver_{ quiver },
 	mSwordPos{ 38 },
@@ -29,11 +30,13 @@ Actor(world, "RedSamurai", position, body),
 {
 	rotation_ = rotation;
 
-	mcurrentStateID = ActorStateID::RedSamuraiIdel;
+	mcurrentStateID = ActorStateID::RedSamuraNoSwardIdle;
 	redsamuraiState_[ActorStateID::RedSamuraiIdel].add(add_state<RedSamuraiIdle>(world, parameters_));
 	redsamuraiState_[ActorStateID::RedSamuraiAttack].add(add_state<RedSamuraiAttack>(world, parameters_));
 	redsamuraiState_[ActorStateID::RedSamuraiDead].add(add_state<RedSamuraiDead>(world, parameters_));
 	redsamuraiState_[ActorStateID::RedSamuraiPlayerDead].add(add_state<RedSamuraiPlayerDead>(world, parameters_));
+	redsamuraiState_[ActorStateID::RedSamuraiPlayerDeadAfter].add(add_state<RedSamuraiPlayerDeadAftor>(world, parameters_));
+	redsamuraiState_[ActorStateID::RedSamuraNoSwardIdle].add(add_state<RedSamuraiFirstState>(world, parameters_));
 	redsamuraiState_[mcurrentStateID].initialize();
 
 	initialize();
@@ -45,11 +48,9 @@ void RedSamuraiActor::initialize()
 	velocity_ = Vector3::Zero;
 
 	parameters_.Set_HP(RedSamuraiHPVal);
-	RedSamuraiParam::getInstance().SetSwardPosNum(38);
 	RedSamuraiParam::getInstance().initialize();
 }
 
-#include "../Input/Keyboard/Keyboard.h"
 void RedSamuraiActor::update(float deltaTime)
 {
 	//ステイトクラスの情報を更新する
@@ -102,15 +103,29 @@ void RedSamuraiActor::update(float deltaTime)
 		mEV.Move(position_, player_->Getposition(), 0.5f,mAttackCheck,15.0f);
 		Attacking();
 	}
+
 }
 
 void RedSamuraiActor::draw() const
 {
 	mesh_.draw();
 	mHP.draw(parameters_.Get_HP());
-	mDW.draw(msword_, RedSamuraiParam::getInstance().GetSwardPosNum(), mesh_);
+
+	//ステイトによって描画する武器を変える(モデル回転を適応するため)
+	//if (mcurrentStateID == ActorStateID::RedSamuraiPlayerDeadAfter){
+	//	mDW.draw(msword_, RedSamuraiParam::getInstance().GetSwardPosNum(), mesh_);
+	//}
+	//else{
+	//	mDW.draw(msword_2, RedSamuraiParam::getInstance().GetSwardPosNum(), mesh_);
+	//}
+
+	mDW.draw(RedSamuraiParam::getInstance().GetSwardModelNum(), RedSamuraiParam::getInstance().GetSwardPosNum(), mesh_);
+
+
 	mDW.draw(marrow_, mArrowPos, mesh_);
 	mDW.draw(mquiver_, mQuiverPos, mesh_);
+
+	mT.draw();
 }
 
 void RedSamuraiActor::onCollide(Actor & other)

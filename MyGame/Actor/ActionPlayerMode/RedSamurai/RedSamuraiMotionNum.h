@@ -18,5 +18,7 @@ public:
 		MotionRedSamuraiSwardDraw2,
 		MotionRedSamuraiSwardPut1,
 		MotionRedSamuraiSwardPut2,
+		MotionRedSamuraiNoSwardWalk,
+		MotionRedSamuraiNoSwardIdle,
 	};
 };

@@ -1,5 +1,6 @@
 #include "RedSamuraiDead.h"
 #include "../Actor/ActionPlayerMode/RedSamurai/RedSamuraiMotionNum.h"
+#include "../Sound/Sound.h"
 
 RedSamuraiDead::RedSamuraiDead(IWorld * world, ActorParameters & parameter)
 {
@@ -13,6 +14,8 @@ void RedSamuraiDead::Stateinitialize()
 	mNextStateID = ActorStateID::RedSamuraiDead;
 
 	parameters_->Set_Motion(RedSamuraiMotionNum::MotionRedSamuraiDead);
+
+	Sound::GetInstance().PlaySE(SE_ID::RED_LOSE);
 }
 
 void RedSamuraiDead::StateUpdate(Vector3 & lposition, Matrix & lrotation, AnimatedMesh & lmesh)

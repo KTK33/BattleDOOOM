@@ -19,7 +19,7 @@ void ActionModeManager::initialize()
 	auto P = new_actor<ActionPlayerActor>(50, 10, world_, Vector3{ -150.0f, 30.0f,-15.0f });
 	world_->add_actor(ActorGroup::Player, P);
 
-	auto Samurai = new_actor<RedSamuraiActor>(51, 11, 12, 13, world_, Vector3{ 0.0f, 30.0f,0.0f }, Matrix::CreateRotationY(90));
+	auto Samurai = new_actor<RedSamuraiActor>(51, 14, 12, 13, world_, Vector3{ 0.0f, 30.0f,0.0f }, Matrix::CreateRotationY(90));
 	world_->add_actor(ActorGroup::Enemy, Samurai);
 
 	auto camera = new_actor<ActionCamera>(world_, P);

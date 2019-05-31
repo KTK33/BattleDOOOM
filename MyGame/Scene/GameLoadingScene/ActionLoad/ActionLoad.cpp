@@ -50,6 +50,7 @@ void ActionLoad::LoadModel()
 	StaticMesh::load(11, "asset/Weapon/Samurai/katana.mv1");
 	StaticMesh::load(12, "asset/Weapon/Arrow/Bow.mv1");
 	StaticMesh::load(13, "asset/Weapon/Arrow/Quiver.mv1");
+	StaticMesh::load(14, "asset/Weapon/Samurai/katana_2.mv1");
 	SkeletalMesh::load(52, "asset/Weapon/Arrow/Arrow.mv1");
 }
 
@@ -58,10 +59,14 @@ void ActionLoad::LoadSound()
 	auto& sound = Sound::GetInstance();
 
 	sound.LoadBGM("asset/Sound/BGM/ActionGameBGM.mp3", BGM_ID::ACTION_PLAY_BGM);
-	sound.LoadSE("asset/Sound/SE/Arrow.mp3", SE_ID::ARROW);
+
 	sound.LoadSE("asset/Sound/SE/ActionPlayerSward.mp3", SE_ID::ACTION_SWARD);
-	sound.LoadSE("asset/Sound/SE/RedSamuraiSward.mp3", SE_ID::RED_SWARD);
 	sound.LoadSE("asset/Sound/SE/ActionStep.mp3", SE_ID::ACTION_STEP);
+	sound.LoadSE("asset/Sound/SE/Arrow.mp3", SE_ID::ARROW);
+	sound.LoadSE("asset/Sound/SE/RedSamuraiSward.mp3", SE_ID::RED_SWARD);
+	sound.LoadSE("asset/Sound/SE/RedSamuraiStart.mp3", SE_ID::RED_START);
+	sound.LoadSE("asset/Sound/SE/RedSamuraiWin.mp3", SE_ID::RED_WIN);
+	sound.LoadSE("asset/Sound/SE/RedSamuraiLose.mp3", SE_ID::RED_LOSE);
 }
 
 void ActionLoad::LoadSprite()
@@ -81,4 +86,8 @@ void ActionLoad::LoadSprite()
 
 	sprite.Load("asset/UI/ActionMode/ActionPlayerDead.png", SPRITE_ID::ACTIONPLAYERDEAD);
 	sprite.Load("asset/UI/ActionMode/RedSamuraiDead.png", SPRITE_ID::REDSAMURAIDEAD);
+
+	sprite.Load("asset/UI/ActionMode/Kakugowo.png", SPRITE_ID::KAKUGOWO);
+	sprite.Load("asset/UI/ActionMode/MottoReiseini.png", SPRITE_ID::MOTTOREISEINI);
+	sprite.Load("asset/UI/ActionMode/Kokodehiku.png", SPRITE_ID::KOKODEHIKU);
 }

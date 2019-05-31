@@ -2,7 +2,8 @@
 
 void RedSamuraiParam::initialize()
 {
-	mswardnum = 38;
+	mswardnum = 5;
+	mswardModelNum = 14;
 	mstate = ActorStateID::NONE;
 	mstop = false;
 }
@@ -15,6 +16,16 @@ void RedSamuraiParam::SetSwardPosNum(int num)
 int RedSamuraiParam::GetSwardPosNum()
 {
 	return mswardnum;
+}
+
+void RedSamuraiParam::SetSwardModelNum(int num)
+{
+	mswardModelNum = num;	
+}
+
+int RedSamuraiParam::GetSwardModelNum()
+{
+	return mswardModelNum;
 }
 
 void RedSamuraiParam::SetPlayerState(ActorStateID id)

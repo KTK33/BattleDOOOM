@@ -18,6 +18,7 @@
 #include "../Actor/ActionPlayerMode/UI/HPUI/RedSamuraiHP.h"
 
 #include "../Actor/EnemyCommon/commonInc.h"
+#include "../Actor/ActionPlayerMode/UI/Text/RedSamuraiText.h"
 
 class RedSamuraiActor : public Actor, public ActorSystem {
 public:
@@ -65,8 +66,11 @@ private:
 
 	PlayerLook mPL;
 
+	RedSamuraiText mT;
+
 	//‚¿•¨ƒ‚ƒfƒ‹
 	int msword_;
+	int msword_2;
 	int marrow_;
 	int mquiver_;
 	//•Ší•`‰æˆÊ’u
