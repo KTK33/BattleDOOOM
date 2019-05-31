@@ -4,7 +4,7 @@ class RedSamuraiMotionNum {
 public:
 	enum Motion
 	{
-		MotionRedSamuraiIdel,
+		MotionRedSamuraiIdle,
 		MotionRedSamuraiForWard,
 		MotionRedSamuraiBackWard,
 		MotionRedSamuraiRight,

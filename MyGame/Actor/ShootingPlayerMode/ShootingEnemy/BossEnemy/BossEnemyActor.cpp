@@ -36,7 +36,7 @@ void BossEnemyActor::initialize()
 	parameters_.Set_Position(position_);
 	parameters_.Set_HP(BossHPVal);
 	parameters_.Set_StateID(ActorStateID::BossEnemyIdle);
-	parameters_.Set_Motion(BossEnemyMotion::MotionBossIdel);
+	parameters_.Set_Motion(BossEnemyMotion::MotionBossIdle);
 }
 
 void BossEnemyActor::update(float deltaTime)

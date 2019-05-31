@@ -5,7 +5,7 @@ class BossEnemyMotion
 public:
 	enum Motion 
 	{
-		MotionBossIdel = 0,
+		MotionBossIdle = 0,
 		MotionBossWalk,
 		MotionBossRun,
 		MotionBossPunch,

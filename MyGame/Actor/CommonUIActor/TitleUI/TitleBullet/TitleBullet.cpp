@@ -2,6 +2,7 @@
 #include "../Actor/CommonUIActor/Effect2D/Effect2D.h"
 #include "../Actor/CommonUIActor/TitleUI/TitleAnyUI/TitleAnyUI.h"
 #include "../Sound/Sound.h"
+#include "../Actor/CommonUIActor/TitleUI/TitleNinjya/TitleNinjya.h"
 
 TitleBullet::TitleBullet(int model, IWorld * world, const Vector3 & position,Vector3 move):
 	Actor(world,"TitleBullet",position),
@@ -26,6 +27,12 @@ void TitleBullet::update(float deltaTime)
 	{
 		world_->add_actor(ActorGroup::Effect, new_actor<Effect2D>(world_, position_,8.0f, SPRITE_ID::EFFECT_BULLETHIT));
 		Sound::GetInstance().PlaySE_IsNotPlay(SE_ID::DAMAGEENEMY_SE);
+	}
+
+	if (Timer == 160)
+	{
+		Vector3 ninjyaPos = Vector3(position_.x + 5.0f, position_.y - 10.0f, position_.z);
+		world_->add_actor(ActorGroup::TitleActor, new_actor<TitleNinjya>(50, 10, world_, ninjyaPos + rotation_.Forward() * 20));
 	}
 
 	if (Timer > 150)

@@ -13,7 +13,7 @@ RedSamuraiIdle::RedSamuraiIdle(IWorld * world, ActorParameters & parameter)
 void RedSamuraiIdle::Stateinitialize()
 {
 	mNextStateFlag = false;
-	mNextStateID = ActorStateID::RedSamuraiIdel;
+	mNextStateID = ActorStateID::RedSamuraiIdle;
 	parameters_->Set_Motion(RedSamuraiMotionNum::MotionRedSamuraiForWard);
 }
 

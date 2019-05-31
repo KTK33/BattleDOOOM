@@ -29,11 +29,7 @@ void TitleCamera::update(float deltaTime)
 	//‚Î‚Ë
 	CameraSpring::move(position_, velocity_, position_, 1.0f, 0.2f, 0.8f);
 
-	if (world_->find_actor(ActorGroup::Ball, "TitleBullet") == NULL)
-	{
-		return;
-	}
-	else
+	if (world_->find_actor(ActorGroup::Ball, "TitleBullet") != NULL)
 	{
 		bullet = world_->find_actor(ActorGroup::Ball, "TitleBullet").get();
 		target_ = bullet->Getposition();

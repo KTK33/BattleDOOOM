@@ -6,7 +6,7 @@ class NormalEnemyMotionNum
 public:
 	enum  Motion
 	{
-		MotionNormalEnemyIdel = 0,
+		MotionNormalEnemyIdle = 0,
 		MotionNormalEnemyPunch,
 		MotionNormalEnemyRoar,
 		MotionNormalEnemyMove,

@@ -10,7 +10,7 @@ ActionPlayerIdle::ActionPlayerIdle(IWorld * world, ActorParameters & parameter)
 void ActionPlayerIdle::Stateinitialize()
 {
 	mNextStateFlag = false;
-	mNextStateID = ActorStateID::ActionPlayerIdel;
+	mNextStateID = ActorStateID::ActionPlayerIdle;
 }
 
 void ActionPlayerIdle::StateUpdate(Vector3 & lposition, Matrix & lrotation, AnimatedMesh & lmesh)

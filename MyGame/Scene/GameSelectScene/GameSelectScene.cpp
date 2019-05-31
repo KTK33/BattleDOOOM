@@ -3,15 +3,18 @@
 #include "../Texture/Sprite.h"
 #include "../Input/InputInfoInc.h"
 #include "../Game/Define.h"
+#include "GameSelectSceneManager/GameSelectSceneManager.h"
 
 GameSelectScene::GameSelectScene()
-{
-}
+{}
 
 void GameSelectScene::start()
 {
+	world_.initialize();
 	menuSize_ = 2;
 	cursorPos_ = 0;
+
+	world_.add_actor(ActorGroup::System, new_actor<GameSelectSceneManager>(&world_));
 }
 
 void GameSelectScene::update(float deltaTime)
@@ -42,6 +45,9 @@ void GameSelectScene::update(float deltaTime)
 		}
 		isEnd_ = true;
 	}
+
+	world_.update(deltaTime);
+	world_.send_message(EventMessage::SELECT_MODE_, reinterpret_cast<int*>(&cursorPos_));
 }
 
 void GameSelectScene::draw() const
@@ -66,6 +72,8 @@ void GameSelectScene::draw() const
 	default:
 		break;
 	}
+
+	world_.draw();
 }
 
 void GameSelectScene::end()

@@ -492,6 +492,18 @@
     <ClCompile Include="Actor\ActionPlayerMode\UI\Text\RedSamuraiText.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="Actor\CommonUIActor\TitleUI\TitleNinjya\TitleNinjya.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\CommonUIActor\SelectActor\SelectActor.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\Camera\SelectCamera\SelectCamera.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\GameSelectScene\GameSelectSceneManager\GameSelectSceneManager.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor\TestEnemy.h">
@@ -1098,6 +1110,18 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Actor\ActionPlayerMode\UI\Text\RedSamuraiText.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\CommonUIActor\TitleUI\TitleNinjya\TitleNinjya.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\CommonUIActor\SelectActor\SelectActor.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\Camera\SelectCamera\SelectCamera.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\GameSelectScene\GameSelectSceneManager\GameSelectSceneManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

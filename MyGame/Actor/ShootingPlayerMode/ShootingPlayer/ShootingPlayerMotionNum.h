@@ -6,7 +6,7 @@ class ShootingPlayerMotionNum
 public:
 	enum  Motion
 	{
-		MotionPlayerIdel = 0,
+		MotionPlayerIdle = 0,
 		MotionPlayerStopGun,
 		MotionPlayerForwardGun,
 		MotionPlayerRightGun,

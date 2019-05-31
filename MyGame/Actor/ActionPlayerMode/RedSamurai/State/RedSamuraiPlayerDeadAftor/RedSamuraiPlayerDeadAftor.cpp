@@ -10,7 +10,7 @@ RedSamuraiPlayerDeadAftor::RedSamuraiPlayerDeadAftor(IWorld * world, ActorParame
 void RedSamuraiPlayerDeadAftor::Stateinitialize()
 {
 	mNextStateFlag = false;
-	mNextStateID = ActorStateID::RedSamuraiIdel;
+	mNextStateID = ActorStateID::RedSamuraiIdle;
 
 	parameters_->Set_Motion(RedSamuraiMotionNum::MotionRedSamuraiSwardPut2);
 }

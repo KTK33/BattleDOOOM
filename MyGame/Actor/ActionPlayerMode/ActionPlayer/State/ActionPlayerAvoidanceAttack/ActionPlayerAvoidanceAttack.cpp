@@ -31,7 +31,7 @@ void ActionPlayerAvoidanceAttack::StateUpdate(Vector3 & lposition, Matrix & lrot
 	//ƒ‚[ƒVƒ‡ƒ“‚ÌŽžŠÔ‚ªI‚í‚Á‚½‚çˆÚ“®ó‘Ô‚Ö
 	if (parameters_->Get_Statetimer() > lmesh.motion_end_time() - 5)
 	{
-		mNextStateID = ActorStateID::ActionPlayerIdel;
+		mNextStateID = ActorStateID::ActionPlayerIdle;
 		mNextStateFlag = true;
 		return;
 	}

@@ -54,7 +54,7 @@ void RedSamuraiFirstState::StateUpdate(Vector3 & lposition, Matrix & lrotation, 
 		}
 		else if (mmotionNum == 2)
 		{
-			mNextStateID = ActorStateID::RedSamuraiIdel;
+			mNextStateID = ActorStateID::RedSamuraiIdle;
 			mNextStateFlag = true;
 			return;
 		}

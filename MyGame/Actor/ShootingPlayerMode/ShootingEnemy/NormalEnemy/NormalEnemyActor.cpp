@@ -33,7 +33,7 @@ void NormalEnemyActor::initialize()
 
 	parameters_.Set_Position(position_);
 	parameters_.Set_HP(NormalHPVal);
-	parameters_.Set_Motion(NormalEnemyMotionNum::MotionNormalEnemyIdel);
+	parameters_.Set_Motion(NormalEnemyMotionNum::MotionNormalEnemyIdle);
 
 	auto EH = new_actor<EnemyHeadShot>(world_, position_, weak_from_this());
 	world_->add_actor(ActorGroup::EnemyHead, EH);

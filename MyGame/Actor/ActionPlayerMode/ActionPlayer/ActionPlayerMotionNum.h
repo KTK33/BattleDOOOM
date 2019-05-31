@@ -6,7 +6,7 @@ class ActionPlayerMotion
 public:
 	enum  Motion
 	{
-		MotionPlayerIdel = 0,
+		MotionPlayerIdle = 0,
 		MotionPlayerWalk,
 		MotionPlayerAttack1,
 		MotionPlayerAttack2,

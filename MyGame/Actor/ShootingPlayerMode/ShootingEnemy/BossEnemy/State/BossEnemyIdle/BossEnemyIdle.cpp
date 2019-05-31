@@ -11,7 +11,7 @@ void BossEnemyIdle::Stateinitialize()
 {
 	mNextStateFlag = false;
 	mNextStateID = ActorStateID::BossEnemyIdle;
-	parameters_->Set_Motion(BossEnemyMotion::MotionBossIdel);
+	parameters_->Set_Motion(BossEnemyMotion::MotionBossIdle);
 }
 
 void BossEnemyIdle::StateUpdate(Vector3 & lposition, Matrix & lrotation, AnimatedMesh & lmesh)

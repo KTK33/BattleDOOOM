@@ -5,26 +5,26 @@
 TitlePlayer::TitlePlayer(int model, int weapon, IWorld * world, const Vector3 & position):
 	Actor(world,"TitlePlayer",position),
 	mesh_{model},
-	weapon_{weapon},
-	Timer{ 0 }
+	mweapon_{weapon},
+	mTimer{ 0 }
 {
 	rotation_ = Matrix::Identity;
 	mesh_.transform(Getpose());
 
 	ActorSystem::TransparenceInit();
 
-	motion_ = ShootingPlayerMotionNum::MotionPlayerIdleAiming;
+	mmotion_ = ShootingPlayerMotionNum::MotionPlayerIdleAiming;
 }
 
 void TitlePlayer::update(float deltaTime)
 {
 	mesh_.update(deltaTime);
 	mesh_.transform(Getpose());
-	mesh_.change_motion(motion_);
+	mesh_.change_motion(mmotion_);
 
-	Timer = min(Timer + 1, 31);
+	mTimer = min(mTimer + 1, 31);
 
-	if (Timer == 30)
+	if (mTimer == 30)
 	{
 		world_->add_actor(ActorGroup::Ball, new_actor<TitleBullet>(5, world_, Vector3{ position_.x,position_.y + 14.0f,position_.z} +rotation_.Forward() * 4.5f + rotation_.Right() *1.4f,rotation_.Forward()));
 	}
@@ -33,12 +33,5 @@ void TitlePlayer::update(float deltaTime)
 void TitlePlayer::draw() const
 {
 	mesh_.draw();
-	draw_weapon();
-}
-
-void TitlePlayer::draw_weapon() const
-{
-	StaticMesh::bind(weapon_);
-	StaticMesh::transform(mesh_.bone_matrix(103));
-	StaticMesh::draw();
+	mDW.draw(mweapon_, 103, mesh_);
 }

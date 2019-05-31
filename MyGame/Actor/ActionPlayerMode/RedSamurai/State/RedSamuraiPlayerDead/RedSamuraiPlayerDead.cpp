@@ -12,7 +12,7 @@ RedSamuraiPlayerDead::RedSamuraiPlayerDead(IWorld * world, ActorParameters & par
 void RedSamuraiPlayerDead::Stateinitialize()
 {
 	mNextStateFlag = false;
-	mNextStateID = ActorStateID::RedSamuraiIdel;
+	mNextStateID = ActorStateID::RedSamuraiIdle;
 
 	parameters_->Set_Motion(RedSamuraiMotionNum::MotionRedSamuraiSwardPut1);
 	Sound::GetInstance().PlaySE(SE_ID::RED_WIN);

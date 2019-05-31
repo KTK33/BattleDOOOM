@@ -50,7 +50,7 @@ void RedSamuraiAttack::StateUpdate(Vector3 & lposition, Matrix & lrotation, Anim
 	if (parameters_->Get_Statetimer() > lmesh.motion_end_time() - 5)
 	{
 		parameters_->Set_Attack(false);
-		mNextStateID = ActorStateID::RedSamuraiIdel;
+		mNextStateID = ActorStateID::RedSamuraiIdle;
 		mNextStateFlag = true;
 		return;
 	}

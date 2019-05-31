@@ -13,8 +13,8 @@ ActionPlayerActor::ActionPlayerActor(int model, int weapon, IWorld * world, cons
 	m_ActionCameraRight{ Vector3::Zero },
 	mDeadArelady{ false }
 {
-	mcurrentStateID = ActorStateID::ActionPlayerIdel;
-	actionplayerState_[ActorStateID::ActionPlayerIdel].add(add_state<ActionPlayerIdle>(world, parameters_));
+	mcurrentStateID = ActorStateID::ActionPlayerIdle;
+	actionplayerState_[ActorStateID::ActionPlayerIdle].add(add_state<ActionPlayerIdle>(world, parameters_));
 	actionplayerState_[ActorStateID::ActionPlayerAttack].add(add_state<ActionPlayerAttack>(world, parameters_));
 	actionplayerState_[ActorStateID::ActionPlayerAvoidance].add(add_state<ActionPlayerAvoidance>(world, parameters_));
 	actionplayerState_[ActorStateID::ActionPlayerAvoidanceAttack].add(add_state<ActionPlayerAvoidanceAttack>(world, parameters_));
@@ -82,7 +82,7 @@ void ActionPlayerActor::update(float deltaTime)
 	parameters_.Add_Statetime(0.5f);
 
 	//移動入力の情報
-	if (parameters_.Get_StateID() == ActorStateID::ActionPlayerIdel || 
+	if (parameters_.Get_StateID() == ActorStateID::ActionPlayerIdle || 
 		parameters_.Get_StateID() == ActorStateID::ActionPlayerAvoidance)
 	{
 		input_information();
@@ -174,9 +174,9 @@ void ActionPlayerActor::gravity_process()
 void ActionPlayerActor::input_information()
 {
 	//アイドル状態ならアイドルモーションに更新
-	if (parameters_.Get_StateID() == ActorStateID::ActionPlayerIdel) 
+	if (parameters_.Get_StateID() == ActorStateID::ActionPlayerIdle) 
 	{
-		parameters_.Set_Motion(ActionPlayerMotion::MotionPlayerIdel);
+		parameters_.Set_Motion(ActionPlayerMotion::MotionPlayerIdle);
 	}
 
 	Vector2 input;
@@ -205,7 +205,7 @@ void ActionPlayerActor::movement(float speed, Vector2 input)
 	velocity_ += m_ActionCameraRight * side_speed;
 
 	//回避加速度
-	static const float mAvoidanceSpeed = 5.0f;
+	static const float mAvoidanceSpeed = 3.0f;
 
 	//走りでの加速
 	float DashSpped = 0.0f;

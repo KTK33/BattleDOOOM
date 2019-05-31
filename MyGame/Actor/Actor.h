@@ -17,6 +17,7 @@
 class IWorld;
 enum class EventMessage
 {
+	SELECT_MODE_,
 	HIT_PLAYER,
 	HIT_ENEMY,
 	HIT_BALL,

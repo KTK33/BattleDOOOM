@@ -35,7 +35,7 @@ enum class ActorStateID
 
 
 	//アクションプレイヤーのステイト
-	ActionPlayerIdel,
+	ActionPlayerIdle,
 	ActionPlayerWalk,
 	ActionPlayerRun,
 	ActionPlayerJump,
@@ -46,7 +46,7 @@ enum class ActorStateID
 	ActionPlayerAvoidanceAttack,
 
 	//赤侍のステイト
-	RedSamuraiIdel,
+	RedSamuraiIdle,
 	RedSamuraiAttack,
 	RedSamuraiAttackArrow,
 	RedSamuraiDead,

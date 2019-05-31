@@ -31,7 +31,7 @@ Actor(world, "RedSamurai", position, body),
 	rotation_ = rotation;
 
 	mcurrentStateID = ActorStateID::RedSamuraNoSwardIdle;
-	redsamuraiState_[ActorStateID::RedSamuraiIdel].add(add_state<RedSamuraiIdle>(world, parameters_));
+	redsamuraiState_[ActorStateID::RedSamuraiIdle].add(add_state<RedSamuraiIdle>(world, parameters_));
 	redsamuraiState_[ActorStateID::RedSamuraiAttack].add(add_state<RedSamuraiAttack>(world, parameters_));
 	redsamuraiState_[ActorStateID::RedSamuraiDead].add(add_state<RedSamuraiDead>(world, parameters_));
 	redsamuraiState_[ActorStateID::RedSamuraiPlayerDead].add(add_state<RedSamuraiPlayerDead>(world, parameters_));
@@ -99,7 +99,7 @@ void RedSamuraiActor::update(float deltaTime)
 	weapon_transfer();
 
 	//ƒAƒCƒhƒ‹’†‚Ìˆ—
-	if (mcurrentStateID == ActorStateID::RedSamuraiIdel){
+	if (mcurrentStateID == ActorStateID::RedSamuraiIdle){
 		mEV.Move(position_, player_->Getposition(), 0.5f,mAttackCheck,15.0f);
 		Attacking();
 	}

@@ -5,13 +5,12 @@
 #include "../Mesh/StaticMesh.h"
 #include "../Animation/Animation.h"
 #include "../Animation/AnimationMesh.h"
-#include "../Actor/ActorSystem/ActorSystem.h"
 #include "../Actor/ActorCommon/DrawWeapon/DrawWeapon.h"
 
-class TitlePlayer : public Actor,public ActorSystem  {
+class TitleNinjya : public Actor{
 public:
-	TitlePlayer(int model, int weapon, IWorld* world, const Vector3& position);
-	virtual ~TitlePlayer() override{}
+	TitleNinjya(int model, int weapon, IWorld* world, const Vector3& position);
+	virtual ~TitleNinjya() override {}
 
 	virtual void update(float deltaTime) override;
 
@@ -23,8 +22,6 @@ private:
 	int mmotion_;
 	//éùÇøï®ÉÇÉfÉã
 	int mweapon_;
-
-	int mTimer;
 
 	DrawWeapon mDW;
 };

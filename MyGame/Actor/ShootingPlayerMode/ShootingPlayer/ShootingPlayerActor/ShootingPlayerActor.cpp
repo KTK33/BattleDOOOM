@@ -253,7 +253,7 @@ void ShootingPlayerActor::input_information()
 	//アイドル状態ならアイドルモーションに更新
 	if (parameters_.Get_StateID() == ActorStateID::ShootingPlayerIdle)
 {
-		parameters_.Set_Motion(ShootingPlayerMotionNum::MotionPlayerIdel);
+		parameters_.Set_Motion(ShootingPlayerMotionNum::MotionPlayerIdle);
 	}
 
 	//エイム中ならエイムモーションに更新
