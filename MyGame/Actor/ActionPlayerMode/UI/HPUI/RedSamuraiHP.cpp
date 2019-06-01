@@ -4,6 +4,8 @@
 
 void RedSamuraiHP::draw(int hp) const
 {
+
+	Sprite::GetInstance().Draw(SPRITE_ID::REDSAMURAI_NAME, Vector2(100, 10));
 	//HP
 	Sprite::GetInstance().Draw(SPRITE_ID::REDSAMURAI_HPFRAME, Vector2(100, Sprite::GetInstance().GetSize(SPRITE_ID::REDSAMURAI_HPFRAME).y));
 	Sprite::GetInstance().DrawPart(SPRITE_ID::REDSAMURAI_HPGAUGE, Vector2(100, Sprite::GetInstance().GetSize(SPRITE_ID::REDSAMURAI_HPFRAME).y), 0, 0,

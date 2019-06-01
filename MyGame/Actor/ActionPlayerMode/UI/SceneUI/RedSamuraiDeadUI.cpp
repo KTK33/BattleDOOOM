@@ -3,12 +3,15 @@
 #include "../Actor/CommonUIActor/FadeUI/FadeUI.h"
 #include "../Texture/Sprite.h"
 #include "../Scene/GameData/GameDataManager.h"
+#include "../Sound/Sound.h"
 
 RedSamuraiDeadUI::RedSamuraiDeadUI(IWorld * world):
 	Actor(world, "RedSamuraiDeadUI", Vector3::Zero),
 	mAlready{ false }
 {
 	GameDataManager::getInstance().SetDeadBossEnemy(true);
+	Sound::GetInstance().StopBGM();
+	Sound::GetInstance().PlaySE(SE_ID::ACTION_WIN);
 }
 
 void RedSamuraiDeadUI::update(float deltaTime)

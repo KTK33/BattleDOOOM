@@ -39,7 +39,16 @@ void ActionCamera::PlayerInput(float deltaTime)
 	m_YawSpeed = RightStick::GetInstance().GetAngle().x;
 	m_PitchSpeed = RightStick::GetInstance().GetAngle().y;
 
-	if (world_->GetPauseCheck() == true) return;
+	//上下の上限の制御
+	if (GetCameraAngleVRotate() >= 0.4f){
+		m_PitchSpeed = -0.1f;
+	}
+	else if (GetCameraAngleVRotate() <= -0.4f){
+		m_PitchSpeed = 0.1f;
+	}
+
+	if (world_->GetPauseCheck()) return;
+
 	//ワールド上方を軸とするヨーのクォータニオンを作成
 	const Quaternion yaw(Vector3::UnitY, m_YawSpeed * deltaTime);
 	//カメラのオフセットと上方ベクトルをヨーで変換

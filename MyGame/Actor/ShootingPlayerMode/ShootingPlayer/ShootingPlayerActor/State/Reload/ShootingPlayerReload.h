@@ -10,6 +10,5 @@ public:
 	virtual void StateUpdate(Vector3& lposition, Matrix& lrotation, AnimatedMesh & lmesh) override;
 
 private:
-	void Input();
 	void GunCount();
 };

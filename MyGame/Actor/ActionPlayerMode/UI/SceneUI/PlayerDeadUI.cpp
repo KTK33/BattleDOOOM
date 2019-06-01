@@ -3,12 +3,15 @@
 #include "../Input/InputInfoInc.h"
 #include "../Actor/CommonUIActor/FadeUI/FadeUI.h"
 #include "../Scene/GameData/GameDataManager.h"
+#include "../Sound/Sound.h"
 
 PlayerDeadUI::PlayerDeadUI(IWorld * world):
 	Actor(world, "PlayerDeadUI", Vector3::Zero),
 	mAlready{false}
 {
 	GameDataManager::getInstance().SetPlayerDead(true);
+	Sound::GetInstance().StopBGM();
+	Sound::GetInstance().PlaySE(SE_ID::ACTION_LOSE);
 }
 
 void PlayerDeadUI::update(float deltaTime)

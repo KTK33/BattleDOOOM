@@ -19,9 +19,6 @@ void ShootingPlayerReload::Stateinitialize()
 
 void ShootingPlayerReload::StateUpdate(Vector3 & lposition, Matrix & lrotation, AnimatedMesh & lmesh)
 {
-	//入力情報
-	Input();
-
 	//モーションの時間が終わったら移動状態へ
 	if (parameters_->Get_Statetimer() > lmesh.motion_end_time() - 5)
 	{
@@ -45,18 +42,6 @@ void ShootingPlayerReload::StateUpdate(Vector3 & lposition, Matrix & lrotation, 
 	if (parameters_->Get_HP() <= 0)
 	{
 		mNextStateID = ActorStateID::ShootingPlayerDead;
-		mNextStateFlag = true;
-		return;
-	}
-}
-
-void ShootingPlayerReload::Input()
-{
-	//エイム中→アイドル状態前まで
-	if (LeftStick::GetInstance().KnockCheck())
-	{
-		ShootingPlayerParam::getInstance().Set_AimCheck(false);
-		mNextStateID = ActorStateID::ShootingPlayerAimToIdle;
 		mNextStateFlag = true;
 		return;
 	}

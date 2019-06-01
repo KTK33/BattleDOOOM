@@ -109,18 +109,11 @@ void RedSamuraiActor::update(float deltaTime)
 void RedSamuraiActor::draw() const
 {
 	mesh_.draw();
-	mHP.draw(parameters_.Get_HP());
-
-	//ステイトによって描画する武器を変える(モデル回転を適応するため)
-	//if (mcurrentStateID == ActorStateID::RedSamuraiPlayerDeadAfter){
-	//	mDW.draw(msword_, RedSamuraiParam::getInstance().GetSwardPosNum(), mesh_);
-	//}
-	//else{
-	//	mDW.draw(msword_2, RedSamuraiParam::getInstance().GetSwardPosNum(), mesh_);
-	//}
+	if (mcurrentStateID != ActorStateID::RedSamuraNoSwardIdle) {
+		mHP.draw(parameters_.Get_HP());
+	}
 
 	mDW.draw(RedSamuraiParam::getInstance().GetSwardModelNum(), RedSamuraiParam::getInstance().GetSwardPosNum(), mesh_);
-
 
 	mDW.draw(marrow_, mArrowPos, mesh_);
 	mDW.draw(mquiver_, mQuiverPos, mesh_);

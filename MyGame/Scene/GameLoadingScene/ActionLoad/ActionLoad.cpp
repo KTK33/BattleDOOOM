@@ -62,6 +62,8 @@ void ActionLoad::LoadSound()
 
 	sound.LoadSE("asset/Sound/SE/ActionPlayerSward.mp3", SE_ID::ACTION_SWARD);
 	sound.LoadSE("asset/Sound/SE/ActionStep.mp3", SE_ID::ACTION_STEP);
+	sound.LoadSE("asset/Sound/SE/ActionPlayerWinSE.mp3", SE_ID::ACTION_WIN);
+	sound.LoadSE("asset/Sound/SE/ActionPlayerLoseSE.mp3.mp3", SE_ID::ACTION_LOSE);
 	sound.LoadSE("asset/Sound/SE/Arrow.mp3", SE_ID::ARROW);
 	sound.LoadSE("asset/Sound/SE/RedSamuraiSward.mp3", SE_ID::RED_SWARD);
 	sound.LoadSE("asset/Sound/SE/RedSamuraiStart.mp3", SE_ID::RED_START);
@@ -81,6 +83,7 @@ void ActionLoad::LoadSprite()
 
 	sprite.Load("asset/UI/ActionMode/APlayerHPFrame.png", SPRITE_ID::ACTION_PLAYER_HPFRAME);
 	sprite.Load("asset/UI/ActionMode/APlayerHPGauge.png", SPRITE_ID::ACTION_PLAYER_HPGAUGE);
+	sprite.Load("asset/UI/ActionMode/RedSamuraiName.png", SPRITE_ID::REDSAMURAI_NAME);
 	sprite.Load("asset/UI/ActionMode/RedSamuraiHPFrame.png", SPRITE_ID::REDSAMURAI_HPFRAME);
 	sprite.Load("asset/UI/ActionMode/RedSamuraiHPGauge.png", SPRITE_ID::REDSAMURAI_HPGAUGE);
 
