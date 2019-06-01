@@ -41,7 +41,7 @@ void ShootingLoad::LoadModel()
 	//ステージモデルの読み込み
 	CollisionMesh::load(0, "asset/stage/Stage/arena.mv1");
 	//スカイボックスモデルの読み込み
-	Skybox::load(0, "asset/skybox/skydome.mv1");
+	Skybox::load(0, "asset/skybox/ShootingMode/sky.mv1");
 
 	//モデルデータの読み込み
 	SkeletalMesh::load(11, "asset/MODEL/DummyEnemy/Zombei_1/zombie.mv1");

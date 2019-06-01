@@ -41,7 +41,7 @@ void ActionLoad::LoadModel()
 	//ステージモデルの読み込み
 	CollisionMesh::load(0, "asset/stage/Stage/arena.mv1");
 	//スカイボックスモデルの読み込み
-	Skybox::load(0, "asset/skybox/skydome.mv1");
+	Skybox::load(0, "asset/skybox/ActionMode/sky2.mv1");
 
 	//モデルデータの読み込み
 	SkeletalMesh::load(50, "asset/MODEL/ActionPlayer/ActionPlayer.mv1");
