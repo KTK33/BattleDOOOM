@@ -63,11 +63,13 @@ void GameSelectScene::draw() const
 		Sprite::GetInstance().DrawSetCenter(SPRITE_ID::SELECT_SHOOTING_EX, Vector2(WINDOW_WIDTH / 2, 1080 - 76));
 		Sprite::GetInstance().DrawSetCenter(SPRITE_ID::SELECT_SHOOTING_DEC, Vector2(WINDOW_WIDTH / 2, 500));
 		Sprite::GetInstance().DrawSetCenter(SPRITE_ID::SELECT_ACTION, Vector2(WINDOW_WIDTH / 2, 700));
+		Sprite::GetInstance().Draw(SPRITE_ID::SELECT_PUR_S, Vector2(WINDOW_WIDTH / 1.4f, 400));
 		break;
 	case 1:
 		Sprite::GetInstance().DrawSetCenter(SPRITE_ID::SELECT_ACTION_EX, Vector2(WINDOW_WIDTH / 2, 1080-76));
 		Sprite::GetInstance().DrawSetCenter(SPRITE_ID::SELECT_SHOOTING, Vector2(WINDOW_WIDTH / 2, 500));
 		Sprite::GetInstance().DrawSetCenter(SPRITE_ID::SELECT_ACTION_DEC, Vector2(WINDOW_WIDTH / 2, 700));
+		Sprite::GetInstance().Draw(SPRITE_ID::SELECT_PUR_A, Vector2(WINDOW_WIDTH / 1.4f, 400));
 		break;
 	default:
 		break;

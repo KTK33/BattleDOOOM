@@ -33,8 +33,6 @@ void SelectActor::update(float deltaTime)
 
 void SelectActor::draw() const
 {
-	//mesh_.draw();
-
 	if (mNum == 0)
 	{
 		mesh1.draw();

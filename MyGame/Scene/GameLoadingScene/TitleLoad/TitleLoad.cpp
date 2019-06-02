@@ -86,6 +86,9 @@ void TitleLoad::LoadSprite()
 	sprite.Load("asset/UI/TitleScene/SelectAction_dec.png", SPRITE_ID::SELECT_ACTION_DEC);
 	sprite.Load("asset/UI/TitleScene/SelectActionex.png", SPRITE_ID::SELECT_ACTION_EX);
 	sprite.Load("asset/UI/TitleScene/SelectTitle.png", SPRITE_ID::SELECT_NAME);
+	sprite.Load("asset/UI/TitleScene/SelectPurposeS.png", SPRITE_ID::SELECT_PUR_S);
+	sprite.Load("asset/UI/TitleScene/SelectPurposeA.png", SPRITE_ID::SELECT_PUR_A);
+
 
 	//エフェクト
 	sprite.Load("asset/UI/Effect/BulletHit.png", SPRITE_ID::EFFECT_BULLETHIT);
