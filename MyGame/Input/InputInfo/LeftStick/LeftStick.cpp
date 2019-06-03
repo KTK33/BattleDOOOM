@@ -5,22 +5,24 @@ Vector2 LeftStick::GetAngle()
 {
 	Vector2 input;
 
-	if (Keyboard::GetInstance().KeyStateDown(KEYCODE::LEFT)) {
+	if (Keyboard::GetInstance().KeyStateDown(KEYCODE::A)) {
 		input.x = -1.0f;
 	}
-	if (Keyboard::GetInstance().KeyStateDown(KEYCODE::RIGHT)) {
+	if (Keyboard::GetInstance().KeyStateDown(KEYCODE::D)) {
 		input.x = 1.0f;
 	}
-	if (Keyboard::GetInstance().KeyStateDown(KEYCODE::UP)) {
+	if (Keyboard::GetInstance().KeyStateDown(KEYCODE::W)) {
 		input.y = 1.0f;
 
 	}
-	if (Keyboard::GetInstance().KeyStateDown(KEYCODE::DOWN)) {
+	if (Keyboard::GetInstance().KeyStateDown(KEYCODE::S)) {
 		input.y = -1.0f;
 	}
 
-	input.x = GamePad::GetInstance().Stick().x;
-	input.y = GamePad::GetInstance().Stick().y;
+	if (GetJoypadNum() >= 1){
+		input.x = GamePad::GetInstance().Stick().x;
+		input.y = GamePad::GetInstance().Stick().y;
+	}
 
 	return input;
 }
