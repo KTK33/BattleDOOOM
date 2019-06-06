@@ -204,6 +204,13 @@
     <ClCompile Include="Actor\ShootingPlayerMode\ItemActor\HPRecoverItem\HPRecoverItem.cpp" />
     <ClCompile Include="Actor\ShootingPlayerMode\ItemActor\ItemCreater\ItemCreater.cpp" />
     <ClCompile Include="Actor\ShootingPlayerMode\ShootingCamera\ShootingCamera.cpp" />
+    <ClCompile Include="Actor\ShootingPlayerMode\ShootingEnemy\BigBossEnemy\BigBossEnemyActor.cpp" />
+    <ClCompile Include="Actor\ShootingPlayerMode\ShootingEnemy\BigBossEnemy\HPUI\BigBossHPUI.cpp" />
+    <ClCompile Include="Actor\ShootingPlayerMode\ShootingEnemy\BigBossEnemy\State\BigBossEnemyAttack\AttackChoice.cpp" />
+    <ClCompile Include="Actor\ShootingPlayerMode\ShootingEnemy\BigBossEnemy\State\BigBossEnemyAttack\BigBossAttackCollision\BigBossAttackCollision.cpp" />
+    <ClCompile Include="Actor\ShootingPlayerMode\ShootingEnemy\BigBossEnemy\State\BigBossEnemyAttack\BigBossEnemyAttack.cpp" />
+    <ClCompile Include="Actor\ShootingPlayerMode\ShootingEnemy\BigBossEnemy\State\BigBossEnemyDead\BigBossEnemyDead.cpp" />
+    <ClCompile Include="Actor\ShootingPlayerMode\ShootingEnemy\BigBossEnemy\State\BigBossEnemyIdle\BigBossEnemyIdle.cpp" />
     <ClCompile Include="Actor\ShootingPlayerMode\ShootingEnemy\BossEnemy\BossEnemyActor.cpp" />
     <ClCompile Include="Actor\ShootingPlayerMode\ShootingEnemy\BossEnemy\HPUI\BossHPUI.cpp" />
     <ClCompile Include="Actor\ShootingPlayerMode\ShootingEnemy\BossEnemy\State\BossEnemyDamage\BossEnemyDamage.cpp" />
@@ -228,6 +235,7 @@
     <ClCompile Include="Actor\ShootingPlayerMode\ShootingPlayer\ShootingPlayerActor\State\Aim_Idle\ShootingPlayerAim_Idle.cpp" />
     <ClCompile Include="Actor\ShootingPlayerMode\ShootingPlayer\ShootingPlayerActor\State\Damage\ShootingPlayerDamage.cpp" />
     <ClCompile Include="Actor\ShootingPlayerMode\ShootingPlayer\ShootingPlayerActor\State\Dead\ShootingPlayerDead.cpp" />
+    <ClCompile Include="Actor\ShootingPlayerMode\ShootingPlayer\ShootingPlayerActor\State\Guard\ShootingPlayerGuard.cpp" />
     <ClCompile Include="Actor\ShootingPlayerMode\ShootingPlayer\ShootingPlayerActor\State\Gun\ShootingPlayerGun.cpp" />
     <ClCompile Include="Actor\ShootingPlayerMode\ShootingPlayer\ShootingPlayerActor\State\GunPunch\ShootingPlayerGunPunch.cpp" />
     <ClCompile Include="Actor\ShootingPlayerMode\ShootingPlayer\ShootingPlayerActor\State\Idle\ShootingPlayerIdle.cpp" />
@@ -257,9 +265,6 @@
     <ClCompile Include="Collision\OrientedBoundingBox.cpp" />
     <ClCompile Include="Collision\Ray.cpp" />
     <ClCompile Include="Conv\DXConverter.cpp" />
-    <ClCompile Include="Effekseer\EffectAsset\EffectAsset.cpp" />
-    <ClCompile Include="Effekseer\EffectObj\EffectObj.cpp" />
-    <ClCompile Include="Effekseer\EffekseerEffect\EffekseerEffect.cpp" />
     <ClCompile Include="Game\Game.cpp" />
     <ClCompile Include="Game\Time.cpp" />
     <ClCompile Include="Graphics\Graphics2D.cpp" />
@@ -383,6 +388,15 @@
     <ClInclude Include="Actor\ShootingPlayerMode\ItemActor\HPRecoverItem\HPRecoverItem.h" />
     <ClInclude Include="Actor\ShootingPlayerMode\ItemActor\ItemCreater\ItemCreater.h" />
     <ClInclude Include="Actor\ShootingPlayerMode\ShootingCamera\ShootingCamera.h" />
+    <ClInclude Include="Actor\ShootingPlayerMode\ShootingEnemy\BigBossEnemy\BigBossEnemyActor.h" />
+    <ClInclude Include="Actor\ShootingPlayerMode\ShootingEnemy\BigBossEnemy\BigBossEnemyMotionNum.h" />
+    <ClInclude Include="Actor\ShootingPlayerMode\ShootingEnemy\BigBossEnemy\BigBossEnemyStateInc.h" />
+    <ClInclude Include="Actor\ShootingPlayerMode\ShootingEnemy\BigBossEnemy\HPUI\BigBossHPUI.h" />
+    <ClInclude Include="Actor\ShootingPlayerMode\ShootingEnemy\BigBossEnemy\State\BigBossEnemyAttack\AttackChoice.h" />
+    <ClInclude Include="Actor\ShootingPlayerMode\ShootingEnemy\BigBossEnemy\State\BigBossEnemyAttack\BigBossAttackCollision\BigBossAttackCollision.h" />
+    <ClInclude Include="Actor\ShootingPlayerMode\ShootingEnemy\BigBossEnemy\State\BigBossEnemyAttack\BigBossEnemyAttack.h" />
+    <ClInclude Include="Actor\ShootingPlayerMode\ShootingEnemy\BigBossEnemy\State\BigBossEnemyDead\BigBossEnemyDead.h" />
+    <ClInclude Include="Actor\ShootingPlayerMode\ShootingEnemy\BigBossEnemy\State\BigBossEnemyIdle\BigBossEnemyIdle.h" />
     <ClInclude Include="Actor\ShootingPlayerMode\ShootingEnemy\BossEnemy\BossEnemyActor.h" />
     <ClInclude Include="Actor\ShootingPlayerMode\ShootingEnemy\BossEnemy\BossEnemyMotionNum.h" />
     <ClInclude Include="Actor\ShootingPlayerMode\ShootingEnemy\BossEnemy\BossEnemyStateInc.h" />
@@ -413,6 +427,7 @@
     <ClInclude Include="Actor\ShootingPlayerMode\ShootingPlayer\ShootingPlayerActor\State\Aim_Idle\ShootingPlayerAim_Idle.h" />
     <ClInclude Include="Actor\ShootingPlayerMode\ShootingPlayer\ShootingPlayerActor\State\Damage\ShootingPlayerDamage.h" />
     <ClInclude Include="Actor\ShootingPlayerMode\ShootingPlayer\ShootingPlayerActor\State\Dead\ShootingPlayerDead.h" />
+    <ClInclude Include="Actor\ShootingPlayerMode\ShootingPlayer\ShootingPlayerActor\State\Guard\ShootingPlayerGuard.h" />
     <ClInclude Include="Actor\ShootingPlayerMode\ShootingPlayer\ShootingPlayerActor\State\Gun\ShootingPlayerGun.h" />
     <ClInclude Include="Actor\ShootingPlayerMode\ShootingPlayer\ShootingPlayerActor\State\GunPunch\ShootingPlayerGunPunch.h" />
     <ClInclude Include="Actor\ShootingPlayerMode\ShootingPlayer\ShootingPlayerActor\State\Idle\ShootingPlayerIdle.h" />
@@ -454,9 +469,6 @@
     <ClInclude Include="Collision\Ray.h" />
     <ClInclude Include="Conv\ByteConverter.h" />
     <ClInclude Include="Conv\DXConverter.h" />
-    <ClInclude Include="Effekseer\EffectAsset\EffectAsset.h" />
-    <ClInclude Include="Effekseer\EffectObj\EffectObj.h" />
-    <ClInclude Include="Effekseer\EffekseerEffect\EffekseerEffect.h" />
     <ClInclude Include="Game\Define.h" />
     <ClInclude Include="Game\FpsSetting.h" />
     <ClInclude Include="Game\Game.h" />

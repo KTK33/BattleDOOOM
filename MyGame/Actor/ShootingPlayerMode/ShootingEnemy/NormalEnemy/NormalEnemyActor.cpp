@@ -119,6 +119,11 @@ void NormalEnemyActor::receiveMessage(EventMessage message, void * param)
 		velocity_ = mAP.Hit(*static_cast<Vector3*>(param));
 	}
 
+	if (message == EventMessage::HIT_ENEMY)
+	{
+		velocity_ = mAP.Hit(*static_cast<Vector3*>(param));
+	}
+
 	//プレイヤーの弾威力をもらう
 	if (message == EventMessage::DAMAGEPARAM)
 	{
@@ -164,7 +169,7 @@ void NormalEnemyActor::collision()
 	//床との接地判定
 	if (floor(result)) {
 		Floorcollide = true;
-		position_ = result + rotation_.Up()*(body_->length()*0.7f + body_->radius()*0.7f);
+		position_ = result + rotation_.Up()* mpushheight;
 	}
 	else {
 		Floorcollide = false;

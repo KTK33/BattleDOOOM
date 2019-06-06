@@ -9,6 +9,8 @@ void ShootingPlayerParam::initialize()
 	mAimPos = Vector3::Zero;
 	mAimCheck = false;
 	mItemBox = false;
+	mWeaponNum = 1;
+	mGuard = false;
 }
 
 int ShootingPlayerParam::Get_RemainGun()
@@ -74,4 +76,24 @@ void ShootingPlayerParam::Set_ItemBoXOpen(bool ibx)
 bool ShootingPlayerParam::Get_ItemBoxOpen()
 {
 	return mItemBox;
+}
+
+void ShootingPlayerParam::Set_WeaponModel(int num)
+{
+	mWeaponNum = num;
+}
+
+int ShootingPlayerParam::Get_WeaponModel()
+{
+	return mWeaponNum;
+}
+
+void ShootingPlayerParam::Set_Guard(bool g)
+{
+	mGuard = g;
+}
+
+bool ShootingPlayerParam::Get_Guard()
+{
+	return mGuard;
 }

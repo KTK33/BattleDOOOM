@@ -61,7 +61,8 @@ void ParamUI::draw() const
 
 	if (mAimCheck)
 	{
-		Sprite::GetInstance().DrawSetCenter(SPRITE_ID::SIGHT, Vector2(ConvWorldPosToScreenPos(mAimPos).x, ConvWorldPosToScreenPos(mAimPos).y));
+		Vector2 getsize = Sprite::GetInstance().GetSize(SPRITE_ID::SIGHT);
+		Sprite::GetInstance().DrawSetCenter(SPRITE_ID::SIGHT, Vector2(ConvWorldPosToScreenPos(mAimPos).x - getsize.x/2, ConvWorldPosToScreenPos(mAimPos).y));
 	}
 
 	if (mGunEmpty)

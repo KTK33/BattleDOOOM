@@ -21,4 +21,6 @@ protected:
 	bool Stagecollide{ false };
 	bool Floorcollide{ false };
 
+	float mpushheight{ 9.8f };
+
 };

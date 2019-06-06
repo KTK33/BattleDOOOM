@@ -51,7 +51,7 @@ void ShootingLoad::LoadModel()
 	SkeletalMesh::load(6, "asset/MODEL/Item/HPRecover/firstaid.mv1");
 	SkeletalMesh::load(7, "asset/MODEL/Item/Bullet/BulletItemEX.mv1");
 	SkeletalMesh::load(8, "asset/MODEL/BossMonster/Fire/Meteor.mv1");
-	StaticMesh::load(1, "asset/Weapon/Italian/Italian machine guns.mv1");
+	SkeletalMesh::load(9, "asset/MODEL/BigBoss/bos.mv1");
 }
 
 void ShootingLoad::LoadSound()

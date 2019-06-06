@@ -46,6 +46,13 @@ void ShootingPlayerIdle::Input()
 		return;
 	}
 
+	if (ButtonB::GetInstance().TriggerDown())
+	{
+		mNextStateID = ActorStateID::ShootingPlayerGuard;
+		mNextStateFlag = true;
+		return;
+	}
+
 	//ÉäÉçÅ[Éh
 	if (ShootingPlayerParam::getInstance().Get_RemainGun() < 7)
 	{

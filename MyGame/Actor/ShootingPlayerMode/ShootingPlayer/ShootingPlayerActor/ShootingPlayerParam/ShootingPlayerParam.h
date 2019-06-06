@@ -38,6 +38,14 @@ public:
 	void Set_ItemBoXOpen(bool ibx);
 	bool Get_ItemBoxOpen();
 
+	//•Šíƒ‚ƒfƒ‹”Ô†
+	void Set_WeaponModel(int num);
+	int Get_WeaponModel();
+
+	//ƒK[ƒh‚µ‚Ä‚¢‚é‚©
+	void Set_Guard(bool g);
+	bool Get_Guard();
+
 private:
 
 	int mRemainGun;
@@ -46,4 +54,7 @@ private:
 	Vector3 mAimPos;
 	bool mAimCheck;
 	bool mItemBox;
+	int mWeaponNum;
+	bool mGuard;
+
 };

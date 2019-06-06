@@ -25,6 +25,7 @@ public:
 		MotionPlayerTyohatu,
 		MotionPlayerWalk,
 		MotionPlayerJump,
-		MotionPlayerRunJump
+		MotionPlayerRunJump,
+		MotionPlayerGuard
 	};
 };

@@ -4,6 +4,7 @@
 #include "../Collision/BoundingCapsule.h"
 #include "../Collision/BoundingSphere.h"
 #include "../Math/MathH.h"
+#include "../Animation/AnimationMesh.h"
 
 class ShootingPlayerBullet : public Actor
 {
@@ -26,6 +27,8 @@ public:
 	float EffectSize();
 private:
 	Actor* player_;
+
+	AnimatedMesh mesh_;
 
 	bool Hit;
 

@@ -6,14 +6,15 @@
 
 ShootingPlayerBullet::ShootingPlayerBullet(IWorld * world, const Vector3 & P_position, Vector3 & A_position, int AttackParam, const IBodyPtr & body):
 	Actor(world, "Ball", P_position, body),
+	mesh_{ 5 },
 	m_GoPos{ A_position },
 	Hit{false}
 {
 	player_ = world_->find_actor(ActorGroup::Player, "Player").get();
 
-	m_InitFar = Vector3(m_GoPos.x - position_.x, m_GoPos.y - position_.y, m_GoPos.z - position_.z);
+	m_InitFar = Vector3(m_GoPos.x - position_.x, m_GoPos.y - position_.y, m_GoPos.z - position_.z).Normalize();
 
-	rotation_ = -player_->Getrotation();
+	rotation_ = Matrix::Invert(Matrix::CreateLookAt(player_->Getposition(), player_->Getposition() + player_->Getpose().Forward(), Vector3::Up)) * Matrix::CreateRotationY(200);
 
 	world_->send_message(EventMessage::DAMAGEPARAM, reinterpret_cast<void*>(&AttackParam));
 
@@ -21,12 +22,16 @@ ShootingPlayerBullet::ShootingPlayerBullet(IWorld * world, const Vector3 & P_pos
 }
 
 void ShootingPlayerBullet::initialize()
-{}
+{
+	mesh_.transform(Getpose());
+}
 
 void ShootingPlayerBullet::update(float deltaTime)
 {
+	mesh_.update(deltaTime);
+	mesh_.transform(Getpose());
 	//’e‚ÌˆÚ“®ˆ—
-	position_ += m_InitFar * 0.3f;
+	position_ += m_InitFar * 5.0f;
 	collision();
 }
 

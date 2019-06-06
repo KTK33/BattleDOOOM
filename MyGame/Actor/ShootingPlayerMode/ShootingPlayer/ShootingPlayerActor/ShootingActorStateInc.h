@@ -10,3 +10,4 @@
 #include "State/Jump/ShootingPlayerJump.h"
 #include "State/Provocation/ShootingPlayerProvocation.h"
 #include "State/Reload/ShootingPlayerReload.h"
+#include "State/Guard/ShootingPlayerGuard.h"

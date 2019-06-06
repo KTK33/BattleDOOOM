@@ -53,6 +53,6 @@ void ShootingPlayerGun::StateUpdate(Vector3 & lposition, Matrix & lrotation, Ani
 void ShootingPlayerGun::Gun(Vector3 lposition, Matrix lrotation)
 {
 	world_->add_actor(ActorGroup::PlayerBullet, new_actor<ShootingPlayerBullet>
-		(world_, Vector3{ lposition.x,lposition.y + 13.0f,lposition.z } +lrotation.Forward() * 4 + lrotation.Right() * 3, 
+		(world_, Vector3{ lposition.x,lposition.y + 16.0f,lposition.z } +lrotation.Forward() * 4 + lrotation.Right() * 3, 
 			ShootingPlayerParam::getInstance().Get_AimPos(), ShootingPlayerParam::getInstance().Get_AttackParam()));
 }

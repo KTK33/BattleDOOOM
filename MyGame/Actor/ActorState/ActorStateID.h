@@ -16,6 +16,7 @@ enum class ActorStateID
 	ShootingPlayerGunPunch,
 	ShootingPlayerThohatu,
 	ShootingPlayerJump,
+	ShootingPlayerGuard,
 
 	//シューティングモードのノーマルエネミーのステイト
 	NormalEnemyIdle,
@@ -32,7 +33,10 @@ enum class ActorStateID
 	BossEnemyDamage,
 	BossEnemyDead,
 
-
+	//シューティングモードのビッグボスエネミーのステイト
+	BigBossEnemyIdle,
+	BigBossEnemyAttack,
+	BigBossEnemyDead,
 
 	//アクションプレイヤーのステイト
 	ActionPlayerIdle,

@@ -100,6 +100,7 @@ void Game::start() {
 void Game::update(float) {
 	// ゲームパッドの更新
 	GamePad::GetInstance().Update();
+	ReSetupJoypad();
 	Keyboard::GetInstance().Update();
 	// マウスの更新
 	Mouse::update();

@@ -162,7 +162,7 @@ void BossEnemyActor::collision()
 	//°‚Æ‚ÌÚ’n”»’è
 	if (floor(result)) {
 		Floorcollide = true;
-		position_ = result + rotation_.Up()*(body_->length()*0.7f + body_->radius()*0.467f);
+		position_ = result + rotation_.Up()*mpushheight;
 	}
 	else {
 		Floorcollide = false;

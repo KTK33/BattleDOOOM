@@ -78,7 +78,7 @@ void ShootingPlayerItemBox::PlayerInput()
 		alphaCheck = false;
 	}
 
-	if(ButtonB::GetInstance().TriggerDown())
+	if(ButtonR3::GetInstance().TriggerDown())
 	{
 		bool Attackup = true;
 		switch (cursorPos_2)

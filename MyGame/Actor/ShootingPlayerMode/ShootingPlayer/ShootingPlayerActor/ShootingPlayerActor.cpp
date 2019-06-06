@@ -33,6 +33,7 @@ ShootingPlayerActor::ShootingPlayerActor(int model, int weapon, IWorld * world, 
 	shootingplayerState_[ActorStateID::ShootingPlayerJump].add(add_state<ShootingPlayerJump>(world, parameters_));
 	shootingplayerState_[ActorStateID::ShootingPlayerReload].add(add_state<ShootingPlayerReload>(world, parameters_));
 	shootingplayerState_[ActorStateID::ShootingPlayerThohatu].add(add_state<ShootingPlayerProvocation>(world, parameters_));
+	shootingplayerState_[ActorStateID::ShootingPlayerGuard].add(add_state<ShootingPlayerGuard>(world, parameters_));
 	shootingplayerState_[mcurrentStateID].initialize();
 
 	initialize();
@@ -135,7 +136,7 @@ void ShootingPlayerActor::update(float deltaTime)
 void ShootingPlayerActor::draw() const
 {
 	mesh_.draw();
-	mDW.draw(mweapon_, mweaponPos, mesh_);
+	mDW.draw(ShootingPlayerParam::getInstance().Get_WeaponModel(), mweaponPos, mesh_);
 	mParamUI.draw();
 }
 
@@ -147,8 +148,9 @@ void ShootingPlayerActor::onCollide(Actor & other)
 
 void ShootingPlayerActor::receiveMessage(EventMessage message, void * param)
 {
-	//–³“G‚Å‚È‚¢‚Æ‚«‚É“G‚Ì’e‚É“–‚½‚Á‚½‚ç
-	if (parameters_.Get_invincibly() == false)
+	//–³“G(ƒK[ƒh’†)‚Å‚È‚¢‚Æ‚«‚É“G‚Ì’e‚É“–‚½‚Á‚½‚ç
+	if (parameters_.Get_invincibly() == false && 
+		ShootingPlayerParam::getInstance().Get_Guard() == false)
 	{
 		if (message == EventMessage::HIT_ENEMY_BULLET)
 		{
@@ -241,7 +243,7 @@ void ShootingPlayerActor::collision()
 	//°‚Æ‚ÌÚ’n”»’è
 	if (floor(result)) {
 		Floorcollide = true;
-		position_ = result + rotation_.Up()*(body_->length()*0.7f + body_->radius()*0.7f);
+		position_ = result + rotation_.Up() * mpushheight;
 	}
 	else {
 		Floorcollide = false;

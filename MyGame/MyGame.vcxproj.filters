@@ -504,13 +504,28 @@
     <ClCompile Include="Scene\GameSelectScene\GameSelectSceneManager\GameSelectSceneManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Effekseer\EffectAsset\EffectAsset.cpp">
+    <ClCompile Include="Actor\ShootingPlayerMode\ShootingPlayer\ShootingPlayerActor\State\Guard\ShootingPlayerGuard.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Effekseer\EffectObj\EffectObj.cpp">
+    <ClCompile Include="Actor\ShootingPlayerMode\ShootingEnemy\BigBossEnemy\BigBossEnemyActor.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Effekseer\EffekseerEffect\EffekseerEffect.cpp">
+    <ClCompile Include="Actor\ShootingPlayerMode\ShootingEnemy\BigBossEnemy\State\BigBossEnemyIdle\BigBossEnemyIdle.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\ShootingPlayerMode\ShootingEnemy\BigBossEnemy\State\BigBossEnemyDead\BigBossEnemyDead.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\ShootingPlayerMode\ShootingEnemy\BigBossEnemy\State\BigBossEnemyAttack\BigBossEnemyAttack.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\ShootingPlayerMode\ShootingEnemy\BigBossEnemy\State\BigBossEnemyAttack\AttackChoice.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\ShootingPlayerMode\ShootingEnemy\BigBossEnemy\HPUI\BigBossHPUI.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\ShootingPlayerMode\ShootingEnemy\BigBossEnemy\State\BigBossEnemyAttack\BigBossAttackCollision\BigBossAttackCollision.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1133,13 +1148,34 @@
     <ClInclude Include="Scene\GameSelectScene\GameSelectSceneManager\GameSelectSceneManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Effekseer\EffectAsset\EffectAsset.h">
+    <ClInclude Include="Actor\ShootingPlayerMode\ShootingEnemy\BigBossEnemy\BigBossEnemyActor.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Effekseer\EffectObj\EffectObj.h">
+    <ClInclude Include="Actor\ShootingPlayerMode\ShootingEnemy\BigBossEnemy\BigBossEnemyMotionNum.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Effekseer\EffekseerEffect\EffekseerEffect.h">
+    <ClInclude Include="Actor\ShootingPlayerMode\ShootingEnemy\BigBossEnemy\BigBossEnemyStateInc.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ShootingPlayerMode\ShootingPlayer\ShootingPlayerActor\State\Guard\ShootingPlayerGuard.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ShootingPlayerMode\ShootingEnemy\BigBossEnemy\State\BigBossEnemyAttack\BigBossEnemyAttack.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ShootingPlayerMode\ShootingEnemy\BigBossEnemy\State\BigBossEnemyDead\BigBossEnemyDead.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ShootingPlayerMode\ShootingEnemy\BigBossEnemy\State\BigBossEnemyIdle\BigBossEnemyIdle.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ShootingPlayerMode\ShootingEnemy\BigBossEnemy\State\BigBossEnemyAttack\AttackChoice.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ShootingPlayerMode\ShootingEnemy\BigBossEnemy\HPUI\BigBossHPUI.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\ShootingPlayerMode\ShootingEnemy\BigBossEnemy\State\BigBossEnemyAttack\BigBossAttackCollision\BigBossAttackCollision.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

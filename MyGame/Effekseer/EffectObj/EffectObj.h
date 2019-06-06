@@ -1,6 +1,4 @@
-#ifndef _EFFECT_OBJ_H_
-#define _EFFECT_OBJ_H_
-
+#pragma once
 #include "../EffekseerEffect/EffekseerEffect.h"
 
 class EffectObj
@@ -33,5 +31,3 @@ private:
 	int m_effect;
 	int m_playingEff;
 };
-
-#endif

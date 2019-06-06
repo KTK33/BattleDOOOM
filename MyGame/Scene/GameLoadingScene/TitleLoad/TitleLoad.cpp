@@ -49,6 +49,7 @@ void TitleLoad::LoadModel()
 	SkeletalMesh::load(0, "asset/MODEL/Player/Model.mv1");
 	SkeletalMesh::load(5, "asset/Weapon/Bullet1.mv1");
 	StaticMesh::load(1, "asset/Weapon/Italian/Italian machine guns.mv1");
+	StaticMesh::load(2, "asset/Weapon/Italian/Italian machine guns.mv2");
 	SkeletalMesh::load(50, "asset/MODEL/ActionPlayer/ActionPlayer.mv1");
 	StaticMesh::load(10, "asset/Weapon/ActionPlayer/dagger.mv1");
 }
