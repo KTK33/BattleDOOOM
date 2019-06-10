@@ -11,6 +11,7 @@ SceneManager::SceneManager() :currentScene_(SceneType::SCENE_TITLE_LOAD) {
 	scenes_[SceneType::SCENE_SHOOTING_PLAY] = std::make_shared<ShootingPlayScene>();
 	scenes_[SceneType::SCENE_ACTION_LOAD] = std::make_shared<ActionLoad>();
 	scenes_[SceneType::SCENE_ACTION_PLAY] = std::make_shared<ActionPlayScene>();
+	scenes_[SceneType::SCENE_TEST] = std::make_shared<TestScene>();
 }
 
 SceneManager::~SceneManager() {

@@ -40,9 +40,13 @@ public:
 	void SetAIMSPD(int AIM);
 	int GetAIMSPD();
 
+	//シーン番号
 	void SetSceneNum(int scene);
 	int GetSceneNum();
 
+	//次はアクションシーン
+	void SetNextActionScene(bool ac);
+	bool GetNextActionScene();
 
 private:
 
@@ -56,4 +60,6 @@ private:
 	int mAIM_SPD{ 5 };
 
 	int mSceneNumber{ 2 };
+
+	bool mNextAction{ false };
 };

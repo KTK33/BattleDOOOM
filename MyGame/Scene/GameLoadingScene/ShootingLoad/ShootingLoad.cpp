@@ -18,6 +18,9 @@ void ShootingLoad::start()
 
 	//ロードするリソース数の設定
 	mDL.setCount(GetASyncLoadNum());
+
+	//Effekseerのエフェクトを読み込み
+	LoadEffect();
 }
 
 void ShootingLoad::update(float deltaTime)
@@ -71,6 +74,10 @@ void ShootingLoad::LoadSound()
 	Sound::GetInstance().LoadSE("asset/Sound/SE/Walkstep.mp3", SE_ID::WALKSTEP_SE);
 	Sound::GetInstance().LoadSE("asset/Sound/SE/Tyouhatu.mp3", SE_ID::TYOHATU_SE);
 	Sound::GetInstance().LoadSE("asset/Sound/SE/ItemGet.mp3", SE_ID::ITEMGET_SE);
+
+	Sound::GetInstance().LoadSE("asset/Sound/SE/RecoverItemUse.mp3", SE_ID::RECOVERITEM_USE);
+	Sound::GetInstance().LoadSE("asset/Sound/SE/AttackUpItemUse.mp3", SE_ID::ATTACKITEM_USE);
+
 }
 
 void ShootingLoad::LoadSprite()
@@ -128,6 +135,13 @@ void ShootingLoad::LoadSprite()
 	sprite.Load("asset/UI/Pause/TitleUI.png", SPRITE_ID::PAUSETITLE);
 	sprite.Load("asset/UI/Pause/Title_description.png", SPRITE_ID::PAUSETITLE_DESCRIPTION);
 
-	//エフェクト
+	//2Dエフェクト
 	sprite.Load("asset/UI/Effect/BulletHit.png", SPRITE_ID::EFFECT_BULLETHIT);
+}
+
+void ShootingLoad::LoadEffect()
+{
+	EffekseerEffect::load((int)EFFECT_ID::PLAYER_HEAL, "asset/Effekseer/Heal.efk");
+	EffekseerEffect::load((int)EFFECT_ID::PLAYER_ATTACKUP, "asset/Effekseer/ShootingPlayer_AttackUp.efk");
+	EffekseerEffect::load((int)EFFECT_ID::ENEMY_ROAR, "asset/Effekseer/EnemyRoar.efk");
 }

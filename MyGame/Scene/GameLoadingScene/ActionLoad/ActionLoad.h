@@ -19,6 +19,8 @@ private:
 	void LoadSound();
 	//画像の読み込み
 	void LoadSprite();
+	//エフェクシアのエフェクト読み込み
+	void LoadEffect();
 
 private:
 	int Countres{ 0 };

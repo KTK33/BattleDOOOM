@@ -46,6 +46,11 @@ public:
 	void Set_Guard(bool g);
 	bool Get_Guard();
 
+	//アイテムを使ったか
+	void Set_ItemUse(bool i,int type);
+	bool Get_ItemUse();
+	int Get_ItemType();
+
 private:
 
 	int mRemainGun;
@@ -56,5 +61,6 @@ private:
 	bool mItemBox;
 	int mWeaponNum;
 	bool mGuard;
-
+	bool mItemUse;
+	int mItemType;
 };

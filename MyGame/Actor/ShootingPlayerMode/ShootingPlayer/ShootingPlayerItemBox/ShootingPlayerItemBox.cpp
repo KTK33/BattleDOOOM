@@ -8,7 +8,9 @@ ShootingPlayerItemBox::ShootingPlayerItemBox(IWorld * world,int HPItem,int Attac
 	Actor(world,"PlayerBox",Vector3::Zero),
 	countHPrecoverItem{ HPItem },
 	countAttackUPItem{AttackItem},
-	m_player{player}
+	m_player{player},
+	mPhp{0},
+	mstate{ActorStateID::NONE}
 {
 	initialize();
 }
@@ -61,6 +63,18 @@ void ShootingPlayerItemBox::draw() const
 	Sprite::GetInstance().DrawPart(SPRITE_ID::NUMBER, Vector2(1830.f, 570.f), static_cast<int>(NumSize.x / 10.0f) * countAttackUPItem, 0, static_cast<int>(NumSize.x / 10.0f), static_cast<int>(NumSize.y));
 }
 
+void ShootingPlayerItemBox::receiveMessage(EventMessage message, void * param)
+{
+	if (message == EventMessage::PLAYER_HP)
+	{
+		mPhp = *static_cast<int*>(param);
+	}
+	if (message == EventMessage::PLAYER_STATE)
+	{
+		mstate = *static_cast<ActorStateID*>(param);
+	}
+}
+
 void ShootingPlayerItemBox::PlayerInput()
 {
 	//右スティックで選択する
@@ -80,15 +94,17 @@ void ShootingPlayerItemBox::PlayerInput()
 
 	if(ButtonR3::GetInstance().TriggerDown())
 	{
+		if (mstate == ActorStateID::ShootingPlayerDamage ||
+			mstate == ActorStateID::ShootingPlayerDead) return;
+
 		bool Attackup = true;
 		switch (cursorPos_2)
 		{
 		case 0:
-			if (countHPrecoverItem > 0)
+			if (countHPrecoverItem > 0 && mPhp < ShootingPlayerHPVal)
 			{
 				m_player.lock()->receiveMessage(EventMessage::HP_RECOVER, (void*)&GetHpPoint);
 				countHPrecoverItem = countHPrecoverItem - 1;
-				Sound::GetInstance().PlaySE(SE_ID::ITEMUSE_SE);
 			}
 			break;
 		case 1:
@@ -96,11 +112,11 @@ void ShootingPlayerItemBox::PlayerInput()
 			{
 				m_player.lock()->receiveMessage(EventMessage::ATTACK_UP, reinterpret_cast<void*>(&Attackup));
 				countAttackUPItem = countAttackUPItem - 1;
-				Sound::GetInstance().PlaySE(SE_ID::ITEMUSE_SE);
 			}
 			break;
 		default:
 			break;
 		}
 	}
+
 }

@@ -19,6 +19,8 @@
 #include "../Actor/ActorCommon/CommonInc.h"
 #include "../Actor/ShootingPlayerMode/ShootingPlayer/ShootingPlayerActor/PlayerMove/PlayerMove.h"
 
+#include "../Effekseer/EffectObj/EffectObj.h"
+
 class ShootingPlayerActor : public Actor, public ActorSystem {
 public:
 	ShootingPlayerActor(int model, int weapon, IWorld* world, const Vector3& position, std::weak_ptr<Actor> ui, const IBodyPtr& body = std::make_shared<BoundingCapsule>(Vector3{ 0.0f,9.0f,0.0f }, Matrix::Identity, 10.0f, 4.0f));
@@ -45,6 +47,8 @@ private:
 	void gun_movement(float speed, Vector2 input);
 	//–³“GŽžŠÔ
 	void invincibly(bool check);
+
+	void Effect();
 private:
 	using StateMap = std::map<ActorStateID, ActorStateManager>;
 	StateMap shootingplayerState_;
@@ -81,4 +85,7 @@ private:
 	int mAttackParam;
 	bool mAttackUpCheck;
 	int mAttackUpTime;
+
+	EffectObj meff;
+	Vector3 meffsize;
 };

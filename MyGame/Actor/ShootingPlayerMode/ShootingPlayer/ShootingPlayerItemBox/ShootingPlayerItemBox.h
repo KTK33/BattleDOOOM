@@ -2,6 +2,7 @@
 
 #include "../Actor/Actor.h"
 #include "../Scene/Menu.h"
+#include "../Actor/ActorState/ActorStateID.h"
 
 class ShootingPlayerItemBox : public Actor,public Menu {
 public:
@@ -14,6 +15,8 @@ public:
 
 	virtual void draw() const override;
 
+	virtual void receiveMessage(EventMessage message, void * param) override;
+
 	void PlayerInput();
 
 private:
@@ -25,4 +28,7 @@ private:
 
 	int alphaTimer;
 	bool alphaCheck;
+
+	int mPhp;
+	ActorStateID mstate;
 };

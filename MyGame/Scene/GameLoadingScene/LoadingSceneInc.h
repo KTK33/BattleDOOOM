@@ -10,3 +10,5 @@
 #include "../Texture/SpriteID.h"
 #include "../Sound/Sound.h"
 #include "../Graphics/Graphics3D.h"
+#include "../Effekseer/EffekseerEffect/EffekseerEffect.h"
+#include "../Effekseer/EFFECT_ID.h"

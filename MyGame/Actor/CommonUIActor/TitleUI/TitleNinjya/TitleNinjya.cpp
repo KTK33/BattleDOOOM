@@ -4,7 +4,8 @@
 TitleNinjya::TitleNinjya(int model, int weapon, IWorld * world, const Vector3 & position):
 	Actor(world, "TitleNinjya", position),
 	mesh_{ model },
-	mweapon_{ weapon }
+	mweapon_{ weapon },
+	mTimer{ 0 }
 {
 	rotation_ = Matrix::CreateRotationY(180);
 	mesh_.transform(Getpose());
@@ -19,6 +20,12 @@ void TitleNinjya::update(float deltaTime)
 	mesh_.change_motion(mmotion_);
 
 	position_ += rotation_.Forward() * 0.3f;
+
+	mTimer++;
+	if (mTimer > 180)
+	{
+		die();
+	}
 }
 
 void TitleNinjya::draw() const

@@ -11,6 +11,8 @@ void ShootingPlayerParam::initialize()
 	mItemBox = false;
 	mWeaponNum = 1;
 	mGuard = false;
+	mItemUse = false;
+	mItemType = 0;
 }
 
 int ShootingPlayerParam::Get_RemainGun()
@@ -96,4 +98,20 @@ void ShootingPlayerParam::Set_Guard(bool g)
 bool ShootingPlayerParam::Get_Guard()
 {
 	return mGuard;
+}
+
+void ShootingPlayerParam::Set_ItemUse(bool i, int type)
+{
+	mItemUse = i;
+	mItemType = type;
+}
+
+bool ShootingPlayerParam::Get_ItemUse()
+{
+	return mItemUse;
+}
+
+int ShootingPlayerParam::Get_ItemType()
+{
+	return mItemType;
 }

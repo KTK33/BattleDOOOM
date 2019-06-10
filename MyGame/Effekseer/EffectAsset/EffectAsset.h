@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _EFFECT_ASSET_H_
+#define _EFFECT_ASSET_H_
 
 #include <unordered_map>
 #include <string>
@@ -32,3 +33,5 @@ private:
 	//モデルデータマップ
 	std::unordered_map<int, int> asset_;
 };
+
+#endif

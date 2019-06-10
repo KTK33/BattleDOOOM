@@ -6,6 +6,7 @@
 #include "../Actor/ShootingPlayerMode/UIActor/Pause/Pause.h"
 #include "../Actor/ShootingPlayerMode/ShootingEnemy/NormalEnemy/NormalEnemyActor.h"
 #include "../Actor/ShootingPlayerMode/ShootingEnemy/BossEnemy/BossEnemyActor.h"
+#include "../Actor/ShootingPlayerMode/ShootingEnemy/BigBossEnemy/BigBossEnemyActor.h"
 #include "../Actor/ShootingPlayerMode/ShootingCamera/ShootingCamera.h"
 
 ShootingModeManager::ShootingModeManager(IWorld * world):
@@ -40,14 +41,16 @@ void ShootingModeManager::initialize()
 	world_->add_actor(ActorGroup::Enemy, dummy3);
 
 
-	world_->add_actor(ActorGroup::System, new_actor<ShootingCamera>(world_, P));
+	//world_->add_actor(ActorGroup::BigBossEnemy, new_actor<BigBossEnemyActor>(9, world_, Vector3{ 200.0f, 300.0f,20.0f }));
+
+	world_->add_camera(new_actor<ShootingCamera>(world_, P));
 }
 
 void ShootingModeManager::update(float deltaTime)
 {
 	if (world_->find_actor(ActorGroup::Enemy, "NormalEnemy") == NULL && BossArleady == false)
 	{
-		world_->add_actor(ActorGroup::BossEnemy, new_actor<BossEnemyActor>(3, world_, Vector3{ 200.0f, 30.0f,20.0f }));
+		world_->add_actor(ActorGroup::BossEnemy, new_actor<BossEnemyActor>(3, world_, Vector3{ 0.0f, 30.0f,0.0f }));
 		BossArleady = true;
 	}
 }

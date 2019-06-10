@@ -3,15 +3,16 @@
 #include "../Scene/GameData/GameDataManager.h"
 #include "../Actor/ActionPlayerMode/UI/SceneUI/PlayerDeadUI.h"
 
-ActionPlayerActor::ActionPlayerActor(int model, int weapon, IWorld * world, const Vector3 & position,const IBodyPtr & body):
-	Actor(world, "Player", position, body),
+ActionPlayerActor::ActionPlayerActor(int model, int weapon, IWorld * world, const Vector3 & position, const Matrix& rotation,const IBodyPtr & body):
+	Actor(world, "Player", position, rotation,body),
 	mesh_{ model,weapon },
 	mweapon_{ weapon },
 	mRightweaponPos{ 15 },
 	mLeftweaponPos{ 38 },
 	m_ActionCameraForward{ Vector3::Zero },
 	m_ActionCameraRight{ Vector3::Zero },
-	mDeadArelady{ false }
+	mDeadArelady{ false },
+	mDeadTime{ 40.0f}
 {
 	mcurrentStateID = ActorStateID::ActionPlayerIdle;
 	actionplayerState_[ActorStateID::ActionPlayerIdle].add(add_state<ActionPlayerIdle>(world, parameters_));
@@ -68,6 +69,7 @@ void ActionPlayerActor::update(float deltaTime)
 			world_->add_actor(ActorGroup::UI, new_actor<PlayerDeadUI>(world_));
 			mDeadArelady = true;
 		}
+		mDeadTime -= deltaTime;
 		return;
 	}
 
@@ -81,6 +83,9 @@ void ActionPlayerActor::update(float deltaTime)
 	//èÛë‘éûä‘Çâ¡éZ
 	parameters_.Add_Statetime(0.5f);
 
+	//É{ÉXÇ™éÄÇÒÇ≈Ç¢ÇΩÇÁà⁄ìÆÇ≥ÇπÇ»Ç¢
+	if (GameDataManager::getInstance().GetDeadBossEnemy()) return;
+
 	//à⁄ìÆì¸óÕÇÃèÓïÒ
 	if (parameters_.Get_StateID() == ActorStateID::ActionPlayerIdle || 
 		parameters_.Get_StateID() == ActorStateID::ActionPlayerAvoidance)
@@ -92,6 +97,8 @@ void ActionPlayerActor::update(float deltaTime)
 #include "../Texture/Sprite.h"
 void ActionPlayerActor::draw() const
 {
+	if (mDeadTime <= 0) return;
+
 	mesh_.draw();
 	mDW.draw(mweapon_, mRightweaponPos, mesh_);
 	mDW.draw(mweapon_, mLeftweaponPos, mesh_);
@@ -205,7 +212,7 @@ void ActionPlayerActor::movement(float speed, Vector2 input)
 	velocity_ += m_ActionCameraRight * side_speed;
 
 	//âÒîâ¡ë¨ìx
-	static const float mAvoidanceSpeed = 3.0f;
+	static const float mAvoidanceSpeed = 1.0f;
 
 	//ëñÇËÇ≈ÇÃâ¡ë¨
 	float DashSpped = 0.0f;

@@ -56,8 +56,14 @@ void Actor::collide(Actor & other) {
 bool Actor::field(Vector3 & result)
 {
 	Vector3 hitPos;
-	if (CollisionMesh::collide_line(prevPosition_ + rotation_.Up()*(body_->length()*0.5f), position_ + rotation_.Up()*(body_->radius() + body_->length()*0.5f), reinterpret_cast<Vector3*>(&hitPos))){
-		const Vector3 upVec = rotation_.Up()*(body_->radius() + body_->length()*0.5f);
+	//if (CollisionMesh::collide_line(prevPosition_ + rotation_.Up()*(body_->length()*0.5f), position_ + rotation_.Up()*(body_->radius() + body_->length()*0.5f), reinterpret_cast<Vector3*>(&hitPos))){
+	//	const Vector3 upVec = rotation_.Up()*(body_->radius() + body_->length()*0.5f);
+	//	position_ = hitPos - upVec;
+	//}
+
+	if (CollisionMesh::collide_capsule(position_ + rotation_.Up()*(body_->length()*0.5f), position_ + rotation_.Down()*(body_->length()*0.5f), body_->radius(), reinterpret_cast<Vector3*>(&hitPos)))
+	{
+		const Vector3 upVec = rotation_.Up()*(body_->radius() + body_->length());
 		position_ = hitPos - upVec;
 	}
 	Vector3 hitcenter;

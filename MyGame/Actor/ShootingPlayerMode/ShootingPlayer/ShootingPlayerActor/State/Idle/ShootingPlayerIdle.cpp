@@ -87,4 +87,12 @@ void ShootingPlayerIdle::Input()
 		mNextStateFlag = true;
 		return;
 	}
+
+	//アイテム使用
+	if (ShootingPlayerParam::getInstance().Get_ItemUse())
+	{
+		mNextStateID = ActorStateID::ShootingPlayerItemUse;
+		mNextStateFlag = true;
+		return;
+	}
 }

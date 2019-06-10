@@ -156,15 +156,6 @@ void NormalEnemyActor::collision()
 {
 	//‚Ô‚Â‚©‚Á‚½‚©
 	Vector3 result;
-	//•Ç‚Æ‚Ô‚Â‚¯‚Ä‚©‚ç
-	if (field(result)) {
-		position_.x = result.x;
-		position_.z = result.z;
-		Stagecollide = true;
-	}
-	else {
-		Stagecollide = false;
-	}
 
 	//°‚Æ‚ÌÚ’n”»’è
 	if (floor(result)) {

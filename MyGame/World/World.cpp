@@ -14,6 +14,7 @@ void World::initialize()
 	actors_.add(ActorGroup::PlayerBullet);
 	actors_.add(ActorGroup::Enemy);
 	actors_.add(ActorGroup::BossEnemy);
+	actors_.add(ActorGroup::BigBossEnemy);
 	actors_.add(ActorGroup::EnemyBullet);
 	actors_.add(ActorGroup::Ball);
 	actors_.add(ActorGroup::Item);
@@ -29,25 +30,27 @@ void World::initialize()
 
 void World::update(float delta_time)
 {
+	camera_->update(delta_time);
 	actors_.update(delta_time);
 	actors_.collide(ActorGroup::Player, ActorGroup::Enemy);
 	actors_.collide(ActorGroup::Player, ActorGroup::BossEnemy);
+	actors_.collide(ActorGroup::Player, ActorGroup::BigBossEnemy);
 	actors_.collide(ActorGroup::Player, ActorGroup::EnemyBullet);
 	actors_.collide(ActorGroup::Player, ActorGroup::Item);
 	actors_.collide(ActorGroup::PlayerBullet, ActorGroup::Enemy);
 	actors_.collide(ActorGroup::PlayerBullet, ActorGroup::BossEnemy);
+	actors_.collide(ActorGroup::PlayerBullet, ActorGroup::BigBossEnemy);
 	actors_.collide(ActorGroup::PlayerBullet, ActorGroup::EnemyHead);
 	actors_.collide(ActorGroup::Player, ActorGroup::Ball);
 	actors_.remove();
-	//camera_->update(delta_time);
 	//light_->update(delta_time);
 	//gsUpdateEffect(delta_time);
 }
 
 void World::draw() const
 {
-	//camera_->draw();
 	//light_->draw();
+	camera_->draw();
 	actors_.draw();
 }
 
@@ -57,8 +60,8 @@ void World::handle_message(EventMessage message, void * param)
 	listener_(message, param);
 	//アクターのメッセージ処理
 	actors_.handle_message(message, param);
-	//camera_->handle_message(message, param);
-	//light_->handle_message(message, param);
+	camera_->handleMessage(message, param);
+	//light_->handlemessage(message, param);
 }
 
 //イベントメッセージリスナーの登録
@@ -70,6 +73,11 @@ void World::add_event_message_listener(EventMessageListener listener)
 void World::add_camera(const ActorPtr & camera)
 {
 	camera_ = camera;
+}
+
+ActorPtr World::get_camera() const
+{
+	return camera_;
 }
 
 void World::add_light(const ActorPtr & light)

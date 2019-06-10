@@ -56,13 +56,11 @@ void ShootingPlayerBullet::collision()
 	Vector3 result;
 	//•Ç‚Æ‚Ô‚Â‚¯‚Ä‚©‚ç
 	if (field(result)) {
-		world_->add_actor(ActorGroup::Effect, new_actor<Effect2D>(world_, position_, EffectSize(), SPRITE_ID::EFFECT_BULLETHIT));
 		die();
 	}
 
 	//°‚Æ‚ÌÚ’n”»’è
 	if (floor(result)) {
-		world_->add_actor(ActorGroup::Effect, new_actor<Effect2D>(world_, position_, EffectSize(), SPRITE_ID::EFFECT_BULLETHIT));
 		die();
 	}
 }

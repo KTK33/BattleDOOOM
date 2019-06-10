@@ -36,13 +36,13 @@ void RedSamuraiAttack::StateUpdate(Vector3 & lposition, Matrix & lrotation, Anim
 	{
 		if (mAttckType < 7) {
 			parameters_->Set_Motion(RedSamuraiMotionNum::MotionRedSamuraiAttack1);
-			if (parameters_->Get_Statetimer() == 20.0f)AttackCollision(lposition, lrotation, 15, 1, Vector3(0.0f, 13.0f, 0.0f), 1.5f, 2.5f);
-			if (parameters_->Get_Statetimer() == 40.0f)AttackCollision(lposition, lrotation, 15, 2, Vector3(0.0f, 13.0f, 0.0f), 1.5f, 2.5f);
-			if (parameters_->Get_Statetimer() == 60.0f)AttackCollision(lposition, lrotation, 15, 2, Vector3(0.0f, 13.0f, 0.0f), 1.5f, 2.5f);
+			if (parameters_->Get_Statetimer() == 4.0f)AttackCollision(lposition, lrotation, 5, 1, Vector3(0.0f, 13.0f, 0.0f), 1.5f, 2.5f);
+			if (parameters_->Get_Statetimer() == 9.0f)AttackCollision(lposition, lrotation, 5, 2, Vector3(0.0f, 13.0f, 0.0f), 1.5f, 2.5f);
+			if (parameters_->Get_Statetimer() == 20.0f)AttackCollision(lposition, lrotation, 5, 2, Vector3(0.0f, 13.0f, 0.0f), 1.5f, 2.5f);
 		}
 		else {
 			parameters_->Set_Motion(RedSamuraiMotionNum::MotionRedSamuraiAttack2);
-			if (parameters_->Get_Statetimer() == 60.0f)AttackCollision(lposition, lrotation, 30, 5, Vector3(0.0f, 13.0f, 0.0f), 2.0f, 2.5f);
+			if (parameters_->Get_Statetimer() == 30.0f)AttackCollision(lposition, lrotation, 15, 5, Vector3(0.0f, 13.0f, 0.0f), 2.0f, 2.5f);
 		}
 	}
 

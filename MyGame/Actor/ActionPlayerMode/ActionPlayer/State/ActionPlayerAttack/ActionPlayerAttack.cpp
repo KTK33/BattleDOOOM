@@ -24,8 +24,8 @@ void ActionPlayerAttack::Stateinitialize()
 
 void ActionPlayerAttack::StateUpdate(Vector3 & lposition, Matrix & lrotation, AnimatedMesh & lmesh)
 {
-	//モーションの終わる20フレーム前までに攻撃ボタンを押せば次の攻撃をする
-	if (parameters_->Get_Statetimer() > lmesh.motion_end_time() - 10 && mAttackCount < 2)
+	//モーションの終わる5フレーム前までに攻撃ボタンを押せば次の攻撃をする
+	if (parameters_->Get_Statetimer() > lmesh.motion_end_time() - 10 && mAttackCount < 3)
 	{
 		Attack();
 	}
@@ -37,7 +37,7 @@ void ActionPlayerAttack::StateUpdate(Vector3 & lposition, Matrix & lrotation, An
 	Input();
 
 	//モーションの時間が終わったら移動状態へ
-	if (parameters_->Get_Statetimer() > lmesh.motion_end_time() - 5)
+	if (parameters_->Get_Statetimer() > lmesh.motion_end_time()-5)
 	{
 		mNextStateID = ActorStateID::ActionPlayerIdle;
 		mNextStateFlag = true;
@@ -74,11 +74,11 @@ void ActionPlayerAttack::AttackOption(Vector3 lposition, Matrix lrotation)
 	//攻撃コンボ回数によって当たり判定の生成タイミングを変える
 	switch (mAttackCount) {
 	case 1:
-		if (parameters_->Get_Statetimer() == 38.0f)AttackCollision(lposition, lrotation, 20, 1, Vector3(0.0f, 13.0f, 0.0f), 2.5f, 3.5f); break;
+		if (parameters_->Get_Statetimer() == 18.0f)AttackCollision(lposition, lrotation, 5, 1, Vector3(0.0f, 13.0f, 0.0f), 2.5f, 3.5f); break;
 	case 2:
-		if (parameters_->Get_Statetimer() == 5.0f) AttackCollision(lposition, lrotation, 20, 2, Vector3(0.0f, 13.0f, 0.0f), 2.5f, 3.5f); break;
+		if (parameters_->Get_Statetimer() == 0.5f) AttackCollision(lposition, lrotation, 5, 2, Vector3(0.0f, 13.0f, 0.0f), 2.5f, 3.5f); break;
 	case 3:
-		if (parameters_->Get_Statetimer() == 5.0f) AttackCollision(lposition, lrotation, 20, 3, Vector3(0.0f, 13.0f, 0.0f), 2.5f, 3.5f); break;
+		if (parameters_->Get_Statetimer() == 0.5f) AttackCollision(lposition, lrotation, 5, 3, Vector3(0.0f, 13.0f, 0.0f), 2.5f, 3.5f); break;
 	default:
 		break;
 	}

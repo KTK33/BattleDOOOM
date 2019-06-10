@@ -24,4 +24,5 @@ private:
 	int mweapon_;
 
 	DrawWeapon mDW;
+	int mTimer;
 };

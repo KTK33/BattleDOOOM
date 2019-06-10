@@ -1,5 +1,7 @@
 #include "EffekseerEffect.h"
+
 #include <EffekseerForDXLib.h>
+
 #include "../Math/MathHelper.h"
 
 int EffekseerEffect::m_effect{ -1 };

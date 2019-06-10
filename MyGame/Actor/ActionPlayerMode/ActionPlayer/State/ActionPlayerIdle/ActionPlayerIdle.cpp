@@ -1,5 +1,6 @@
 #include "ActionPlayerIdle.h"
 #include "../Input/InputInfoInc.h"
+#include "../Scene/GameData/GameDataManager.h"
 
 ActionPlayerIdle::ActionPlayerIdle(IWorld * world, ActorParameters & parameter)
 {
@@ -29,6 +30,8 @@ void ActionPlayerIdle::StateUpdate(Vector3 & lposition, Matrix & lrotation, Anim
 
 void ActionPlayerIdle::Input()
 {
+	if (GameDataManager::getInstance().GetDeadBossEnemy()) return;
+
 	//攻撃
 	if(ButtonB::GetInstance().TriggerDown())
 	{
@@ -38,7 +41,7 @@ void ActionPlayerIdle::Input()
 	}
 
 	//ステップ
-	if(ButtonA::GetInstance().TriggerDown())
+	if(ButtonA::GetInstance().TriggerDown() && LeftStick::GetInstance().KnockCheck())
 	{
 		mNextStateID = ActorStateID::ActionPlayerAvoidance;
 		mNextStateFlag = true;

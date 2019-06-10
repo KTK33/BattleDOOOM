@@ -21,6 +21,11 @@ void ActionPlayScene::update(float deltaTime)
 		next_ = SceneType::SCENE_TITLE_LOAD;
 		isEnd_ = true;
 	}
+
+	if (GameDataManager::getInstance().GetNextActionScene()== true) {
+		next_ = SceneType::SCENE_ACTION_PLAY;
+		isEnd_ = true;
+	}
 }
 
 void ActionPlayScene::draw() const
@@ -34,13 +39,9 @@ void ActionPlayScene::draw() const
 	CollisionMesh::draw();
 
 	world_.draw();
+
+	Effekseer_Sync3DSetting();
 }
 
 void ActionPlayScene::end()
-{
-	Graphics3D::finalize();
-	CollisionMesh::finalize();
-	Skybox::finalize();
-	Sound::GetInstance().Initialize();
-	Sprite::GetInstance().Initialize();
-}
+{}

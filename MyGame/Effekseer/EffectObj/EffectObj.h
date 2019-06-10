@@ -1,5 +1,8 @@
-#pragma once
+#ifndef _EFFECT_OBJ_H_
+#define _EFFECT_OBJ_H_
+
 #include "../EffekseerEffect/EffekseerEffect.h"
+#include "../EFFECT_ID.h"
 
 class EffectObj
 {
@@ -8,7 +11,7 @@ public:
 	EffectObj(int l_effect);
 
 	//çXêV
-	void update(float deltaTime);
+	void update(float speed);
 
 	//ï`âÊ
 	void draw()const;
@@ -19,7 +22,7 @@ public:
 
 	void set_position(Vector3 l_position);
 
-	void set_rotation(float x, float y, float z);
+	void set_rotation(Vector3 lrota);
 
 	void set_scale(Vector3 l_scale);
 
@@ -27,7 +30,13 @@ public:
 
 	int get_isPlaying()const;
 
+	void set_endTime(float time);
+
 private:
 	int m_effect;
 	int m_playingEff;
+
+	float m_time{ 0.0f };
 };
+
+#endif

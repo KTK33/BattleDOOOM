@@ -17,6 +17,7 @@ enum class ActorStateID
 	ShootingPlayerThohatu,
 	ShootingPlayerJump,
 	ShootingPlayerGuard,
+	ShootingPlayerItemUse,
 
 	//シューティングモードのノーマルエネミーのステイト
 	NormalEnemyIdle,

@@ -8,3 +8,4 @@
 #include "GameLoadingScene/ActionLoad/ActionLoad.h"
 #include "ActionPlayScene/ActionPlayScene.h"
 #include "SceneType.h"
+#include "TestScene/TestScene.h"

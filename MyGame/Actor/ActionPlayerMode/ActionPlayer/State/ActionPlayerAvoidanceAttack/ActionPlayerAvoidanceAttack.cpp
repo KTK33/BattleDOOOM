@@ -47,8 +47,8 @@ void ActionPlayerAvoidanceAttack::StateUpdate(Vector3 & lposition, Matrix & lrot
 
 void ActionPlayerAvoidanceAttack::AttackOption(Vector3 lposition, Matrix lrotation)
 {
-	if(parameters_->Get_Statetimer() == 25.0f)AttackCollision(lposition, lrotation, 20, 1, Vector3(0.0f, 13.0f, 0.0f), 1.5f, 2.5f);
-	if(parameters_->Get_Statetimer() == 40.0f)AttackCollision(lposition, lrotation, 20, 2, Vector3(0.0f, 13.0f, 0.0f), 1.5f, 2.5f);
+	if(parameters_->Get_Statetimer() == 10.0f)AttackCollision(lposition, lrotation, 5, 1, Vector3(0.0f, 13.0f, 0.0f), 1.5f, 2.5f);
+	if(parameters_->Get_Statetimer() == 20.0f)AttackCollision(lposition, lrotation, 5, 2, Vector3(0.0f, 13.0f, 0.0f), 1.5f, 2.5f);
 
 }
 

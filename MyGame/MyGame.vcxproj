@@ -79,12 +79,12 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用;$(LibraryPath)</LibraryPath>
+    <IncludePath>..\Library\DxLib;..\Library\Effekseer;$(IncludePath)</IncludePath>
+    <LibraryPath>..\Library\DxLib;..\Library\Effekseer;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用;E:\ProGame\Effekseer;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用;E:\ProGame\Effekseer;$(LibraryPath)</LibraryPath>
+    <IncludePath>..\Library\DxLib;..\Library\Effekseer;$(IncludePath)</IncludePath>
+    <LibraryPath>..\Library\DxLib;..\Library\Effekseer;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -112,6 +112,7 @@
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -148,6 +149,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <SubSystem>Windows</SubSystem>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -173,6 +175,7 @@
     <ClCompile Include="Actor\ActionPlayerMode\UI\HPUI\RedSamuraiHP.cpp" />
     <ClCompile Include="Actor\ActionPlayerMode\UI\SceneUI\PlayerDeadUI.cpp" />
     <ClCompile Include="Actor\ActionPlayerMode\UI\SceneUI\RedSamuraiDeadUI.cpp" />
+    <ClCompile Include="Actor\ActionPlayerMode\UI\SceneUI\SceneCommon\SceneCommon.cpp" />
     <ClCompile Include="Actor\ActionPlayerMode\UI\Text\RedSamuraiText.cpp" />
     <ClCompile Include="Actor\Actor.cpp" />
     <ClCompile Include="Actor\ActorCommon\ActorPush\AcotrPush.cpp" />
@@ -208,6 +211,7 @@
     <ClCompile Include="Actor\ShootingPlayerMode\ShootingEnemy\BigBossEnemy\HPUI\BigBossHPUI.cpp" />
     <ClCompile Include="Actor\ShootingPlayerMode\ShootingEnemy\BigBossEnemy\State\BigBossEnemyAttack\AttackChoice.cpp" />
     <ClCompile Include="Actor\ShootingPlayerMode\ShootingEnemy\BigBossEnemy\State\BigBossEnemyAttack\BigBossAttackCollision\BigBossAttackCollision.cpp" />
+    <ClCompile Include="Actor\ShootingPlayerMode\ShootingEnemy\BigBossEnemy\State\BigBossEnemyAttack\BigBossAttackCollision\CollisionMove\CollisionMove.cpp" />
     <ClCompile Include="Actor\ShootingPlayerMode\ShootingEnemy\BigBossEnemy\State\BigBossEnemyAttack\BigBossEnemyAttack.cpp" />
     <ClCompile Include="Actor\ShootingPlayerMode\ShootingEnemy\BigBossEnemy\State\BigBossEnemyDead\BigBossEnemyDead.cpp" />
     <ClCompile Include="Actor\ShootingPlayerMode\ShootingEnemy\BigBossEnemy\State\BigBossEnemyIdle\BigBossEnemyIdle.cpp" />
@@ -241,6 +245,7 @@
     <ClCompile Include="Actor\ShootingPlayerMode\ShootingPlayer\ShootingPlayerActor\State\Idle\ShootingPlayerIdle.cpp" />
     <ClCompile Include="Actor\ShootingPlayerMode\ShootingPlayer\ShootingPlayerActor\State\IdleAiming\ShootingPlayerIdleAiming.cpp" />
     <ClCompile Include="Actor\ShootingPlayerMode\ShootingPlayer\ShootingPlayerActor\State\Idle_Aim\ShootingPlayerIdle_Aim.cpp" />
+    <ClCompile Include="Actor\ShootingPlayerMode\ShootingPlayer\ShootingPlayerActor\State\ItemUse\ShootingPlayerItemUse.cpp" />
     <ClCompile Include="Actor\ShootingPlayerMode\ShootingPlayer\ShootingPlayerActor\State\Jump\ShootingPlayerJump.cpp" />
     <ClCompile Include="Actor\ShootingPlayerMode\ShootingPlayer\ShootingPlayerActor\State\Provocation\ShootingPlayerProvocation.cpp" />
     <ClCompile Include="Actor\ShootingPlayerMode\ShootingPlayer\ShootingPlayerActor\State\Reload\ShootingPlayerReload.cpp" />
@@ -265,6 +270,9 @@
     <ClCompile Include="Collision\OrientedBoundingBox.cpp" />
     <ClCompile Include="Collision\Ray.cpp" />
     <ClCompile Include="Conv\DXConverter.cpp" />
+    <ClCompile Include="Effekseer\EffectAsset\EffectAsset.cpp" />
+    <ClCompile Include="Effekseer\EffectObj\EffectObj.cpp" />
+    <ClCompile Include="Effekseer\EffekseerEffect\EffekseerEffect.cpp" />
     <ClCompile Include="Game\Game.cpp" />
     <ClCompile Include="Game\Time.cpp" />
     <ClCompile Include="Graphics\Graphics2D.cpp" />
@@ -316,6 +324,7 @@
     <ClCompile Include="Scene\SceneTemplate.cpp" />
     <ClCompile Include="Scene\ShootingPlayScene\ShootingModeManager\ShootingModeManager.cpp" />
     <ClCompile Include="Scene\ShootingPlayScene\ShootingPlayScene.cpp" />
+    <ClCompile Include="Scene\TestScene\TestScene.cpp" />
     <ClCompile Include="Skybox\Skybox.cpp" />
     <ClCompile Include="Sound\Sound.cpp" />
     <ClCompile Include="Sound\SoundEffect.cpp" />
@@ -350,6 +359,7 @@
     <ClInclude Include="Actor\ActionPlayerMode\UI\HPUI\RedSamuraiHP.h" />
     <ClInclude Include="Actor\ActionPlayerMode\UI\SceneUI\PlayerDeadUI.h" />
     <ClInclude Include="Actor\ActionPlayerMode\UI\SceneUI\RedSamuraiDeadUI.h" />
+    <ClInclude Include="Actor\ActionPlayerMode\UI\SceneUI\SceneCommon\SceneCommon.h" />
     <ClInclude Include="Actor\ActionPlayerMode\UI\Text\RedSamuraiText.h" />
     <ClInclude Include="Actor\Actor.h" />
     <ClInclude Include="Actor\ActorCommon\ActorPush\AcotrPush.h" />
@@ -394,6 +404,7 @@
     <ClInclude Include="Actor\ShootingPlayerMode\ShootingEnemy\BigBossEnemy\HPUI\BigBossHPUI.h" />
     <ClInclude Include="Actor\ShootingPlayerMode\ShootingEnemy\BigBossEnemy\State\BigBossEnemyAttack\AttackChoice.h" />
     <ClInclude Include="Actor\ShootingPlayerMode\ShootingEnemy\BigBossEnemy\State\BigBossEnemyAttack\BigBossAttackCollision\BigBossAttackCollision.h" />
+    <ClInclude Include="Actor\ShootingPlayerMode\ShootingEnemy\BigBossEnemy\State\BigBossEnemyAttack\BigBossAttackCollision\CollisionMove\CollisionMove.h" />
     <ClInclude Include="Actor\ShootingPlayerMode\ShootingEnemy\BigBossEnemy\State\BigBossEnemyAttack\BigBossEnemyAttack.h" />
     <ClInclude Include="Actor\ShootingPlayerMode\ShootingEnemy\BigBossEnemy\State\BigBossEnemyDead\BigBossEnemyDead.h" />
     <ClInclude Include="Actor\ShootingPlayerMode\ShootingEnemy\BigBossEnemy\State\BigBossEnemyIdle\BigBossEnemyIdle.h" />
@@ -433,6 +444,7 @@
     <ClInclude Include="Actor\ShootingPlayerMode\ShootingPlayer\ShootingPlayerActor\State\Idle\ShootingPlayerIdle.h" />
     <ClInclude Include="Actor\ShootingPlayerMode\ShootingPlayer\ShootingPlayerActor\State\IdleAiming\ShootingPlayerIdleAiming.h" />
     <ClInclude Include="Actor\ShootingPlayerMode\ShootingPlayer\ShootingPlayerActor\State\Idle_Aim\ShootingPlayerIdle_Aim.h" />
+    <ClInclude Include="Actor\ShootingPlayerMode\ShootingPlayer\ShootingPlayerActor\State\ItemUse\ShootingPlayerItemUse.h" />
     <ClInclude Include="Actor\ShootingPlayerMode\ShootingPlayer\ShootingPlayerActor\State\Jump\ShootingPlayerJump.h" />
     <ClInclude Include="Actor\ShootingPlayerMode\ShootingPlayer\ShootingPlayerActor\State\Provocation\ShootingPlayerProvocation.h" />
     <ClInclude Include="Actor\ShootingPlayerMode\ShootingPlayer\ShootingPlayerActor\State\Reload\ShootingPlayerReload.h" />
@@ -469,6 +481,10 @@
     <ClInclude Include="Collision\Ray.h" />
     <ClInclude Include="Conv\ByteConverter.h" />
     <ClInclude Include="Conv\DXConverter.h" />
+    <ClInclude Include="Effekseer\EffectAsset\EffectAsset.h" />
+    <ClInclude Include="Effekseer\EffectObj\EffectObj.h" />
+    <ClInclude Include="Effekseer\EFFECT_ID.h" />
+    <ClInclude Include="Effekseer\EffekseerEffect\EffekseerEffect.h" />
     <ClInclude Include="Game\Define.h" />
     <ClInclude Include="Game\FpsSetting.h" />
     <ClInclude Include="Game\Game.h" />
@@ -531,6 +547,7 @@
     <ClInclude Include="Scene\SceneType.h" />
     <ClInclude Include="Scene\ShootingPlayScene\ShootingModeManager\ShootingModeManager.h" />
     <ClInclude Include="Scene\ShootingPlayScene\ShootingPlayScene.h" />
+    <ClInclude Include="Scene\TestScene\TestScene.h" />
     <ClInclude Include="Skybox\Skybox.h" />
     <ClInclude Include="Sound\Sound.h" />
     <ClInclude Include="Sound\SoundEffect.h" />

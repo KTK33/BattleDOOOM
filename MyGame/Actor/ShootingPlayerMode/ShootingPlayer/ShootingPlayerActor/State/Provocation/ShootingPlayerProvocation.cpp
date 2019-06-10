@@ -1,5 +1,6 @@
 #include "ShootingPlayerProvocation.h"
 #include "../Actor/ShootingPlayerMode/ShootingPlayer/ShootingPlayerActor/State/stateInc.h"
+#include "../Input/InputInfoInc.h"
 
 ShootingPlayerProvocation::ShootingPlayerProvocation(IWorld * world, ActorParameters & parameter)
 {
@@ -17,7 +18,7 @@ void ShootingPlayerProvocation::Stateinitialize()
 void ShootingPlayerProvocation::StateUpdate(Vector3 & lposition, Matrix & lrotation, AnimatedMesh & lmesh)
 {
 	//ƒ‚[ƒVƒ‡ƒ“‚ÌŽžŠÔ‚ªI‚í‚Á‚½‚çˆÚ“®ó‘Ô‚Ö
-	if (parameters_->Get_Statetimer() > lmesh.motion_end_time() - 5)
+	if (parameters_->Get_Statetimer() > lmesh.motion_end_time() - 5 || LeftStick::GetInstance().KnockCheck())
 	{
 		mNextStateID = parameters_->Get_PrevStateID();
 		mNextStateFlag = true;

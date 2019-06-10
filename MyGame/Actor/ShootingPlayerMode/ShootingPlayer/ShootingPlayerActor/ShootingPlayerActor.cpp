@@ -16,10 +16,13 @@ ShootingPlayerActor::ShootingPlayerActor(int model, int weapon, IWorld * world, 
 	mweapon_{ weapon },
 	mweaponPos{ 103 },
 	mInitAimPos{ position_.x + rotation_.Forward().x * 10 + rotation_.Right().x * 5, position_.y + 15, position_.z + rotation_.Forward().z * 10 + rotation_.Right().z * 5 },
-	mRecoverItemCount{ 1 },
-	mAttackItemCount{ 1 },
+	mRecoverItemCount{ HaveRecoverItem },
+	mAttackItemCount{ HaveAttackUpItem },
 	mAttackUpCheck{ false },
-	mAttackUpTime{ AttackUpTime }
+	mAttackParam{ 1 },
+	mAttackUpTime{ AttackUpTime * 60 },
+	meff{(int)EFFECT_ID::PLAYER_HEAL},
+	meffsize{ Vector3(1.0f,1.0f,1.0f)}
 {
 	mcurrentStateID = ActorStateID::ShootingPlayerIdle;
 	shootingplayerState_[ActorStateID::ShootingPlayerIdle].add(add_state<ShootingPlayerIdle>(world, parameters_));
@@ -34,6 +37,7 @@ ShootingPlayerActor::ShootingPlayerActor(int model, int weapon, IWorld * world, 
 	shootingplayerState_[ActorStateID::ShootingPlayerReload].add(add_state<ShootingPlayerReload>(world, parameters_));
 	shootingplayerState_[ActorStateID::ShootingPlayerThohatu].add(add_state<ShootingPlayerProvocation>(world, parameters_));
 	shootingplayerState_[ActorStateID::ShootingPlayerGuard].add(add_state<ShootingPlayerGuard>(world, parameters_));
+	shootingplayerState_[ActorStateID::ShootingPlayerItemUse].add(add_state<ShootingPlayerItemUse>(world, parameters_));
 	shootingplayerState_[mcurrentStateID].initialize();
 
 	initialize();
@@ -93,6 +97,13 @@ void ShootingPlayerActor::update(float deltaTime)
 	mesh_.transform(Getpose());
 	mesh_.change_motion(parameters_.Get_Motion());
 
+	//エフェクトの設定処理
+	meff.set_scale(meffsize);
+	Matrix angle = Matrix::Invert(rotation_);
+	meff.set_rotation(Vector3(0, Matrix::Angle(angle).y, 0));
+	meff.set_position(position_);
+	meff.update(1.5f);
+
 	//パラメータをセット
 	ParamSet();
 
@@ -111,6 +122,9 @@ void ShootingPlayerActor::update(float deltaTime)
 	//十字キー右を押したらアイテムボックスを生成
 	if(DPad::GetInstance().GetRight())
 	{
+		int hp = parameters_.Get_HP();
+		world_->send_message(EventMessage::PLAYER_HP,reinterpret_cast<void*>(&hp));
+		world_->send_message(EventMessage::PLAYER_STATE, reinterpret_cast<void*>(&mcurrentStateID));
 		if (world_->find_actor(ActorGroup::ItemBoxUI, "PlayerBox") == NULL)
 		{
 			world_->add_actor(ActorGroup::ItemBoxUI, new_actor<ShootingPlayerItemBox>(world_, mRecoverItemCount, mAttackItemCount, weak_from_this()));
@@ -126,11 +140,11 @@ void ShootingPlayerActor::update(float deltaTime)
 			mAttackUpTime = AttackUpTime;
 			mAttackUpCheck = false;
 		}
-		world_->send_message(EventMessage::DAMAGEPARAM, reinterpret_cast<void*>(&mAttackParam));
 	}
 	else {
 		mAttackParam = 1;
 	}
+	world_->send_message(EventMessage::DAMAGEPARAM, reinterpret_cast<void*>(&mAttackParam));
 }
 
 void ShootingPlayerActor::draw() const
@@ -138,6 +152,8 @@ void ShootingPlayerActor::draw() const
 	mesh_.draw();
 	mDW.draw(ShootingPlayerParam::getInstance().Get_WeaponModel(), mweaponPos, mesh_);
 	mParamUI.draw();
+
+	meff.draw();
 }
 
 void ShootingPlayerActor::onCollide(Actor & other)
@@ -174,23 +190,7 @@ void ShootingPlayerActor::receiveMessage(EventMessage message, void * param)
 		m_ui.lock()->receiveMessage(EventMessage::GET_HPRECOVER, nullptr);
 	}
 
-	//回復アイテムを使ったとき
-	if (message == EventMessage::HP_RECOVER)
-	{
-		int nowHp = parameters_.Get_HP();
-		parameters_.Set_HP(nowHp + *static_cast<int*>(param));
-		mRecoverItemCount = mRecoverItemCount - 1;
-	}
-
-	//攻撃アップアイテムを使ったとき
-	if (message == EventMessage::ATTACK_UP)
-	{
-		mAttackUpCheck = *static_cast<bool*>(param);
-		m_ui.lock()->receiveMessage(EventMessage::ATTACK_UP, reinterpret_cast<bool*>(param));
-		mAttackItemCount = mAttackItemCount - 1;
-	}
-
-	//的に接触したときに押しだす
+	//敵に接触したときに押しだす
 	if (message == EventMessage::HIT_ENEMY)
 	{
 		velocity_ = mAP.Hit(*static_cast<Vector3*>(param));
@@ -209,6 +209,40 @@ void ShootingPlayerActor::receiveMessage(EventMessage message, void * param)
 		float rote = *(float*)param;
 		rotation_ *= Matrix::CreateFromAxisAngle(rotation_.Up(), *static_cast<float*>(param));
 		rotation_.NormalizeRotationMatrix();
+	}
+
+	//ステイトが死orダメージ中でないときのみアイテム使用可
+	if (mcurrentStateID != ActorStateID::ShootingPlayerDead)
+	{
+		if (mcurrentStateID == ActorStateID::ShootingPlayerDamage) return;
+		//回復アイテムを使ったとき
+		if (message == EventMessage::HP_RECOVER)
+		{
+			ShootingPlayerParam::getInstance().Set_ItemUse(true,1);
+			int afterHp = parameters_.Get_HP() + *static_cast<int*>(param);
+			afterHp = MathHelper::Clamp(afterHp, 0, ShootingPlayerHPVal);
+			parameters_.Set_HP(afterHp);
+			mRecoverItemCount = mRecoverItemCount - 1;
+			meff.stop();
+			meff.change_effect((int)EFFECT_ID::PLAYER_HEAL);
+			meffsize = Vector3(5.0f, 10.0f, 5.0f);
+			meff.set_endTime(120);
+			meff.play();
+		}
+
+		//攻撃アップアイテムを使ったとき
+		if (message == EventMessage::ATTACK_UP)
+		{
+			ShootingPlayerParam::getInstance().Set_ItemUse(true,2);
+			mAttackUpCheck = *static_cast<bool*>(param);
+			m_ui.lock()->receiveMessage(EventMessage::ATTACK_UP, reinterpret_cast<bool*>(param));
+			mAttackItemCount = mAttackItemCount - 1;
+			meff.stop();
+			meff.change_effect((int)EFFECT_ID::PLAYER_ATTACKUP);
+			meffsize = Vector3(1.0f, 1.0f, 1.0f);
+			meff.set_endTime(120);
+			meff.play();
+		}
 	}
 }
 
@@ -325,4 +359,8 @@ void ShootingPlayerActor::invincibly(bool check)
 	else{
 		TransparenceInit();
 	}
+}
+
+void ShootingPlayerActor::Effect()
+{
 }

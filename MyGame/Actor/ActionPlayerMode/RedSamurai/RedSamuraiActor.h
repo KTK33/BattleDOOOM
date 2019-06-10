@@ -82,4 +82,6 @@ private:
 	int mAttackTime;
 
 	bool mDeadArelady;
+
+	float mDeadTime;
 };

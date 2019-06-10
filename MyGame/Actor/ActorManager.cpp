@@ -63,7 +63,7 @@ ActorPtr ActorManager::find(const std::string & name) const{
 }
 
 unsigned int ActorManager::count() const{
-	return actors_.size();
+	return (unsigned int)actors_.size();
 }
 
 void ActorManager::each(std::function<void(const ActorPtr&)> fn) const

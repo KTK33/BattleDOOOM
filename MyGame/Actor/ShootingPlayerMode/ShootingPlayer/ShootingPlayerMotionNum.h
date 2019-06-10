@@ -26,6 +26,7 @@ public:
 		MotionPlayerWalk,
 		MotionPlayerJump,
 		MotionPlayerRunJump,
-		MotionPlayerGuard
+		MotionPlayerGuard,
+		MotionPlayerItemUse,
 	};
 };

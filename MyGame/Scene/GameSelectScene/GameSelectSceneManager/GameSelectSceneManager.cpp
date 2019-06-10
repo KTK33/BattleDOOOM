@@ -13,7 +13,7 @@ void GameSelectSceneManager::initialize()
 	auto P = new_actor<SelectActor>(0, 50, 1, 10, world_);
 	world_->add_actor(ActorGroup::Player, P);
 
-	world_->add_actor(ActorGroup::System, new_actor<SelectCamera>(world_, P));
+	world_->add_camera(new_actor<SelectCamera>(world_, P));
 }
 
 void GameSelectSceneManager::update(float deltaTime)

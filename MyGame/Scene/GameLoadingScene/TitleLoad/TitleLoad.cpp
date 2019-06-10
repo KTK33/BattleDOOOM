@@ -15,6 +15,7 @@ void TitleLoad::start()
 	StaticMesh::initialize();
 	CollisionMesh::initialize();
 	Skybox::initialize();
+	EffekseerEffect::initialize();
 	//非同期開始
 	SetUseASyncLoadFlag(TRUE);
 	//タイトルで使用するリソースのロードを行う

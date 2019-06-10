@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _EFFEKSEER_EFFECT_H_
+#define _EFFEKSEER_EFFECT_H_
+
 #include "../EffectAsset/EffectAsset.h"
 #include "../Math/Vector3.h"
 
@@ -29,3 +31,5 @@ private:
 	static int m_effect;
 	static EffectAsset asset_;
 };
+
+#endif

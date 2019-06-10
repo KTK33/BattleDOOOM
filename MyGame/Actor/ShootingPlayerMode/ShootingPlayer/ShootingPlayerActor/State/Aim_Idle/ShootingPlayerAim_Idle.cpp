@@ -28,6 +28,14 @@ void ShootingPlayerAim_Idle::StateUpdate(Vector3 & lposition, Matrix & lrotation
 		return;
 	}
 
+	//アイテム使用
+	if (ShootingPlayerParam::getInstance().Get_ItemUse())
+	{
+		mNextStateID = ActorStateID::ShootingPlayerItemUse;
+		mNextStateFlag = true;
+		return;
+	}
+
 	//ダメージを受けたらダメージ状態へ
 	if (parameters_->Get_invincibly())
 	{

@@ -17,6 +17,10 @@ public:
 	virtual void add_actor(ActorGroup group, const ActorPtr& actor) = 0;
 	// アクターを検索
 	virtual ActorPtr find_actor(ActorGroup group, const std::string& name) const = 0;
+	//カメラアクターの追加	
+	virtual void add_camera(const ActorPtr& camera) = 0;
+	//カメラアクターの検索
+	virtual ActorPtr get_camera() const = 0;
 	// アクター数の取得
 	virtual unsigned int count_actor(ActorGroup group) const = 0;
 	// アクターの巡回

@@ -22,12 +22,14 @@ void TitlePlayer::update(float deltaTime)
 	mesh_.transform(Getpose());
 	mesh_.change_motion(mmotion_);
 
-	mTimer = min(mTimer + 1, 31);
+	mTimer++;
 
 	if (mTimer == 30)
 	{
 		world_->add_actor(ActorGroup::Ball, new_actor<TitleBullet>(5, world_, Vector3{ position_.x,position_.y + 14.0f,position_.z} +rotation_.Forward() * 4.5f + rotation_.Right() *1.4f,rotation_.Forward()));
 	}
+
+	if (mTimer == 150) die();
 }
 
 void TitlePlayer::draw() const

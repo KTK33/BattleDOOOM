@@ -1,4 +1,5 @@
 #include "EffectAsset.h"
+
 #include <EffekseerForDXLib.h>
 
 EffectAsset::EffectAsset()

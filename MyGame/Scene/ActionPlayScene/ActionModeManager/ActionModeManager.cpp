@@ -16,14 +16,14 @@ void ActionModeManager::initialize()
 {
 	world_->add_actor(ActorGroup::Fade, new_actor<FadeUI>(world_, 1, 0));
 
-	auto P = new_actor<ActionPlayerActor>(50, 10, world_, Vector3{ -150.0f, 30.0f,-15.0f });
+	auto P = new_actor<ActionPlayerActor>(50, 10, world_, Vector3{ -150.0f, 30.0f,0.0f }, Matrix::CreateRotationY(-90));
 	world_->add_actor(ActorGroup::Player, P);
 
 	auto Samurai = new_actor<RedSamuraiActor>(51, 14, 12, 13, world_, Vector3{ 0.0f, 30.0f,0.0f }, Matrix::CreateRotationY(90));
 	world_->add_actor(ActorGroup::Enemy, Samurai);
 
 	auto camera = new_actor<ActionCamera>(world_, P);
-	world_->add_actor(ActorGroup::System, camera);
+	world_->add_camera(camera);
 
 	world_->add_actor(ActorGroup::System, new_actor<TargetCameraManager>(world_, P, camera));
 

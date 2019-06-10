@@ -1,6 +1,7 @@
 #include "ShootingPlayScene.h"
 #include "../ShootingPlayScene/ShootingModeManager/ShootingModeManager.h"
 
+
 //コンストラクタ
 ShootingPlayScene::ShootingPlayScene() :world_{},
 BossArleady{false}
@@ -19,12 +20,14 @@ void ShootingPlayScene::update(float deltaTime)
 {
 	world_.update(deltaTime);
 
+
 	if (world_.GetBackTitleCheck())
 	{
 		next_ = SceneType::SCENE_TITLE_LOAD;
 		isEnd_ = true;
 		return;
 	}
+
 }
 
 void ShootingPlayScene::draw() const 
@@ -38,6 +41,8 @@ void ShootingPlayScene::draw() const
 	CollisionMesh::draw();
 	
 	world_.draw();
+
+	Effekseer_Sync3DSetting();
 }
 void ShootingPlayScene::end()
 {

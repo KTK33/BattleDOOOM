@@ -33,6 +33,10 @@ void FadeUI::update(float deltaTime)
 			{
 				world_->SetBackTitleCheck(true);
 			}
+			if (m_SceneNum == 3)
+			{
+				GameDataManager::getInstance().SetNextActionScene(true);
+			}
 			Sound::GetInstance().StopBGM();
 			Sound::GetInstance().StopSE();
 		}

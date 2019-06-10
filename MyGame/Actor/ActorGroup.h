@@ -6,6 +6,7 @@ enum class ActorGroup {
 	ETCETERA_ACTOR,
 	Enemy,        //“G
 	BossEnemy,
+	BigBossEnemy,
 	EnemyHead,
 	PlayerBullet, //ƒvƒŒƒCƒ„[’e
 	Item,

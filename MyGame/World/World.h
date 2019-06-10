@@ -27,7 +27,9 @@ public:
 	//メッセージリスナー登録
 	void add_event_message_listener(EventMessageListener listener);
 	//カメラの追加
-	void add_camera(const ActorPtr& camera);
+	virtual void add_camera(const ActorPtr& camera)override;
+
+	virtual ActorPtr get_camera() const override;
 	//ライトの追加
 	void add_light(const ActorPtr& light);
 	//消去

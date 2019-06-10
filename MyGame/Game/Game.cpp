@@ -11,6 +11,8 @@
 #include "../Mesh/CollisionMesh.h"
 #include "../Texture/Sprite.h"
 #include "../Skybox/Skybox.h"
+#include <EffekseerForDXLib.h>
+#include "../Effekseer/EffekseerEffect/EffekseerEffect.h"
 #include "FpsSetting.h"
 #include "Time.h"
 
@@ -46,12 +48,31 @@ int Game::run() {
     Graphics2D::initialize();
     // サウンドの初期化
 	Sound::GetInstance().Initialize();
-    // ゲームパッドの初期化
-	
     // マウスの初期化
     Mouse::initialize();
     // 3Dグラフィックスの初期化
     Graphics3D::initialize();
+
+	// DirectX9を使用するようにする。(DirectX11も可)
+	// Effekseerを使用するには必ず設定する。
+	SetUseDirect3DVersion(DX_DIRECT3D_11);
+
+	// Effekseerを初期化する。
+	// 引数には画面に表示する最大パーティクル数を設定する。
+	if (Effkseer_Init(8000) == -1)
+	{
+		DxLib_End();
+		return -1;
+	}
+
+	// フルスクリーンウインドウの切り替えでリソースが消えるのを防ぐ。
+	// Effekseerを使用する場合は必ず設定する。
+	SetChangeScreenModeGraphicsSystemResetFlag(FALSE);
+
+	// DXライブラリのデバイスロストした時のコールバックを設定する。
+	// ウインドウとフルスクリーンの切り替えが発生する場合は必ず実行する。
+	// ただし、DirectX11を使用する場合は実行する必要はない。
+	Effekseer_SetGraphicsDeviceLostCallbackFunctions();
 
 	Fps fps;
 
@@ -84,6 +105,10 @@ int Game::run() {
 	Skybox::finalize();
 	Sound::GetInstance().Initialize();
 	Sprite::GetInstance().Initialize();
+	EffekseerEffect::initialize();
+
+	// Effekseerを終了する
+	Effkseer_End();
 
     // ＤＸライブラリの後始末
     DxLib_End();

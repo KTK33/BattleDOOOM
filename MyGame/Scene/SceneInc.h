@@ -17,3 +17,5 @@
 #include "GameData/GameDataManager.h"
 #include "../Input/InputInfoInc.h"
 #include "../Game/Define.h"
+
+#include <EffekseerForDXLib.h>

@@ -7,6 +7,7 @@ void GameDataManager::initialize()
 	mDeadBossEnemyCheck = false;
 	mDeadPlayerCheck = false;
 	mSceneNumber = 0;
+	mNextAction = false;
 }
 
 void GameDataManager::update()
@@ -91,4 +92,14 @@ void GameDataManager::SetSceneNum(int scene)
 int GameDataManager::GetSceneNum()
 {
 	return mSceneNumber;
+}
+
+void GameDataManager::SetNextActionScene(bool ac)
+{
+	mNextAction = ac;
+}
+
+bool GameDataManager::GetNextActionScene()
+{
+	return mNextAction;
 }

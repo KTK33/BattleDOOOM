@@ -26,7 +26,8 @@ Actor(world, "RedSamurai", position, body),
 	mQuiverPos{ 82 },
 	mAttackCheck{ false },
 	mAttackTime{ false },
-	mDeadArelady{false}
+	mDeadArelady{false},
+	mDeadTime{ 60.0f }
 {
 	rotation_ = rotation;
 
@@ -79,6 +80,7 @@ void RedSamuraiActor::update(float deltaTime)
 			world_->add_actor(ActorGroup::UI, new_actor<RedSamuraiDeadUI>(world_));
 			mDeadArelady = true;
 		}
+		mDeadTime -= deltaTime;
 		return;
 	}
 
@@ -108,6 +110,8 @@ void RedSamuraiActor::update(float deltaTime)
 
 void RedSamuraiActor::draw() const
 {
+	if (mDeadTime <= 0) return;
+
 	mesh_.draw();
 	if (mcurrentStateID != ActorStateID::RedSamuraNoSwardIdle) {
 		mHP.draw(parameters_.Get_HP());

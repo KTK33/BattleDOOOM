@@ -18,6 +18,8 @@ void ActionLoad::start()
 
 	//ロードするリソース数の設定
 	mDL.setCount(GetASyncLoadNum());
+
+	LoadEffect();
 }
 
 void ActionLoad::update(float deltaTime)
@@ -93,4 +95,16 @@ void ActionLoad::LoadSprite()
 	sprite.Load("asset/UI/ActionMode/Kakugowo.png", SPRITE_ID::KAKUGOWO);
 	sprite.Load("asset/UI/ActionMode/MottoReiseini.png", SPRITE_ID::MOTTOREISEINI);
 	sprite.Load("asset/UI/ActionMode/Kokodehiku.png", SPRITE_ID::KOKODEHIKU);
+
+	sprite.Load("asset/UI/ActionMode/NextPlay.png", SPRITE_ID::NEXTPLAY);
+	sprite.Load("asset/UI/ActionMode/NextPlay_dec.png", SPRITE_ID::NEXTPLAY_DEC);
+	sprite.Load("asset/UI/ActionMode/NextTitle.png", SPRITE_ID::NEXTTITLE);
+	sprite.Load("asset/UI/ActionMode/NextTitle_dec.png", SPRITE_ID::NEXTTITLE_DEC);
+
+}
+
+void ActionLoad::LoadEffect()
+{
+	EffekseerEffect::load((int)EFFECT_ID::ACTION_PLAYER_DEAD, "asset/Effekseer/ActionPlayerDead.efk");
+	EffekseerEffect::load((int)EFFECT_ID::REDSAMURAI_DEAD, "asset/Effekseer/RedSamuraiDead.efk");
 }

@@ -28,6 +28,12 @@ static const int GetBulletPoint = 5;
 //回復アイテムを拾ったときの回復量
 static const int GetHpPoint = 3;
 
+//初期にもっている回復アイテムの数
+static const int HaveRecoverItem = 3;
+
+//初期に持っている攻撃アップの数
+static const int HaveAttackUpItem = 1;
+
 //敵の落とすアイテムの割合(0～100) 値が大きいほど弾が落ちやすい、0に近いほど回復アイテムが落ちやすい　100に近いほど弾が落ちやすい
 static const int GetItemRate = 70;
 
@@ -40,10 +46,13 @@ static const int NormalHPVal = 3;
 //ボス敵のHP
 static const int BossHPVal = 10;
 
+//大ボスのHP
+static const int BigBossHPVal = 10;
+
 ///アクションモード
 
 //プレイヤーのHP
 static const int ActionPlayerHPVal = 10;
 
 //赤侍のHP
-static const int RedSamuraiHPVal = 5;
+static const int RedSamuraiHPVal = 1;
