@@ -8,7 +8,7 @@
 #include "../Effekseer/EFFECT_ID.h"
 
 TestScene::TestScene():
-	eff_{(int)EFFECT_ID::PLAYER_HEAL}
+	eff_{(int)EFFECT_ID::TITLE_THUNDER}
 {
 }
 
@@ -16,11 +16,13 @@ void TestScene::start()
 {
 	world_.initialize();
 
-	auto P_Text = new_actor<ShootingPlayerTextUI>(&world_);
-	world_.add_actor(ActorGroup::UI, P_Text);
+	//auto P_Text = new_actor<ShootingPlayerTextUI>(&world_);
+	//world_.add_actor(ActorGroup::UI, P_Text);
 
-	auto P = new_actor<ShootingPlayerActor>(0, 1, &world_, Vector3{ 0.0f, 0.0f,0.0f }, P_Text);
-	world_.add_actor(ActorGroup::Player, P);
+	//auto P = new_actor<ShootingPlayerActor>(0, 1, &world_, Vector3{ 0.0f, 0.0f,0.0f }, P_Text);
+	//world_.add_actor(ActorGroup::Player, P);
+
+	EffekseerEffect::load((int)EFFECT_ID::TITLE_THUNDER, "asset/Effekseer/TitleThunder.efk");
 
 	eff_.play();
 }
@@ -35,9 +37,9 @@ void TestScene::update(float deltaTime)
 	TPSCamera::GetInstance().Up.Set(Vector3::Up);
 	TPSCamera::GetInstance().Update();
 
-	//eff_.set_scale(Vector3{ 1.0f,1.0f,1.0f });
-	//eff_.set_rotation(0.0f, 0.0f, 0.0f);
-	//eff_.set_position(Vector3(30,10,30));
+	eff_.set_scale(Vector3{ 1.0f,1.0f,1.0f });
+	eff_.set_rotation(Vector3(0.0f, 0.0f, 0.0f));
+	eff_.set_position(Vector3(30,10,30));
 
 	eff_.update(1.0f);
 }

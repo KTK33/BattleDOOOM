@@ -1,5 +1,4 @@
 #pragma once
-#include "../Actor/ActorState/ActorStateID.h"
 
 class BigBossEnemyParam {
 	BigBossEnemyParam() {}
@@ -12,14 +11,9 @@ public:
 
 	void initialize();
 
-	//シューティングモードプレイヤーのステイト
-	void SetPlayerState(ActorStateID id);
-	ActorStateID GetPlayerState();
-
-	void SetPlayerHP(int hp);
-	int GetPlayerHP();
+	void Set_RotaCheck(bool r);
+	bool Get_RotaCheck();
 
 private:
-	ActorStateID mstate{ ActorStateID::NONE };
-	int mhp;
+	bool mrota;
 };

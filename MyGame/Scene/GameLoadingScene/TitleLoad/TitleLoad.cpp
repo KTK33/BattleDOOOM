@@ -26,6 +26,8 @@ void TitleLoad::start()
 
 	//ロードするリソース数の設定
 	mDL.setCount(GetASyncLoadNum());
+
+	LoadEffect();
 }
 
 void TitleLoad::update(float deltaTime)
@@ -63,6 +65,7 @@ void TitleLoad::LoadSound()
 	sound.LoadSE("asset/Sound/SE/TitleKetteiSE.mp3", SE_ID::TITLEKETTEI_SE);
 	sound.LoadSE("asset/Sound/SE/PauseCursorSE.mp3", SE_ID::PAUSECURSOR_SE);
 	sound.LoadSE("asset/Sound/SE/PauseKetteiSE.mp3", SE_ID::PAUSEKETTEI_SE);
+	sound.LoadSE("asset/Sound/SE/kaminari.mp3", SE_ID::THUNDER_SE);
 }
 
 void TitleLoad::LoadSprite()
@@ -94,4 +97,9 @@ void TitleLoad::LoadSprite()
 
 	//エフェクト
 	sprite.Load("asset/UI/Effect/BulletHit.png", SPRITE_ID::EFFECT_BULLETHIT);
+}
+
+void TitleLoad::LoadEffect()
+{
+	EffekseerEffect::load((int)EFFECT_ID::TITLE_THUNDER, "asset/Effekseer/TitleThunder.efk");
 }

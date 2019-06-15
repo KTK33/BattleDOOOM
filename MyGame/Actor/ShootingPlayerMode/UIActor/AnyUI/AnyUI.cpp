@@ -27,7 +27,14 @@ void AnyUI::draw() const
 	}
 	else
 	{
-		Sprite::GetInstance().Draw(SPRITE_ID::MISSION_BOSS_DEFEAT, Vector2(150, 75));
+		if (world_->find_actor(ActorGroup::BossEnemy, "BossEnemy") == NULL)
+		{
+			Sprite::GetInstance().Draw(SPRITE_ID::MISSION_BIGBOSS_DEFEAT, Vector2(150, 75));
+		}
+		else
+		{
+			Sprite::GetInstance().Draw(SPRITE_ID::MISSION_BOSS_DEFEAT, Vector2(150, 75));
+		}
 	}
 
 }

@@ -66,7 +66,7 @@ void ShootingCamera::CameraSet(float deltaTime)
 	if (world_->GetPauseCheck() == false && ShootingPlayerParam::getInstance().Get_ItemBoxOpen() == false)
 	{
 		//エイム中の操作
-		mAimPosMove += RightStick::GetInstance().GetAngle() * (GameDataManager::getInstance().GetAIMSPD() * 0.2f);
+		mAimPosMove += RightStick::GetInstance().GetAngle() * (GameDataManager::getInstance().GetAIMSPD() * 0.5f);
 	}
 
 	//プレイヤーがエイム中か
@@ -90,6 +90,9 @@ void ShootingCamera::Out_Aim()
 
 	//ターゲットの場所を徐々に更新
 	mtarget_ = Vector3::Lerp(mtarget_, position_ + mGetplayer_->Getrotation().Forward(), 0.5f);
+
+	//カメラの移動と一緒にプレイヤーを回転させる
+	In_Aim_Rotation();
 
 	//カメラの移動範囲の制限
 	mAimPosMove = Vector2::Clamp(mAimPosMove, Vector2(0, -20), Vector2(0, 20));

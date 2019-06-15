@@ -4,7 +4,7 @@
 void ShootingPlayerParam::initialize()
 {
 	mRemainGun = SetGunPoint;
-	mHaveGun = 10;
+	mHaveGun = InitHaveGun;
 	mAttackParam = 1;
 	mAimPos = Vector3::Zero;
 	mAimCheck = false;

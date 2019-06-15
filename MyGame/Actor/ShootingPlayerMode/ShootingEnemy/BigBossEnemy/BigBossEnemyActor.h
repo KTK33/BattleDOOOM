@@ -21,7 +21,7 @@
 
 class BigBossEnemyActor : public Actor, public ActorSystem {
 public:
-	BigBossEnemyActor(int model, IWorld* world, const Vector3& position, const IBodyPtr& body = std::make_shared<BoundingCapsule>(Vector3{ 0.0f,20.0f,0.0f }, Matrix::Identity, 23.0f, 10.0f));
+	BigBossEnemyActor(int model, IWorld* world, const Vector3& position, const IBodyPtr& body = std::make_shared<BoundingCapsule>(Vector3{ 0.0f,13.0f,0.0f }, Matrix::Identity, 17.0f, 5.0f));
 	virtual ~BigBossEnemyActor() override {}
 	virtual void initialize() override;
 
@@ -68,4 +68,8 @@ private:
 
 	int mAttackTime;
 	int mAttackTimeInit{ 60 };
+
+	EnemyMove mEM;
+
+	bool mAttack;
 };

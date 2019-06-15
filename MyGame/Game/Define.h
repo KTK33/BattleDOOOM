@@ -19,11 +19,14 @@ static constexpr int SEGMENT_VERTEX_COUNT = 2;
 //プレイヤーの最大ＨＰ
 static constexpr int ShootingPlayerHPVal = 10;
 
+//初期に持っている弾数
+static const int InitHaveGun = 30;
+
 //一度にセットできる弾数
-static constexpr int SetGunPoint = 7;
+static const int SetGunPoint = 7;
 
 //弾を拾ったときに取得できる弾数
-static const int GetBulletPoint = 5;
+static const int GetBulletPoint = 10;
 
 //回復アイテムを拾ったときの回復量
 static const int GetHpPoint = 3;
@@ -41,13 +44,22 @@ static const int GetItemRate = 70;
 static const int AttackUpTime = 30;
 
 //ノーマル敵のHP
-static const int NormalHPVal = 3;
+static const int NormalHPVal = 2;
+
+//ノーマル敵の移動速度
+static const float NormalWalkSpeed = 0.5f;
 
 //ボス敵のHP
-static const int BossHPVal = 10;
+static const int BossHPVal = 5;
+
+//ボス敵の移動速度(通常時)
+static const float BossWalkSpeed = 0.5f;
 
 //大ボスのHP
-static const int BigBossHPVal = 10;
+static const int BigBossHPVal = 20;
+
+//大ボスの移動速度
+static const float BigBossWalkSpeed = 1.5f;
 
 ///アクションモード
 
@@ -55,4 +67,4 @@ static const int BigBossHPVal = 10;
 static const int ActionPlayerHPVal = 10;
 
 //赤侍のHP
-static const int RedSamuraiHPVal = 1;
+static const int RedSamuraiHPVal = 30;

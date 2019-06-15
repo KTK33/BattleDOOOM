@@ -22,7 +22,8 @@ ShootingPlayerActor::ShootingPlayerActor(int model, int weapon, IWorld * world, 
 	mAttackParam{ 1 },
 	mAttackUpTime{ AttackUpTime * 60 },
 	meff{(int)EFFECT_ID::PLAYER_HEAL},
-	meffsize{ Vector3(1.0f,1.0f,1.0f)}
+	meffsize{ Vector3(1.0f,1.0f,1.0f)},
+	meffPos{Vector3::Zero}
 {
 	mcurrentStateID = ActorStateID::ShootingPlayerIdle;
 	shootingplayerState_[ActorStateID::ShootingPlayerIdle].add(add_state<ShootingPlayerIdle>(world, parameters_));
@@ -101,7 +102,7 @@ void ShootingPlayerActor::update(float deltaTime)
 	meff.set_scale(meffsize);
 	Matrix angle = Matrix::Invert(rotation_);
 	meff.set_rotation(Vector3(0, Matrix::Angle(angle).y, 0));
-	meff.set_position(position_);
+	meff.set_position(meffPos);
 	meff.update(1.5f);
 
 	//パラメータをセット
@@ -165,13 +166,25 @@ void ShootingPlayerActor::onCollide(Actor & other)
 void ShootingPlayerActor::receiveMessage(EventMessage message, void * param)
 {
 	//無敵(ガード中)でないときに敵の弾に当たったら
-	if (parameters_.Get_invincibly() == false && 
-		ShootingPlayerParam::getInstance().Get_Guard() == false)
+	if (parameters_.Get_invincibly() == false)	
 	{
 		if (message == EventMessage::HIT_ENEMY_BULLET)
 		{
-			parameters_.Red_HP(*static_cast<int*>(param));
-			parameters_.Set_Invicibly(true);
+			if (ShootingPlayerParam::getInstance().Get_Guard())
+			{
+				meff.change_effect((int)EFFECT_ID::GUARD);
+				meffsize = Vector3(3.0f, 3.0f, 3.0f);
+				meffPos = Vector3(position_.x,position_.y + 10.0f,position_.z) + rotation_.Forward() * 5 + rotation_.Right() * 3;
+				meff.set_endTime(30);
+				if (meff.get_isPlaying() == -1){
+					meff.play();
+				}
+			}
+			else
+			{
+				parameters_.Red_HP(*static_cast<int*>(param));
+				parameters_.Set_Invicibly(true);
+			}
 		}
 	}
 
@@ -226,6 +239,7 @@ void ShootingPlayerActor::receiveMessage(EventMessage message, void * param)
 			meff.stop();
 			meff.change_effect((int)EFFECT_ID::PLAYER_HEAL);
 			meffsize = Vector3(5.0f, 10.0f, 5.0f);
+			meffPos = position_;
 			meff.set_endTime(120);
 			meff.play();
 		}
@@ -240,6 +254,7 @@ void ShootingPlayerActor::receiveMessage(EventMessage message, void * param)
 			meff.stop();
 			meff.change_effect((int)EFFECT_ID::PLAYER_ATTACKUP);
 			meffsize = Vector3(1.0f, 1.0f, 1.0f);
+			meffPos = position_;
 			meff.set_endTime(120);
 			meff.play();
 		}

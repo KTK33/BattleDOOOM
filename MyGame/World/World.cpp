@@ -21,6 +21,7 @@ void World::initialize()
 	actors_.add(ActorGroup::Effect);
 	actors_.add(ActorGroup::System);
 	actors_.add(ActorGroup::UI);
+	actors_.add(ActorGroup::TitleEffect);
 	actors_.add(ActorGroup::PauseUI);
 	actors_.add(ActorGroup::ItemBoxUI);
 

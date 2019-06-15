@@ -5,6 +5,7 @@
 #include "../Actor/CommonUIActor/TitleUI/TitleBack/TitleBack.h"
 #include "../Actor/CommonUIActor/FadeUI/FadeUI.h"
 #include "../Sound/Sound.h"
+#include "../TitleEffect/TitleEffect.h"
 
 TitleAnyUI::TitleAnyUI(IWorld * world) :
 	Actor(world, "TitleAnuUI", Vector3::Zero),
@@ -21,7 +22,10 @@ TitleAnyUI::TitleAnyUI(IWorld * world) :
 	TitleBackWhiteAlpha{0},
 	TitleBackWhiteCheck{false},
 	alreadyFadeCheck{false},
-	NameBackSize2{0,0}{}
+	NameBackSize2{0,0}
+{
+	world_->add_actor(ActorGroup::TitleEffect, new_actor<TitleEffect>(world_));
+}
 
 void TitleAnyUI::update(float deltaTime)
 {
@@ -116,6 +120,7 @@ void TitleAnyUI::update(float deltaTime)
 
 void TitleAnyUI::draw() const
 {
+
 	Vector2 NameSpriteSize = Sprite::GetInstance().GetSize(SPRITE_ID::TITLENAME);
 	Sprite::GetInstance().Draw(SPRITE_ID::TITLENAME, Vector2(static_cast<float>(WINDOW_WIDTH) / 2, static_cast<float>(WINDOW_HEIGHT) - 900), NameSpriteSize/2,NameSize,NameAngle);
 

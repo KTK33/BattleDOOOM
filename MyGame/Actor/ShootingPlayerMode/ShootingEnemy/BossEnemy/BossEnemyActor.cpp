@@ -6,6 +6,7 @@
 #include "BossEnemyStateInc.h"
 #include "../Game/Define.h"
 #include "../Scene/GameData/GameDataManager.h"
+#include "../BigBossEnemy/BigBossEnemyActor.h"
 
 BossEnemyActor::BossEnemyActor(int model, IWorld * world, const Vector3 & position, const IBodyPtr & body) :
 	Actor(world, "BossEnemy", position, body),
@@ -63,7 +64,7 @@ void BossEnemyActor::update(float deltaTime)
 	//€‚ñ‚Å‚¢‚éó‘Ô
 	if (parameters_.Get_IsDead() == true)
 	{
-		GameDataManager::getInstance().SetDeadBossEnemy(true);
+		world_->add_actor(ActorGroup::BigBossEnemy, new_actor<BigBossEnemyActor>(9, world_, Vector3{ 200.0f, 10.0f,20.0f }));
 		die();
 		return;
 	}
@@ -87,9 +88,9 @@ void BossEnemyActor::update(float deltaTime)
 	//ˆÚ“®’†‚ÉƒvƒŒƒCƒ„[•û‚ğŒü‚­
 	if (parameters_.Get_StateID() == ActorStateID::BossEnemyIdle)
 	{
-		float movespeed = 0.5f;
+		float movespeed = BossWalkSpeed;
 		if (parameters_.Get_HP() < 5) {
-			movespeed = 0.8f;
+			movespeed *= 1.5f;
 			parameters_.Set_Motion(BossEnemyMotion::MotionBossRun);
 		}
 		else {

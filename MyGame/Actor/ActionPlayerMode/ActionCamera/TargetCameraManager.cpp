@@ -2,7 +2,6 @@
 #include "../Input/GamePad/GamePad.h"
 #include "../Input/Keyboard/Keyboard.h"
 #include "../Input/InputInfoInc.h"
-#include "../Scene/GameData/GameDataManager.h"
 
 TargetCameraManager::TargetCameraManager(IWorld * world, std::weak_ptr<Actor> player, std::weak_ptr<Actor> camera):
 	Actor(world, "TargetCameraManager", Vector3::Zero),
@@ -14,11 +13,6 @@ TargetCameraManager::TargetCameraManager(IWorld * world, std::weak_ptr<Actor> pl
 
 void TargetCameraManager::update(float deltaTime)
 {
-	if (GameDataManager::getInstance().GetDeadBossEnemy() ||
-		GameDataManager::getInstance().GetPlayerDead()){
-		mTargetCamera = false;
-	}
-
 	//“G‚ÌŒŸõ
 	auto enemy_ = world_->find_actor(ActorGroup::Enemy, "RedSamurai").get();
 	if (enemy_ == nullptr) return;

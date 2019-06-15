@@ -14,6 +14,9 @@ enum class BGM_ID
 
 enum class SE_ID
 {
+	//タイトル用
+	THUNDER_SE,
+
 	//シューティングモード用
 	SHOOT_SE,
 	ATTACK_SE,

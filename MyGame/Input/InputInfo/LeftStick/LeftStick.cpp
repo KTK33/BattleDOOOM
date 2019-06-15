@@ -24,6 +24,8 @@ Vector2 LeftStick::GetAngle()
 		input.y = GamePad::GetInstance().Stick().y;
 	}
 
+	input = Vector2::Clamp(input, Vector2(-1.0f, -1.0f), Vector2(1.0f, 1.0f));
+
 	return input;
 }
 

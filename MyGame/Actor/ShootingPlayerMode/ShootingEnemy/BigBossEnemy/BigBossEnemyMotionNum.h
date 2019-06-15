@@ -11,6 +11,7 @@ public:
 		MotionBigBossHanniSemai,
 		MotionBigBossRun,
 		MotionBigBossDead,
-		MotionBigBossHanni,
+		MotionBigBossRoar,
+		MotionBigBossAttack,
 	};
 };

@@ -94,7 +94,6 @@ void ActionPlayerActor::update(float deltaTime)
 	}
 }
 
-#include "../Texture/Sprite.h"
 void ActionPlayerActor::draw() const
 {
 	if (mDeadTime <= 0) return;

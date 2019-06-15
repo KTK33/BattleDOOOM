@@ -25,6 +25,9 @@ void ActionCamera::update(float deltaTime)
 	player_ = world_->find_actor(ActorGroup::Player, "Player").get();
 	if (player_ == nullptr) return;
 
+	if (GameDataManager::getInstance().GetDeadBossEnemy() ||
+		GameDataManager::getInstance().GetPlayerDead())
+		return;
 	PlayerInput(deltaTime);
 
 	//‚Î‚Ë

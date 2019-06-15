@@ -11,7 +11,7 @@ void BigBossEnemyIdle::Stateinitialize()
 {
 	mNextStateFlag = false;
 	mNextStateID = ActorStateID::BossEnemyIdle;
-	parameters_->Set_Motion(BigBossEnemyMotion::MotionBigBossIdle);
+	parameters_->Set_Motion(BigBossEnemyMotion::MotionBigBossRun);
 }
 
 void BigBossEnemyIdle::StateUpdate(Vector3 & lposition, Matrix & lrotation, AnimatedMesh & lmesh)

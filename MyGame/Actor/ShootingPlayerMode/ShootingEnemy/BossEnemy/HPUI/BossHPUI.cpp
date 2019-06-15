@@ -9,5 +9,5 @@ void BossHP::draw(int hp, Vector3 pos) const
 	Billboard::bind((int)SPRITE_ID::BOSSHP_UI);
 	Billboard::draw(pos, 20.0f,0.0f,0.0f);
 	Billboard::bind((int)SPRITE_ID::BOSSHP_GAUGE);
-	Billboard::Mobidraw(pos, Vector2(0, 0), Vector2(2.0f * hp, 0), Vector2(2.0f * hp, 1.2f), Vector2(0, 1.2f));
+	Billboard::Mobidraw(pos, Vector2(0, 0), Vector2(20.0f/BossHPVal * hp, 0), Vector2(20.0f / BossHPVal * hp, 1.2f), Vector2(0, 1.2f));
 }

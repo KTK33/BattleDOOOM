@@ -2,26 +2,15 @@
 
 void BigBossEnemyParam::initialize()
 {
-	mstate = ActorStateID::NONE;
-	mhp = 0;
+	mrota = false;
 }
 
-void BigBossEnemyParam::SetPlayerState(ActorStateID id)
+void BigBossEnemyParam::Set_RotaCheck(bool r)
 {
-	mstate = id;
+	mrota = r;
 }
 
-ActorStateID BigBossEnemyParam::GetPlayerState()
+bool BigBossEnemyParam::Get_RotaCheck()
 {
-	return mstate;
-}
-
-void BigBossEnemyParam::SetPlayerHP(int hp)
-{
-	mhp = hp;
-}
-
-int BigBossEnemyParam::GetPlayerHP()
-{
-	return mhp;
+	return mrota;
 }

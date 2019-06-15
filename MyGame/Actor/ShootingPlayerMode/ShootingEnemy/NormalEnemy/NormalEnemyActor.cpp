@@ -94,7 +94,7 @@ void NormalEnemyActor::update(float deltaTime)
 	//ˆÚ“®’†‚ÉƒvƒŒƒCƒ„[•û‚ðŒü‚­
 	if (parameters_.Get_StateID() == ActorStateID::NormalEnemyIdle)
 	{
-		mEV.Move(position_, player_->Getposition(), 0.5f, mAttackCheck,15.0f);
+		mEV.Move(position_, player_->Getposition(), NormalWalkSpeed, mAttackCheck,15.0f);
 		Attacking();
 	}
 }

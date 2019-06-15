@@ -2,10 +2,17 @@
 
 enum class EFFECT_ID
 {
+	//タイトルシーン
+	TITLE_THUNDER,
+
 	//シューティングモード
 	PLAYER_HEAL,
 	PLAYER_ATTACKUP,
+	GUARD,
 	ENEMY_ROAR,
+	LASER_TYOKUSEN,
+	LASER_HANI_SEMAI,
+	LASER_HANI_TAME,
 
 	//アクションモード
 	ACTION_PLAYER_DEAD,

@@ -79,12 +79,12 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>..\Library\DxLib;..\Library\Effekseer;$(IncludePath)</IncludePath>
-    <LibraryPath>..\Library\DxLib;..\Library\Effekseer;$(LibraryPath)</LibraryPath>
+    <IncludePath>..\Library\Effekseer;$(IncludePath)</IncludePath>
+    <LibraryPath>..\Library\Effekseer;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>..\Library\DxLib;..\Library\Effekseer;$(IncludePath)</IncludePath>
-    <LibraryPath>..\Library\DxLib;..\Library\Effekseer;$(LibraryPath)</LibraryPath>
+    <IncludePath>..\Library\Effekseer;$(IncludePath)</IncludePath>
+    <LibraryPath>..\Library\Effekseer;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -198,6 +198,7 @@
     <ClCompile Include="Actor\CommonUIActor\TitleUI\TitleAnyUI\TitleAnyUI.cpp" />
     <ClCompile Include="Actor\CommonUIActor\TitleUI\TitleBack\TitleBack.cpp" />
     <ClCompile Include="Actor\CommonUIActor\TitleUI\TitleBullet\TitleBullet.cpp" />
+    <ClCompile Include="Actor\CommonUIActor\TitleUI\TitleEffect\TitleEffect.cpp" />
     <ClCompile Include="Actor\CommonUIActor\TitleUI\TitleNinjya\TitleNinjya.cpp" />
     <ClCompile Include="Actor\CommonUIActor\TitleUI\TitlePlayer\TitlePlayer.cpp" />
     <ClCompile Include="Actor\EnemyAttackCollison\EnemyAttackCollison.cpp" />
@@ -208,6 +209,7 @@
     <ClCompile Include="Actor\ShootingPlayerMode\ItemActor\ItemCreater\ItemCreater.cpp" />
     <ClCompile Include="Actor\ShootingPlayerMode\ShootingCamera\ShootingCamera.cpp" />
     <ClCompile Include="Actor\ShootingPlayerMode\ShootingEnemy\BigBossEnemy\BigBossEnemyActor.cpp" />
+    <ClCompile Include="Actor\ShootingPlayerMode\ShootingEnemy\BigBossEnemy\BigBossEnemyParam\BigBossEnemyParam.cpp" />
     <ClCompile Include="Actor\ShootingPlayerMode\ShootingEnemy\BigBossEnemy\HPUI\BigBossHPUI.cpp" />
     <ClCompile Include="Actor\ShootingPlayerMode\ShootingEnemy\BigBossEnemy\State\BigBossEnemyAttack\AttackChoice.cpp" />
     <ClCompile Include="Actor\ShootingPlayerMode\ShootingEnemy\BigBossEnemy\State\BigBossEnemyAttack\BigBossAttackCollision\BigBossAttackCollision.cpp" />
@@ -388,6 +390,7 @@
     <ClInclude Include="Actor\CommonUIActor\TitleUI\TitleAnyUI\TitleAnyUI.h" />
     <ClInclude Include="Actor\CommonUIActor\TitleUI\TitleBack\TitleBack.h" />
     <ClInclude Include="Actor\CommonUIActor\TitleUI\TitleBullet\TitleBullet.h" />
+    <ClInclude Include="Actor\CommonUIActor\TitleUI\TitleEffect\TitleEffect.h" />
     <ClInclude Include="Actor\CommonUIActor\TitleUI\TitleNinjya\TitleNinjya.h" />
     <ClInclude Include="Actor\CommonUIActor\TitleUI\TitlePlayer\TitlePlayer.h" />
     <ClInclude Include="Actor\EnemyAttackCollison\EnemyAttackCollison.h" />
@@ -400,6 +403,7 @@
     <ClInclude Include="Actor\ShootingPlayerMode\ShootingCamera\ShootingCamera.h" />
     <ClInclude Include="Actor\ShootingPlayerMode\ShootingEnemy\BigBossEnemy\BigBossEnemyActor.h" />
     <ClInclude Include="Actor\ShootingPlayerMode\ShootingEnemy\BigBossEnemy\BigBossEnemyMotionNum.h" />
+    <ClInclude Include="Actor\ShootingPlayerMode\ShootingEnemy\BigBossEnemy\BigBossEnemyParam\BigBossEnemyParam.h" />
     <ClInclude Include="Actor\ShootingPlayerMode\ShootingEnemy\BigBossEnemy\BigBossEnemyStateInc.h" />
     <ClInclude Include="Actor\ShootingPlayerMode\ShootingEnemy\BigBossEnemy\HPUI\BigBossHPUI.h" />
     <ClInclude Include="Actor\ShootingPlayerMode\ShootingEnemy\BigBossEnemy\State\BigBossEnemyAttack\AttackChoice.h" />

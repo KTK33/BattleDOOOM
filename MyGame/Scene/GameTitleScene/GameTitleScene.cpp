@@ -37,6 +37,8 @@ void GameTitleScene::draw() const
 {
 	Graphics3D::clear_color(0, 0, 0);
 	world_.draw();
+
+	Effekseer_Sync3DSetting();
 }
 
 void GameTitleScene::end()

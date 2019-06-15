@@ -98,6 +98,7 @@ void ShootingLoad::LoadSprite()
 	sprite.Load("asset/UI/PlayScene/MissionExtermination.png", SPRITE_ID::MISSION_ENEMY_EXTERMINATION);
 	sprite.Load("asset/UI/PlayScene/MissionNumber.png", SPRITE_ID::MISSION_NUMBER);
 	sprite.Load("asset/UI/PlayScene/MissionBossDefeat.png", SPRITE_ID::MISSION_BOSS_DEFEAT);
+	sprite.Load("asset/UI/PlayScene/MissionBigBossDefeat.png", SPRITE_ID::MISSION_BIGBOSS_DEFEAT);
 
 	sprite.Load("asset/UI/PlayScene/Enemy/EnemyCountATO.png", SPRITE_ID::ENEMY_COUNT_ATO);
 	sprite.Load("asset/UI/PlayScene/Sight.png", SPRITE_ID::SIGHT);
@@ -144,4 +145,8 @@ void ShootingLoad::LoadEffect()
 	EffekseerEffect::load((int)EFFECT_ID::PLAYER_HEAL, "asset/Effekseer/Heal.efk");
 	EffekseerEffect::load((int)EFFECT_ID::PLAYER_ATTACKUP, "asset/Effekseer/ShootingPlayer_AttackUp.efk");
 	EffekseerEffect::load((int)EFFECT_ID::ENEMY_ROAR, "asset/Effekseer/EnemyRoar.efk");
+	EffekseerEffect::load((int)EFFECT_ID::LASER_TYOKUSEN, "asset/Effekseer/BigBossLaser_Tyokusen.efk");
+	EffekseerEffect::load((int)EFFECT_ID::LASER_HANI_SEMAI, "asset/Effekseer/BigBossLaser_HaniSemai.efk");
+	EffekseerEffect::load((int)EFFECT_ID::LASER_HANI_TAME, "asset/Effekseer/BigBossLaser_Tame.efk");
+	EffekseerEffect::load((int)EFFECT_ID::GUARD, "asset/Effekseer/ShootingPlayerGuard.efk");
 }

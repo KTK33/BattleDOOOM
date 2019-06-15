@@ -17,6 +17,7 @@ enum class ActorGroup {
 	Player,       //ƒvƒŒƒCƒ„[
 	System,
 	UIBefore,
+	TitleEffect,
 	UI,
 	PauseUI,
 	ItemBoxUI,

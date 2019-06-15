@@ -88,4 +88,5 @@ private:
 
 	EffectObj meff;
 	Vector3 meffsize;
+	Vector3 meffPos;
 };

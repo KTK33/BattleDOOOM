@@ -34,7 +34,6 @@ void BigBossAttackCollision::update(float deltaTime)
 
 void BigBossAttackCollision::draw() const
 {
-	DrawFormatString(300, 300, GetColor(255, 255, 255), "%f,%f,%f", position_.x, position_.y,position_.z);
 	body_->transform(Getpose())->draw();
 }
 

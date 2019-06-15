@@ -4,13 +4,15 @@
 #include "../Scene/GameData/GameDataManager.h"
 #include "../Sound/Sound.h"
 #include "HPUI/BigBossHPUI.h"
+#include "BigBossEnemyParam/BigBossEnemyParam.h"
 
 BigBossEnemyActor::BigBossEnemyActor(int model, IWorld * world, const Vector3 & position, const IBodyPtr & body):
 	Actor(world, "BigBossEnemy", position, body),
 	player_{ nullptr },
 	mesh_{ model },
 	mDamageParam{ 1 },
-	mAttackTime{mAttackTimeInit}
+	mAttackTime{mAttackTimeInit},
+	mAttack{ false }
 {
 	mcurrentStateID = ActorStateID::BigBossEnemyIdle;
 	bigbossenemyState_[ActorStateID::BigBossEnemyIdle].add(add_state<BigBossEnemyIdle>(world, parameters_));
@@ -30,6 +32,8 @@ void BigBossEnemyActor::initialize()
 	parameters_.Set_HP(BigBossHPVal);
 	parameters_.Set_StateID(ActorStateID::BigBossEnemyIdle);
 
+	BigBossEnemyParam::getInstance().initialize();
+
 	world_->add_actor(ActorGroup::UI, new_actor<BigBossHPUI>(world_));
 }
 
@@ -48,7 +52,6 @@ void BigBossEnemyActor::update(float deltaTime)
 		parameters_.Set_Statetimer(0.0f);
 	}
 
-
 	//•Ç°‚Æ‚Ì“–‚½‚è”»’è
 	collision();
 
@@ -63,10 +66,6 @@ void BigBossEnemyActor::update(float deltaTime)
 		return;
 	}
 
-	mesh_.update(deltaTime);
-	mesh_.transform(Getpose());
-	mesh_.change_motion(parameters_.Get_Motion());
-
 	//d—Í
 	mG.gravity(position_, velocity_, Floorcollide);
 
@@ -77,6 +76,14 @@ void BigBossEnemyActor::update(float deltaTime)
 	{
 		LookPlayer();
 		Attacking();
+
+		mEM.Move(position_, player_->Getposition(), BigBossWalkSpeed, mAttack, 15.0f);
+	}
+	else if (mcurrentStateID == ActorStateID::BigBossEnemyAttack)
+	{
+		if (!BigBossEnemyParam::getInstance().Get_RotaCheck()){
+			LookPlayer();
+		}
 	}
 
 	//ó‘ÔŽžŠÔ‚ð‰ÁŽZ
@@ -84,15 +91,16 @@ void BigBossEnemyActor::update(float deltaTime)
 
 	int hp = parameters_.Get_HP();
 	world_->send_message(EventMessage::BOSSHP, reinterpret_cast<int*>(&hp));
+
+	mesh_.update(deltaTime);
+	mesh_.transform(Matrix::CreateScale(Vector3(1.7f,1.7f,1.7f)) *Getpose());
+	mesh_.change_motion(parameters_.Get_Motion());
 }
 
 void BigBossEnemyActor::draw() const
 {
 	mesh_.draw();
 	body_->transform(Getpose())->draw();
-
-	SetFontSize(32);
-	DrawFormatString(300, 200, GetColor(255, 0, 0), "%f,%f,%f", position_.x, position_.y, position_.z);
 }
 
 void BigBossEnemyActor::onCollide(Actor & other)

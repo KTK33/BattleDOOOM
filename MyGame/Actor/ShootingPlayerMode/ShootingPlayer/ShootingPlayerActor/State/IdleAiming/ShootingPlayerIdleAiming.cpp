@@ -40,24 +40,6 @@ void ShootingPlayerIdleAiming::StateUpdate(Vector3 & lposition, Matrix & lrotati
 
 void ShootingPlayerIdleAiming::Input()
 {
-	////エイム中→アイドル状態前まで
-	//if(ButtonLB::GetInstance().TriggerUp())
-	//{
-
-	//	ShootingPlayerParam::getInstance().Set_AimCheck(false);
-	//	mNextStateID = ActorStateID::ShootingPlayerAimToIdle;
-	//	mNextStateFlag = true;
-	//	return;
-	//}
-
-	//if (ButtonLB::GetInstance().StateUp())
-	//{
-	//	ShootingPlayerParam::getInstance().Set_AimCheck(false);
-	//	mNextStateID = ActorStateID::ShootingPlayerAimToIdle;
-	//	mNextStateFlag = true;
-	//	return;
-	//}
-
 	//銃を撃つステイトへ
 	if(ShootingPlayerParam::getInstance().Get_RemainGun() > 0 &&
 		parameters_->Get_Motion() != ShootingPlayerMotionNum::MotionPlayerBackGun)
