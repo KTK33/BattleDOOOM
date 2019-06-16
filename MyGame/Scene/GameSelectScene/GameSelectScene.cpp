@@ -13,12 +13,21 @@ void GameSelectScene::start()
 	world_.initialize();
 	menuSize_ = 2;
 	cursorPos_ = 0;
+	mCredit = false;
+	mCreditPos = Vector2(0, -(float)WINDOW_HEIGHT);
 
 	world_.add_actor(ActorGroup::System, new_actor<GameSelectSceneManager>(&world_));
 }
 
 void GameSelectScene::update(float deltaTime)
 {
+	world_.update(deltaTime);
+	world_.send_message(EventMessage::SELECT_MODE_, reinterpret_cast<int*>(&cursorPos_));
+
+	CreditSystem();
+
+	if (mCreditPos.y != -(float)WINDOW_HEIGHT) return;
+
 	if(ButtonUp::GetInstance().TriggerDown())
 	{
 		moveCursor(1);
@@ -45,9 +54,6 @@ void GameSelectScene::update(float deltaTime)
 		}
 		isEnd_ = true;
 	}
-
-	world_.update(deltaTime);
-	world_.send_message(EventMessage::SELECT_MODE_, reinterpret_cast<int*>(&cursorPos_));
 }
 
 void GameSelectScene::draw() const
@@ -76,8 +82,28 @@ void GameSelectScene::draw() const
 	}
 
 	world_.draw();
+
+	Sprite::GetInstance().Draw(SPRITE_ID::CREDIT, mCreditPos);
+	Sprite::GetInstance().Draw(SPRITE_ID::CREDIT_OPENBUTTON, Vector2(1600,1030));
 }
 
 void GameSelectScene::end()
 {
+}
+
+void GameSelectScene::CreditSystem()
+{
+	if (ButtonStart::GetInstance().TriggerDown())
+	{
+		mCredit = !mCredit;
+	}
+
+	if (mCredit)
+	{
+		mCreditPos.y = MathHelper::Min(mCreditPos.y + 50.0f, 0.0f);
+	}
+	else
+	{
+		mCreditPos.y = MathHelper::Max(mCreditPos.y - 50.0f, -(float)WINDOW_HEIGHT);
+	}
 }

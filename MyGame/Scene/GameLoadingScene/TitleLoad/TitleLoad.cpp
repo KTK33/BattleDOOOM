@@ -94,9 +94,12 @@ void TitleLoad::LoadSprite()
 	sprite.Load("asset/UI/TitleScene/SelectPurposeS.png", SPRITE_ID::SELECT_PUR_S);
 	sprite.Load("asset/UI/TitleScene/SelectPurposeA.png", SPRITE_ID::SELECT_PUR_A);
 
-
 	//エフェクト
 	sprite.Load("asset/UI/Effect/BulletHit.png", SPRITE_ID::EFFECT_BULLETHIT);
+
+	//クレジット
+	sprite.Load("asset/UI/TitleScene/CreditScene.png", SPRITE_ID::CREDIT);
+	sprite.Load("asset/UI/TitleScene/CreditOpenUI.png", SPRITE_ID::CREDIT_OPENBUTTON);
 }
 
 void TitleLoad::LoadEffect()

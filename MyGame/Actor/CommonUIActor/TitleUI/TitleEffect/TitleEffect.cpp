@@ -24,7 +24,7 @@ void TitleEffect::update(float deltaTime)
 	mTimer--;
 	if (mTimer <= 0) //3秒ごとに雷エフェクトの表示
 	{
-		mEffectPos = GetCameraTarget() + rotation_.Right() * Random::rand(6.0f,6.0f);
+		mEffectPos = GetCameraTarget() + rotation_.Right() * Random::rand(-10.0f, 6.0f);
 		meff.play();
 		meff.set_endTime(70);
 		Sound::GetInstance().PlaySE(SE_ID::THUNDER_SE);

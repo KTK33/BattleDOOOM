@@ -14,5 +14,11 @@ public:
 	void end()override;
 
 private:
+	void CreditSystem();
+
+private:
 	World world_;
+
+	bool mCredit;
+	Vector2 mCreditPos;
 };
