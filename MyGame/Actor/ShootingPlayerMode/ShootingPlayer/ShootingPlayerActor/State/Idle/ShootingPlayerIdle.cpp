@@ -46,6 +46,7 @@ void ShootingPlayerIdle::Input()
 		return;
 	}
 
+	//ÉKÅ[Éh
 	if (ButtonB::GetInstance().TriggerDown())
 	{
 		mNextStateID = ActorStateID::ShootingPlayerGuard;

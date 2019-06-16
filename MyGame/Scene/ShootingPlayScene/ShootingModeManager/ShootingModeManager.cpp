@@ -47,7 +47,7 @@ void ShootingModeManager::update(float deltaTime)
 {
 	if (world_->find_actor(ActorGroup::Enemy, "NormalEnemy") == NULL && BossArleady == false)
 	{
-		world_->add_actor(ActorGroup::BossEnemy, new_actor<BossEnemyActor>(3, world_, Vector3{ 0.0f, 10.0f,0.0f }));
+		world_->add_actor(ActorGroup::BossEnemy, new_actor<BossEnemyActor>(3, world_, Vector3{ 200.0f, 10.0f,20.0f }));
 		BossArleady = true;
 	}
 }

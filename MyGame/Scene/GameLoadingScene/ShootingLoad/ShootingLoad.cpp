@@ -74,6 +74,7 @@ void ShootingLoad::LoadSound()
 	Sound::GetInstance().LoadSE("asset/Sound/SE/Walkstep.mp3", SE_ID::WALKSTEP_SE);
 	Sound::GetInstance().LoadSE("asset/Sound/SE/Tyouhatu.mp3", SE_ID::TYOHATU_SE);
 	Sound::GetInstance().LoadSE("asset/Sound/SE/ItemGet.mp3", SE_ID::ITEMGET_SE);
+	Sound::GetInstance().LoadSE("asset/Sound/SE/Reload.mp3", SE_ID::RELOAD_SE);
 
 	Sound::GetInstance().LoadSE("asset/Sound/SE/RecoverItemUse.mp3", SE_ID::RECOVERITEM_USE);
 	Sound::GetInstance().LoadSE("asset/Sound/SE/AttackUpItemUse.mp3", SE_ID::ATTACKITEM_USE);
@@ -105,6 +106,9 @@ void ShootingLoad::LoadSprite()
 
 	Billboard::load((int)SPRITE_ID::BOSSHP_UI, "asset/UI/PlayScene/Enemy/BossHP_.png");
 	Billboard::load((int)SPRITE_ID::BOSSHP_GAUGE, "asset/UI/PlayScene/Enemy/BossHP_gauge.png");
+
+	sprite.Load("asset/UI/PlayScene/BigBossHP_gauge.png", SPRITE_ID::BIGBOSSHP_GAUGE);
+	sprite.Load("asset/UI/PlayScene/BigBossHP_FRAME.png", SPRITE_ID::BIGBOSSHP_FRAME);
 
 	sprite.Load("asset/UI/PlayScene/ItemBox.png", SPRITE_ID::ITEMBOX);
 

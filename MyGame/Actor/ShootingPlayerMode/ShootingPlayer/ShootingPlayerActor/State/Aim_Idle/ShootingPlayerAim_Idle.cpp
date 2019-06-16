@@ -55,6 +55,15 @@ void ShootingPlayerAim_Idle::StateUpdate(Vector3 & lposition, Matrix & lrotation
 
 void ShootingPlayerAim_Idle::Input()
 {
+	//ガード
+	if (ButtonB::GetInstance().TriggerDown())
+	{
+		ShootingPlayerParam::getInstance().Set_AimCheck(false);
+		mNextStateID = ActorStateID::ShootingPlayerGuard;
+		mNextStateFlag = true;
+		return;
+	}
+
 		//リロード
 	if (ShootingPlayerParam::getInstance().Get_RemainGun() < 7)
 	{

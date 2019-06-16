@@ -64,7 +64,7 @@ void BossEnemyActor::update(float deltaTime)
 	//Ž€‚ñ‚Å‚¢‚éó‘Ô
 	if (parameters_.Get_IsDead() == true)
 	{
-		world_->add_actor(ActorGroup::BigBossEnemy, new_actor<BigBossEnemyActor>(9, world_, Vector3{ 200.0f, 10.0f,20.0f }));
+		world_->add_actor(ActorGroup::BigBossEnemy, new_actor<BigBossEnemyActor>(9, world_, Vector3{ 200.0f, 15.0f,20.0f }));
 		die();
 		return;
 	}

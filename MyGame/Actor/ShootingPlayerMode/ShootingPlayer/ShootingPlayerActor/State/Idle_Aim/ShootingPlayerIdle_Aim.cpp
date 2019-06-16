@@ -29,6 +29,14 @@ void ShootingPlayerIdle_Aim::StateUpdate(Vector3 & lposition, Matrix & lrotation
 		return;
 	}
 
+	if (ButtonB::GetInstance().TriggerDown())
+	{
+		ShootingPlayerParam::getInstance().Set_AimCheck(false);
+		mNextStateID = ActorStateID::ShootingPlayerGuard;
+		mNextStateFlag = true;
+		return;
+	}
+
 	//アイテム使用
 	if (ShootingPlayerParam::getInstance().Get_ItemUse())
 	{

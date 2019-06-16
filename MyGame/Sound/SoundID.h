@@ -31,6 +31,7 @@ enum class SE_ID
 	TYOHATU_SE,
 	RECOVERITEM_USE,
 	ATTACKITEM_USE,
+	RELOAD_SE,
 
 	//アクションモード用
 	ARROW,

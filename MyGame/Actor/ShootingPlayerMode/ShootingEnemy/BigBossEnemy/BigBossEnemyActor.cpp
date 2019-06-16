@@ -11,8 +11,9 @@ BigBossEnemyActor::BigBossEnemyActor(int model, IWorld * world, const Vector3 & 
 	player_{ nullptr },
 	mesh_{ model },
 	mDamageParam{ 1 },
-	mAttackTime{mAttackTimeInit},
-	mAttack{ false }
+	mAttackTime{ 200 },
+	mAttack{ false },
+	mDelayTime{0}
 {
 	mcurrentStateID = ActorStateID::BigBossEnemyIdle;
 	bigbossenemyState_[ActorStateID::BigBossEnemyIdle].add(add_state<BigBossEnemyIdle>(world, parameters_));
@@ -28,11 +29,11 @@ void BigBossEnemyActor::initialize()
 {
 	mesh_.transform(Getpose());
 
+	BigBossEnemyParam::getInstance().initialize();
+
 	parameters_.Set_Position(position_);
 	parameters_.Set_HP(BigBossHPVal);
 	parameters_.Set_StateID(ActorStateID::BigBossEnemyIdle);
-
-	BigBossEnemyParam::getInstance().initialize();
 
 	world_->add_actor(ActorGroup::UI, new_actor<BigBossHPUI>(world_));
 }
@@ -75,15 +76,21 @@ void BigBossEnemyActor::update(float deltaTime)
 	if (mcurrentStateID == ActorStateID::BigBossEnemyIdle)
 	{
 		LookPlayer();
+
 		Attacking();
 
-		mEM.Move(position_, player_->Getposition(), BigBossWalkSpeed, mAttack, 15.0f);
+		mDelayTime--;
+		if (mDelayTime <= 0){
+			parameters_.Set_Motion(BigBossEnemyMotion::MotionBigBossRun);
+			mEM.Move(position_, player_->Getposition(), BigBossWalkSpeed, mAttack, 15.0f);
+		}
 	}
 	else if (mcurrentStateID == ActorStateID::BigBossEnemyAttack)
 	{
 		if (!BigBossEnemyParam::getInstance().Get_RotaCheck()){
 			LookPlayer();
 		}
+		mDelayTime = mDeleyTimeInit;
 	}
 
 	//èÛë‘éûä‘Çâ¡éZ

@@ -10,8 +10,10 @@ BigBossHPUI::BigBossHPUI(IWorld * world):
 
 void BigBossHPUI::draw() const
 {
-	Sprite::GetInstance().DrawPart(SPRITE_ID::HP_GAUGE, Vector2(500, 1080 - Sprite::GetInstance().GetSize(SPRITE_ID::HP_GAUGE).y), 0, 0,
-		static_cast<int>(Sprite::GetInstance().GetSize(SPRITE_ID::HP_GAUGE).x / BigBossHPVal * mhp), static_cast<int>(Sprite::GetInstance().GetSize(SPRITE_ID::HP_GAUGE).y));
+	Sprite::GetInstance().Draw(SPRITE_ID::BIGBOSSHP_FRAME, Vector2(495, 998));
+	Sprite::GetInstance().DrawPart(SPRITE_ID::BIGBOSSHP_GAUGE, Vector2(500, 1050 - Sprite::GetInstance().GetSize(SPRITE_ID::BIGBOSSHP_GAUGE).y), 0, 0,
+		static_cast<int>(Sprite::GetInstance().GetSize(SPRITE_ID::BIGBOSSHP_GAUGE).x / BigBossHPVal * mhp), static_cast<int>(Sprite::GetInstance().GetSize(SPRITE_ID::BIGBOSSHP_GAUGE).y));
+
 }
 
 void BigBossHPUI::receiveMessage(EventMessage message, void * param)

@@ -34,6 +34,20 @@ void NormalEnemyPunch::StateUpdate(Vector3 & lposition, Matrix & lrotation, Anim
 		return;
 	}
 
+	//HP‚ª‚O‚É‚È‚Á‚½‚çŽ€–S
+	if (parameters_->Get_HP() <= 0)
+	{
+		mNextStateID = ActorStateID::NormalEnemyDead;
+		mNextStateFlag = true;
+		return;
+	}
+
+	if (parameters_->Get_invincibly())
+	{
+		mNextStateID = ActorStateID::NormalEnemyDamage;
+		mNextStateFlag = true;
+		return;
+	}
 }
 
 void NormalEnemyPunch::AttackCollision(Vector3 lposition, Matrix lrotation, int deadTime, int attackParam, Vector3 spot, float len, float rad)

@@ -2,6 +2,7 @@
 #include "../Actor/ShootingPlayerMode/ShootingPlayer/ShootingPlayerActor/State/stateInc.h"
 #include "../Game/Define.h"
 #include "../Input/InputInfoInc.h"
+#include "../Sound/Sound.h"
 
 ShootingPlayerReload::ShootingPlayerReload(IWorld * world, ActorParameters & parameter)
 {
@@ -19,16 +20,30 @@ void ShootingPlayerReload::Stateinitialize()
 
 void ShootingPlayerReload::StateUpdate(Vector3 & lposition, Matrix & lrotation, AnimatedMesh & lmesh)
 {
-	//モーションの時間が終わったら移動状態へ
-	if (parameters_->Get_Statetimer() > lmesh.motion_end_time() - 5)
+	if (parameters_->Get_Statetimer() == 60)
 	{
 		//弾数の計算
 		GunCount();
+		Sound::GetInstance().PlaySE(SE_ID::RELOAD_SE);
+	}
 
+	//モーションの時間が終わったら移動状態へ
+	if (parameters_->Get_Statetimer() > lmesh.motion_end_time() - 5)
+	{
 		mNextStateID = parameters_->Get_PrevStateID();
 		mNextStateFlag = true;
 		return;
 	}
+
+	//ガード
+	if (ButtonB::GetInstance().TriggerDown())
+	{
+		ShootingPlayerParam::getInstance().Set_AimCheck(false);
+		mNextStateID = ActorStateID::ShootingPlayerGuard;
+		mNextStateFlag = true;
+		return;
+	}
+
 
 	//ダメージを受けたらダメージ状態へ
 	if (parameters_->Get_invincibly())

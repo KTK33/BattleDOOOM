@@ -52,6 +52,15 @@ void ShootingPlayerIdleAiming::Input()
 		}
 	}
 
+	//ガード
+	if (ButtonB::GetInstance().TriggerDown())
+	{
+		ShootingPlayerParam::getInstance().Set_AimCheck(false);
+		mNextStateID = ActorStateID::ShootingPlayerGuard;
+		mNextStateFlag = true;
+		return;
+	}
+
 	//リロード
 	if(ButtonX::GetInstance().TriggerDown())
 	{

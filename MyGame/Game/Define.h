@@ -53,13 +53,13 @@ static const float NormalWalkSpeed = 0.5f;
 static const int BossHPVal = 5;
 
 //ボス敵の移動速度(通常時)
-static const float BossWalkSpeed = 0.5f;
+static const float BossWalkSpeed = 0.8f;
 
 //大ボスのHP
 static const int BigBossHPVal = 20;
 
 //大ボスの移動速度
-static const float BigBossWalkSpeed = 1.5f;
+static const float BigBossWalkSpeed = 1.1f;
 
 ///アクションモード
 
@@ -67,4 +67,4 @@ static const float BigBossWalkSpeed = 1.5f;
 static const int ActionPlayerHPVal = 10;
 
 //赤侍のHP
-static const int RedSamuraiHPVal = 30;
+static const int RedSamuraiHPVal = 15;

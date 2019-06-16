@@ -32,7 +32,6 @@ void NormalEnemyIdle::StateUpdate(Vector3 & lposition, Matrix & lrotation, Anima
 		return;
 	}
 
-	//1‰ñ–Ú‚Ìƒ_ƒ[ƒW‚ðŽó‚¯‚½‚ç™ôšK
 	if (parameters_->Get_invincibly())
 	{
 		mNextStateID = ActorStateID::NormalEnemyDamage;
