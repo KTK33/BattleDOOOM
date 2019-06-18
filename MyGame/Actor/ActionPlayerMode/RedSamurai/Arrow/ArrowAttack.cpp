@@ -1,5 +1,6 @@
 #include "ArrowAttack.h"
 #include "../Sound/Sound.h"
+#include "../Game/GameData/ActionMode/RedSamuraiData.h"
 
 ArrowAttack::ArrowAttack(int model, IWorld * world, const Vector3 & position, const IBodyPtr & body):
 	Actor(world,"ArrowAttack",position,body),
@@ -36,7 +37,7 @@ void ArrowAttack::update(float deltaTime)
 
 void ArrowAttack::onCollide(Actor & other)
 {
-	int DamageVal = 1;
+	int DamageVal = ArrowAttackVal;
 	other.receiveMessage(EventMessage::HIT_ENEMY_BULLET,  reinterpret_cast<void*>(&DamageVal));
 }
 

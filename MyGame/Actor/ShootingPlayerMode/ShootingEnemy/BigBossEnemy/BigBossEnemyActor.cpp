@@ -5,13 +5,14 @@
 #include "../Sound/Sound.h"
 #include "HPUI/BigBossHPUI.h"
 #include "BigBossEnemyParam/BigBossEnemyParam.h"
+#include "../Game/GameData/ShootingMode/ShootingBigBossEnemyData.h"
 
 BigBossEnemyActor::BigBossEnemyActor(int model, IWorld * world, const Vector3 & position, const IBodyPtr & body):
 	Actor(world, "BigBossEnemy", position, body),
 	player_{ nullptr },
 	mesh_{ model },
 	mDamageParam{ 1 },
-	mAttackTime{ 200 },
+	mAttackTime{ BigBossInitDelayTime*60 },
 	mAttack{ false },
 	mDelayTime{0}
 {
@@ -90,7 +91,7 @@ void BigBossEnemyActor::update(float deltaTime)
 		if (!BigBossEnemyParam::getInstance().Get_RotaCheck()){
 			LookPlayer();
 		}
-		mDelayTime = mDeleyTimeInit;
+		mDelayTime = BigBossDelayTime*60;
 	}
 
 	//èÛë‘éûä‘Çâ¡éZ
@@ -176,7 +177,7 @@ void BigBossEnemyActor::Attacking()
 	if (mAttackTime <= 0)
 	{
 		parameters_.Set_Attack(true);
-		mAttackTime = mAttackTimeInit;
+		mAttackTime = BigBossAttackTime*60;
 	}
 }
 

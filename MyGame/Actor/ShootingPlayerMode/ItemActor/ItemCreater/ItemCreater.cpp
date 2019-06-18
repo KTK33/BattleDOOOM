@@ -1,7 +1,7 @@
 #include "ItemCreater.h"
 #include "../Actor/ShootingPlayerMode/ItemActor/BulletItem/BulletItem.h"
 #include "../Actor/ShootingPlayerMode/ItemActor/HPRecoverItem/HPRecoverItem.h"
-#include "../Game/Define.h"
+#include "../Game/GameData/ShootingMode/ShootingPlayerData.h"
 
 ItemCreater::ItemCreater(IWorld * world, const Vector3 & position):
 	Actor(world,"ItemCreater",position)

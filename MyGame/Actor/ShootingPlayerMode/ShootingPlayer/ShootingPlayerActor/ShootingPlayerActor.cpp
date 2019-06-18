@@ -1,5 +1,5 @@
 #include "ShootingPlayerActor.h"
-#include "../Game/Define.h"
+#include "../Game/GameData/ShootingMode/ShootingPlayerData.h"
 #include "ShootingActorStateInc.h"
 #include "../Actor/ShootingPlayerMode/ShootingPlayer/ShootingPlayerMotionNum.h"
 #include "ShootingPlayerParam/ShootingPlayerParam.h"
@@ -134,7 +134,7 @@ void ShootingPlayerActor::update(float deltaTime)
 
 	//攻撃アップアイテムを使用したら指定時間、攻撃力が２倍になる
 	if (mAttackUpCheck) {
-		mAttackParam = 2;
+		mAttackParam = UPAttackVal;
 		mAttackUpTime = max(mAttackUpTime - 1, 0);
 		if (mAttackUpTime == 0)
 		{
@@ -143,7 +143,7 @@ void ShootingPlayerActor::update(float deltaTime)
 		}
 	}
 	else {
-		mAttackParam = 1;
+		mAttackParam = NormalAttackVal;
 	}
 	world_->send_message(EventMessage::DAMAGEPARAM, reinterpret_cast<void*>(&mAttackParam));
 }
@@ -327,12 +327,12 @@ void ShootingPlayerActor::input_information()
 
 	if (parameters_.Get_StateID() == ActorStateID::ShootingPlayerIdle)
 	{
-		movement(1.0f, input);
+		movement(OutAimWalkSpeed, input);
 	}
 
 	if (parameters_.Get_StateID() == ActorStateID::ShootingPlayerIdleAiming)
 	{
-		gun_movement(0.5f, input);
+		gun_movement(IAimWalkSpeed, input);
 	}
 }
 
@@ -341,7 +341,7 @@ void ShootingPlayerActor::movement(float speed, Vector2 input)
 	mMV.Move(position_, velocity_, rotation_, speed, input);
 
 	//スティックの倒し具合でモーション変更
-	if (MathHelper::Abs(input.x) < 0.75f || MathHelper::Abs(input.y) < 0.75f) {
+	if (MathHelper::Abs(input.x) < OutAimWalkRunVal || MathHelper::Abs(input.y) < OutAimWalkRunVal) {
 		parameters_.Set_Motion(ShootingPlayerMotionNum::MotionPlayerWalk);
 	}
 	else {
@@ -374,8 +374,4 @@ void ShootingPlayerActor::invincibly(bool check)
 	else{
 		TransparenceInit();
 	}
-}
-
-void ShootingPlayerActor::Effect()
-{
 }

@@ -1,5 +1,5 @@
 #include "HPRecoverItem.h"
-#include "../Game/Define.h"
+#include "../Game/GameData/ShootingMode/ShootingPlayerData.h"
 
 HPRecoverItem::HPRecoverItem(int model,IWorld * world, const Vector3 & position, const IBodyPtr & body):
 	Actor(world,"HPRecoverItem",position,body),

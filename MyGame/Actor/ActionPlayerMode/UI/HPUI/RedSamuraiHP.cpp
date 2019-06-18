@@ -1,5 +1,6 @@
 #include "RedSamuraiHP.h"
 #include "../Texture/Sprite.h"
+#include "../Game/GameData/ActionMode/RedSamuraiData.h"
 #include "../Game/Define.h"
 
 void RedSamuraiHP::draw(int hp) const

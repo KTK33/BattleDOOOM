@@ -5,6 +5,7 @@
 #include "../Actor/ActionPlayerMode/RedSamurai/RedSamuraiMotionNum.h"
 #include "../../RedSamuraiParam/RedSamuraiParam.h"
 #include "../Sound/Sound.h"
+#include "../Game/GameData/ActionMode/RedSamuraiData.h"
 
 RedSamuraiFirstState::RedSamuraiFirstState(IWorld * world, ActorParameters & parameter)
 {
@@ -30,8 +31,8 @@ void RedSamuraiFirstState::StateUpdate(Vector3 & lposition, Matrix & lrotation, 
 	//プレイヤーとの距離
 	const float PlayerDis = Vector3::Distance(lposition, player_->Getposition());
 
-	//距離が200以下なら戦闘体制に
-	if (PlayerDis <= 100.0f)
+	//距離が値以下なら戦闘体制に
+	if (PlayerDis <= AttackStartDis)
 	{
 		if (mmotionNum == 0)
 		{

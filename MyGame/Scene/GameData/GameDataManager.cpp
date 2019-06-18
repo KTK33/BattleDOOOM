@@ -56,7 +56,7 @@ bool GameDataManager::GetPlayerDead()
 
 void GameDataManager::SetBGMVAL(int BGM)
 {
-	mBGMVAL = BGM;
+	mBGMVAL = (float)BGM;
 }
 
 float GameDataManager::GetBGMVAL()
@@ -66,7 +66,7 @@ float GameDataManager::GetBGMVAL()
 
 void GameDataManager::SetSEVAL(int SE)
 {
-	mSE_VAL = SE;
+	mSE_VAL = (float)SE;
 }
 
 float GameDataManager::GetSEVAL()

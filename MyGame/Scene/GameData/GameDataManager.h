@@ -1,4 +1,5 @@
 #pragma once
+#include "../Game/Define.h"
 
 class GameDataManager {
 	GameDataManager() {}
@@ -55,8 +56,8 @@ private:
 	bool mDeadBossEnemyCheck{ false };
 	bool mDeadPlayerCheck{ false };
 
-	int mBGMVAL{ 5 };
-	int mSE_VAL{ 7 };
+	float mBGMVAL{ BGMVOLUME * 10 };
+	float mSE_VAL{ SEVOLUME * 10 };
 	int mAIM_SPD{ 5 };
 
 	int mSceneNumber{ 2 };

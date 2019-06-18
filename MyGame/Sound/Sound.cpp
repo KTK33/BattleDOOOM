@@ -1,12 +1,13 @@
 #include "Sound.h"
 #include "../Game/Define.h"
 #include "../math/MathHelper.h"
+#include "../Game/Define.h"
 #include <sstream>
 
 static constexpr float SOUND_RANGE = 256.0f;
 
 Sound::Sound() :
-	m_bgm_volume(0.5f), m_se_volume(0.7f)
+	m_bgm_volume(BGMVOLUME), m_se_volume(SEVOLUME)
 {
 
 }

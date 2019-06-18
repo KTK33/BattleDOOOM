@@ -5,6 +5,7 @@
 #include "../Actor/ActionPlayerMode/RedSamurai/Arrow/ArrowAttack.h"
 #include "../Actor/EnemyAttackCollison/EnemyAttackCollison.h"
 #include "../Sound/Sound.h"
+#include "../Game/GameData/ActionMode/RedSamuraiData.h"
 
 RedSamuraiAttack::RedSamuraiAttack(IWorld * world, ActorParameters & parameter)
 {
@@ -34,15 +35,15 @@ void RedSamuraiAttack::StateUpdate(Vector3 & lposition, Matrix & lrotation, Anim
 	//モーションの時間によって当たり判定を生成
 	if (mAttckStart)
 	{
-		if (mAttckType < 7) {
+		if (mAttckType < AttackTypeRate) {
 			parameters_->Set_Motion(RedSamuraiMotionNum::MotionRedSamuraiAttack1);
-			if (parameters_->Get_Statetimer() == 4.0f)AttackCollision(lposition, lrotation, 5, 1, Vector3(0.0f, 13.0f, 0.0f), 1.5f, 2.5f);
-			if (parameters_->Get_Statetimer() == 9.0f)AttackCollision(lposition, lrotation, 5, 2, Vector3(0.0f, 13.0f, 0.0f), 1.5f, 2.5f);
-			if (parameters_->Get_Statetimer() == 20.0f)AttackCollision(lposition, lrotation, 5, 2, Vector3(0.0f, 13.0f, 0.0f), 1.5f, 2.5f);
+			if (parameters_->Get_Statetimer() == 4.0f)AttackCollision(lposition, lrotation, 5, SwardAttack1Val, Vector3(0.0f, 13.0f, 0.0f), 1.5f, 2.5f);
+			if (parameters_->Get_Statetimer() == 9.0f)AttackCollision(lposition, lrotation, 5, SwardAttack2Val, Vector3(0.0f, 13.0f, 0.0f), 1.5f, 2.5f);
+			if (parameters_->Get_Statetimer() == 20.0f)AttackCollision(lposition, lrotation, 5, SwardAttack3Val, Vector3(0.0f, 13.0f, 0.0f), 1.5f, 2.5f);
 		}
 		else {
 			parameters_->Set_Motion(RedSamuraiMotionNum::MotionRedSamuraiAttack2);
-			if (parameters_->Get_Statetimer() == 30.0f)AttackCollision(lposition, lrotation, 15, 5, Vector3(0.0f, 13.0f, 0.0f), 2.0f, 2.5f);
+			if (parameters_->Get_Statetimer() == 30.0f)AttackCollision(lposition, lrotation, 15, SwardDownVal, Vector3(0.0f, 13.0f, 0.0f), 2.0f, 2.5f);
 		}
 	}
 
@@ -73,8 +74,8 @@ void RedSamuraiAttack::AttackBehavior(Vector3 lposition, Matrix lrotation)
 	//プレイヤーとの距離
 	const float PlayerDis = Vector3::Distance(lposition, player_->Getposition());
 
-	//距離が30以上なら遠距離攻撃、それ以外は近距離攻撃
-	if (PlayerDis >= 15.0f)
+	//距離が15以上なら遠距離攻撃、それ以外は近距離攻撃
+	if (PlayerDis >= ArrowTypeDis)
 	{
 		world_->add_actor(ActorGroup::EnemyBullet, std::make_shared<ArrowAttack>(52, world_, Vector3{ lposition.x,lposition.y + 13.0f,lposition.z } +lrotation.Forward() * 4 + lrotation.Right() * 3));
 		parameters_->Set_Motion(RedSamuraiMotionNum::MotionRedSamuraiArrowAttack);
@@ -98,5 +99,4 @@ void RedSamuraiAttack::AttackCollision(Vector3 lposition, Matrix lrotation, int 
 	AttackPunch->SetParam(false, deadTime, attackParam);
 
 	Sound::GetInstance().PlaySE(SE_ID::RED_SWARD);
-
 }

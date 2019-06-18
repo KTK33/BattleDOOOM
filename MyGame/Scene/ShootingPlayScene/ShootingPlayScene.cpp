@@ -11,6 +11,8 @@ BossArleady{false}
 void ShootingPlayScene::start() {
 	world_.initialize();
 	GameDataManager::getInstance().initialize();
+	Sound::GetInstance().SetAllBGMVolume(GameDataManager::getInstance().GetBGMVAL());
+	Sound::GetInstance().SetAllSEVolume(GameDataManager::getInstance().GetSEVAL());
 	Sound::GetInstance().PlayBGM(BGM_ID::PLAY_BGM, DX_PLAYTYPE_LOOP);
 
 	world_.add_actor(ActorGroup::System, new_actor<ShootingModeManager>(&world_));

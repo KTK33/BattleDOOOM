@@ -2,6 +2,7 @@
 #include "ActionStateInc.h"
 #include "../Scene/GameData/GameDataManager.h"
 #include "../Actor/ActionPlayerMode/UI/SceneUI/PlayerDeadUI.h"
+#include "../Game/GameData/ActionMode/ActionPlayerData.h"
 
 ActionPlayerActor::ActionPlayerActor(int model, int weapon, IWorld * world, const Vector3 & position, const Matrix& rotation,const IBodyPtr & body):
 	Actor(world, "Player", position, rotation,body),
@@ -192,7 +193,7 @@ void ActionPlayerActor::input_information()
 	mI.Input(input,yaw);
 	//入力が両方０ならばアイドル状態
 	if (input.x == 0.0f && input.y == 0.0f) return; 
-	movement(1.0f, input);
+	movement(ActionPlayerSpeedVal, input);
 }
 
 void ActionPlayerActor::movement(float speed, Vector2 input)
@@ -210,9 +211,6 @@ void ActionPlayerActor::movement(float speed, Vector2 input)
 	velocity_ += m_ActionCameraForward * forward_speed;
 	velocity_ += m_ActionCameraRight * side_speed;
 
-	//回避加速度
-	static const float mAvoidanceSpeed = 1.0f;
-
 	//走りでの加速
 	float DashSpped = 0.0f;
 
@@ -225,12 +223,12 @@ void ActionPlayerActor::movement(float speed, Vector2 input)
 	else
 	{
 		//スティックの倒し具合でモーション変更
-		if (MathHelper::Abs(input.x) < 0.8f || MathHelper::Abs(input.y) < 0.8f) {
+		if (MathHelper::Abs(input.x) < WalkRunVal || MathHelper::Abs(input.y) < WalkRunVal) {
 			parameters_.Set_Motion(ActionPlayerMotion::MotionPlayerWalk);
 		}
 		else {
 			parameters_.Set_Motion(ActionPlayerMotion::MotionPlayerRun);
-			DashSpped = 0.5f;
+			DashSpped = ActionPlayerRunSpeedVal;
 		}
 	}
 

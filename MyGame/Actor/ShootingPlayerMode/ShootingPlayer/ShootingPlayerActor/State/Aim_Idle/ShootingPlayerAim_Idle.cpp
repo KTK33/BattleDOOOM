@@ -1,6 +1,7 @@
 #include "ShootingPlayerAim_Idle.h"
 #include "../Input/InputInfoInc.h"
 #include "../Actor/ShootingPlayerMode/ShootingPlayer/ShootingPlayerActor/State/stateInc.h"
+#include "../Game/GameData/ShootingMode/ShootingPlayerData.h"
 
 ShootingPlayerAim_Idle::ShootingPlayerAim_Idle(IWorld * world, ActorParameters & parameter)
 {
@@ -65,7 +66,7 @@ void ShootingPlayerAim_Idle::Input()
 	}
 
 		//ÉäÉçÅ[Éh
-	if (ShootingPlayerParam::getInstance().Get_RemainGun() < 7)
+	if (ShootingPlayerParam::getInstance().Get_RemainGun() < SetGunPoint)
 	{
 		if(ButtonX::GetInstance().TriggerDown())
 		{

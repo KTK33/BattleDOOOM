@@ -1,6 +1,7 @@
 #include "ParamUI.h"
 #include "../Texture/Sprite.h"
 #include "../Game/Define.h"
+#include "../Game/GameData/ShootingMode/ShootingPlayerData.h"
 #include "../Actor/ActionPlayerMode/UI/HPUI/ActonPlayerHP.h"
 
 void ParamUI::initialize()

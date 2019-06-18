@@ -1,6 +1,7 @@
 #include "ShootingPlayerGunPunch.h"
 #include "../Actor/PlayerAttackCollision/PlayerAttackCollision.h"
 #include "../Actor/ShootingPlayerMode/ShootingPlayer/ShootingPlayerActor/State/stateInc.h"
+#include "../Game/GameData/ShootingMode/ShootingPlayerData.h"
 
 ShootingPlayerGunPunch::ShootingPlayerGunPunch(IWorld * world, ActorParameters & parameter)
 {
@@ -54,6 +55,6 @@ void ShootingPlayerGunPunch::AttackCollision(Vector3 lposition, Matrix lrotation
 	auto AttackPunch = std::make_shared<PlayerAttackCollision>(world_, Vector3{ lposition + lrotation.Forward() * 10 },
 		std::make_shared<BoundingCapsule>(Vector3{ 0.0f,13.0f,0.0f }, Matrix::Identity, 1.5f, 2.5f));
 	world_->add_actor(ActorGroup::PlayerBullet, AttackPunch);
-	AttackPunch->SetParam(false, 20, 1);
+	AttackPunch->SetParam(false, 20, PunchAttackVal);
 
 }

@@ -1,6 +1,7 @@
 #include "AttackChoice.h"
 #include "../Game/Define.h"
 #include "../Math/Random.h"
+#include "../Game/GameData/ShootingMode/ShootingBigBossEnemyData.h"
 
 int AttackChoice::AttackType(int BigHP)
 {

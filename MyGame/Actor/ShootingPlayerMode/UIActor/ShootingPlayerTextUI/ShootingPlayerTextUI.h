@@ -17,10 +17,10 @@ public:
 
 private:
 
-	bool GetBulletCheck;
-	int BulletTextTimer;
-	bool GetRecoverCheck;
-	int RecoverTextTimer;
-	bool AttackUpCheck;
-	int AttackUpTime;
+	bool mGetBulletCheck;
+	int mBulletTextTimer;
+	bool mGetRecoverCheck;
+	int mRecoverTextTimer;
+	bool mAttackUpCheck;
+	int mAttackUpTime;
 };

@@ -1,4 +1,5 @@
 #include "EnemyAttackFire.h"
+#include "../Game/GameData/ShootingMode/ShootingBossEnemyData.h"
 
 EnemyAttackFire::EnemyAttackFire(int model, IWorld * world, const Vector3 & position, const IBodyPtr & body):
 	Actor(world,"EnemyAttackFire",position,body),
@@ -26,13 +27,12 @@ void EnemyAttackFire::update(float deltaTime)
 	//çsóÒÇÃê›íË
 	mesh_.transform(Getpose());
 
-	position_ +=mPlyaerVector * 0.01f;
+	position_ +=mPlyaerVector * FireSpeed;
 }
 
 void EnemyAttackFire::onCollide(Actor & other)
 {
-	int DamageVal = 2;
-	other.receiveMessage(EventMessage::HIT_ENEMY_BULLET, (void*)&DamageVal);
+	other.receiveMessage(EventMessage::HIT_ENEMY_BULLET, (void*)&FireAttackVal);
 }
 
 void EnemyAttackFire::receiveMessage(EventMessage message, void * param)

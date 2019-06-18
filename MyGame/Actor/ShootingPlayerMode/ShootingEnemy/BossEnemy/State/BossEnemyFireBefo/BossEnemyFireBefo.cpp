@@ -23,4 +23,18 @@ void BossEnemyFireBefo::StateUpdate(Vector3 & lposition, Matrix & lrotation, Ani
 		mNextStateFlag = true;
 		return;
 	}
+	//HP‚ª‚O‚É‚È‚Á‚½‚çŽ€–S
+	if (parameters_->Get_HP() <= 0)
+	{
+		mNextStateID = ActorStateID::BossEnemyDead;
+		mNextStateFlag = true;
+		return;
+	}
+
+	if (parameters_->Get_invincibly())
+	{
+		mNextStateID = ActorStateID::BossEnemyDamage;
+		mNextStateFlag = true;
+		return;
+	}
 }

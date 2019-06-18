@@ -31,6 +31,20 @@ void BossEnemyFire::StateUpdate(Vector3 & lposition, Matrix & lrotation, Animate
 		mNextStateFlag = true;
 		return;
 	}
+	//HP‚ª‚O‚É‚È‚Á‚½‚çŽ€–S
+	if (parameters_->Get_HP() <= 0)
+	{
+		mNextStateID = ActorStateID::BossEnemyDead;
+		mNextStateFlag = true;
+		return;
+	}
+
+	if (parameters_->Get_invincibly())
+	{
+		mNextStateID = ActorStateID::BossEnemyDamage;
+		mNextStateFlag = true;
+		return;
+	}
 }
 
 void BossEnemyFire::FireCollision(Vector3 lposition, Matrix lrotation)

@@ -69,8 +69,6 @@ private:
 
 	bool mroarCheck;
 
-	float mAttackDis{ 10.0f };
-
 	int mDamageParam;
 
 	bool mAttackCheck;

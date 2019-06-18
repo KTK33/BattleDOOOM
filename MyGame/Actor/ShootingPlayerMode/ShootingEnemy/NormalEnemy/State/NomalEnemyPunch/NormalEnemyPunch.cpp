@@ -3,6 +3,7 @@
 #include "../Actor/Actor.h"
 #include "../Actor/ShootingPlayerMode/ShootingEnemy/NormalEnemy/NormalEnemyMotionNum.h"
 #include "../Actor/EnemyAttackCollison/EnemyAttackCollison.h"
+#include "../Game/GameData/ShootingMode/ShootingNormalEnemyData.h"
 
 NormalEnemyPunch::NormalEnemyPunch(IWorld * world, ActorParameters & parameter)
 {
@@ -22,7 +23,7 @@ void NormalEnemyPunch::StateUpdate(Vector3 & lposition, Matrix & lrotation, Anim
 {
 	if (parameters_->Get_Statetimer() == 40.0f)
 	{
-		AttackCollision(lposition, lrotation, 15, 1, Vector3(0.0f, 13.0f, 0.0f), 1.5f, 2.5f);
+		AttackCollision(lposition, lrotation, 15, NormalPunchVal, Vector3(0.0f, 13.0f, 0.0f), 1.5f, 2.5f);
 	}
 
 	//ƒ‚[ƒVƒ‡ƒ“‚ÌŠÔ‚ªI‚í‚Á‚½‚ç

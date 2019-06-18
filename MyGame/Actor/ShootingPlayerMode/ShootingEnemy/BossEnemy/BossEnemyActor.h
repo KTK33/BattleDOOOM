@@ -77,6 +77,5 @@ private:
 	int mDamageParam;
 
 	bool mAttackCheck;
-	int mAttackTimeInit{ 300 };
 	int mAttackTime;
 };

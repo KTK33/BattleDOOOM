@@ -67,10 +67,8 @@ private:
 	int mDamageParam;
 
 	int mAttackTime;
-	int mAttackTimeInit{ 180 };
 
 	int mDelayTime;
-	int mDeleyTimeInit{ 120 };
 
 	EnemyMove mEM;
 

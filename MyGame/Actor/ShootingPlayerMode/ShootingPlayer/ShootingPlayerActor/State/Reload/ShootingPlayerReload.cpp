@@ -1,6 +1,6 @@
 #include "ShootingPlayerReload.h"
 #include "../Actor/ShootingPlayerMode/ShootingPlayer/ShootingPlayerActor/State/stateInc.h"
-#include "../Game/Define.h"
+#include "../Game/GameData/ShootingMode/ShootingPlayerData.h"
 #include "../Input/InputInfoInc.h"
 #include "../Sound/Sound.h"
 

@@ -1,11 +1,14 @@
 #include "ActionPlayScene.h"
 #include "../ActionPlayScene/ActionModeManager/ActionModeManager.h"
+#include "../Game/Define.h"
 ActionPlayScene::ActionPlayScene(){}
 
 void ActionPlayScene::start()
 {
 	world_.initialize();
 	GameDataManager::getInstance().initialize();
+	Sound::GetInstance().SetAllBGMVolume(BGMVOLUME);
+	Sound::GetInstance().SetAllSEVolume(SEVOLUME);
 	Sound::GetInstance().PlayBGM(BGM_ID::ACTION_PLAY_BGM, DX_PLAYTYPE_LOOP);
 
 	world_.add_actor(ActorGroup::System, new_actor<ActionModeManager>(&world_));

@@ -1,5 +1,6 @@
 #include "ActonPlayerHP.h"
 #include "../Texture/Sprite.h"
+#include "../Game/GameData/ActionMode/ActionPlayerData.h"
 #include "../Game/Define.h"
 
 void ActionPlayerHP::draw(int hp) const

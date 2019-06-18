@@ -12,6 +12,7 @@
 
 #include "RedSamuraiParam/RedSamuraiParam.h"
 #include "../UI/SceneUI/RedSamuraiDeadUI.h"
+#include "../Game/GameData/ActionMode/RedSamuraiData.h"
 
 RedSamuraiActor::RedSamuraiActor(int model, int sward, int arrow, int quiver, IWorld * world, const Vector3 & position, Matrix & rotation,const IBodyPtr & body):
 Actor(world, "RedSamurai", position, body),
@@ -25,7 +26,7 @@ Actor(world, "RedSamurai", position, body),
 	mArrowPos{ 76 },
 	mQuiverPos{ 82 },
 	mAttackCheck{ false },
-	mAttackTime{ false },
+	mAttackTime{ 0 },
 	mDeadArelady{false},
 	mDeadTime{ 60.0f }
 {
@@ -102,7 +103,7 @@ void RedSamuraiActor::update(float deltaTime)
 
 	//ƒAƒCƒhƒ‹’†‚Ìˆ—
 	if (mcurrentStateID == ActorStateID::RedSamuraiIdle){
-		mEV.Move(position_, player_->Getposition(), 0.5f,mAttackCheck,15.0f);
+		mEV.Move(position_, player_->Getposition(), RedSamuraiMoveSpeed,mAttackCheck,15.0f);
 		Attacking();
 	}
 
@@ -187,7 +188,7 @@ void RedSamuraiActor::Attacking()
 {
 	mAttackTime++;
 	float PlayerAngle = mPL.Look(player_, position_, rotation_);
-	if (MathHelper::Abs(PlayerAngle) < 0.2f && (mAttackCheck || mAttackTime > 60))
+	if (MathHelper::Abs(PlayerAngle) < 0.2f && (mAttackCheck || mAttackTime > RedSamuraiAttackTime * 60))
 	{
 		parameters_.Set_Attack(true);
 		mAttackTime = 0;

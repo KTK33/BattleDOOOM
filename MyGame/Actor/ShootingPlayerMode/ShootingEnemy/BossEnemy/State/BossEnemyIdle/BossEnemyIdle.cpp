@@ -38,7 +38,6 @@ void BossEnemyIdle::StateUpdate(Vector3 & lposition, Matrix & lrotation, Animate
 		return;
 	}
 
-	//1‰ñ–Ú‚Ìƒ_ƒ[ƒW‚ðŽó‚¯‚½‚ç™ôšK
 	if (parameters_->Get_invincibly())
 	{
 		mNextStateID = ActorStateID::BossEnemyDamage;

@@ -492,6 +492,12 @@
     <ClInclude Include="Game\Define.h" />
     <ClInclude Include="Game\FpsSetting.h" />
     <ClInclude Include="Game\Game.h" />
+    <ClInclude Include="Game\GameData\ActionMode\ActionPlayerData.h" />
+    <ClInclude Include="Game\GameData\ActionMode\RedSamuraiData.h" />
+    <ClInclude Include="Game\GameData\ShootingMode\ShootingBigBossEnemyData.h" />
+    <ClInclude Include="Game\GameData\ShootingMode\ShootingBossEnemyData.h" />
+    <ClInclude Include="Game\GameData\ShootingMode\ShootingNormalEnemyData.h" />
+    <ClInclude Include="Game\GameData\ShootingMode\ShootingPlayerData.h" />
     <ClInclude Include="Game\Time.h" />
     <ClInclude Include="Graphics\Graphics2D.h" />
     <ClInclude Include="Graphics\Graphics3D.h" />

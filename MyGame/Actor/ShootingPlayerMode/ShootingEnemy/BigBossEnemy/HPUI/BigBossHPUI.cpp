@@ -1,6 +1,7 @@
 #include "BigBossHPUI.h"
 #include "../Texture/Sprite.h"
 #include "../Game/Define.h"
+#include "../Game/GameData/ShootingMode/ShootingBigBossEnemyData.h"
 
 BigBossHPUI::BigBossHPUI(IWorld * world):
 	Actor(world,"BigBossHP",Vector3::Zero),

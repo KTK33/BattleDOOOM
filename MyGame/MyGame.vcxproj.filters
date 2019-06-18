@@ -1235,5 +1235,23 @@
     <ClInclude Include="Actor\CommonUIActor\TitleUI\TitleEffect\TitleEffect.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="Game\GameData\ShootingMode\ShootingPlayerData.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\GameData\ShootingMode\ShootingNormalEnemyData.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\GameData\ShootingMode\ShootingBossEnemyData.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\GameData\ShootingMode\ShootingBigBossEnemyData.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\GameData\ActionMode\ActionPlayerData.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\GameData\ActionMode\RedSamuraiData.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -4,7 +4,7 @@
 #include "../Actor/ShootingPlayerMode/ItemActor/ItemCreater/ItemCreater.h"
 #include "BossEnemyMotionNum.h"
 #include "BossEnemyStateInc.h"
-#include "../Game/Define.h"
+#include "../Game/GameData/ShootingMode/ShootingBossEnemyData.h"
 #include "../Scene/GameData/GameDataManager.h"
 #include "../BigBossEnemy/BigBossEnemyActor.h"
 
@@ -13,9 +13,9 @@ BossEnemyActor::BossEnemyActor(int model, IWorld * world, const Vector3 & positi
 	player_{ nullptr },
 	mesh_{ model },
 	mroarCheck{ false },
-	mDamageParam{ 1 },
+	mDamageParam{ 0 },
 	mAttackCheck{ false },
-	mAttackTime{mAttackTimeInit}
+	mAttackTime{FireAttackTime*60}
 {
 	mcurrentStateID = ActorStateID::BossEnemyIdle;
 	bossenemyState_[ActorStateID::BossEnemyIdle].add(add_state<BossEnemyIdle>(world, parameters_));
@@ -90,7 +90,7 @@ void BossEnemyActor::update(float deltaTime)
 	{
 		float movespeed = BossWalkSpeed;
 		if (parameters_.Get_HP() < 5) {
-			movespeed *= 1.5f;
+			movespeed = BossWalkSpeedEX;
 			parameters_.Set_Motion(BossEnemyMotion::MotionBossRun);
 		}
 		else {
@@ -180,7 +180,7 @@ void BossEnemyActor::Attacking()
 		}
 		if (mAttackTime < 0){
 			parameters_.Set_AttackType(2);
-			mAttackTime = mAttackTimeInit;
+			mAttackTime = FireAttackTime * 60;
 			return;
 		}
 	}

@@ -1,5 +1,5 @@
 #include "ShootingPlayerParam.h"
-#include "../Game/Define.h"
+#include "../Game/GameData/ShootingMode/ShootingPlayerData.h"
 
 void ShootingPlayerParam::initialize()
 {

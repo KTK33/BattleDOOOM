@@ -47,8 +47,6 @@ private:
 	void gun_movement(float speed, Vector2 input);
 	//–³“GŽžŠÔ
 	void invincibly(bool check);
-
-	void Effect();
 private:
 	using StateMap = std::map<ActorStateID, ActorStateManager>;
 	StateMap shootingplayerState_;

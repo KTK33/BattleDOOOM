@@ -5,7 +5,7 @@
 #include "../Actor/ShootingPlayerMode/ShootingEnemy/EnemyHeadShot/EnemyHeadShot.h"
 #include "NormalEnemyMotionNum.h"
 #include "NormalEnemyStateInc.h"
-#include "../Game/Define.h"
+#include "../Game/GameData/ShootingMode/ShootingNormalEnemyData.h"
 
 NormalEnemyActor::NormalEnemyActor(int model, IWorld * world, const Vector3 & position, const Matrix & rotation, const IBodyPtr & body):
 	Actor(world,"NormalEnemy",position,rotation, body),

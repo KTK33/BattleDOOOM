@@ -1,5 +1,5 @@
 #include "ShootingPlayerItemBox.h"
-#include "../Game/Define.h"
+#include "../Game/GameData/ShootingMode/ShootingPlayerData.h"
 #include "../Texture/Sprite.h"
 #include "../Input/InputInfoInc.h"
 #include "../Actor/ShootingPlayerMode/ShootingPlayer/ShootingPlayerActor/ShootingPlayerParam/ShootingPlayerParam.h"

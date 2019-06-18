@@ -1,5 +1,5 @@
 #include "BulletItem.h"
-#include "../Game/Define.h"
+#include "../Game/GameData/ShootingMode/ShootingPlayerData.h"
 
 BulletItem::BulletItem(int model, IWorld * world, const Vector3 & position, const IBodyPtr & body):
 	Actor(world, "BulletItem", position, body),

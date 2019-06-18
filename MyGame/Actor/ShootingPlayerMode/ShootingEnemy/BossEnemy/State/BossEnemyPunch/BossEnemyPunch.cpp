@@ -3,6 +3,7 @@
 #include "../World/IWorld.h"
 #include "../Actor/Actor.h"
 #include "../Actor/EnemyAttackCollison/EnemyAttackCollison.h"
+#include "../Game/GameData/ShootingMode/ShootingBossEnemyData.h"
 
 BossEnemyPunch::BossEnemyPunch(IWorld * world, ActorParameters & parameter)
 {
@@ -21,13 +22,27 @@ void BossEnemyPunch::StateUpdate(Vector3 & lposition, Matrix & lrotation, Animat
 {
 	if (parameters_->Get_Statetimer() == 30.0f)
 	{
-		AttackCollision(lposition, lrotation, 15, 3, Vector3(0.0f, 13.0f, 0.0f), 1.5f, 2.5f);
+		AttackCollision(lposition, lrotation, 15, BossPunchVal, Vector3(0.0f, 13.0f, 0.0f), 1.5f, 2.5f);
 	}
 	//ƒ‚[ƒVƒ‡ƒ“‚ÌŽžŠÔ‚ªI‚í‚Á‚½‚ç
 	if (parameters_->Get_Statetimer() > lmesh.motion_end_time() - 5)
 	{
 		mNextStateID = ActorStateID::BossEnemyIdle;
 		parameters_->Set_AttackType(0);
+		mNextStateFlag = true;
+		return;
+	}
+	//HP‚ª‚O‚É‚È‚Á‚½‚çŽ€–S
+	if (parameters_->Get_HP() <= 0)
+	{
+		mNextStateID = ActorStateID::BossEnemyDead;
+		mNextStateFlag = true;
+		return;
+	}
+
+	if (parameters_->Get_invincibly())
+	{
+		mNextStateID = ActorStateID::BossEnemyDamage;
 		mNextStateFlag = true;
 		return;
 	}

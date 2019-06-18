@@ -2,6 +2,7 @@
 #include "../Texture/Sprite.h"
 #include "../Scene/GameData/GameDataManager.h"
 #include "../Sound/Sound.h"
+#include "../Game/GameData/ShootingMode/ShootingPlayerData.h"
 
 ShootingPlayerTextUI::ShootingPlayerTextUI(IWorld * world):
 	Actor(world,"PlayerText",Vector3::Zero)
@@ -11,43 +12,43 @@ ShootingPlayerTextUI::ShootingPlayerTextUI(IWorld * world):
 
 void ShootingPlayerTextUI::initialize()
 {
-	GetBulletCheck = false;
-	BulletTextTimer = 0;
-	GetRecoverCheck = false;
-	RecoverTextTimer = 0;
-	AttackUpCheck = false;
-	AttackUpTime = 600;
+	mGetBulletCheck = false;
+	mBulletTextTimer = 0;
+	mGetRecoverCheck = false;
+	mRecoverTextTimer = 0;
+	mAttackUpCheck = false;
+	mAttackUpTime = AttackUpTime * 60;
 }
 
 void ShootingPlayerTextUI::update(float deltaTime)
 {
-	if (GetBulletCheck)
+	if (mGetBulletCheck)
 	{
-		GetRecoverCheck = false;
-		BulletTextTimer = min(BulletTextTimer + 1, 60);
-		if (BulletTextTimer == 60)
+		mGetRecoverCheck = false;
+		mBulletTextTimer = min(mBulletTextTimer + 1, TextTime*60);
+		if (mBulletTextTimer == TextTime * 60)
 		{
-			BulletTextTimer = 0;
-			GetBulletCheck = false;
+			mBulletTextTimer = 0;
+			mGetBulletCheck = false;
 		}
 	}
-	if (GetRecoverCheck)
+	if (mGetRecoverCheck)
 	{
-		GetBulletCheck = false;
-		RecoverTextTimer = min(RecoverTextTimer + 1, 60);
-		if (RecoverTextTimer == 60)
+		mGetBulletCheck = false;
+		mRecoverTextTimer = min(mRecoverTextTimer + 1, TextTime * 60);
+		if (mRecoverTextTimer == TextTime * 60)
 		{
-			RecoverTextTimer = 0;
-			GetRecoverCheck = false;
+			mRecoverTextTimer = 0;
+			mGetRecoverCheck = false;
 		}
 	}
-	if (AttackUpCheck)
+	if (mAttackUpCheck)
 	{
-		AttackUpTime = max(AttackUpTime - 1, 0);
-		if (AttackUpTime == 0)
+		mAttackUpTime = max(AttackUpTime - 1, 0);
+		if (mAttackUpTime == 0)
 		{
-			AttackUpTime = 600;
-			AttackUpCheck = false;
+			mAttackUpTime = AttackUpTime * 60;
+			mAttackUpCheck = false;
 		}
 	}
 }
@@ -56,35 +57,35 @@ void ShootingPlayerTextUI::receiveMessage(EventMessage message, void * param)
 {
 	if (message == EventMessage::GET_BULLET)
 	{
-		GetBulletCheck = true;
-		BulletTextTimer = 0;
+		mGetBulletCheck = true;
+		mBulletTextTimer = 0;
 		Sound::GetInstance().PlaySE(SE_ID::ITEMGET_SE);
 	}
 
 	if (message == EventMessage::GET_HPRECOVER)
 	{
-		GetRecoverCheck = true;
-		RecoverTextTimer = 0;
+		mGetRecoverCheck = true;
+		mRecoverTextTimer = 0;
 		Sound::GetInstance().PlaySE(SE_ID::ITEMGET_SE);
 	}
 
 	if (message == EventMessage::ATTACK_UP)
 	{
-		AttackUpCheck = *static_cast<bool*>(param);
+		mAttackUpCheck = *static_cast<bool*>(param);
 	}
 }
 
 void ShootingPlayerTextUI::draw() const
 {
-	if (GetBulletCheck)
+	if (mGetBulletCheck)
 	{
 		Sprite::GetInstance().Draw(SPRITE_ID::BULLETGETUI, Vector2(WINDOW_WIDTH - Sprite::GetInstance().GetSize(SPRITE_ID::BULLETGETUI).x, 0));
 	}
-	if (GetRecoverCheck)
+	if (mGetRecoverCheck)
 	{
 		Sprite::GetInstance().Draw(SPRITE_ID::HPRECOVERTEXT, Vector2(WINDOW_WIDTH - Sprite::GetInstance().GetSize(SPRITE_ID::HPRECOVERTEXT).x, 0));
 	}
-	if (AttackUpCheck)
+	if (mAttackUpCheck)
 	{
 		Sprite::GetInstance().Draw(SPRITE_ID::ATTACK_UPNOW, Vector2(1300.0f, 150.0f));
 	}

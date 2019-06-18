@@ -66,7 +66,7 @@ void ShootingCamera::CameraSet(float deltaTime)
 	if (world_->GetPauseCheck() == false && ShootingPlayerParam::getInstance().Get_ItemBoxOpen() == false)
 	{
 		//エイム中の操作
-		mAimPosMove += RightStick::GetInstance().GetAngle() * (GameDataManager::getInstance().GetAIMSPD() * 0.5f);
+		mAimPosMove -= RightStick::GetInstance().GetAngle() * (GameDataManager::getInstance().GetAIMSPD() * 0.5f);
 	}
 
 	//プレイヤーがエイム中か
