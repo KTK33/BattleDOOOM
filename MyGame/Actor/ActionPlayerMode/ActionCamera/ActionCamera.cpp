@@ -40,7 +40,7 @@ void ActionCamera::draw() const {
 void ActionCamera::PlayerInput(float deltaTime)
 {
 	m_YawSpeed = RightStick::GetInstance().GetAngle().x;
-	m_PitchSpeed = RightStick::GetInstance().GetAngle().y;
+	m_PitchSpeed = -RightStick::GetInstance().GetAngle().y;
 
 	//ã‰º‚ÌãŒÀ‚Ì§Œä
 	if (GetCameraAngleVRotate() >= 0.4f){
