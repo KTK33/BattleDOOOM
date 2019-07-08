@@ -236,7 +236,9 @@ void ActionPlayerActor::movement(float speed, Vector2 input)
 	Vector3 angle = m_ActionCameraForward * input.y + m_ActionCameraRight * input.x;
 	angle.y = 0.0f;
 	Matrix to_Target_rotate = Matrix::CreateLookAt(position_, position_ + angle.Normalize(), Vector3::Up);
-	rotation_ = Matrix::Lerp(rotation_, Matrix::Invert(to_Target_rotate) * Matrix::CreateRotationY(180), 0.1f);
+	rotation_ = Matrix::Lerp(rotation_, Matrix::Invert(to_Target_rotate) * Matrix::CreateRotationY(180), 0.3f);
 
 	position_ += velocity_ * (1.0f + DashSpped);
+
+	position_ = Vector3::Clamp(position_, Vector3(-320.0f, 0, -240.0f), Vector3(320.0f, 100.0f, 240.0f));
 }

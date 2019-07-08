@@ -15,7 +15,6 @@ void ActorGroupManager::update(float delta_time){
 	for (auto& pair : actor_group_map_) {
 		pair.second.update(delta_time);
 	}
-	
 }
 
 //•`‰æ

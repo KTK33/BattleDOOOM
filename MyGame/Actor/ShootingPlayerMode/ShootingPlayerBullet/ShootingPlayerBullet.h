@@ -22,19 +22,9 @@ public:
 
 	virtual void receiveMessage(EventMessage message, void * param) override;
 
-	//壁と床の判定
-	void collision();
 	float EffectSize();
 private:
 	Actor* player_;
-
-	AnimatedMesh mesh_;
-
-	bool Hit;
-
-	//弾のスピード
-	const float m_BallSPeed{ 1.0f };
-	const float TurnAngle{ 2.5f };
 
 	Vector3 m_InitFar{ 0.0f,0.0f,0.0f };
 

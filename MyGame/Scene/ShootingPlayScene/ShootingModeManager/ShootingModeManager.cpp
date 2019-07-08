@@ -7,7 +7,7 @@
 #include "../Actor/ShootingPlayerMode/ShootingEnemy/NormalEnemy/NormalEnemyActor.h"
 #include "../Actor/ShootingPlayerMode/ShootingEnemy/BossEnemy/BossEnemyActor.h"
 #include "../Actor/ShootingPlayerMode/ShootingEnemy/BigBossEnemy/BigBossEnemyActor.h"
-#include "../Actor/ShootingPlayerMode/ShootingCamera/ShootingCamera.h"
+#include "../Actor/ShootingPlayerMode/ShootingCamera/ShootingTPSCamera.h"
 
 ShootingModeManager::ShootingModeManager(IWorld * world):
 	Actor(world, "ShootingModeManager", Vector3::Zero),
@@ -40,7 +40,8 @@ void ShootingModeManager::initialize()
 	auto dummy3 = new_actor<NormalEnemyActor>(13, world_, Vector3{ -110.0f , 10.0f, 90.0f }, Matrix::CreateRotationY(Random::rand(0.0f, 360.0f)));
 	world_->add_actor(ActorGroup::Enemy, dummy3);
 
-	world_->add_camera(new_actor<ShootingCamera>(world_, P));
+	world_->add_camera(new_actor<ShootingTPSCamera>(world_, P));
+
 }
 
 void ShootingModeManager::update(float deltaTime)

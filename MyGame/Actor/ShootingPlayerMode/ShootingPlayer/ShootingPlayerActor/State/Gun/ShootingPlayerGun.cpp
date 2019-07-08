@@ -17,7 +17,7 @@ void ShootingPlayerGun::Stateinitialize()
 
 void ShootingPlayerGun::StateUpdate(Vector3 & lposition, Matrix & lrotation, AnimatedMesh & lmesh)
 {
-	if (parameters_->Get_Statetimer() == 5.0f)
+	if (parameters_->Get_Statetimer() == 2.0f)
 	{
 		//’e‚Ì¶¬
 		Gun(lposition, lrotation);
@@ -52,7 +52,12 @@ void ShootingPlayerGun::StateUpdate(Vector3 & lposition, Matrix & lrotation, Ani
 
 void ShootingPlayerGun::Gun(Vector3 lposition, Matrix lrotation)
 {
+	//world_->add_actor(ActorGroup::PlayerBullet, new_actor<ShootingPlayerBullet>
+	//	(world_, Vector3{ lposition.x,lposition.y + 16.0f,lposition.z } +lrotation.Forward() * 4 + lrotation.Right() * 3, 
+	//		ShootingPlayerParam::getInstance().Get_AimPos(), ShootingPlayerParam::getInstance().Get_AttackParam()));]
+
 	world_->add_actor(ActorGroup::PlayerBullet, new_actor<ShootingPlayerBullet>
-		(world_, Vector3{ lposition.x,lposition.y + 16.0f,lposition.z } +lrotation.Forward() * 4 + lrotation.Right() * 3, 
+		(world_, GetCameraPosition(),
 			ShootingPlayerParam::getInstance().Get_AimPos(), ShootingPlayerParam::getInstance().Get_AttackParam()));
+
 }

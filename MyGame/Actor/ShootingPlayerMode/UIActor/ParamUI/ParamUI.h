@@ -12,8 +12,6 @@ public:
 
 	void SetHaveGun(int bullets);
 
-	void SetAimPos(Vector3 pos,bool check);
-
 	void SetGunEmpty(bool check);
 
 	void draw()const;
@@ -22,7 +20,5 @@ private:
 	int mHP;
 	int mRemainGun;
 	int mHaveGun;
-	Vector3 mAimPos;
-	bool mAimCheck;
 	bool mGunEmpty;
 };

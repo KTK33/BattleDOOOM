@@ -13,7 +13,7 @@ TitlePlayer::TitlePlayer(int model, int weapon, IWorld * world, const Vector3 & 
 
 	ActorSystem::TransparenceInit();
 
-	mmotion_ = ShootingPlayerMotionNum::MotionPlayerIdleAiming;
+	mmotion_ = ShootingPlayerMotionNum::MotionPlayerTitle;
 }
 
 void TitlePlayer::update(float deltaTime)

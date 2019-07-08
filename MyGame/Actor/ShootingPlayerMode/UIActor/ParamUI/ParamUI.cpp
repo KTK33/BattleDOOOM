@@ -9,8 +9,6 @@ void ParamUI::initialize()
 	mHP = 0;
 	mRemainGun = 0;
 	mHaveGun = 0;
-	mAimPos = Vector3::Zero;
-	mAimCheck = false;
 	mGunEmpty = false;
 }
 
@@ -27,12 +25,6 @@ void ParamUI::SetRemainGun(int bullets)
 void ParamUI::SetHaveGun(int bullets)
 {
 	mHaveGun = bullets;
-}
-
-void ParamUI::SetAimPos(Vector3 pos,bool check)
-{
-	mAimPos = pos;
-	mAimCheck = check;
 }
 
 void ParamUI::SetGunEmpty(bool check)
@@ -59,12 +51,6 @@ void ParamUI::draw() const
 		Sprite::GetInstance().DrawPart(SPRITE_ID::NUMBER, Vector2(static_cast<float>(WINDOW_WIDTH) - GunFreamSize.x*0.5f, static_cast<float>(WINDOW_HEIGHT) - GunFreamSize.y*0.8f), static_cast<int>(NumSize.x / 10.0f) * m_P[0], 0, static_cast<int>(NumSize.x / 10.0f), static_cast<int>(NumSize.y)); //ÉZÉbÉgÇ≥ÇÍÇƒÇ¢ÇÈíeêî(ÇPåÖ)
 	}
 	Sprite::GetInstance().DrawPart(SPRITE_ID::NUMBER, Vector2(static_cast<float>(WINDOW_WIDTH) - GunFreamSize.x*0.3f, static_cast<float>(WINDOW_HEIGHT) - GunFreamSize.y*0.8f), static_cast<int>(NumSize.x / 10.0f) * m_P[1], 0, static_cast<int>(NumSize.x / 10.0f), static_cast<int>(NumSize.y)); //ÉZÉbÉgÇ≥ÇÍÇƒÇ¢ÇÈíeêî(ÇPåÖ)
-
-	if (mAimCheck)
-	{
-		Vector2 getsize = Sprite::GetInstance().GetSize(SPRITE_ID::SIGHT);
-		Sprite::GetInstance().DrawSetCenter(SPRITE_ID::SIGHT, Vector2(ConvWorldPosToScreenPos(mAimPos).x - getsize.x/2, ConvWorldPosToScreenPos(mAimPos).y));
-	}
 
 	if (mGunEmpty)
 	{

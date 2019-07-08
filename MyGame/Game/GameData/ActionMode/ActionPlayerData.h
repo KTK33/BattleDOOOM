@@ -15,4 +15,4 @@ static const float WalkRunVal = 0.8f;
 static const float ActionPlayerRunSpeedVal = 0.5f;
 
 //‰ñ”ð‰Á‘¬“x
-static const float mAvoidanceSpeed = 1.0f;
+static const float mAvoidanceSpeed = 0.5f;

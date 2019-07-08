@@ -28,5 +28,6 @@ public:
 		MotionPlayerRunJump,
 		MotionPlayerGuard,
 		MotionPlayerItemUse,
+		MotionPlayerTitle,
 	};
 };

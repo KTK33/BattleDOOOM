@@ -29,6 +29,9 @@ static const int GetItemRate = 70;
 //攻撃アップアイテムを使ったときの継続時間(秒)
 static const int AttackUpTime = 30;
 
+//弾の速度
+static const float BulletSpeed = 10.0f;
+
 //通常の銃での攻撃力
 static const int NormalAttackVal = 1;
 

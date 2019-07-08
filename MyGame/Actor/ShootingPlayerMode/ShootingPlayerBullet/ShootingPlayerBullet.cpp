@@ -3,12 +3,11 @@
 #include "../Actor/ActorGroup.h"
 #include "../Sound/Sound.h"
 #include "../Actor/CommonUIActor/Effect2D/Effect2D.h"
+#include "../Game/GameData/ShootingMode/ShootingPlayerData.h"
 
 ShootingPlayerBullet::ShootingPlayerBullet(IWorld * world, const Vector3 & P_position, Vector3 & A_position, int AttackParam, const IBodyPtr & body):
 	Actor(world, "Ball", P_position, body),
-	mesh_{ 5 },
-	m_GoPos{ A_position },
-	Hit{false}
+	m_GoPos{ A_position }
 {
 	player_ = world_->find_actor(ActorGroup::Player, "Player").get();
 
@@ -23,16 +22,19 @@ ShootingPlayerBullet::ShootingPlayerBullet(IWorld * world, const Vector3 & P_pos
 
 void ShootingPlayerBullet::initialize()
 {
-	mesh_.transform(Getpose());
 }
 
 void ShootingPlayerBullet::update(float deltaTime)
 {
-	mesh_.update(deltaTime);
-	mesh_.transform(Getpose());
 	//’e‚ÌˆÚ“®ˆ—
-	position_ += m_InitFar * 5.0f;
-	collision();
+	position_ += m_InitFar * BulletSpeed;
+
+	if (MathHelper::Abs(position_.x) > 300 || 
+		MathHelper::Abs(position_.y) > 100 ||
+		MathHelper::Abs(position_.z) > 300)
+	{
+		die();
+	}
 }
 
 void ShootingPlayerBullet::onCollide(Actor & other)
@@ -46,21 +48,6 @@ void ShootingPlayerBullet::receiveMessage(EventMessage message, void * param)
 	if (message == EventMessage::HIT_ENEMY)
 	{
 		world_->add_actor(ActorGroup::Effect, new_actor<Effect2D>(world_, position_, EffectSize(), SPRITE_ID::EFFECT_BULLETHIT));
-		die();
-	}
-}
-
-void ShootingPlayerBullet::collision()
-{
-	//‚Ô‚Â‚©‚Á‚½‚©
-	Vector3 result;
-	//•Ç‚Æ‚Ô‚Â‚¯‚Ä‚©‚ç
-	if (field(result)) {
-		die();
-	}
-
-	//°‚Æ‚ÌÚ’n”»’è
-	if (floor(result)) {
 		die();
 	}
 }

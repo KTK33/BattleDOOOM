@@ -207,7 +207,7 @@
     <ClCompile Include="Actor\ShootingPlayerMode\ItemActor\BulletItem\BulletItem.cpp" />
     <ClCompile Include="Actor\ShootingPlayerMode\ItemActor\HPRecoverItem\HPRecoverItem.cpp" />
     <ClCompile Include="Actor\ShootingPlayerMode\ItemActor\ItemCreater\ItemCreater.cpp" />
-    <ClCompile Include="Actor\ShootingPlayerMode\ShootingCamera\ShootingCamera.cpp" />
+    <ClCompile Include="Actor\ShootingPlayerMode\ShootingCamera\ShootingTPSCamera.cpp" />
     <ClCompile Include="Actor\ShootingPlayerMode\ShootingEnemy\BigBossEnemy\BigBossEnemyActor.cpp" />
     <ClCompile Include="Actor\ShootingPlayerMode\ShootingEnemy\BigBossEnemy\BigBossEnemyParam\BigBossEnemyParam.cpp" />
     <ClCompile Include="Actor\ShootingPlayerMode\ShootingEnemy\BigBossEnemy\HPUI\BigBossHPUI.cpp" />
@@ -259,6 +259,7 @@
     <ClCompile Include="Actor\ShootingPlayerMode\UIActor\PlaySceneUI\GameClearUIh.cpp" />
     <ClCompile Include="Actor\ShootingPlayerMode\UIActor\PlaySceneUI\GameOverUI.cpp" />
     <ClCompile Include="Actor\ShootingPlayerMode\UIActor\ShootingPlayerTextUI\ShootingPlayerTextUI.cpp" />
+    <ClCompile Include="Actor\ShootingPlayerMode\UIActor\SightUI\SightUI.cpp" />
     <ClCompile Include="Animation\AnimatedSprite.cpp" />
     <ClCompile Include="Animation\Animation.cpp" />
     <ClCompile Include="Animation\AnimationMesh.cpp" />
@@ -299,7 +300,6 @@
     <ClCompile Include="Input\InputInfo\LeftStick\LeftStick.cpp" />
     <ClCompile Include="Input\InputInfo\RightStick\RightStick.cpp" />
     <ClCompile Include="Input\Keyboard\Keyboard.cpp" />
-    <ClCompile Include="Input\Mouse\Mouse.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Math\Color.cpp" />
     <ClCompile Include="Math\MathHelper.cpp" />
@@ -329,7 +329,6 @@
     <ClCompile Include="Scene\TestScene\TestScene.cpp" />
     <ClCompile Include="Skybox\Skybox.cpp" />
     <ClCompile Include="Sound\Sound.cpp" />
-    <ClCompile Include="Sound\SoundEffect.cpp" />
     <ClCompile Include="Texture\Sprite.cpp" />
     <ClCompile Include="Texture\TextureAsset.cpp" />
     <ClCompile Include="World\World.cpp" />
@@ -400,7 +399,7 @@
     <ClInclude Include="Actor\ShootingPlayerMode\ItemActor\BulletItem\BulletItem.h" />
     <ClInclude Include="Actor\ShootingPlayerMode\ItemActor\HPRecoverItem\HPRecoverItem.h" />
     <ClInclude Include="Actor\ShootingPlayerMode\ItemActor\ItemCreater\ItemCreater.h" />
-    <ClInclude Include="Actor\ShootingPlayerMode\ShootingCamera\ShootingCamera.h" />
+    <ClInclude Include="Actor\ShootingPlayerMode\ShootingCamera\ShootingTPSCamera.h" />
     <ClInclude Include="Actor\ShootingPlayerMode\ShootingEnemy\BigBossEnemy\BigBossEnemyActor.h" />
     <ClInclude Include="Actor\ShootingPlayerMode\ShootingEnemy\BigBossEnemy\BigBossEnemyMotionNum.h" />
     <ClInclude Include="Actor\ShootingPlayerMode\ShootingEnemy\BigBossEnemy\BigBossEnemyParam\BigBossEnemyParam.h" />
@@ -463,6 +462,7 @@
     <ClInclude Include="Actor\ShootingPlayerMode\UIActor\PlaySceneUI\GameClearUIh.h" />
     <ClInclude Include="Actor\ShootingPlayerMode\UIActor\PlaySceneUI\GameOverUI.h" />
     <ClInclude Include="Actor\ShootingPlayerMode\UIActor\ShootingPlayerTextUI\ShootingPlayerTextUI.h" />
+    <ClInclude Include="Actor\ShootingPlayerMode\UIActor\SightUI\SightUI.h" />
     <ClInclude Include="Actor\TestEnemy.h" />
     <ClInclude Include="Animation\AnimatedSprite.h" />
     <ClInclude Include="Animation\Animation.h" />
@@ -524,7 +524,6 @@
     <ClInclude Include="Input\InputInfo\RightStick\RightStick.h" />
     <ClInclude Include="Input\InputType.h" />
     <ClInclude Include="Input\Keyboard\Keyboard.h" />
-    <ClInclude Include="Input\Mouse\Mouse.h" />
     <ClInclude Include="Math\Color.h" />
     <ClInclude Include="Math\MathH.h" />
     <ClInclude Include="Math\MathHelper.h" />
@@ -560,7 +559,6 @@
     <ClInclude Include="Scene\TestScene\TestScene.h" />
     <ClInclude Include="Skybox\Skybox.h" />
     <ClInclude Include="Sound\Sound.h" />
-    <ClInclude Include="Sound\SoundEffect.h" />
     <ClInclude Include="Sound\SoundID.h" />
     <ClInclude Include="Texture\Sprite.h" />
     <ClInclude Include="Texture\SpriteID.h" />

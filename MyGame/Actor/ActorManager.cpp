@@ -1,5 +1,9 @@
 #include "ActorManager.h"
 
+void ActorManager::initialize()
+{
+}
+
 //
 void ActorManager::add(const ActorPtr & actor){
 	actors_.push_front(actor);

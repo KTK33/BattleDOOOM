@@ -14,7 +14,7 @@ ShootingPlayerActor::ShootingPlayerActor(int model, int weapon, IWorld * world, 
 	m_ui{ ui },
 	mesh_{ model,weapon },
 	mweapon_{ weapon },
-	mweaponPos{ 103 },
+	mweaponPos{ 106 },
 	mInitAimPos{ position_.x + rotation_.Forward().x * 10 + rotation_.Right().x * 5, position_.y + 15, position_.z + rotation_.Forward().z * 10 + rotation_.Right().z * 5 },
 	mRecoverItemCount{ HaveRecoverItem },
 	mAttackItemCount{ HaveAttackUpItem },
@@ -120,6 +120,14 @@ void ShootingPlayerActor::update(float deltaTime)
 	//敵の攻撃を食らったら点滅させる
 	invincibly(parameters_.Get_invincibly());
 
+	//ステイトによって武器の描画位置の変更
+	if (mcurrentStateID == ActorStateID::ShootingPlayerGuard) {
+		mweaponPos = 103;
+	}
+	else {
+		mweaponPos = 106;
+	}
+
 	//十字キー右を押したらアイテムボックスを生成
 	if(DPad::GetInstance().GetRight())
 	{
@@ -209,19 +217,13 @@ void ShootingPlayerActor::receiveMessage(EventMessage message, void * param)
 		velocity_ = mAP.Hit(*static_cast<Vector3*>(param));
 	}
 
-	//照準ポジションの取得
-	if (message == EventMessage::SIGHT_POSITION)
-	{
-		Vector3 pos = *static_cast<Vector3*>(param);
-		ShootingPlayerParam::getInstance().Set_AimPos(pos);
-	}
-
 	//カメラの向き
 	if (message == EventMessage::SIGHT_ROTATION)
 	{
-		float rote = *(float*)param;
-		rotation_ *= Matrix::CreateFromAxisAngle(rotation_.Up(), *static_cast<float*>(param));
-		rotation_.NormalizeRotationMatrix();
+		Vector3 rote = *(Vector3*)param;
+		rote.y = 0.0f;
+		Matrix to_Target_rotate = Matrix::CreateLookAt(position_, position_ + rote.Normalize(), Vector3::Up);
+		rotation_ = Matrix::Lerp(rotation_, Matrix::Invert(to_Target_rotate) * Matrix::CreateRotationY(180), 0.1f);
 	}
 
 	//ステイトが死orダメージ中でないときのみアイテム使用可
@@ -266,9 +268,6 @@ void ShootingPlayerActor::ParamSet()
 	mParamUI.SetHP(parameters_.Get_HP());
 	mParamUI.SetRemainGun(ShootingPlayerParam::getInstance().Get_RemainGun());
 	mParamUI.SetHaveGun(ShootingPlayerParam::getInstance().Get_HaveGun());
-
-	const Vector3 sightpos = ShootingPlayerParam::getInstance().Get_AimPos() + rotation_.Forward() * 4 + rotation_.Right() * 3;
-	mParamUI.SetAimPos(sightpos, ShootingPlayerParam::getInstance().Get_AimCheck());
 
 	//セットされている弾数が０の時に描画する
 	if (ShootingPlayerParam::getInstance().Get_RemainGun() == 0) {
@@ -318,9 +317,6 @@ void ShootingPlayerActor::input_information()
 
 	//上下左右入力
 	mI.Input(input, yaw_speed);
-
-	rotation_ *= Matrix::CreateFromAxisAngle(rotation_.Up(), yaw_speed * 1.0f);
-	rotation_.NormalizeRotationMatrix();
 
 	//入力が両方０ならばアイドル状態
 	if (input.x == 0.0f && input.y == 0.0f) return;

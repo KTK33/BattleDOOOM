@@ -3,7 +3,6 @@
 
 #include "../Input/GamePad/GamePad.h"
 #include "../Input/KeyBoard/Keyboard.h"
-#include "../Input/Mouse/Mouse.h"
 #include "../Math/Random.h"
 #include "../Graphics/Graphics2D.h"
 #include "../Sound/Sound.h"
@@ -38,6 +37,8 @@ int Game::run() {
     ChangeWindowMode(is_full_screen_ ? FALSE : TRUE);
 	SetUseDirect3DVersion(DX_DIRECT3D_11);
 	SetWindowSizeExtendRate(0.6f);
+
+
     // ＤＸライブラリの初期化
     DxLib_Init();
     // 描画先を裏画面にする
@@ -48,8 +49,6 @@ int Game::run() {
     Graphics2D::initialize();
     // サウンドの初期化
 	Sound::GetInstance().Initialize();
-    // マウスの初期化
-    Mouse::initialize();
     // 3Dグラフィックスの初期化
     Graphics3D::initialize();
 
@@ -73,6 +72,14 @@ int Game::run() {
 	// ウインドウとフルスクリーンの切り替えが発生する場合は必ず実行する。
 	// ただし、DirectX11を使用する場合は実行する必要はない。
 	Effekseer_SetGraphicsDeviceLostCallbackFunctions();
+
+	//HWND TempHh = GetMainWindowHandle();
+	////最前面処理
+	//SetWindowPos(TempHh, HWND_TOP, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
+	//SetWindowLong(TempHh, GWL_STYLE, WS_POPUP);
+	//ShowWindow(TempHh, SW_SHOWMAXIMIZED);
+
+	SetMouseDispFlag(FALSE);
 
 	Fps fps;
 
@@ -127,8 +134,6 @@ void Game::update(float) {
 	GamePad::GetInstance().Update();
 	ReSetupJoypad();
 	Keyboard::GetInstance().Update();
-	// マウスの更新
-	Mouse::update();
 	sceneManager_.update(60.0f / 60.0f);
 }
 

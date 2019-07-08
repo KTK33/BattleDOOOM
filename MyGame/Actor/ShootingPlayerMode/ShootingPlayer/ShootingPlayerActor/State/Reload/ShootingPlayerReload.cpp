@@ -20,7 +20,7 @@ void ShootingPlayerReload::Stateinitialize()
 
 void ShootingPlayerReload::StateUpdate(Vector3 & lposition, Matrix & lrotation, AnimatedMesh & lmesh)
 {
-	if (parameters_->Get_Statetimer() == 60)
+	if (parameters_->Get_Statetimer() == 30)
 	{
 		//’e”‚ÌŒvZ
 		GunCount();

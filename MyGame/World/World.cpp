@@ -51,8 +51,8 @@ void World::update(float delta_time)
 void World::draw() const
 {
 	//light_->draw();
-	camera_->draw();
 	actors_.draw();
+	camera_->draw();
 }
 
 void World::handle_message(EventMessage message, void * param)

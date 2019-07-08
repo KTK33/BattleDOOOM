@@ -41,9 +41,7 @@ void ShootingPlayerIdleAiming::StateUpdate(Vector3 & lposition, Matrix & lrotati
 void ShootingPlayerIdleAiming::Input()
 {
 	//銃を撃つステイトへ
-	if(ShootingPlayerParam::getInstance().Get_RemainGun() > 0 &&
-		parameters_->Get_Motion() != ShootingPlayerMotionNum::MotionPlayerBackGun)
-	{
+	if(ShootingPlayerParam::getInstance().Get_RemainGun() > 0)	{
 		if(ButtonRB::GetInstance().TriggerDown())
 		{
 			mNextStateID = ActorStateID::ShootingPlayerGun;
