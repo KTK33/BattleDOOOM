@@ -17,6 +17,7 @@ public:
 
 	virtual void receiveMessage(EventMessage message, void * param) override;
 
+private:
 	//ゲーム終了時設定
 	void PlayerGameFinish();
 
@@ -28,18 +29,18 @@ private:
 	//
 	Vector3 target_{ 0.0f,0.0f,0.0f };
 
-	Vector2 m_FarPoint{ 30.f,20.f };
-
 	std::weak_ptr<Actor> m_player{};
 
 	//ターゲットからのオフセット
-	Vector3 m_Offset;
+	Vector3 mOffset;
 	//カメラの上方向ベクトル
-	Vector3 m_Up;
+	Vector3 mUp;
 	//ピッチの角速度
-	float m_PitchSpeed;
+	float mPitchSpeed;
 	//ヨーの角速度
-	float m_YawSpeed;
+	float mYawSpeed;
+	//前方向
+	Vector3 mForward;
 
 	//プレイヤーの高さ
 	int PlayerHeight{ 15 };

@@ -187,10 +187,9 @@ void ActionPlayerActor::input_information()
 	}
 
 	Vector2 input;
-	float yaw;
 
 	//左右上下入力
-	mI.Input(input,yaw);
+	mI.Input(input);
 	//入力が両方０ならばアイドル状態
 	if (input.x == 0.0f && input.y == 0.0f) return; 
 	movement(ActionPlayerSpeedVal, input);
@@ -240,5 +239,5 @@ void ActionPlayerActor::movement(float speed, Vector2 input)
 
 	position_ += velocity_ * (1.0f + DashSpped);
 
-	position_ = Vector3::Clamp(position_, Vector3(-320.0f, 0, -240.0f), Vector3(320.0f, 100.0f, 240.0f));
+	position_ = Vector3::Clamp(position_, Vector3(-278.0f, 0, -196.0f), Vector3(295.0f, 100.0f, 210.0f));
 }

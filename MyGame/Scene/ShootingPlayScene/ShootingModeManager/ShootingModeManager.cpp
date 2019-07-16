@@ -31,13 +31,13 @@ void ShootingModeManager::initialize()
 
 	world_->add_actor(ActorGroup::PauseUI, new_actor<PauseUI>(world_));
 
-	auto dummy1 = new_actor<NormalEnemyActor>(11, world_, Vector3{ 20.0f, 10.0f,  -150.0f }, Matrix::CreateRotationY(Random::rand(0.0f, 360.0f)));
+	auto dummy1 = new_actor<NormalEnemyActor>(11, world_,"NormalEnemy1", Vector3{ 20.0f, 10.0f,  -150.0f }, Matrix::CreateRotationY(Random::rand(0.0f, 360.0f)));
 	world_->add_actor(ActorGroup::Enemy, dummy1);
 
-	auto dummy2 = new_actor<NormalEnemyActor>(12, world_, Vector3{ 130.0f, 10.0f, -4.0f }, Matrix::CreateRotationY(Random::rand(0.0f, 360.0f)));
+	auto dummy2 = new_actor<NormalEnemyActor>(12, world_,"NormalEnemy2", Vector3{ 130.0f, 10.0f, -4.0f }, Matrix::CreateRotationY(Random::rand(0.0f, 360.0f)));
 	world_->add_actor(ActorGroup::Enemy, dummy2);
 
-	auto dummy3 = new_actor<NormalEnemyActor>(13, world_, Vector3{ -110.0f , 10.0f, 90.0f }, Matrix::CreateRotationY(Random::rand(0.0f, 360.0f)));
+	auto dummy3 = new_actor<NormalEnemyActor>(13, world_,"NormalEnemy3", Vector3{ -110.0f , 10.0f, 90.0f }, Matrix::CreateRotationY(Random::rand(0.0f, 360.0f)));
 	world_->add_actor(ActorGroup::Enemy, dummy3);
 
 	world_->add_camera(new_actor<ShootingTPSCamera>(world_, P));
@@ -46,7 +46,7 @@ void ShootingModeManager::initialize()
 
 void ShootingModeManager::update(float deltaTime)
 {
-	if (world_->find_actor(ActorGroup::Enemy, "NormalEnemy") == NULL && BossArleady == false)
+	if (world_->count_actor(ActorGroup::Enemy) == 0 && BossArleady == false)
 	{
 		world_->add_actor(ActorGroup::BossEnemy, new_actor<BossEnemyActor>(3, world_, Vector3{ 200.0f, 10.0f,20.0f }));
 		BossArleady = true;

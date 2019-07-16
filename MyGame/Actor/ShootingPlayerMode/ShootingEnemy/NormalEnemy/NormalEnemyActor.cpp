@@ -7,8 +7,8 @@
 #include "NormalEnemyStateInc.h"
 #include "../Game/GameData/ShootingMode/ShootingNormalEnemyData.h"
 
-NormalEnemyActor::NormalEnemyActor(int model, IWorld * world, const Vector3 & position, const Matrix & rotation, const IBodyPtr & body):
-	Actor(world,"NormalEnemy",position,rotation, body),
+NormalEnemyActor::NormalEnemyActor(int model, IWorld * world, const std::string& name, const Vector3 & position, const Matrix & rotation, const IBodyPtr & body):
+	Actor(world, name,position,rotation, body),
 	player_{nullptr},
 	mesh_{model},
 	mroarCheck{false},

@@ -42,7 +42,11 @@ static const int UPAttackVal = 2;
 static const int PunchAttackVal = 1;
 
 //移動速度(エイム状態でない)
-static const float OutAimWalkSpeed = 1.0f;
+static const float OutAimWalkSpeed = 0.8f;
+
+//後左右に移動しているときの速度倍率
+
+static const float BackRightLeftWalk = 0.3f;
 
 //移動速度(エイム状態中)
 static const float IAimWalkSpeed = 0.5f;

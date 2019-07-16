@@ -128,40 +128,18 @@ void ShootingPlayerActor::update(float deltaTime)
 		mweaponPos = 106;
 	}
 
-	//十字キー右を押したらアイテムボックスを生成
-	if(DPad::GetInstance().GetRight())
-	{
-		int hp = parameters_.Get_HP();
-		world_->send_message(EventMessage::PLAYER_HP,reinterpret_cast<void*>(&hp));
-		world_->send_message(EventMessage::PLAYER_STATE, reinterpret_cast<void*>(&mcurrentStateID));
-		if (world_->find_actor(ActorGroup::ItemBoxUI, "PlayerBox") == NULL)
-		{
-			world_->add_actor(ActorGroup::ItemBoxUI, new_actor<ShootingPlayerItemBox>(world_, mRecoverItemCount, mAttackItemCount, weak_from_this()));
-		}
-	}
-
-	//攻撃アップアイテムを使用したら指定時間、攻撃力が２倍になる
-	if (mAttackUpCheck) {
-		mAttackParam = UPAttackVal;
-		mAttackUpTime = max(mAttackUpTime - 1, 0);
-		if (mAttackUpTime == 0)
-		{
-			mAttackUpTime = AttackUpTime;
-			mAttackUpCheck = false;
-		}
-	}
-	else {
-		mAttackParam = NormalAttackVal;
-	}
-	world_->send_message(EventMessage::DAMAGEPARAM, reinterpret_cast<void*>(&mAttackParam));
+	//アイテムの処理
+	ItemProcess();
 }
 
 void ShootingPlayerActor::draw() const
 {
+	//モデルの描画
 	mesh_.draw();
 	mDW.draw(ShootingPlayerParam::getInstance().Get_WeaponModel(), mweaponPos, mesh_);
 	mParamUI.draw();
 
+	//エフェクトの描画
 	meff.draw();
 }
 
@@ -174,26 +152,9 @@ void ShootingPlayerActor::onCollide(Actor & other)
 void ShootingPlayerActor::receiveMessage(EventMessage message, void * param)
 {
 	//無敵(ガード中)でないときに敵の弾に当たったら
-	if (parameters_.Get_invincibly() == false)	
+	if (message == EventMessage::HIT_ENEMY_BULLET)
 	{
-		if (message == EventMessage::HIT_ENEMY_BULLET)
-		{
-			if (ShootingPlayerParam::getInstance().Get_Guard())
-			{
-				meff.change_effect((int)EFFECT_ID::GUARD);
-				meffsize = Vector3(3.0f, 3.0f, 3.0f);
-				meffPos = Vector3(position_.x,position_.y + 10.0f,position_.z) + rotation_.Forward() * 5 + rotation_.Right() * 3;
-				meff.set_endTime(30);
-				if (meff.get_isPlaying() == -1){
-					meff.play();
-				}
-			}
-			else
-			{
-				parameters_.Red_HP(*static_cast<int*>(param));
-				parameters_.Set_Invicibly(true);
-			}
-		}
+		AttackByHit(*static_cast<int*>(param));
 	}
 
 	//弾を入手したとき
@@ -233,32 +194,13 @@ void ShootingPlayerActor::receiveMessage(EventMessage message, void * param)
 		//回復アイテムを使ったとき
 		if (message == EventMessage::HP_RECOVER)
 		{
-			ShootingPlayerParam::getInstance().Set_ItemUse(true,1);
-			int afterHp = parameters_.Get_HP() + *static_cast<int*>(param);
-			afterHp = MathHelper::Clamp(afterHp, 0, ShootingPlayerHPVal);
-			parameters_.Set_HP(afterHp);
-			mRecoverItemCount = mRecoverItemCount - 1;
-			meff.stop();
-			meff.change_effect((int)EFFECT_ID::PLAYER_HEAL);
-			meffsize = Vector3(5.0f, 10.0f, 5.0f);
-			meffPos = position_;
-			meff.set_endTime(120);
-			meff.play();
+			UseRecoveryItem(*static_cast<int*>(param));
 		}
 
 		//攻撃アップアイテムを使ったとき
 		if (message == EventMessage::ATTACK_UP)
 		{
-			ShootingPlayerParam::getInstance().Set_ItemUse(true,2);
-			mAttackUpCheck = *static_cast<bool*>(param);
-			m_ui.lock()->receiveMessage(EventMessage::ATTACK_UP, reinterpret_cast<bool*>(param));
-			mAttackItemCount = mAttackItemCount - 1;
-			meff.stop();
-			meff.change_effect((int)EFFECT_ID::PLAYER_ATTACKUP);
-			meffsize = Vector3(1.0f, 1.0f, 1.0f);
-			meffPos = position_;
-			meff.set_endTime(120);
-			meff.play();
+			UseAttackUpItem(*static_cast<bool*>(param));
 		}
 	}
 }
@@ -313,13 +255,15 @@ void ShootingPlayerActor::input_information()
 	}
 
 	Vector2 input;
-	float yaw_speed = 0.0f;
 
 	//上下左右入力
-	mI.Input(input, yaw_speed);
+	mI.Input(input);
 
 	//入力が両方０ならばアイドル状態
-	if (input.x == 0.0f && input.y == 0.0f) return;
+	if (input.x == 0.0f && input.y == 0.0f) {
+		Sound::GetInstance().StopSE(SE_ID::WALKSTEP_SE);
+		return;
+	}
 
 	if (parameters_.Get_StateID() == ActorStateID::ShootingPlayerIdle)
 	{
@@ -330,34 +274,76 @@ void ShootingPlayerActor::input_information()
 	{
 		gun_movement(IAimWalkSpeed, input);
 	}
+	position_ = Vector3::Clamp(position_, Vector3(-278.0f, 0, -196.0f), Vector3(295.0f, 100.0f, 210.0f));
 }
 
 void ShootingPlayerActor::movement(float speed, Vector2 input)
 {
-	mMV.Move(position_, velocity_, rotation_, speed, input);
-
-	//スティックの倒し具合でモーション変更
-	if (MathHelper::Abs(input.x) < OutAimWalkRunVal || MathHelper::Abs(input.y) < OutAimWalkRunVal) {
+	float walkSpeed = speed;
+	if (input.y > 0.1f)
+	{//前に歩く
 		parameters_.Set_Motion(ShootingPlayerMotionNum::MotionPlayerWalk);
 	}
-	else {
-		parameters_.Set_Motion(ShootingPlayerMotionNum::MotionPlayerRun);
+	else if (input.x > 0.1f)
+	{//右に歩く
+		parameters_.Set_Motion(ShootingPlayerMotionNum::MotionPlayerRightWalk);
+		walkSpeed *= BackRightLeftWalk;
 	}
+	else if (input.x < -0.1f)
+	{//左に歩く
+		parameters_.Set_Motion(ShootingPlayerMotionNum::MotionPlayerLeftWalk);
+		walkSpeed *= BackRightLeftWalk;
+	}
+	else if (input.y < 0.1f)
+	{//後ろに歩く
+		parameters_.Set_Motion(ShootingPlayerMotionNum::MotionPlayerBackWalk);
+		walkSpeed *= BackRightLeftWalk;
+	}
+	mMV.Move(position_, velocity_, rotation_, walkSpeed, input);
 }
 
 void ShootingPlayerActor::gun_movement(float speed, Vector2 input)
 {
 	mMV.Move(position_, velocity_, rotation_, speed, input);
 
-	//スティックの倒し具合でモーション変更
-	if (input.x != 0.0f){
-		parameters_.Set_Motion(ShootingPlayerMotionNum::MotionPlayerLeftGun);
-		return;
-	}
-
-	if (input.y != 0.0f){
+	if (input.y > 0.1f)
+	{//前に歩く
 		parameters_.Set_Motion(ShootingPlayerMotionNum::MotionPlayerForwardGun);
-		return;
+	}
+	else if (input.x > 0.1f)
+	{//右に歩く
+		parameters_.Set_Motion(ShootingPlayerMotionNum::MotionPlayerRightGun);
+	}
+	else if (input.x < -0.1f)
+	{//左に歩く
+		parameters_.Set_Motion(ShootingPlayerMotionNum::MotionPlayerLeftGun);
+	}
+	else if (input.y < 0.1f)
+	{//後ろに歩く
+		parameters_.Set_Motion(ShootingPlayerMotionNum::MotionPlayerBackGun);
+	}
+}
+
+void ShootingPlayerActor::AttackByHit(int hitVal)
+{
+	//無敵(ガード中)でないときに敵の弾に当たったら
+	if (parameters_.Get_invincibly() == false)
+	{
+		if (ShootingPlayerParam::getInstance().Get_Guard())
+		{
+			meff.change_effect((int)EFFECT_ID::GUARD);
+			meffsize = Vector3(3.0f, 3.0f, 3.0f);
+			meffPos = Vector3(position_.x, position_.y + 10.0f, position_.z) + rotation_.Forward() * 5 + rotation_.Right() * 3;
+			meff.set_endTime(30);
+			if (meff.get_isPlaying() == -1) {
+				meff.play();
+			}
+		}
+		else
+		{
+			parameters_.Red_HP(hitVal);
+			parameters_.Set_Invicibly(true);
+		}
 	}
 }
 
@@ -370,4 +356,63 @@ void ShootingPlayerActor::invincibly(bool check)
 	else{
 		TransparenceInit();
 	}
+}
+
+void ShootingPlayerActor::ItemProcess()
+{
+	//十字キー右を押したらアイテムボックスを生成
+	if (DPad::GetInstance().GetRight())
+	{
+		int hp = parameters_.Get_HP();
+		world_->send_message(EventMessage::PLAYER_HP, reinterpret_cast<void*>(&hp));
+		world_->send_message(EventMessage::PLAYER_STATE, reinterpret_cast<void*>(&mcurrentStateID));
+		if (world_->find_actor(ActorGroup::ItemBoxUI, "PlayerBox") == NULL)
+		{
+			world_->add_actor(ActorGroup::ItemBoxUI, new_actor<ShootingPlayerItemBox>(world_, mRecoverItemCount, mAttackItemCount, weak_from_this()));
+		}
+	}
+
+	//攻撃アップアイテムを使用したら指定時間、攻撃力が２倍になる
+	if (mAttackUpCheck) {
+		mAttackParam = UPAttackVal;
+		mAttackUpTime = max(mAttackUpTime - 1, 0);
+		if (mAttackUpTime == 0)
+		{
+			mAttackUpTime = AttackUpTime;
+			mAttackUpCheck = false;
+		}
+	}
+	else {
+		mAttackParam = NormalAttackVal;
+	}
+	world_->send_message(EventMessage::DAMAGEPARAM, reinterpret_cast<void*>(&mAttackParam));
+	m_ui.lock()->receiveMessage(EventMessage::ATTACK_UP, reinterpret_cast<bool*>(&mAttackUpCheck));
+}
+
+void ShootingPlayerActor::UseRecoveryItem(int recovVal)
+{
+	ShootingPlayerParam::getInstance().Set_ItemUse(true, 1);
+	int afterHp = parameters_.Get_HP() + recovVal;
+	afterHp = MathHelper::Clamp(afterHp, 0, ShootingPlayerHPVal);
+	parameters_.Set_HP(afterHp);
+	mRecoverItemCount = mRecoverItemCount - 1;
+	meff.stop();
+	meff.change_effect((int)EFFECT_ID::PLAYER_HEAL);
+	meffsize = Vector3(5.0f, 10.0f, 5.0f);
+	meffPos = position_;
+	meff.set_endTime(120);
+	meff.play();
+}
+
+void ShootingPlayerActor::UseAttackUpItem(bool upCheck)
+{
+	ShootingPlayerParam::getInstance().Set_ItemUse(true, 2);
+	mAttackUpCheck = upCheck;
+	mAttackItemCount = mAttackItemCount - 1;
+	meff.stop();
+	meff.change_effect((int)EFFECT_ID::PLAYER_ATTACKUP);
+	meffsize = Vector3(1.0f, 1.0f, 1.0f);
+	meffPos = position_;
+	meff.set_endTime(120);
+	meff.play();
 }

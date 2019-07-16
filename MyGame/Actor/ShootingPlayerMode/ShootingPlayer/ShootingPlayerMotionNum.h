@@ -29,5 +29,8 @@ public:
 		MotionPlayerGuard,
 		MotionPlayerItemUse,
 		MotionPlayerTitle,
+		MotionPlayerRightWalk,
+		MotionPlayerLeftWalk,
+		MotionPlayerBackWalk,
 	};
 };

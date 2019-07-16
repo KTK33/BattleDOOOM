@@ -58,7 +58,7 @@ private:
 
 	float mBGMVAL{ BGMVOLUME * 10 };
 	float mSE_VAL{ SEVOLUME * 10 };
-	int mAIM_SPD{ 5 };
+	int mAIM_SPD{ 2 };
 
 	int mSceneNumber{ 2 };
 

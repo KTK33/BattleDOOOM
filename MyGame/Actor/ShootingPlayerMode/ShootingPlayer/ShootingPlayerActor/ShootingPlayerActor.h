@@ -45,8 +45,16 @@ private:
 	void movement(float speed, Vector2 input);
 	//エイム移動処理
 	void gun_movement(float speed, Vector2 input);
+	//攻撃を受けたとき
+	void AttackByHit(int hitVal);
 	//無敵時間
 	void invincibly(bool check);
+	//アイテム処理
+	void ItemProcess();
+	//回復アイテムを使ったとき
+	void UseRecoveryItem(int recovVal);
+	//攻撃アイテムを使ったとき
+	void UseAttackUpItem(bool upCheck);
 private:
 	using StateMap = std::map<ActorStateID, ActorStateManager>;
 	StateMap shootingplayerState_;

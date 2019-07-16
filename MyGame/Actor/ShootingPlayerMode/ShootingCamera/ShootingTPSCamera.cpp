@@ -15,10 +15,11 @@ ShootingTPSCamera::ShootingTPSCamera(IWorld * world, std::weak_ptr<Actor> m_Play
 	Actor(world, "ActionCamera", Vector3::Zero),
 	m_player{ m_Player },
 	player_{ nullptr },
-	m_Offset(-30.0f, 0.0f, 0.0f),
-	m_Up(Vector3::UnitY),
-	m_PitchSpeed(0.0f),
-	m_YawSpeed(0.0f),
+	mOffset(-30.0f, 0.0f, 0.0f),
+	mUp(Vector3::UnitY),
+	mPitchSpeed(0.0f),
+	mYawSpeed(0.0f),
+	mForward{Vector3::Zero},
 	mFinishCamera{ 20.0f,20.0f,20.0f },
 	malreadyCreate{ false }
 {}
@@ -52,21 +53,21 @@ void ShootingTPSCamera::draw() const {
 	TPSCamera::GetInstance().SetRange(0.5f, 1000.0f);
 	TPSCamera::GetInstance().Position.Set(position_);
 	TPSCamera::GetInstance().Target.Set(target_);
-	TPSCamera::GetInstance().Up.Set(m_Up);
+	TPSCamera::GetInstance().Up.Set(mUp);
 	TPSCamera::GetInstance().Update();
 }
 
 void ShootingTPSCamera::PlayerInput(float deltaTime)
 {
-	m_YawSpeed = RightStick::GetInstance().GetAngle().x;
-	m_PitchSpeed = -RightStick::GetInstance().GetAngle().y;
+	mYawSpeed = RightStick::GetInstance().GetAngle().x * GameDataManager::getInstance().GetAIMSPD();
+	mPitchSpeed = -RightStick::GetInstance().GetAngle().y * GameDataManager::getInstance().GetAIMSPD();
 
 	//上下の上限の制御
 	if (GetCameraAngleVRotate() >= 0.4f) {
-		m_PitchSpeed = -0.1f;
+		mPitchSpeed = -0.1f;
 	}
 	else if (GetCameraAngleVRotate() <= -0.4f) {
-		m_PitchSpeed = 0.1f;
+		mPitchSpeed = 0.1f;
 	}
 
 	//ポーズ中とアイテムボックスを開いている時にはカメラは動かなせない
@@ -74,26 +75,27 @@ void ShootingTPSCamera::PlayerInput(float deltaTime)
 		ShootingPlayerParam::getInstance().Get_ItemBoxOpen()) return;
 
 	//ワールド上方を軸とするヨーのクォータニオンを作成
-	const Quaternion yaw(Vector3::UnitY, m_YawSpeed * deltaTime);
+	const Quaternion yaw(Vector3::UnitY, mYawSpeed * deltaTime);
 	//カメラのオフセットと上方ベクトルをヨーで変換
-	m_Offset = Quaternion::Transform(m_Offset, yaw);
-	m_Up = Quaternion::Transform(m_Up, yaw);
+	mOffset = Quaternion::Transform(mOffset, yaw);
+	mUp = Quaternion::Transform(mUp, yaw);
 
 	//カメラの前方/右方向を計算
-	Vector3 forward = -1.0f * m_Offset;
-	forward.Normalize();
-	Vector3 right = Vector3::Cross(m_Up, forward);
+	mForward = -1.0f * mOffset;
+	mForward.Normalize();
+	Vector3 right = Vector3::Cross(mUp, mForward);
 	right.Normalize();
 
 	//カメラ右方向を軸とするピッチのクォータニオンを作成
-	const Quaternion pitch(right, m_PitchSpeed * deltaTime);
+	const Quaternion pitch(right, mPitchSpeed * deltaTime);
 	//カメラのオフセットと上方ベクトルをピッチで変換
-	m_Offset = Quaternion::Transform(m_Offset, pitch);
-	m_Up = Quaternion::Transform(m_Up, pitch);
+	mOffset = Quaternion::Transform(mOffset, pitch);
+	mUp = Quaternion::Transform(mUp, pitch);
 
 	target_ = player_->Getposition() + right * 5.0f;
 	target_.y = target_.y + PlayerHeight;
 
+	//カメラとプレイヤーの距離
 	float dis = 0.0f;
 
 	//プレイヤーがエイム中か
@@ -106,14 +108,14 @@ void ShootingTPSCamera::PlayerInput(float deltaTime)
 		dis = MathHelper::Lerp(dis, 8.0f, 0.1f);
 	}
 
-	position_ = target_ + m_Offset * dis;
- 
+	position_ = target_ + mOffset * dis;
+
 	//照準の位置をセットする
-	Vector3 to_Target = position_ + forward.Normalize();
+	Vector3 to_Target = position_ + mForward.Normalize();
 	ShootingPlayerParam::getInstance().Set_AimPos(to_Target);
 
 	//プレイヤーにカメラの前方向を渡す
-	m_player.lock()->receiveMessage(EventMessage::SIGHT_ROTATION, reinterpret_cast<void*>(&forward));
+	m_player.lock()->receiveMessage(EventMessage::SIGHT_ROTATION, reinterpret_cast<void*>(&mForward));
 
 	mSU.SetAimPos(GetCameraTarget(), ShootingPlayerParam::getInstance().Get_AimCheck());
 }

@@ -3,8 +3,7 @@
 
 #include "../Input/InputInfoInc.h"
 
-void MoveInput::Input(Vector2 & input, float & yaw)
+void MoveInput::Input(Vector2 & input)
 {
 	input = LeftStick::GetInstance().GetAngle();
-	yaw = RightStick::GetInstance().GetAngle().x;
 }

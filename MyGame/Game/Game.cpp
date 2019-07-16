@@ -132,7 +132,6 @@ void Game::start() {
 void Game::update(float) {
 	// ゲームパッドの更新
 	GamePad::GetInstance().Update();
-	ReSetupJoypad();
 	Keyboard::GetInstance().Update();
 	sceneManager_.update(60.0f / 60.0f);
 }

@@ -4,5 +4,5 @@
 class MoveInput
 {
 public:
-	void Input(Vector2 & input,float & yaw);
+	void Input(Vector2 & input);
 };
