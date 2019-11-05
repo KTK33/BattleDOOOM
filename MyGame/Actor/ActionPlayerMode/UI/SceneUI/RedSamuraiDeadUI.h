@@ -4,6 +4,7 @@
 #include "SceneCommon/SceneCommon.h"
 #include "../Effekseer/EffectObj/EffectObj.h"
 
+//アクションモードの赤侍死亡UIクラス
 class RedSamuraiDeadUI : public Actor,public Menu {
 public:
 	RedSamuraiDeadUI(IWorld* world);

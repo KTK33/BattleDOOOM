@@ -4,6 +4,7 @@
 #include "../Animation/AnimationMesh.h"
 #include "../Collision/BoundingSegment.h"
 
+//矢アクター
 class ArrowAttack : public Actor
 {
 public:

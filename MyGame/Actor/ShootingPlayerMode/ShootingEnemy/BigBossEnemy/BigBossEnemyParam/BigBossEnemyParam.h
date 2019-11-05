@@ -1,5 +1,6 @@
 #pragma once
 
+//大ボスのパラメータクラス
 class BigBossEnemyParam {
 	BigBossEnemyParam() {}
 

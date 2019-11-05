@@ -1,6 +1,7 @@
 #pragma once
 #include "../Animation/AnimationMesh.h"
 
+//•Ší•`‰æ
 class DrawWeapon
 {
 public:

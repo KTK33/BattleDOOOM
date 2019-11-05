@@ -17,6 +17,7 @@ void ActorStateManager::update(Vector3 & lposition, Matrix & lrotation, Animated
 
 void ActorStateManager::NextState(ActorStateID & lstate)
 {
+	//次の状態クラスの初期化処理を現在の状態から移行する前に行うため
 	lstate = state_->Get_NextStateID();
 }
 

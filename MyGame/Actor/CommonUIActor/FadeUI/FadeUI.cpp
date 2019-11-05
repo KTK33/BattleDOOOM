@@ -46,6 +46,7 @@ void FadeUI::update(float deltaTime)
 		FadeAlpha = static_cast<int>(max(FadeAlpha - 2.55f, 0));
 		if (FadeAlpha == 0)
 		{
+			//‰½‚à‚µ‚È‚¢
 		}
 	}
 }

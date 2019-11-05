@@ -117,15 +117,3 @@ void ActionModePause::PlayerInput()
 		}
 	}
 }
-
-
-void ActionModePause::SystemInput()
-{
-	//if (!areladySystemOpen)
-	//{
-	//	auto ps = std::make_shared<PauseSystem>(world_);
-	//	world_->add_actor(ActorGroup::ItemBoxUI, ps);
-	//	ps->setPlayMode(1);
-	//	areladySystemOpen = true;
-	//}
-}

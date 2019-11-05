@@ -4,6 +4,7 @@
 #include "SceneCommon/SceneCommon.h"
 #include "../Effekseer/EffectObj/EffectObj.h"
 
+//アクションモードのプレイヤー死亡時UIクラス
 class PlayerDeadUI : public Actor,public Menu {
 public:
 	PlayerDeadUI(IWorld* world);

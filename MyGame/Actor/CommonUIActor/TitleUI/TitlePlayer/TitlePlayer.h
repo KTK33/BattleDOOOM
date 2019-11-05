@@ -8,6 +8,7 @@
 #include "../Actor/ActorSystem/ActorSystem.h"
 #include "../Actor/ActorCommon/DrawWeapon/DrawWeapon.h"
 
+//タイトル時のプレイヤー（学生服）アクター
 class TitlePlayer : public Actor,public ActorSystem  {
 public:
 	TitlePlayer(int model, int weapon, IWorld* world, const Vector3& position);

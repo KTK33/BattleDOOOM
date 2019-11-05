@@ -1,6 +1,7 @@
 #pragma once
 #include "../Math/MathH.h"
 
+//d—Í
 class Gravity
 {
 public:

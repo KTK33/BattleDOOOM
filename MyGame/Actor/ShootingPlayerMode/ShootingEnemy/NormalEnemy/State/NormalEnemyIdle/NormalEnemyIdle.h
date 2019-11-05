@@ -2,6 +2,7 @@
 
 #include "../Actor/ActorState/ActorStateBase.h"
 
+//通常エネミーアイドルステイトクラス
 class NormalEnemyIdle :public ActorStateBase
 {
 public:

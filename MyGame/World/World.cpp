@@ -44,13 +44,10 @@ void World::update(float delta_time)
 	actors_.collide(ActorGroup::PlayerBullet, ActorGroup::EnemyHead);
 	actors_.collide(ActorGroup::Player, ActorGroup::Ball);
 	actors_.remove();
-	//light_->update(delta_time);
-	//gsUpdateEffect(delta_time);
 }
 
 void World::draw() const
 {
-	//light_->draw();
 	actors_.draw();
 	camera_->draw();
 }
@@ -62,7 +59,6 @@ void World::handle_message(EventMessage message, void * param)
 	//アクターのメッセージ処理
 	actors_.handle_message(message, param);
 	camera_->handleMessage(message, param);
-	//light_->handlemessage(message, param);
 }
 
 //イベントメッセージリスナーの登録

@@ -2,6 +2,7 @@
 
 #include "../Actor/ActorState/ActorStateBase.h"
 
+//中ボスの被ダメージクラス
 class BossEnemyDamage :public ActorStateBase
 {
 public:

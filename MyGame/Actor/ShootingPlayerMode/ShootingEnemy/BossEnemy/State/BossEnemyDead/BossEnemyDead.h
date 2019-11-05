@@ -2,6 +2,7 @@
 
 #include "../Actor/ActorState/ActorStateBase.h"
 
+//中ボスの死亡ステイト
 class BossEnemyDead :public ActorStateBase
 {
 public:

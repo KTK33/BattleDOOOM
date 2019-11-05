@@ -126,8 +126,6 @@ public:
 	void collideChildren(Actor& other);
 
 	//q‚Ìíœ
-	void removeChildren();
-	//q‚Ìíœ
 	void removeChildren(std::function<bool(Actor&)> fn);
 
 	void handleMessage(EventMessage message, void* param);

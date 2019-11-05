@@ -12,8 +12,8 @@ public:
 		MotionPlayerAttack2,
 		MotionPlayerAttack3,
 		MotionPlayerRun,
-		MotionPlayerAvoidance,
-		MotionPlayerAvoidanceAttack,
+		MotionPlayerAvoidance,//‰ñ”ğ
+		MotionPlayerAvoidanceAttack,//‰ñ”ğUŒ‚
 		MotionPlayerDead,
 	};
 };

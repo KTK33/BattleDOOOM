@@ -2,6 +2,7 @@
 
 #include "../../Actor.h"
 
+//セレクト画面のカメラアクター
 class SelectCamera : public Actor
 {
 public:

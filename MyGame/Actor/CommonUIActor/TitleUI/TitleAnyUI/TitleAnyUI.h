@@ -1,6 +1,7 @@
 #pragma once
 #include "../Actor/Actor.h"
 
+//タイトル画面のUI諸々
 class TitleAnyUI : public Actor {
 public:
 	TitleAnyUI(IWorld* world);

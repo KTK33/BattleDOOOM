@@ -2,6 +2,7 @@
 #include "../Actor/Actor.h"
 #include "../Scene/Menu.h"
 
+//アクションモードのポーズクラス
 class ActionModePause : public Actor, public Menu {
 public:
 	ActionModePause(IWorld* world);
@@ -16,8 +17,6 @@ public:
 
 	//入力
 	void PlayerInput();
-
-	void SystemInput();
 
 private:
 	bool PauseDecision; //ポーズの決定状態

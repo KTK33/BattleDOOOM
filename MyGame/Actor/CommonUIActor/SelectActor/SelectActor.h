@@ -8,6 +8,7 @@
 #include "../World/World.h"
 #include "../Actor/ActorCommon/DrawWeapon/DrawWeapon.h"
 
+//セレクト画面時のアクター
 class SelectActor : public Actor {
 public:
 	SelectActor(int model1, int model2,int weapon1,int weapon2,IWorld* world);

@@ -4,6 +4,7 @@
 #include "../Collision/BoundingCapsule.h"
 #include "../Animation/AnimationMesh.h"
 
+//アクションモードのターゲットカメラ
 class TargetCameraManager : public Actor {
 public:
 	TargetCameraManager(IWorld* world, std::weak_ptr<Actor> player, std::weak_ptr<Actor> camera);

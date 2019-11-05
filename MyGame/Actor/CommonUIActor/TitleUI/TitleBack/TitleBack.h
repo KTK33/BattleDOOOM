@@ -1,6 +1,7 @@
 #pragma once
 #include "../Actor/Actor.h"
 
+//ƒ^ƒCƒgƒ‹”wŒi
 class TitleBack : public Actor {
 public:
 	TitleBack(IWorld* world);

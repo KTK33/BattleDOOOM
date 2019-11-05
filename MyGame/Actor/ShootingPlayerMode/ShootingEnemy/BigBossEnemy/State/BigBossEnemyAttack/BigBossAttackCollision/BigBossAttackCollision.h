@@ -5,7 +5,7 @@
 #include "../Animation/AnimationMesh.h"
 #include "CollisionMove/CollisionMove.h"
 
-
+//‘åƒ{ƒX‚ÌUŒ‚“–‚½‚è”»’è
 class BigBossAttackCollision : public Actor {
 public:
 	BigBossAttackCollision(IWorld* world, const Vector3& position, const Matrix & rotation, const IBodyPtr& body = std::make_shared<BoundingCapsule>(Vector3{ 0.0f,5.0f,0.0f }, Matrix::Identity, 10.0f, 3.5f));

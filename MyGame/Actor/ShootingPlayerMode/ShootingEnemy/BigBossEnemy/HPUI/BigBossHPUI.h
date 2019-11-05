@@ -2,6 +2,7 @@
 #include "../Math/MathH.h"
 #include "../Actor/Actor.h"
 
+//大ボスのHPUIクラス
 class BigBossHPUI : public Actor
 {
 public:

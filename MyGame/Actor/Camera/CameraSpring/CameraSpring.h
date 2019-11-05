@@ -1,6 +1,7 @@
 #pragma once
 #include "../Math/Vector3.h"
 
+//ƒJƒƒ‰‚Ìƒoƒl
 class CameraSpring
 {
 public:

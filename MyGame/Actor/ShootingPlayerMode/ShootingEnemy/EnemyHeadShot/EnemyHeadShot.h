@@ -4,6 +4,7 @@
 #include "../Math/MathH.h"
 #include "../Collision/BoundingSphere.h"
 
+//ヘッドショットクラス
 class EnemyHeadShot : public Actor
 {
 public:

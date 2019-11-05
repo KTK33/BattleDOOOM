@@ -3,6 +3,7 @@
 #include "../Actor/ActorState/ActorStateBase.h"
 #include "../Effekseer/EffectObj/EffectObj.h"
 
+//通常エネミー咆哮ステイトクラス
 class NormalEnemyRoar :public ActorStateBase
 {
 public:

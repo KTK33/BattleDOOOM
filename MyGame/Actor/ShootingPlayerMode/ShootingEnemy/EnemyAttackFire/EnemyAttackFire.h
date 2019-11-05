@@ -4,6 +4,7 @@
 #include "../Animation/AnimationMesh.h"
 #include "../Collision/BoundingSphere.h"
 
+//’†ƒ{ƒX‚Ì‰ŠUŒ‚‚Ì“–‚½‚è”»’è
 class EnemyAttackFire : public Actor
 {
 public:

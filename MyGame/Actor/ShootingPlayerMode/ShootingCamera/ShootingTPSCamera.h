@@ -3,6 +3,7 @@
 #include "../Actor/Actor.h"
 #include "../Actor/ShootingPlayerMode/UIActor/SightUI/SightUI.h"
 
+//シューティングモードのTPSカメラ
 class ShootingTPSCamera : public Actor
 {
 public:

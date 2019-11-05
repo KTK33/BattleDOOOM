@@ -16,6 +16,8 @@ ActionPlayerActor::ActionPlayerActor(int model, int weapon, IWorld * world, cons
 	mDeadTime{ 40.0f}
 {
 	mcurrentStateID = ActorStateID::ActionPlayerIdle;
+
+	//ó‘Ô‚²‚Æ‚ÌƒNƒ‰ƒX‚ğ’Ç‰Á‚·‚é
 	actionplayerState_[ActorStateID::ActionPlayerIdle].add(add_state<ActionPlayerIdle>(world, parameters_));
 	actionplayerState_[ActorStateID::ActionPlayerAttack].add(add_state<ActionPlayerAttack>(world, parameters_));
 	actionplayerState_[ActorStateID::ActionPlayerAvoidance].add(add_state<ActionPlayerAvoidance>(world, parameters_));

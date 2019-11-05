@@ -8,19 +8,16 @@
 #include "../Animation/AnimationMesh.h"
 #include "../World/World.h"
 #include "../Actor/ActorSystem/ActorSystem.h"
-
 #include <map>
 #include "../Actor/ActorState/ActorStateID.h"
 #include "../Actor/ActorParameters.h"
 #include "../Actor/ActorState/ActorStateManager.h"
-
 #include "../Actor/ShootingPlayerMode/UIActor/ParamUI/ParamUI.h"
-
 #include "../Actor/ActorCommon/CommonInc.h"
 #include "../Actor/ShootingPlayerMode/ShootingPlayer/ShootingPlayerActor/PlayerMove/PlayerMove.h"
-
 #include "../Effekseer/EffectObj/EffectObj.h"
 
+//シューティングモードのプレイヤーアクタークラス
 class ShootingPlayerActor : public Actor, public ActorSystem {
 public:
 	ShootingPlayerActor(int model, int weapon, IWorld* world, const Vector3& position, std::weak_ptr<Actor> ui, const IBodyPtr& body = std::make_shared<BoundingCapsule>(Vector3{ 0.0f,9.0f,0.0f }, Matrix::Identity, 10.0f, 4.0f));

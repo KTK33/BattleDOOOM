@@ -16,6 +16,8 @@ NormalEnemyActor::NormalEnemyActor(int model, IWorld * world, const std::string&
 	mAttackCheck{false}
 {
 	mcurrentStateID = ActorStateID::NormalEnemyIdle;
+
+	//ステイトの追加
 	normalenemyState_[ActorStateID::NormalEnemyIdle].add(add_state<NormalEnemyIdle>(world, parameters_));
 	normalenemyState_[ActorStateID::NormalEnemyDamage].add(add_state<NormalEnemyDamage>(world, parameters_));
 	normalenemyState_[ActorStateID::NormalEnemyDead].add(add_state<NormalEnemyDead>(world, parameters_));

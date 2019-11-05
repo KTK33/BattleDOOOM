@@ -19,6 +19,7 @@
 #include "../Actor/ActorCommon/CommonInc.h"
 #include "../Actor/EnemyCommon/commonInc.h"
 
+//大ボスのアクタークラス
 class BigBossEnemyActor : public Actor, public ActorSystem {
 public:
 	BigBossEnemyActor(int model, IWorld* world, const Vector3& position, const IBodyPtr& body = std::make_shared<BoundingCapsule>(Vector3{ 0.0f,13.0f,0.0f }, Matrix::Identity, 17.0f, 5.0f));

@@ -1,6 +1,7 @@
 #pragma once
 #include "../Math/Vector3.h"
 
+//“G‚ÌˆÚ“®‹¤’Êˆ—
 class EnemyMove
 {
 public:

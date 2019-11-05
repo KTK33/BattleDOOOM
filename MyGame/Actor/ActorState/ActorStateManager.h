@@ -3,6 +3,7 @@
 #include "ActorStateBase.h"
 #include "ActorStatePtr.h"
 
+//アクター状態管理クラス
 class ActorStateManager
 {
 public:

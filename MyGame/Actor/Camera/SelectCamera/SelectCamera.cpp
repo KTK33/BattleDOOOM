@@ -10,6 +10,7 @@ SelectCamera::SelectCamera(IWorld * world, std::weak_ptr<Actor> m_Player):
 
 	position_ = m_player.lock()->Getposition() + m_player.lock()->Getpose().Forward() * 30.0f;
 
+	//値をセット
 	TPSCamera::GetInstance().SetRange(0.5f, 1000.0f);
 	TPSCamera::GetInstance().Position.Set(position_);
 	TPSCamera::GetInstance().Target.Set(target_);

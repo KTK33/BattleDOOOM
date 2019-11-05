@@ -38,7 +38,6 @@ void Actor::onCollide(Actor & other) {}
 void Actor::receiveMessage(EventMessage message, void * param) {}
 
 bool Actor::is_collided(const Actor & other) const {
-	//return body().intersects(other.body());
 	HitInfo hitInfo;
 	return body_->transform(Getpose())->isCollide(*other.GetBody()->transform(other.Getpose()).get(), hitInfo);
 }
@@ -56,10 +55,6 @@ void Actor::collide(Actor & other) {
 bool Actor::field(Vector3 & result)
 {
 	Vector3 hitPos;
-	//if (CollisionMesh::collide_line(prevPosition_ + rotation_.Up()*(body_->length()*0.5f), position_ + rotation_.Up()*(body_->radius() + body_->length()*0.5f), reinterpret_cast<Vector3*>(&hitPos))){
-	//	const Vector3 upVec = rotation_.Up()*(body_->radius() + body_->length()*0.5f);
-	//	position_ = hitPos - upVec;
-	//}
 
 	if (CollisionMesh::collide_capsule(position_ + rotation_.Up()*(body_->length()*0.5f), position_ + rotation_.Down()*(body_->length()*0.5f), body_->radius(), reinterpret_cast<Vector3*>(&hitPos)))
 	{
@@ -222,12 +217,6 @@ void Actor::collideChildren(Actor & other)
 		[&](Actor& my) {
 		other.eachChildren([&](Actor& target) { my.collide(target); });
 	});
-}
-
-void Actor::removeChildren()
-{
-	//removeChildren([](Actor& child) { return child.die(); });
-	//eachChildren([](Actor& child) { child.removeChildren(); });
 }
 
 void Actor::removeChildren(std::function<bool(Actor&)> fn)

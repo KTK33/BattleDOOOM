@@ -1,6 +1,7 @@
 #pragma once
 #include "../Math/Vector2.h"
 
+//ˆÚ“®“ü—Í
 class MoveInput
 {
 public:

@@ -21,6 +21,7 @@
 
 #include "HPUI/BossHPUI.h"
 
+//中ボスアクタークラス
 class BossEnemyActor : public Actor, public ActorSystem {
 public:
 	BossEnemyActor(int model, IWorld* world, const Vector3& position,const IBodyPtr& body = std::make_shared<BoundingCapsule>(Vector3{ 0.0f,10.0f,0.0f }, Matrix::Identity, 10.0f, 6.0f));

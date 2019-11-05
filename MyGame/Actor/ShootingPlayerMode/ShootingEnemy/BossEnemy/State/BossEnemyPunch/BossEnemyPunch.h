@@ -2,6 +2,7 @@
 
 #include "../Actor/ActorState/ActorStateBase.h"
 
+//中ボスのパンチ攻撃ステイト
 class BossEnemyPunch :public ActorStateBase
 {
 public:

@@ -4,6 +4,7 @@
 #include "../Actor/EnemyAttackCollison/EnemyAttackCollison.h"
 #include "../Actor/ShootingPlayerMode/ShootingEnemy/EnemyAttackFire/EnemyAttackFire.h"
 
+//アクターの透明化クラス
 class ActorSystem
 {
 public:

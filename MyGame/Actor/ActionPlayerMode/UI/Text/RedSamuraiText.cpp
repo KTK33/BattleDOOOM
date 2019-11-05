@@ -6,6 +6,8 @@
 Vector2 textPos = Vector2((float)WINDOW_WIDTH / 2, 150);
 void RedSamuraiText::draw() const
 {
+	//ボイスがなっているときのみテキストを表示する
+
 	if (Sound::GetInstance().IsPlaySE(SE_ID::RED_START))
 	{
 		Sprite::GetInstance().DrawSetCenter(SPRITE_ID::KAKUGOWO, textPos);

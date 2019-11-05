@@ -2,6 +2,7 @@
 
 #include "../Actor/Actor.h"
 
+//アクションモードの基本カメラ
 class ActionCamera : public Actor
 {
 public:
@@ -9,8 +10,6 @@ public:
 	virtual ~ActionCamera()override{}
 
 	virtual void update(float deltaTime) override;
-
-	virtual void draw() const override;
 
 	void PlayerInput(float deltaTime);
 

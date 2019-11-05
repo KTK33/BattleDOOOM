@@ -7,6 +7,7 @@
 #include "../Animation/AnimationMesh.h"
 #include "../Actor/ActorCommon/DrawWeapon/DrawWeapon.h"
 
+//タイトルでの忍者アクター
 class TitleNinjya : public Actor{
 public:
 	TitleNinjya(int model, int weapon, IWorld* world, const Vector3& position);

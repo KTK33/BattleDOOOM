@@ -49,6 +49,7 @@ void BigBossAttackCollision::receiveMessage(EventMessage message, void * param)
 
 void BigBossAttackCollision::AttackType(int type)
 {
+	//呼ばれた攻撃のタイプにより攻撃を変更
 	mattacktime++;
 	switch (type)
 	{

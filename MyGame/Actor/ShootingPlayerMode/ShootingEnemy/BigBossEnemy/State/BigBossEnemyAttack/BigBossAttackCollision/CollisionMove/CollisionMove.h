@@ -1,5 +1,7 @@
 #pragma once
 #include "../Math/MathH.h"
+
+//大ボスの攻撃の位置、向き、時間設定クラス
 class CollisionMove
 {
 public:

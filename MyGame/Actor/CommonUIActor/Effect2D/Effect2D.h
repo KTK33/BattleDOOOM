@@ -2,6 +2,7 @@
 #include "../Actor/Actor.h"
 #include "../Texture/Sprite.h"
 
+//2Dエフェクト描画のクラス
 class Effect2D : public Actor
 {
 public:

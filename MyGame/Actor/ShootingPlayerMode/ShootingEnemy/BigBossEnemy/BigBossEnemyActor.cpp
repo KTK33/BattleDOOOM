@@ -17,6 +17,8 @@ BigBossEnemyActor::BigBossEnemyActor(int model, IWorld * world, const Vector3 & 
 	mDelayTime{0}
 {
 	mcurrentStateID = ActorStateID::BigBossEnemyIdle;
+
+	//èÛë‘ÇÃí«â¡
 	bigbossenemyState_[ActorStateID::BigBossEnemyIdle].add(add_state<BigBossEnemyIdle>(world, parameters_));
 	bigbossenemyState_[ActorStateID::BigBossEnemyAttack].add(add_state<BigBossEnemyAttack>(world, parameters_));
 	bigbossenemyState_[ActorStateID::BigBossEnemyDead].add(add_state<BigBossEnemyDead>(world, parameters_));

@@ -17,7 +17,7 @@
 #include "../Actor/ActorCommon/CommonInc.h"
 #include "../Actor/ActionPlayerMode/UI/HPUI/ActonPlayerHP.h"
 
-
+//アクションモードのプレイヤーアクター
 class ActionPlayerActor : public Actor, public ActorSystem {
 public:
 	ActionPlayerActor(int model, int weapon, IWorld* world, const Vector3& position, const Matrix& rotation, const IBodyPtr& body = std::make_shared<BoundingCapsule>(Vector3{ 0.0f,9.0f,0.0f }, Matrix::Identity, 10.0f, 4.0f));

@@ -3,6 +3,7 @@
 #include "../Actor/Actor.h"
 #include "../Effekseer/EffectObj/EffectObj.h"
 
+//タイトルエフェクト
 class TitleEffect : public Actor {
 public:
 	TitleEffect(IWorld* world);

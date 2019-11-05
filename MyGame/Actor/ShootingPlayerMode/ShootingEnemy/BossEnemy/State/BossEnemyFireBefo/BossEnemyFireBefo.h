@@ -2,6 +2,7 @@
 
 #include "../Actor/ActorState/ActorStateBase.h"
 
+//中ボスの火炎攻撃前段階ステイト
 class BossEnemyFireBefo :public ActorStateBase
 {
 public:

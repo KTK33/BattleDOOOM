@@ -20,6 +20,7 @@ TitleCamera::TitleCamera(IWorld * world, std::weak_ptr<Actor> m_Player):
 
 void TitleCamera::update(float deltaTime)
 {
+	//値のセット
 	TPSCamera::GetInstance().SetRange(0.5f, 1000.0f);
 	TPSCamera::GetInstance().Position.Set(position_);
 	TPSCamera::GetInstance().Target.Set(target_);
@@ -29,6 +30,7 @@ void TitleCamera::update(float deltaTime)
 	//ばね
 	CameraSpring::move(position_, velocity_, position_, 1.0f, 0.2f, 0.8f);
 
+	//銃弾がなくなるまではカメラのターゲットにする
 	if (world_->find_actor(ActorGroup::Ball, "TitleBullet") != NULL)
 	{
 		bullet = world_->find_actor(ActorGroup::Ball, "TitleBullet").get();

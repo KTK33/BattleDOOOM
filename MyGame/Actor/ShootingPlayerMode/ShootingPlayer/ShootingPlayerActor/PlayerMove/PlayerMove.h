@@ -1,6 +1,7 @@
 #pragma once
 #include "../Math/MathH.h"
 
+//シューティングモードのプレイヤー移動クラス
 class PlayerMove
 {
 public:

@@ -1,6 +1,7 @@
 #pragma once
 #include "../Math/MathH.h"
 
+//アクションモードのプレイヤーのHPのクラス
 class ActionPlayerHP
 {
 public:

@@ -1,8 +1,10 @@
 #pragma once
 #include "../Actor/Actor.h"
 
+//フェードUIクラス
 class FadeUI : public Actor {
 public:
+	//コンストラクタ（０：フェードイン　１：フェードアウト）
 	FadeUI(IWorld* world,int FadeCheck,int SceneNum);
 	virtual ~FadeUI()override {}
 

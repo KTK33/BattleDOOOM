@@ -2,6 +2,7 @@
 #include "../Actor/ActorState/ActorStateID.h"
 #include "../Math/Vector3.h"
 
+//赤侍のパラメータクラス
 class RedSamuraiParam {
 	RedSamuraiParam() {}
 

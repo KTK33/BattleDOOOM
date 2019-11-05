@@ -2,6 +2,7 @@
 
 #include "../Actor/ActorState/ActorStateBase.h"
 
+//中ボスの炎攻撃ステイト
 class BossEnemyFire :public ActorStateBase
 {
 public:

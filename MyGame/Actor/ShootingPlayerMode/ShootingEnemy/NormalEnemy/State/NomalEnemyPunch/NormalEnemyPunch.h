@@ -2,6 +2,7 @@
 
 #include "../Actor/ActorState/ActorStateBase.h"
 
+//通常エネミーパンチステイトクラス
 class NormalEnemyPunch :public ActorStateBase
 {
 public:

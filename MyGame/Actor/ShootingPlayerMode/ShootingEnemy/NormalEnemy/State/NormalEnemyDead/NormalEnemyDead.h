@@ -2,6 +2,7 @@
 
 #include "../Actor/ActorState/ActorStateBase.h"
 
+//通常エネミー死亡ステイトクラス
 class NormalEnemyDead :public ActorStateBase
 {
 public:

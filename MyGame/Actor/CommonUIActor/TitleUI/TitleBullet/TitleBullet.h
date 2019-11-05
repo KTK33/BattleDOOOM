@@ -3,6 +3,7 @@
 #include "../Actor/Actor.h"
 #include "../Animation/AnimationMesh.h"
 
+//ƒ^ƒCƒgƒ‹e’e
 class TitleBullet : public Actor
 {
 public:

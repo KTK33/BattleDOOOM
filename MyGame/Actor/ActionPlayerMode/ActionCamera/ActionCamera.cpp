@@ -34,9 +34,6 @@ void ActionCamera::update(float deltaTime)
 	CameraSpring::move(position_, velocity_, prevPosition_, 1.0f, 0.2f, 0.8f);
 }
 
-void ActionCamera::draw() const {
-}
-
 void ActionCamera::PlayerInput(float deltaTime)
 {
 	m_YawSpeed = RightStick::GetInstance().GetAngle().x;
@@ -117,6 +114,7 @@ void ActionCamera::PlayerInput(float deltaTime)
 
 void ActionCamera::receiveMessage(EventMessage message, void * param)
 {
+	//ターゲットカメラの情報を取得
 	if (message == EventMessage::TARGET_CAMERA)
 	{
 		mTargetCamera =*static_cast<bool*>(param);

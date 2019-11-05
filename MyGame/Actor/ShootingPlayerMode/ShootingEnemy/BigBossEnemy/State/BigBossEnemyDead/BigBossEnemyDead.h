@@ -2,6 +2,7 @@
 
 #include "../Actor/ActorState/ActorStateBase.h"
 
+//大ボスの死亡時クラス
 class BigBossEnemyDead :public ActorStateBase
 {
 public:

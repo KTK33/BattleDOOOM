@@ -18,6 +18,8 @@ BossEnemyActor::BossEnemyActor(int model, IWorld * world, const Vector3 & positi
 	mAttackTime{FireAttackTime*60}
 {
 	mcurrentStateID = ActorStateID::BossEnemyIdle;
+
+	//ステイトの追加
 	bossenemyState_[ActorStateID::BossEnemyIdle].add(add_state<BossEnemyIdle>(world, parameters_));
 	bossenemyState_[ActorStateID::BossEnemyDamage].add(add_state<BossEnemyDamage>(world, parameters_));
 	bossenemyState_[ActorStateID::BossEnemyDead].add(add_state<BossEnemyDead>(world, parameters_));
